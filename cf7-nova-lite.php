@@ -3,7 +3,7 @@
  * Plugin Name:       CF7 Nova Lite
  * Plugin URI:        https://github.com/Rupashdas/cf7-nova-lite
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
@@ -20,6 +20,16 @@
  * bundles, which used to be two hundred lines of near-identical render
  * functions here (see src/Admin/Menu.php and src/Admin/Assets.php).
  *
+ * No load_plugin_textdomain(). It was here to register this plugin's own
+ * languages/ folder, because WordPress searches only WP_LANG_DIR/plugins and
+ * WP_LANG_DIR/themes unless a path is registered — so without it a .mo sitting
+ * beside the .pot would never be found. Nothing turns on that: no .mo ships,
+ * translations from wordpress.org arrive in WP_LANG_DIR/plugins where they are
+ * found anyway, and the JS half passes its own path to
+ * wp_set_script_translations(). What the call did do was earn a Plugin Check
+ * warning on every run, for a case nobody should rely on — a .mo inside the
+ * plugin folder is deleted by the next update.
+ *
  * @package CF7_Nova_Lite
  */
 
@@ -27,7 +37,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CF7NL_VERSION', '2.0.1' );
+define( 'CF7NL_VERSION', '2.0.2' );
 define( 'CF7NL_DB_VERSION', '3' );
 define( 'CF7NL_FILE', __FILE__ );
 define( 'CF7NL_PATH', plugin_dir_path( __FILE__ ) );
@@ -119,25 +129,6 @@ function cf7nl_render_cf7_missing_notice(): void {
 		)
 	);
 }
-
-/**
- * Bundled translations, for the PHP half.
- *
- * `wp_set_script_translations()` already points the JS bundles at
- * `languages/`, and a `.pot` ships in there — so bundled translations are
- * plainly the intent. The PHP half was missing. WordPress's just-in-time
- * loader resolves a domain against `WP_LANG_DIR/plugins` and nothing else
- * unless a path has been registered, and registering one is exactly what
- * `load_plugin_textdomain()` does. Without it a `.mo` sitting in this
- * plugin's own folder is never found and every PHP `__()` returns English.
- *
- * On `init` rather than earlier: WordPress 6.7 onwards warns about
- * translations loaded before then.
- */
-function cf7nl_load_textdomain(): void {
-	load_plugin_textdomain( 'cf7-nova-lite', false, dirname( CF7NL_BASENAME ) . '/languages' );
-}
-add_action( 'init', 'cf7nl_load_textdomain' );
 
 function cf7nl_boot(): void {
 	if ( ! cf7nl_is_cf7_active() ) {

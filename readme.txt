@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
 No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
 
 == Changelog ==
+
+= 2.0.2 =
+* Removed the manual translation loader. WordPress has loaded plugin translations on its own since 4.6, and this plugin ships none of its own — the template in languages/ is what a translator starts from, and finished translations live in wp-content/languages/plugins/ where an update cannot delete them. Nothing about translating the plugin changes; one warning on every Plugin Check run does.
 
 = 2.0.1 =
 * Removed the "See Pro" button from the Features screen. It pointed at a placeholder address, which reads as a broken plugin rather than as a feature that has not been built. Pro is not being built until the free version has had time with real users; the screen still says what it will hold.
