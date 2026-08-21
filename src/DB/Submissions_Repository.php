@@ -354,6 +354,89 @@ final class Submissions_Repository {
 	/**
 	 * @return array{total: int, submitted: int, today: int, week: int, spam: int, unread: int}
 	 */
+	/**
+	 * How many entries arrived on each of the last N days.
+	 *
+	 * Spam is left out. It is caught rather than received, and a day the filter
+	 * did its job would otherwise read as a busy one.
+	 *
+	 * The window is dated through local_day_start(), the same as stats(), and
+	 * that is not tidiness: the two are drawn on one screen, the chart's last
+	 * bar directly under the "Today" figure. Dated any other way they disagree
+	 * on a site that is not on UTC, and a reader has no way to tell which is
+	 * lying.
+	 *
+	 * @return array<int, array{date: string, count: int}>
+	 */
+	public function daily( int $days = 30 ): array {
+		global $wpdb;
+
+		$days  = max( 1, $days );
+		$since = self::local_day_start( $days - 1 );
+
+		// Grouped in the site's own zone, not the column's. created_at is UTC, so
+		// grouping it raw puts the small hours of a UTC+6 morning on the day
+		// before — the same fault stats() carries a comment about.
+		//
+		// Shifted by adding seconds rather than with CONVERT_TZ, which answers
+		// NULL unless the server has MySQL's timezone tables loaded — common
+		// enough on shared hosting, and it fails in the worst possible way here:
+		// every day would come back empty and the chart would read as a site
+		// with no submissions, directly under a "Today" figure saying otherwise.
+		// Interval arithmetic needs nothing loaded.
+		$offset = (int) ( (float) get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+
+		$sql = "SELECT DATE( created_at + INTERVAL %d SECOND ) AS day, COUNT(*) AS hits
+				FROM {$this->table}
+				WHERE created_at >= %s AND status = 'submitted'
+				GROUP BY day";
+
+		$rows = $wpdb->get_results( $wpdb->prepare( $sql, $offset, $since ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+
+		$counts = array();
+		foreach ( (array) $rows as $row ) {
+			$counts[ (string) ( $row['day'] ?? '' ) ] = (int) ( $row['hits'] ?? 0 );
+		}
+
+		return self::series( $counts, $days, current_time( 'Y-m-d' ) );
+	}
+
+	/**
+	 * A run of days, gaps included.
+	 *
+	 * A GROUP BY only answers for days that have rows, so a quiet month comes
+	 * back as four entries. Drawn straight, that is four evenly spaced bars —
+	 * "something every week" rather than "almost nothing". The empty days are
+	 * the shape, so they are put back.
+	 *
+	 * `$today` is a parameter rather than a call to the clock: it is what makes
+	 * the boundaries checkable, and daily() is the one place that has to decide
+	 * which day "today" is anyway.
+	 *
+	 * @param array<string, int|string> $counts Rows the query found, keyed Y-m-d.
+	 * @param int                       $days   How many days the window holds.
+	 * @param string                    $today  The last day in it, as Y-m-d.
+	 * @return array<int, array{date: string, count: int}>
+	 */
+	public static function series( array $counts, int $days, string $today ): array {
+		$days = max( 1, $days );
+		$out  = array();
+
+		for ( $back = $days - 1; $back >= 0; $back-- ) {
+			$date = gmdate( 'Y-m-d', (int) strtotime( $today . ' -' . $back . ' days' ) );
+
+			$out[] = array(
+				'date'  => $date,
+				'count' => (int) ( $counts[ $date ] ?? 0 ),
+			);
+		}
+
+		return $out;
+	}
+
+	/**
+	 * @return array<string, int>
+	 */
 	public function stats(): array {
 		global $wpdb;
 

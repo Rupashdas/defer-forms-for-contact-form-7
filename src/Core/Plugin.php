@@ -315,7 +315,8 @@ final class Plugin {
 		$this->container->singleton(
 			'admin.menu',
 			static fn( Container $container ) => new Menu(
-				$container->make( 'cf7.design' )
+				$container->make( 'cf7.design' ),
+				$container->make( 'submissions.repository' )
 			)
 		);
 

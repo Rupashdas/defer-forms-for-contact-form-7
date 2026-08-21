@@ -240,9 +240,20 @@ final class Submissions_Controller extends Controller {
 		return $clean;
 	}
 
+	/**
+	 * The dashboard's whole payload, in one request.
+	 *
+	 * `daily` rides along with the totals rather than getting a route of its own:
+	 * the screen has no use for one without the other, and two requests would let
+	 * the chart and the figures above it be drawn from two different moments.
+	 */
 	public function rest_get_stats(): \WP_REST_Response {
 		$repo = $this->container->make( 'submissions.repository' );
-		return new \WP_REST_Response( $repo->stats(), 200 );
+
+		return new \WP_REST_Response(
+			$repo->stats() + array( 'daily' => $repo->daily( 30 ) ),
+			200
+		);
 	}
 
 	/**

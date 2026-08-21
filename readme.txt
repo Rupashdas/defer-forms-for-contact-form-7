@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.0.3 =
+* The Dashboard is a different screen. It used to be four figures that read 0 on a new site and repeated each other on a young one; it now shows what has actually been arriving — a thirty-day activity chart, this week against the one before it, which forms are getting the entries, and the latest few. A site with nothing yet gets a way in rather than a row of zeroes.
+* Clicking an entry on the Dashboard opens that entry. It used to land on the Submissions list with nothing selected.
+* Every admin screen now loads at the size it will keep. Cards used to come up short and grow the moment the data arrived, which moved whatever you were about to click. The Features screen no longer waits at all — its list travels with the page.
 = 2.0.2 =
 * Removed the manual translation loader. WordPress has loaded plugin translations on its own since 4.6, and this plugin ships none of its own — the template in languages/ is what a translator starts from, and finished translations live in wp-content/languages/plugins/ where an update cannot delete them. Nothing about translating the plugin changes; one warning on every Plugin Check run does.
 

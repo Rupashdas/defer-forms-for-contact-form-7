@@ -16,6 +16,8 @@ namespace CF7NL\Admin;
 use CF7NL\CF7\Design;
 use CF7NL\CF7\Product_Field;
 use CF7NL\Core\Capability;
+use CF7NL\DB\Submissions_Repository;
+use CF7NL\Modules\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,8 +27,11 @@ final class Menu {
 
 	private Design $design;
 
-	public function __construct( Design $design ) {
-		$this->design = $design;
+	private Submissions_Repository $submissions;
+
+	public function __construct( Design $design, Submissions_Repository $submissions ) {
+		$this->design      = $design;
+		$this->submissions = $submissions;
 	}
 
 	/**
@@ -154,6 +159,48 @@ final class Menu {
 			wp_add_inline_script(
 				$handle,
 				'window.cf7nlBuilder = ' . wp_json_encode( array( 'woocommerce' => Product_Field::is_available() ) ) . ';',
+				'before'
+			);
+
+			return;
+		}
+
+		if ( 'dashboard' === $entry ) {
+			/*
+			 * How many forms have entries, so the loading state can draw the
+			 * right number of rows in the breakdown rather than guessing two.
+			 *
+			 * Everything else on that screen can reserve its own height from
+			 * markup alone; this one section is as tall as the site has forms,
+			 * which is the one thing the browser cannot know before the fetch
+			 * comes back. The server already does.
+			 */
+			wp_add_inline_script(
+				$handle,
+				'window.cf7nlDashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
+				'before'
+			);
+
+			return;
+		}
+
+		if ( 'features' === $entry ) {
+			/*
+			 * The whole catalogue, not a count and not a route.
+			 *
+			 * It is a fixed list in this plugin — the same on every site, the
+			 * same on every load — so fetching it left the screen drawing a
+			 * skeleton of something already sitting in memory here. And no
+			 * skeleton could have matched it: the cards are as tall as their
+			 * descriptions wrap, which nothing knows before the text arrives.
+			 *
+			 * Five kilobytes inline against a round trip and a loading state.
+			 * The route stays for anything else that wants it, and the page
+			 * still falls back to it if this line never ran.
+			 */
+			wp_add_inline_script(
+				$handle,
+				'window.cf7nlFeatures = ' . wp_json_encode( array( 'items' => Registry::definitions() ) ) . ';',
 				'before'
 			);
 
