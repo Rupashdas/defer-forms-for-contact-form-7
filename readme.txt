@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.7
+Stable tag: 2.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,10 +31,9 @@ CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keepi
 * Spam protection (honeypot, time-trap, duplicate check)
 * Privacy: submissions join WordPress's own export and erase tools
 * 20+ ready-made templates
+* Telegram: every submission forwarded to a chat as it arrives
 
-Telegram forwarding and AI generation are on the roadmap and are listed as
-"Planned" on the plugin's Features screen — this plugin does not claim them as
-shipped.
+The Features screen lists everything this plugin does, and nothing it does not.
 
 CF7 Nova **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
@@ -55,6 +54,9 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.1.0 =
+* New: Telegram. Every submission is forwarded to a Telegram chat as it arrives — the form name, the time, every field and its value, and a link to open the entry. Set a bot token and a chat ID under Settings → Telegram, and use the test button to check them before switching it on. Spam is never sent.
+* The AI form generator has been dropped rather than built, and no longer appears as planned. The Features screen lists what the plugin does and nothing it does not.
 = 2.0.7 =
 * Much faster on sites with a lot of entries. Measured at 100,000 submissions: the Forms page went from 970ms to 35ms, and the Dashboard and Submissions screens roughly halved. Two database indexes were missing, and two queries were counting entries in a way that made the database read every row. Nothing about what the screens show has changed — only how long they take.
 * This update adds two indexes to the submissions table. On a very large table the first admin page load after updating may take a few seconds while they are built.

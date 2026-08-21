@@ -57,23 +57,20 @@ final class Registry {
 			array( 'privacy', __( 'Privacy & GDPR', 'cf7-nova-lite' ), __( 'Data export and erase helpers for compliance.', 'cf7-nova-lite' ), __( 'Protection', 'cf7-nova-lite' ), 'lock' ),
 			array( 'import_export', __( 'Import / Export', 'cf7-nova-lite' ), __( 'Move forms between sites as JSON.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'arrow-down-up' ),
 			array( 'revisions', __( 'Revisions', 'cf7-nova-lite' ), __( 'Keep the last ten versions of a form and roll one back.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'history' ),
+			array( 'telegram', __( 'Telegram', 'cf7-nova-lite' ), __( 'Send every submission to a Telegram chat as it arrives.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'send' ),
 		);
 
 		/**
 		 * Not written yet. Listed so the page can say what is coming rather than
 		 * pretending the plugin is finished; `planned` is what keeps them out of
 		 * the "what you have today" count.
+		 *
+		 * Empty at the moment, and that is the honest state: Telegram was the
+		 * last one here and now exists, and the AI generator was dropped rather
+		 * than built. A promise nobody intends to keep is worse than a shorter
+		 * list — the group simply does not draw when there is nothing in it.
 		 */
-		$planned = array(
-			array( 'telegram', __( 'Telegram', 'cf7-nova-lite' ), __( 'Forward submissions to a Telegram channel.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'send' ),
-			// Forms, not Notifications. It sat under Notifications next to
-			// Telegram, presumably because both were added in the same pass —
-			// but that group is for getting a submission out to somebody, and
-			// this one makes the form in the first place. It belongs beside the
-			// builder and the template library, which is where anyone looking
-			// for a faster way to start a form is already looking.
-			array( 'ai', __( 'AI Generator', 'cf7-nova-lite' ), __( 'Generate forms and email copy with AI.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'bot' ),
-		);
+		$planned = array();
 
 		$pro = array(
 			array( 'analytics', __( 'Analytics', 'cf7-nova-lite' ), __( 'Track views, conversion, abandonment and field drop-off.', 'cf7-nova-lite' ), __( 'Insights', 'cf7-nova-lite' ), 'bar-chart' ),

@@ -21,11 +21,11 @@ final class Settings_Repository {
 	 * @var array<string, array<string, mixed>>
 	 */
 	private const DEFAULTS = array(
-		'general' => array(
+		'general'  => array(
 			'retention_days'      => 0,
 			'delete_on_uninstall' => false,
 		),
-		'spam'    => array(
+		'spam'     => array(
 			'honeypot_enabled'    => true,
 			'time_trap_enabled'   => true,
 			'dedup_enabled'       => true,
@@ -35,13 +35,20 @@ final class Settings_Repository {
 			'store_spam'          => true,
 			'spam_retention_days' => 30,
 		),
-		'privacy' => array(
+		'privacy'  => array(
 			'ip_logging' => true,
+		),
+		// Off until somebody fills in both halves of it. A bot token is not
+		// something a plugin can guess at, and half of one sends nothing.
+		'telegram' => array(
+			'enabled'   => false,
+			'bot_token' => '',
+			'chat_id'   => '',
 		),
 		// Mirrors the --cf7nl-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
-		'design'  => array(
+		'design'   => array(
 			'primary'          => '#1b1b22',
 			'primary_contrast' => '#ffffff',
 			'text'             => '#1b1b22',
@@ -143,6 +150,22 @@ final class Settings_Repository {
 			case 'privacy':
 				return array(
 					'ip_logging' => (bool) ( $input['ip_logging'] ?? false ),
+				);
+
+			case 'telegram':
+				/*
+				 * Both halves trimmed, because both are pasted rather than typed
+				 * and a trailing space on a bot token is an Unauthorized with
+				 * nothing on screen to explain it.
+				 *
+				 * sanitize_text_field() on the token as well: it is not displayed
+				 * anywhere, but it does go into a URL, and a newline in a URL is
+				 * how a header gets split.
+				 */
+				return array(
+					'enabled'   => (bool) ( $input['enabled'] ?? false ),
+					'bot_token' => trim( sanitize_text_field( (string) ( $input['bot_token'] ?? '' ) ) ),
+					'chat_id'   => trim( sanitize_text_field( (string) ( $input['chat_id'] ?? '' ) ) ),
 				);
 
 			case 'design':

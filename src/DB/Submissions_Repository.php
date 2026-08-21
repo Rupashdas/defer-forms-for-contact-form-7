@@ -533,9 +533,16 @@ final class Submissions_Repository {
 			return array();
 		}
 
+		$counts = $wpdb->get_results(
+			"SELECT form_id, COUNT(*) AS submission_count, MAX( created_at ) AS last_at
+			FROM {$this->table}
+			GROUP BY form_id",
+			ARRAY_A
+		); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+
 		$totals = array();
 
-		foreach ( (array) $wpdb->get_results( "SELECT form_id, COUNT(*) AS submission_count, MAX( created_at ) AS last_at FROM {$this->table} GROUP BY form_id", ARRAY_A ) as $row ) {
+		foreach ( (array) $counts as $row ) {
 			$totals[ (int) $row['form_id'] ] = $row;
 		}
 

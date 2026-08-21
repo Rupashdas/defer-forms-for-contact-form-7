@@ -79,6 +79,18 @@ final class Submission_Listener {
 		if ( $id > 0 ) {
 			$this->keep_attachments( $id, $submission, $data );
 		}
+
+		/*
+		 * Only real entries reach a phone. Spam is stored so a misfiring check
+		 * can be undone, not so a bot can make somebody's pocket buzz.
+		 *
+		 * After the row exists, because the message links to it — and after the
+		 * attachments, so a notification cannot arrive announcing a file the
+		 * site has not finished keeping.
+		 */
+		if ( $id > 0 && 'submitted' === $status ) {
+			Telegram::notify( $this->settings->get_section( 'telegram' ), $id, $contact_form, $data );
+		}
 	}
 
 	/**
