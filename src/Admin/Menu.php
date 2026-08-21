@@ -48,7 +48,7 @@ final class Menu {
 			'cf7-nova-submissions' => array( 'submissions', __( 'Submissions', 'cf7-nova-lite' ) ),
 			'cf7-nova-templates'   => array( 'templates', __( 'Templates', 'cf7-nova-lite' ) ),
 			'cf7-nova-settings'    => array( 'settings', __( 'Settings', 'cf7-nova-lite' ) ),
-			'cf7-nova-modules'     => array( 'modules', __( 'Features', 'cf7-nova-lite' ) ),
+			'cf7-nova-features'    => array( 'features', __( 'Features', 'cf7-nova-lite' ) ),
 		);
 	}
 

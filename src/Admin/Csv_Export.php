@@ -49,8 +49,11 @@ final class Csv_Export {
 		header( 'Content-Disposition: attachment; filename="cf7-nova-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
 
 		// A long export must not be cut short by the default execution limit.
+		// Discouraged in general because most code has no business extending it;
+		// an export that streams every row a site has ever received is the case
+		// the discouragement is not about. Guarded, because hosts disable it.
 		if ( function_exists( 'set_time_limit' ) ) {
-			@set_time_limit( 0 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			@set_time_limit( 0 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, Squiz.PHP.DiscouragedFunctions.Discouraged -- see above.
 		}
 
 		// Anything WordPress already buffered would otherwise land in the file.
@@ -58,10 +61,20 @@ final class Csv_Export {
 			ob_end_clean();
 		}
 
+		/*
+		 * php://output, not a file. This is a download being written to the
+		 * response as it is generated, so a site with a hundred thousand
+		 * submissions never has to hold the whole CSV in memory first.
+		 *
+		 * WP_Filesystem cannot do this, and the sniff asking for it has the
+		 * wrong context: it abstracts *file* access for hosts where PHP cannot
+		 * write directly — it puts contents at a path. There is no path here and
+		 * no file. The fwrite and fclose below are on that output handle.
+		 */
 		$output = fopen( 'php://output', 'w' );
 
 		// Byte-order mark, so Excel opens UTF-8 as UTF-8.
-		fwrite( $output, "\xEF\xBB\xBF" );
+		fwrite( $output, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- see above; the response, not a file.
 		// The four fixed columns are ours to name, so they are named in the
 		// reader's language. The rest are the visitor's own field names and stay
 		// exactly as the form spelled them. Nothing re-imports this file, so
@@ -87,7 +100,7 @@ final class Csv_Export {
 			}
 		}
 
-		fclose( $output );
+		fclose( $output ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- see above; this is the response, not a file.
 		exit;
 	}
 

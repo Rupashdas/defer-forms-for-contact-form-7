@@ -19,6 +19,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery -- Removing the plugin's own
+// table, and its transients, which have no API that deletes by prefix. Nothing
+// is worth caching in a file that runs once and then the plugin is gone.
+
 /**
  * Erase this one site's data, if this one site asked for that.
  *
@@ -67,7 +71,7 @@ function cf7nl_uninstall_site(): void {
 	// its own, with the plugin never loaded and no autoloader. tests/php/uninstall.php
 	// checks the two names still match.
 	$table = $wpdb->prefix . 'cf7nl_submissions';
-	$wpdb->query( "DROP TABLE IF EXISTS {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL -- a table name built from $wpdb->prefix and a literal; prepare() cannot placeholder an identifier anyway.
+	$wpdb->query( "DROP TABLE IF EXISTS {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- a table name built from $wpdb->prefix and a literal; prepare() cannot placeholder an identifier anyway.
 
 	// The files people attached. Dropping the table alone would leave every upload
 	// this plugin ever kept sitting under uploads with nothing left pointing at it.

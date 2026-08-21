@@ -42,6 +42,7 @@ final class Submissions_Controller extends Controller {
 				'methods'             => 'GET',
 				'permission_callback' => self::can_manage(),
 				'callback'            => array( $this, 'rest_list_submissions' ),
+
 				/*
 				 * The constraints are declared here as well as enforced in the
 				 * repository, and the repetition is the point.

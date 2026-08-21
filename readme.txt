@@ -3,9 +3,9 @@ Contributors: rupashdas
 Tags: contact form 7, form builder, multi-step form, submissions, conditional logic
 Requires at least: 6.5
 Requires Plugins: contact-form-7
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
 No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
 
 == Changelog ==
+
+= 2.0.1 =
+* Removed the "See Pro" button from the Features screen. It pointed at a placeholder address, which reads as a broken plugin rather than as a feature that has not been built. Pro is not being built until the free version has had time with real users; the screen still says what it will hold.
+* The Features screen moved to a matching address. It was reached at `admin.php?page=cf7-nova-modules`, left over from when these were modules with a switch beside each one, and is now `admin.php?page=cf7-nova-features`. Update any bookmark.
 
 = 2.0.0 =
 * Full architectural rebuild from scratch.

@@ -96,6 +96,14 @@ final class Submission_Id {
 		return $data;
 	}
 
+	// phpcs:disable WordPress.DB.DirectDatabaseQuery -- These three do touch
+	// core's options table, and deliberately: the counter has to be incremented
+	// and read back in one statement, and there is no option API that does that.
+	// update_option() reads, adds one and writes, so two submissions arriving
+	// together are handed the same number. Caching is handled below rather than
+	// skipped — the wp_cache_delete() is what stops get_option() serving the
+	// value from before the increment.
+
 	/**
 	 * Take the next number. Atomic: the UPDATE both increments the counter and
 	 * records the new value for this connection, so concurrent submissions can
@@ -127,4 +135,5 @@ final class Submission_Id {
 
 		return $number > 0 ? $number : 1;
 	}
+	// phpcs:enable WordPress.DB.DirectDatabaseQuery
 }

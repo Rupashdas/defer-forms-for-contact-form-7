@@ -40,7 +40,7 @@ not required.
 
 **Extra fields**
 
-Star rating, country picker, password, dynamic text, product, quiz, character count — plus a
+Star rating, country picker, password, dynamic text, product, quiz and character count — plus a
 searchable select and a drag-and-drop file upload with previews.
 
 **After the form is sent**

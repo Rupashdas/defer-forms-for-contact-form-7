@@ -90,7 +90,7 @@ final class Assets {
 			return $manifest;
 		}
 
-		$path = CF7NL_PATH . 'build/.vite/manifest.json';
+		$path = CF7NL_PATH . 'build/manifest.json';
 
 		// The readable check stays in front of it: an unbuilt checkout is a
 		// normal state for a developer, and wp_json_file_decode() announces a

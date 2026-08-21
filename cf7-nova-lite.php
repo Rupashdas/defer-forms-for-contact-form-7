@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name:       CF7 Nova Lite
- * Plugin URI:        https://example.com/cf7-nova
+ * Plugin URI:        https://github.com/Rupashdas/cf7-nova-lite
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
  * Author:            Rupash Das
- * Author URI:        https://example.com
+ * Author URI:        https://github.com/Rupashdas
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       cf7-nova-lite
@@ -27,7 +27,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CF7NL_VERSION', '2.0.0' );
+define( 'CF7NL_VERSION', '2.0.1' );
 define( 'CF7NL_DB_VERSION', '3' );
 define( 'CF7NL_FILE', __FILE__ );
 define( 'CF7NL_PATH', plugin_dir_path( __FILE__ ) );
