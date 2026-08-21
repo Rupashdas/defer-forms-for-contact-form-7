@@ -3,7 +3,7 @@
  * Plugin Name:       CF7 Nova Lite
  * Plugin URI:        https://github.com/Rupashdas/cf7-nova-lite
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.0.3
+ * Version:           2.0.4
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
@@ -37,7 +37,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CF7NL_VERSION', '2.0.3' );
+define( 'CF7NL_VERSION', '2.0.4' );
 define( 'CF7NL_DB_VERSION', '3' );
 define( 'CF7NL_FILE', __FILE__ );
 define( 'CF7NL_PATH', plugin_dir_path( __FILE__ ) );
@@ -69,21 +69,6 @@ if ( is_readable( CF7NL_PATH . 'vendor/autoload.php' ) ) {
 register_activation_hook( __FILE__, array( '\CF7NL\Core\Activator', 'activate' ) );
 register_deactivation_hook( __FILE__, array( '\CF7NL\Core\Deactivator', 'deactivate' ) );
 
-/**
- * Cache-busting version for one of our own asset files.
- *
- * `CF7NL_VERSION` alone is not enough: it does not move while you are working,
- * so the browser keeps serving yesterday's JS, and it does not move on a release
- * where somebody forgot to bump it either — leaving every existing visitor on
- * the old file. The file's own modification time cannot be forgotten.
- *
- * Lives here, as a plain function, because every class under src/ calls it and
- * none of them should have to reach for an object to ask what version a
- * stylesheet is.
- *
- * @param string $relative Path under the plugin folder, e.g. 'assets/js/steps.js'.
- * @return string Version string for wp_enqueue_script()/wp_enqueue_style().
- */
 /*
  * Guarded, unlike the other three below it. All four are prefixed, so a clash
  * with an unrelated plugin is far-fetched; the realistic case is a second copy
@@ -94,23 +79,37 @@ register_deactivation_hook( __FILE__, array( '\CF7NL\Core\Deactivator', 'deactiv
  */
 if ( ! function_exists( 'cf7nl_asset_ver' ) ) :
 
-function cf7nl_asset_ver( string $relative ): string {
-	// A page with two forms on it asks for the same handful of files twice over,
-	// and each miss is a stat call. The answer cannot change within a request.
-	static $cache = array();
+	/**
+	 * Cache-busting version for one of our own asset files.
+	 *
+	 * `CF7NL_VERSION` alone is not enough: it does not move while you are working,
+	 * so the browser keeps serving yesterday's JS, and it does not move on a release
+	 * where somebody forgot to bump it either — leaving every existing visitor on
+	 * the old file. The file's own modification time cannot be forgotten.
+	 *
+	 * Lives here, as a plain function, because every class under src/ calls it and
+	 * none of them should have to reach for an object to ask what version a
+	 * stylesheet is.
+	 *
+	 * @param string $relative Path under the plugin folder, e.g. 'assets/js/steps.js'.
+	 * @return string Version string for wp_enqueue_script()/wp_enqueue_style().
+	 */
+	function cf7nl_asset_ver( string $relative ): string {
+		// A page with two forms on it asks for the same handful of files twice over,
+		// and each miss is a stat call. The answer cannot change within a request.
+		static $cache = array();
 
-	if ( isset( $cache[ $relative ] ) ) {
+		if ( isset( $cache[ $relative ] ) ) {
+			return $cache[ $relative ];
+		}
+
+		$path  = CF7NL_PATH . $relative;
+		$mtime = is_readable( $path ) ? filemtime( $path ) : false;
+
+		$cache[ $relative ] = $mtime ? CF7NL_VERSION . '.' . $mtime : CF7NL_VERSION;
+
 		return $cache[ $relative ];
 	}
-
-	$path  = CF7NL_PATH . $relative;
-	$mtime = is_readable( $path ) ? filemtime( $path ) : false;
-
-	$cache[ $relative ] = $mtime ? CF7NL_VERSION . '.' . $mtime : CF7NL_VERSION;
-
-	return $cache[ $relative ];
-}
-
 endif;
 
 function cf7nl_is_cf7_active(): bool {

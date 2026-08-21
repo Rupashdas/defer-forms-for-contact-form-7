@@ -105,8 +105,8 @@ final class Revisions {
 			return;
 		}
 
-		$state = self::current_state( $form_id );
-		$rows  = self::rows( $form_id );
+		$state  = self::current_state( $form_id );
+		$rows   = self::rows( $form_id );
 		$newest = end( $rows );
 
 		if ( is_array( $newest ) && self::same( $newest, $state ) ) {
@@ -114,7 +114,7 @@ final class Revisions {
 		}
 
 		$state['rev']  = self::next_rev( $rows );
-		$state['time'] = (int) current_time( 'timestamp', true );
+		$state['time'] = time();
 
 		add_post_meta( $form_id, self::META, $state, false );
 
@@ -227,9 +227,10 @@ final class Revisions {
 
 	/** Drop the oldest until the form is back within the cap. */
 	private static function prune( int $form_id ): void {
-		$rows = self::rows( $form_id );
+		$rows   = self::rows( $form_id );
+		$excess = count( $rows ) - self::KEEP;
 
-		for ( $i = 0; $i < count( $rows ) - self::KEEP; $i++ ) {
+		for ( $i = 0; $i < $excess; $i++ ) {
 			delete_post_meta( $form_id, self::META, $rows[ $i ] );
 		}
 	}

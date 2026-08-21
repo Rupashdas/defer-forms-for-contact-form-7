@@ -98,6 +98,7 @@ final class Plugin {
 		$this->container->make( 'privacy.gdpr' )->register_hooks();
 		$this->container->make( 'cf7.redirect' )->register_hooks();
 		$this->container->make( 'cf7.revisions' )->register_hooks();
+
 		/*
 		 * The admin side, and only when there is one.
 		 *

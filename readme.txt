@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,8 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.0.4 =
+* Housekeeping only — nothing about the plugin behaves differently. The source now passes the WordPress coding standards with no findings left standing, and two small things in the revision history were rewritten to say plainly what they do.
 = 2.0.3 =
 * The Dashboard is a different screen. It used to be four figures that read 0 on a new site and repeated each other on a young one; it now shows what has actually been arriving — a thirty-day activity chart, this week against the one before it, which forms are getting the entries, and the latest few. A site with nothing yet gets a way in rather than a row of zeroes.
 * Clicking an entry on the Dashboard opens that entry. It used to land on the Submissions list with nothing selected.
