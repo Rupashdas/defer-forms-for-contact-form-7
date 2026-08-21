@@ -26,14 +26,15 @@ CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keepi
 * Redirect after submit, to a page or a URL
 * Extra fields: star rating, country, password, dynamic text, product, quiz, character count
 * Import / export — move forms between sites as one JSON file
+* Revisions — the last ten versions of a form, with one-click rollback
 * Styling controls (colors, typography, spacing)
 * Spam protection (honeypot, time-trap, duplicate check)
 * Privacy: submissions join WordPress's own export and erase tools
 * 20+ ready-made templates
 
-Telegram forwarding, AI generation and revisions are on the roadmap and are
-listed as "Planned" on the plugin's Features screen — this plugin does not
-claim them as shipped.
+Telegram forwarding and AI generation are on the roadmap and are listed as
+"Planned" on the plugin's Features screen — this plugin does not claim them as
+shipped.
 
 CF7 Nova **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
