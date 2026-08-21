@@ -3,7 +3,7 @@
  * Plugin Name:       CF7 Nova Lite
  * Plugin URI:        https://github.com/Rupashdas/cf7-nova-lite
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.0.6
+ * Version:           2.0.7
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
@@ -37,8 +37,8 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CF7NL_VERSION', '2.0.6' );
-define( 'CF7NL_DB_VERSION', '3' );
+define( 'CF7NL_VERSION', '2.0.7' );
+define( 'CF7NL_DB_VERSION', '4' );
 define( 'CF7NL_FILE', __FILE__ );
 define( 'CF7NL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CF7NL_URL', plugin_dir_url( __FILE__ ) );

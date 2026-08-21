@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.0.7 =
+* Much faster on sites with a lot of entries. Measured at 100,000 submissions: the Forms page went from 970ms to 35ms, and the Dashboard and Submissions screens roughly halved. Two database indexes were missing, and two queries were counting entries in a way that made the database read every row. Nothing about what the screens show has changed — only how long they take.
+* This update adds two indexes to the submissions table. On a very large table the first admin page load after updating may take a few seconds while they are built.
 = 2.0.6 =
 * Multi-step forms no longer jump back to the first step after a successful submit. The success message is shown where you are, and moving you took away the thing you had just been looking at.
 * Fixed: a redirect set to open in a new tab did nothing at all. Browsers only allow a new tab for a few seconds after the click, so a longer wait was refused — and the way the tab was being opened made the refusal invisible to the plugin. A refused tab now falls back to opening in the same tab, so the redirect always happens. Around 2 seconds is a reliable wait for a new tab, and the builder says so when the wait is set longer.

@@ -110,7 +110,9 @@ final class Schema {
 			PRIMARY KEY  (id),
 			KEY form_id (form_id),
 			KEY created_at (created_at),
-			KEY read_at (read_at)
+			KEY read_at (read_at),
+			KEY form_created (form_id,created_at),
+			KEY status_created (status,created_at)
 		) {$charset};";
 
 		dbDelta( $sql );
