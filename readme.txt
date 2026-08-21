@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,11 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.0.6 =
+* Multi-step forms no longer jump back to the first step after a successful submit. The success message is shown where you are, and moving you took away the thing you had just been looking at.
+* Fixed: a redirect set to open in a new tab did nothing at all. Browsers only allow a new tab for a few seconds after the click, so a longer wait was refused — and the way the tab was being opened made the refusal invisible to the plugin. A refused tab now falls back to opening in the same tab, so the redirect always happens. Around 2 seconds is a reliable wait for a new tab, and the builder says so when the wait is set longer.
+* Added "Nowhere — stay on the page" to the redirect setting. Turning a redirect off used to mean choosing a destination and leaving its box empty.
+* The Dashboard's spam and unread notices now open Submissions on the matching tab instead of on All.
 = 2.0.5 =
 * Fixed: saving a form could empty it. A save that reached the server without its fields wrote a blank form over the real one and reported success — no error, nothing in the log, and the first sign would have been a form that had stopped appearing. Emptying a form on purpose still saves; a save that lost its fields on the way is now refused.
 * Fixed: headings, paragraphs and dividers lost their alignment, size and style whenever those had never been set — a heading came out with no heading tag at all. Anything built before those settings existed renders properly again.

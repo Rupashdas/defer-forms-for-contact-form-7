@@ -278,21 +278,44 @@
 		} );
 		prev.addEventListener( 'click', function () { show( current - 1, true ); } );
 
-		// An emptied form is a filling-in that is over, so the step remembered for
-		// it belongs to nobody. Leaving it drops the next visitor halfway through
-		// a blank form.
-		//
-		// Both events, because they are not one moment: CF7 empties the form
-		// after a send, but also on load when the page came out of a cache — and
-		// that second one announces no send at all, so it used to leave a visitor
-		// standing on step 4 of a form with nothing in it.
-		function restart() {
+		// CF7 empties the form at two moments that look identical from here and
+		// call for opposite things, so they are told apart by this.
+		var sent = false;
+
+		/**
+		 * A send is over, but the visitor has not gone anywhere.
+		 *
+		 * The success message is printed where they are, so moving them to step
+		 * one puts it above a blank first step and takes away the thing they were
+		 * just looking at. They stay.
+		 *
+		 * The step is still forgotten, which is a different question: that is
+		 * where a RETURNING visitor is put, and this filling-in is finished.
+		 */
+		form.addEventListener( 'wpcf7mailsent', function () {
+			sent = true;
+			forgetStep( form );
+		} );
+
+		/**
+		 * An empty form nobody filled in belongs at the beginning.
+		 *
+		 * This is the other moment: the page came back out of a cache, CF7 empties
+		 * the form, and no send was announced at all. Left alone it strands the
+		 * visitor on step 4 of a form with nothing in it.
+		 *
+		 * The reset after a send reaches here too, a tick later, and is the one
+		 * case that must not move anybody.
+		 */
+		window.cf7nl.onReset( form, function () {
+			if ( sent ) {
+				sent = false;
+				return;
+			}
+
 			show( 0, false, false );
 			forgetStep( form );
-		}
-
-		form.addEventListener( 'wpcf7mailsent', restart );
-		window.cf7nl.onReset( form, restart );
+		} );
 
 		// Submitting from the last step must not fail on a field the visitor
 		// cannot see. Capture phase so this runs before CF7's own handler and can

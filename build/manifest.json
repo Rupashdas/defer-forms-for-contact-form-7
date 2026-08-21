@@ -153,7 +153,7 @@
     ]
   },
   "ui/apps/builder/index.jsx": {
-    "file": "apps/builder/builder.C8KXs3hq.js",
+    "file": "apps/builder/builder.CkIKk2vm.js",
     "name": "builder",
     "src": "ui/apps/builder/index.jsx",
     "isEntry": true,
@@ -173,7 +173,7 @@
     ]
   },
   "ui/apps/dashboard/index.jsx": {
-    "file": "apps/dashboard/dashboard.f-3YJE9-.js",
+    "file": "apps/dashboard/dashboard.BvZ3sHcp.js",
     "name": "dashboard",
     "src": "ui/apps/dashboard/index.jsx",
     "isEntry": true,
@@ -248,7 +248,7 @@
     ]
   },
   "ui/apps/submissions/index.jsx": {
-    "file": "apps/submissions/submissions.CP8YQHO_.js",
+    "file": "apps/submissions/submissions.-ob6se06.js",
     "name": "submissions",
     "src": "ui/apps/submissions/index.jsx",
     "isEntry": true,

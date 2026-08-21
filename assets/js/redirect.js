@@ -97,6 +97,46 @@
 		}
 	}
 
+	/**
+	 * Open the destination in a new tab. Returns false if the browser refused.
+	 *
+	 * This used to pass 'noopener' in the features string and ignore what came
+	 * back. Per the spec that makes the return value null WHETHER OR NOT the tab
+	 * opened, so a refusal was indistinguishable from success and the visitor was
+	 * simply left where they were with nothing said.
+	 *
+	 * And refusals are the normal case here, not the exotic one: opening a tab
+	 * needs transient user activation, which lasts a few seconds from the click
+	 * and is long gone by the time a delay of any length has elapsed. A new tab
+	 * after a wait is a thing browsers do not permit.
+	 *
+	 * So the handle is kept and its opener cleared by hand, which is what
+	 * 'noopener' was there for, and the caller falls back to this tab. Landing on
+	 * the destination in the tab you were already in is not what was asked for,
+	 * but it is much closer than never leaving the form.
+	 */
+	function openTab( url ) {
+		var tab;
+
+		try {
+			tab = window.open( url, '_blank' );
+		} catch ( e ) {
+			return false;
+		}
+
+		if ( ! tab ) {
+			return false;
+		}
+
+		// Nothing on the other page should be able to reach back through
+		// window.opener and drive this one.
+		try {
+			tab.opener = null;
+		} catch ( e ) {}
+
+		return true;
+	}
+
 	document.addEventListener( 'wpcf7mailsent', function ( e ) {
 		var form = e.target;
 		var marker = form ? form.querySelector( '.cf7nl-redirect' ) : null;
@@ -111,9 +151,7 @@
 		}
 
 		var go = function () {
-			if ( 'blank' === marker.dataset.target ) {
-				// Popup blockers only allow this because it follows a user submit.
-				window.open( url, '_blank', 'noopener' );
+			if ( 'blank' === marker.dataset.target && openTab( url ) ) {
 				return;
 			}
 			if ( 'replace' === marker.dataset.method ) {
