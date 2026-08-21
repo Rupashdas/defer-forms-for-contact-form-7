@@ -45,6 +45,16 @@ final class Settings_Repository {
 			'bot_token' => '',
 			'chat_id'   => '',
 		),
+		// One URL each, and the URL carries the channel with it — so unlike
+		// Telegram there is no second field to pair wrongly.
+		'slack'    => array(
+			'enabled'     => false,
+			'webhook_url' => '',
+		),
+		'discord'  => array(
+			'enabled'     => false,
+			'webhook_url' => '',
+		),
 		// Mirrors the --cf7nl-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
@@ -168,6 +178,19 @@ final class Settings_Repository {
 					'chat_id'   => trim( sanitize_text_field( (string) ( $input['chat_id'] ?? '' ) ) ),
 				);
 
+			case 'slack':
+			case 'discord':
+				/*
+				 * esc_url_raw, not sanitize_text_field: this value is posted to
+				 * as a URL, and it is the one setting on this page that the
+				 * server hands straight to an HTTP request. Anything that is not
+				 * a URL comes back empty rather than being sent somewhere.
+				 */
+				return array(
+					'enabled'     => (bool) ( $input['enabled'] ?? false ),
+					'webhook_url' => esc_url_raw( trim( (string) ( $input['webhook_url'] ?? '' ) ) ),
+				);
+
 			case 'design':
 				// Design owns its own colour rules and size limits, and applies them
 				// again on the way out — see CF7\Design::declarations().
@@ -175,6 +198,51 @@ final class Settings_Repository {
 		}
 
 		return array();
+	}
+
+	/**
+	 * Why a section cannot be saved as given, or '' when it can.
+	 *
+	 * Separate from sanitize(), which quietly makes a value safe. Some values
+	 * are safe and still wrong, and the difference matters to whoever typed it:
+	 * a webhook URL that belongs to the other service is a perfectly good URL,
+	 * and silently emptying the field would leave somebody staring at a box that
+	 * refuses to keep what they paste.
+	 *
+	 * The commonest mistake this catches is pasting the Discord webhook into the
+	 * Slack tab. Sent as-is, Slack answers "invalid_payload", which reads as a
+	 * bug in this plugin rather than as a URL in the wrong box.
+	 *
+	 * @param array<string, mixed> $input
+	 */
+	public static function problem( string $section, array $input ): string {
+		$hosts = array(
+			// Slack's incoming webhooks are only ever on this host.
+			'slack'   => array( 'hooks.slack.com' ),
+			// discordapp.com is the old name and still issued in older URLs.
+			'discord' => array( 'discord.com', 'discordapp.com', 'ptb.discord.com', 'canary.discord.com' ),
+		);
+
+		if ( ! isset( $hosts[ $section ] ) ) {
+			return '';
+		}
+
+		$url = trim( (string) ( $input['webhook_url'] ?? '' ) );
+
+		// Empty is how the setting is cleared, and clearing is allowed.
+		if ( '' === $url ) {
+			return '';
+		}
+
+		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+
+		if ( ! in_array( $host, $hosts[ $section ], true ) ) {
+			return 'slack' === $section
+				? __( 'That is not a Slack webhook URL. It should begin https://hooks.slack.com/services/', 'cf7-nova-lite' )
+				: __( 'That is not a Discord webhook URL. It should begin https://discord.com/api/webhooks/', 'cf7-nova-lite' );
+		}
+
+		return '';
 	}
 
 	/**

@@ -51,6 +51,7 @@ function cf7nl_uninstall_site(): void {
 	delete_post_meta_by_key( '_cf7nl_redirect' );
 	delete_post_meta_by_key( '_cf7nl_steps' );
 	delete_post_meta_by_key( '_cf7nl_revision' );
+	delete_post_meta_by_key( '_cf7nl_form_class' );
 
 	// Short-lived markers: duplicate-submission keys and the schema-upgrade lock.
 	// They expire by themselves, but a site uninstalling right after a burst of

@@ -13,7 +13,19 @@
  * fieldset chrome so it reads like a normal field caption. */
 :is( .wpcf7-form, .cf7nl-preview ) .nv-fieldset {
 	min-width: 0;
-	margin: 0;
+	/*
+	 * margin-inline, not the shorthand.
+	 *
+	 * The browser's fieldset chrome is a 2px inline margin and nothing in the
+	 * block direction, so that is all there is to reset here. `margin: 0` also
+	 * cleared the gap under the field — controls.css sets margin-bottom on
+	 * fieldsets for exactly the reason it says there, and this rule comes after
+	 * it at the same specificity, so it won.
+	 *
+	 * Seen as: the checkbox under a radio group sat flush against it while every
+	 * other field had space, on the front end as well as in the preview.
+	 */
+	margin-inline: 0;
 	padding: 0;
 	border: 0;
 }

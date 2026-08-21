@@ -51,6 +51,15 @@ final class Menu {
 			// looking for after making one.
 			'cf7-nova-styling'     => array( 'styling', __( 'Styling', 'cf7-nova-lite' ) ),
 			'cf7-nova-submissions' => array( 'submissions', __( 'Submissions', 'cf7-nova-lite' ) ),
+			// Under Submissions, because that is the order of the work: entries
+			// arrive, then somebody is told about them.
+			//
+			// Its own page rather than three more tabs in Settings, for the same
+			// reason Styling has one. Each destination carries credentials and a
+			// button that goes and tries them, which is a job rather than a
+			// preference — and the routing rules to come need somewhere to live
+			// that is not a seventh tab.
+			'cf7-nova-notifications' => array( 'notifications', __( 'Notifications', 'cf7-nova-lite' ) ),
 			'cf7-nova-templates'   => array( 'templates', __( 'Templates', 'cf7-nova-lite' ) ),
 			'cf7-nova-settings'    => array( 'settings', __( 'Settings', 'cf7-nova-lite' ) ),
 			'cf7-nova-features'    => array( 'features', __( 'Features', 'cf7-nova-lite' ) ),

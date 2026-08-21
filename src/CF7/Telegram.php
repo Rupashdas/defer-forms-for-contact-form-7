@@ -38,11 +38,9 @@ final class Telegram {
 	 * failure goes to the log, where a site owner wondering why their phone is
 	 * quiet can find it.
 	 *
-	 * @param array<string, mixed> $config       The `telegram` settings section.
-	 * @param object|null          $contact_form CF7's form object; typed loosely because CF7 may not be loaded.
-	 * @param array<string, mixed> $data         The submitted fields.
+	 * @param array<string, mixed> $config The `telegram` settings section.
 	 */
-	public static function notify( array $config, int $entry_id, ?object $contact_form, array $data ): void {
+	public static function notify( array $config, Notification $entry ): void {
 		if ( empty( $config['enabled'] ) ) {
 			return;
 		}
@@ -54,11 +52,7 @@ final class Telegram {
 			return;
 		}
 
-		$title = null !== $contact_form && method_exists( $contact_form, 'title' )
-			? (string) $contact_form->title()
-			: '';
-
-		$error = self::send( $token, $chat, self::compose( $title, $entry_id, $data ) );
+		$error = self::send( $token, $chat, self::compose( $entry ) );
 
 		/*
 		 * The only place a failure here can be seen. Nobody is watching this
@@ -154,21 +148,20 @@ final class Telegram {
 	 * Values are printed as the visitor sent them, including the empty ones —
 	 * a question left blank is worth seeing on a form that asked it.
 	 *
-	 * @param array<string, mixed> $data
 	 */
-	private static function compose( string $title, int $entry_id, array $data ): string {
+	private static function compose( Notification $entry ): string {
 		$lines = array(
-			'<b>' . self::escape( '' !== $title ? $title : __( 'New submission', 'cf7-nova-lite' ) ) . '</b>',
-			self::escape( wp_date( 'j M Y, g:i a' ) ?: '' ),
+			'<b>' . self::escape( $entry->title ) . '</b>',
+			self::escape( $entry->when ),
 			'',
 		);
 
-		foreach ( $data as $field => $value ) {
-			$lines[] = '<b>' . self::escape( (string) $field ) . '</b>: ' . self::escape( self::flatten( $value ) );
+		foreach ( $entry->fields as $field => $value ) {
+			$lines[] = '<b>' . self::escape( $field ) . '</b>: ' . self::escape( $value );
 		}
 
 		$lines[] = '';
-		$lines[] = '<a href="' . esc_url( admin_url( 'admin.php?page=cf7-nova-submissions&entry=' . $entry_id ) ) . '">'
+		$lines[] = '<a href="' . esc_url( $entry->link ) . '">'
 			. self::escape( __( 'Open this entry', 'cf7-nova-lite' ) ) . '</a>';
 
 		$message = implode( "\n", $lines );
@@ -182,23 +175,6 @@ final class Telegram {
 		$notice = "\n\n" . self::escape( __( '(truncated)', 'cf7-nova-lite' ) );
 
 		return mb_substr( $message, 0, self::LIMIT - mb_strlen( $notice ) ) . $notice;
-	}
-
-	/**
-	 * One field's value as a line of text.
-	 *
-	 * Checkboxes and multi-selects arrive as arrays; a file field arrives as a
-	 * name. Anything else is cast, because a value that is not a string is not a
-	 * reason to send nothing.
-	 *
-	 * @param mixed $value
-	 */
-	private static function flatten( $value ): string {
-		if ( is_array( $value ) ) {
-			return implode( ', ', array_map( static fn( $one ): string => (string) $one, $value ) );
-		}
-
-		return (string) $value;
 	}
 
 	/**

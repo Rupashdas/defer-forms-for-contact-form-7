@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace CF7NL\REST;
 
+use CF7NL\CF7\Form_Class;
 use CF7NL\CF7\Form_Html;
 use CF7NL\CF7\Form_Tag_Parser;
 use CF7NL\CF7\Redirect;
@@ -276,11 +277,15 @@ final class Forms_Controller extends Controller {
 
 		return new \WP_REST_Response(
 			array(
-				'id'       => $id,
-				'title'    => $form->title(),
-				'fields'   => $fields,
-				'redirect' => Redirect::config( $id ),
-				'steps'    => Steps::config( $id ),
+				'id'        => $id,
+				'title'     => $form->title(),
+				// From CF7, not composed here: it owns the hash format and lets
+				// other plugins filter what comes back.
+				'shortcode' => method_exists( $form, 'shortcode' ) ? (string) $form->shortcode() : '',
+				'fields'    => $fields,
+				'redirect'  => Redirect::config( $id ),
+				'steps'     => Steps::config( $id ),
+				'css_class' => Form_Class::config( $id ),
 			),
 			200
 		);
@@ -387,13 +392,17 @@ final class Forms_Controller extends Controller {
 		// nothing worth storing; both used to be spelled out again here.
 		$redirect = Redirect::save( $id, (array) ( $params['redirect'] ?? array() ) );
 		$steps    = Steps::save( $id, (array) ( $params['steps'] ?? array() ) );
+		$css      = Form_Class::save( $id, (string) ( $params['css_class'] ?? '' ) );
 
 		return new \WP_REST_Response(
 			array(
-				'saved'    => true,
-				'fields'   => Form_Tag_Parser::parse( $markup ),
-				'redirect' => $redirect,
-				'steps'    => $steps,
+				'saved'     => true,
+				'fields'    => Form_Tag_Parser::parse( $markup ),
+				'redirect'  => $redirect,
+				'steps'     => $steps,
+				// Sent back as stored, so the builder shows what was kept rather
+				// than what was typed: a name with a comma in it loses the comma.
+				'css_class' => $css,
 			),
 			200
 		);

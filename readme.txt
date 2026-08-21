@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,17 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.2.0 =
+* New: Slack and Discord. Every submission is posted into a channel as it arrives, alongside Telegram. One webhook URL each, with a button to test it before you switch it on.
+* Notifications moved out of Settings onto a page of their own, under Submissions. Old links to the Settings tabs still work.
+* New: a CSS class per form, under the form’s Settings tab, for the one form that needs to look different from the rest.
+* Fixed: an uploaded file arrived in a notification as a long hash instead of its filename.
+* Fixed: a radio or checkbox group sat flush against the field below it, with no gap, on the front end and in the styling preview.
+* Fixed: focus outlines were black in some places and the browser’s blue in others. Every clickable thing now shows the same ring, and only when reached from the keyboard.
+* Fixed: spam entries appeared among the newest entries on the Dashboard.
+* The Dashboard’s notices can be got rid of: unread offers to mark them all read, and the spam notice can be dismissed until more arrives.
+* The form’s shortcode is now in the builder toolbar, so it can be copied without leaving.
+* The Features page lost its search box, lists Telegram, Slack and Discord as one entry, and now mentions that uploaded files are kept with the entry — which it never did.
 = 2.1.0 =
 * New: Telegram. Every submission is forwarded to a Telegram chat as it arrives — the form name, the time, every field and its value, and a link to open the entry. Set a bot token and a chat ID under Settings → Telegram, and use the test button to check them before switching it on. Spam is never sent.
 * The AI form generator has been dropped rather than built, and no longer appears as planned. The Features screen lists what the plugin does and nothing it does not.

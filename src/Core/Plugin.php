@@ -21,6 +21,7 @@ use CF7NL\CF7\Date_Picker;
 use CF7NL\CF7\Design;
 use CF7NL\CF7\Dynamic_Text;
 use CF7NL\CF7\File_Field;
+use CF7NL\CF7\Form_Class;
 use CF7NL\CF7\Form_Styles;
 use CF7NL\CF7\Grid;
 use CF7NL\CF7\Honeypot;
@@ -97,6 +98,7 @@ final class Plugin {
 		$this->container->make( 'cf7.spamguard' )->register_hooks();
 		$this->container->make( 'privacy.gdpr' )->register_hooks();
 		$this->container->make( 'cf7.redirect' )->register_hooks();
+		$this->container->make( 'cf7.form_class' )->register_hooks();
 		$this->container->make( 'cf7.revisions' )->register_hooks();
 
 		/*
@@ -241,6 +243,11 @@ final class Plugin {
 		$this->container->singleton(
 			'cf7.redirect',
 			static fn() => new Redirect()
+		);
+
+		$this->container->singleton(
+			'cf7.form_class',
+			static fn() => new Form_Class()
 		);
 
 		$this->container->singleton(

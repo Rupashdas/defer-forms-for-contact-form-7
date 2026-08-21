@@ -77,7 +77,10 @@ final class Submission_Listener {
 		$id = $this->repository->insert( (int) $contact_form->id(), $data, $ip, $status );
 
 		if ( $id > 0 ) {
-			$this->keep_attachments( $id, $submission, $data );
+			// Returned, not just stored: keeping the files is also what turns a
+			// file field's value from the hash CF7 uploaded under into the name
+			// the visitor chose, and the notifications below print that value.
+			$data = $this->keep_attachments( $id, $submission, $data );
 		}
 
 		/*
@@ -89,7 +92,17 @@ final class Submission_Listener {
 		 * site has not finished keeping.
 		 */
 		if ( $id > 0 && 'submitted' === $status ) {
-			Telegram::notify( $this->settings->get_section( 'telegram' ), $id, $contact_form, $data );
+			/*
+			 * One description of the entry, three places it can go. Each of them
+			 * marks up text its own way — Telegram parses HTML, Slack and
+			 * Discord each parse their own markdown — so the formatting is
+			 * theirs and only the content is shared.
+			 */
+			$entry = new Notification( $id, $contact_form, $data );
+
+			Telegram::notify( $this->settings->get_section( 'telegram' ), $entry );
+			Slack::notify( $this->settings->get_section( 'slack' ), $entry );
+			Discord::notify( $this->settings->get_section( 'discord' ), $entry );
 		}
 	}
 
@@ -162,22 +175,24 @@ final class Submission_Listener {
 	 *                                         assumed, so nothing here needs the
 	 *                                         concrete CF7 class.
 	 * @param array<string, mixed> $data       The data already written for this row.
+	 * @param array<string, mixed> $data
+	 * @return array<string, mixed> The entry as it now reads, with real filenames.
 	 */
-	private function keep_attachments( int $id, object $submission, array $data ): void {
+	private function keep_attachments( int $id, object $submission, array $data ): array {
 		if ( ! method_exists( $submission, 'uploaded_files' ) ) {
-			return;
+			return $data;
 		}
 
 		$uploaded = (array) $submission->uploaded_files();
 
 		if ( empty( $uploaded ) ) {
-			return;
+			return $data;
 		}
 
 		$kept = Attachments::store( $id, $uploaded );
 
 		if ( empty( $kept ) ) {
-			return;
+			return $data;
 		}
 
 		foreach ( $kept['fields'] as $field => $files ) {
@@ -187,6 +202,8 @@ final class Submission_Listener {
 		$data[ Attachments::DATA_KEY ] = $kept;
 
 		$this->repository->update_data( $id, $data );
+
+		return $data;
 	}
 
 	/**

@@ -45,19 +45,22 @@ final class Registry {
 	public static function definitions(): array {
 		$lite = array(
 			array( 'submissions', __( 'Submissions Database', 'cf7-nova-lite' ), __( 'Store every form entry with search, filtering and export.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'database' ),
+			// Built since before this list was written and never on it: uploads
+			// are kept with the entry, downloadable from it, and removed with it.
+			array( 'attachments', __( 'File Uploads Kept', 'cf7-nova-lite' ), __( 'Uploaded files are stored with the entry and downloadable from it.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'paperclip' ),
 			array( 'builder', __( 'Visual Builder', 'cf7-nova-lite' ), __( 'Drag-and-drop builder for Contact Form 7 fields.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'layout' ),
 			array( 'grid', __( 'Grid Layout', 'cf7-nova-lite' ), __( 'Arrange fields in 1–4 responsive columns.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'grid' ),
 			array( 'multistep', __( 'Multi-Step Forms', 'cf7-nova-lite' ), __( 'Split long forms into steps with a progress bar.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'list-ordered' ),
 			array( 'conditional', __( 'Conditional Logic', 'cf7-nova-lite' ), __( 'Show or hide fields based on what the user selects.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'git-branch' ),
 			array( 'redirect', __( 'Redirect', 'cf7-nova-lite' ), __( 'Send users to a thank-you or external page after submit.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'external-link' ),
 			array( 'templates', __( 'Template Library', 'cf7-nova-lite' ), __( 'Start from 20+ ready-made form templates.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'layout-template' ),
-			array( 'styling', __( 'Styling Controls', 'cf7-nova-lite' ), __( 'Customise colors, typography and spacing without CSS.', 'cf7-nova-lite' ), __( 'Design', 'cf7-nova-lite' ), 'palette' ),
+			array( 'styling', __( 'Styling Controls', 'cf7-nova-lite' ), __( 'Customise colors, typography and spacing without CSS, or give one form a class of your own.', 'cf7-nova-lite' ), __( 'Design', 'cf7-nova-lite' ), 'palette' ),
 			array( 'fields', __( 'Lite Fields', 'cf7-nova-lite' ), __( 'Star rating, country, password, dynamic text and more.', 'cf7-nova-lite' ), __( 'Fields', 'cf7-nova-lite' ), 'text-cursor-input' ),
 			array( 'spam', __( 'Spam Protection', 'cf7-nova-lite' ), __( 'Block bots with a honeypot, time-trap and dedup checks.', 'cf7-nova-lite' ), __( 'Protection', 'cf7-nova-lite' ), 'shield' ),
 			array( 'privacy', __( 'Privacy & GDPR', 'cf7-nova-lite' ), __( 'Data export and erase helpers for compliance.', 'cf7-nova-lite' ), __( 'Protection', 'cf7-nova-lite' ), 'lock' ),
 			array( 'import_export', __( 'Import / Export', 'cf7-nova-lite' ), __( 'Move forms between sites as JSON.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'arrow-down-up' ),
 			array( 'revisions', __( 'Revisions', 'cf7-nova-lite' ), __( 'Keep the last ten versions of a form and roll one back.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'history' ),
-			array( 'telegram', __( 'Telegram', 'cf7-nova-lite' ), __( 'Send every submission to a Telegram chat as it arrives.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'send' ),
+			array( 'notifications', __( 'Chat Notifications', 'cf7-nova-lite' ), __( 'Send every submission to Telegram, Slack or Discord as it arrives.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'send' ),
 		);
 
 		/**
