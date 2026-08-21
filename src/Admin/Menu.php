@@ -93,7 +93,7 @@ final class Menu {
 		// An empty parent, not null: null is the older spelling of the same thing
 		// and WordPress threads it into string parameters, so PHP 8.1 logs a
 		// deprecation for every admin page load.
-		add_submenu_page(
+		$builder = add_submenu_page(
 			'',
 			__( 'Form Builder', 'cf7-nova-lite' ),
 			__( 'Form Builder', 'cf7-nova-lite' ),
@@ -101,6 +101,27 @@ final class Menu {
 			'cf7-nova-builder',
 			fn() => $this->render( 'builder' )
 		);
+
+		/*
+		 * And its own title, which nothing else will supply. An empty parent
+		 * keeps the page out of the menu, and keeps it out of $submenu too, so
+		 * get_admin_page_title() searches the top-level menu, finds nothing, and
+		 * leaves the global null. The browser tab then read " ‹ site — WordPress"
+		 * with no page name in it, and WordPress logged a deprecation for every
+		 * builder load: admin-header.php passes that null to strip_tags().
+		 *
+		 * On `load-`, because admin.php fires it before including the header,
+		 * and the page callback runs after — too late to name the page.
+		 */
+		if ( $builder ) {
+			add_action(
+				'load-' . $builder,
+				static function (): void {
+					// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- this global IS the mechanism: get_admin_page_title() sets it and admin-header.php reads it, and for a page with no parent nothing else will.
+					$GLOBALS['title'] = __( 'Form Builder', 'cf7-nova-lite' );
+				}
+			);
+		}
 	}
 
 	/**

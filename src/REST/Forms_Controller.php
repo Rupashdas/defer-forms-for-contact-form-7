@@ -357,9 +357,22 @@ final class Forms_Controller extends Controller {
 			return self::error( 'forbidden', __( 'You do not have permission to edit this form.', 'cf7-nova-lite' ), 403 );
 		}
 
-		$params = $request->get_json_params();
-		$items  = $params['fields'] ?? array();
-		$markup = Form_Tag_Parser::serialize( is_array( $items ) ? $items : array() );
+		$params = (array) $request->get_json_params();
+
+		/*
+		 * An empty array is a form somebody emptied on purpose, and still saves.
+		 * A `fields` that is missing or is not an array is a caller that did not
+		 * send one, and both used to fall through to the same place: serialise
+		 * nothing, write nothing over the template, answer `saved: true`. A form
+		 * lost every field to a request that never meant to change it, with no
+		 * error and nothing in the log — the first sign being a form that had
+		 * stopped rendering.
+		 */
+		if ( ! isset( $params['fields'] ) || ! is_array( $params['fields'] ) ) {
+			return self::error( 'no_fields', __( 'That save did not carry the form fields, so nothing was written.', 'cf7-nova-lite' ), 400 );
+		}
+
+		$markup = Form_Tag_Parser::serialize( $params['fields'] );
 
 		// `html` items pass through the serializer verbatim — that is what lets an
 		// existing hand-written form survive a round-trip, and what makes this the

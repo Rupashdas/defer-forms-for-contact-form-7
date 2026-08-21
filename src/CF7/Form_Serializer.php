@@ -344,6 +344,27 @@ final class Form_Serializer {
 	}
 
 	/**
+	 * One setting off a fixed list, or the fallback when it is anything else.
+	 *
+	 * Each of these used to be written inline as
+	 *
+	 *     in_array( $item[ $key ] ?? $fallback, $allowed, true ) ? (string) $item[ $key ] : $fallback
+	 *
+	 * where the null coalesce covers the test and not the branch it guards. With
+	 * the key absent the test passes on a default the branch then discards,
+	 * reading the missing key again and casting null — so the fallback never ran
+	 * and the value came out empty. A heading saved without one lost its tag
+	 * name: `< class="nv-h nv-h- nv-align-">`.
+	 *
+	 * @param array<string, mixed> $item
+	 * @param array<int, string>   $allowed
+	 */
+	private static function one_of( array $item, string $key, array $allowed, string $fallback ): string {
+		$value = (string) ( $item[ $key ] ?? '' );
+
+		return in_array( $value, $allowed, true ) ? $value : $fallback;
+	}
+	/**
 	 * A content block (heading/paragraph/divider/spacer) → its HTML, carrying
 	 * nv- classes the front-end styles.
 	 *
@@ -351,20 +372,20 @@ final class Form_Serializer {
 	 */
 	private static function serialize_content( array $item ): string {
 		$type  = (string) ( $item['type'] ?? '' );
-		$align = in_array( $item['align'] ?? 'left', array( 'left', 'center', 'right' ), true ) ? (string) $item['align'] : 'left';
+		$align = self::one_of( $item, 'align', array( 'left', 'center', 'right' ), 'left' );
 		$text  = Form_Markup::escape_text( (string) ( $item['text'] ?? '' ) );
 
 		if ( 'heading' === $type ) {
-			$level = in_array( $item['level'] ?? 'h2', array( 'h2', 'h3', 'h4' ), true ) ? (string) $item['level'] : 'h2';
+			$level = self::one_of( $item, 'level', array( 'h2', 'h3', 'h4' ), 'h2' );
 			return "<{$level} class=\"nv-h nv-h-{$level} nv-align-{$align}\">{$text}</{$level}>";
 		}
 		if ( 'paragraph' === $type ) {
-			$size = in_array( $item['size'] ?? 'md', array( 'sm', 'md', 'lg' ), true ) ? (string) $item['size'] : 'md';
+			$size = self::one_of( $item, 'size', array( 'sm', 'md', 'lg' ), 'md' );
 			return "<p class=\"nv-p nv-p-{$size} nv-align-{$align}\">{$text}</p>";
 		}
 		if ( 'divider' === $type ) {
-			$style     = in_array( $item['style'] ?? 'solid', array( 'solid', 'dashed', 'dotted' ), true ) ? (string) $item['style'] : 'solid';
-			$tier      = in_array( $item['tier'] ?? 'subtle', array( 'subtle', 'normal', 'strong' ), true ) ? (string) $item['tier'] : 'subtle';
+			$style     = self::one_of( $item, 'style', array( 'solid', 'dashed', 'dotted' ), 'solid' );
+			$tier      = self::one_of( $item, 'tier', array( 'subtle', 'normal', 'strong' ), 'subtle' );
 			$thickness = max( 1, min( 6, (int) ( $item['thickness'] ?? 1 ) ) );
 			return "<hr class=\"nv-hr nv-hr-{$style} nv-hr-{$tier}\" style=\"border-top-width:{$thickness}px\" />";
 		}

@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,11 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 == Changelog ==
 
+= 2.0.5 =
+* Fixed: saving a form could empty it. A save that reached the server without its fields wrote a blank form over the real one and reported success — no error, nothing in the log, and the first sign would have been a form that had stopped appearing. Emptying a form on purpose still saves; a save that lost its fields on the way is now refused.
+* Fixed: headings, paragraphs and dividers lost their alignment, size and style whenever those had never been set — a heading came out with no heading tag at all. Anything built before those settings existed renders properly again.
+* Fixed: the form builder had no name in the browser tab, and every visit to it wrote a PHP notice to the debug log.
+* Opening an entry now puts it in the address, so you can link to the one you are reading, reload without losing your place, and use Back to close it.
 = 2.0.4 =
 * Housekeeping only — nothing about the plugin behaves differently. The source now passes the WordPress coding standards with no findings left standing, and two small things in the revision history were rewritten to say plainly what they do.
 = 2.0.3 =
