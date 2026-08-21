@@ -1,0 +1,386 @@
+/**
+ * CF7 Nova — multi-step forms.
+ *
+ * Only the active step is shown; the indicator and the Next/Back controls are
+ * injected by assets/js/steps.js. Everything here draws from the `--cf7nl-*`
+ * tokens in controls.css, so a form re-skinned in the Design settings brings its
+ * steps with it instead of keeping a second, hardcoded palette.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step {
+	display: none;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step.cf7nl-step-active {
+	display: block;
+}
+
+/* ---- step heading ---- */
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-heading {
+	margin-bottom: 1.25em;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-title {
+	margin: 0;
+	font-size: max( 18px, 1.25em );
+	font-weight: 700;
+	line-height: 1.3;
+	color: var( --cf7nl-text, #1b1b22 );
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-desc {
+	margin: 0.35em 0 0;
+	font-size: max( 14px, 0.95em );
+	line-height: 1.5;
+	color: var( --cf7nl-muted, #6f665d );
+}
+
+/**
+ * ---- the indicator ----
+ *
+ * steps.js builds the progress bar and the marker list every time; a class on
+ * the <form> decides which is drawn. Keeping the choice in CSS means switching
+ * style never waits on a cached script, and a screen reader walks the same
+ * markup whatever is on screen.
+ *
+ * Both start hidden and each variant turns one back on, at a higher specificity
+ * so source order cannot decide it. The first version of this set `display:
+ * none` here and then `display: flex` further down at the *same* specificity —
+ * the later rule won, the marker list showed on every variant, and "None"
+ * rendered exactly what "Titles" did.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-indicator {
+	margin-bottom: 1.75em;
+}
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-progress {
+	display: none;
+	height: 4px;
+	background: var( --cf7nl-border, #d9d3c9 );
+	border-radius: 999px;
+	overflow: hidden;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-progress-fill {
+	height: 100%;
+	background: var( --cf7nl-primary, #1b1b22 );
+	border-radius: 999px;
+	transition: width 0.35s cubic-bezier( 0.4, 0, 0.2, 1 );
+}
+
+/*
+ * The marker row.
+ *
+ * The font size is anchored here rather than on the marker, so the marker's
+ * `em` sizes and the connector's `em` offset resolve against the same number.
+ * When they were set separately the line sat off the circle's centre by
+ * whatever the form's base size happened to be.
+ *
+ * --cf7nl-mark is the marker diameter, and the only thing a variant changes to
+ * turn numbers into dots.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-marks {
+	--cf7nl-mark: 2em;
+
+	display: none;
+	list-style: none;
+	align-items: flex-start;
+	margin: 0;
+	padding: 0;
+	font-size: max( 14px, 0.875em );
+}
+
+/*
+ * The row spans the form: the first marker sits on its left edge, the last on
+ * its right edge, and a connector fills every gap in between with nothing left
+ * over at either end.
+ *
+ * Every step but the last takes an equal share of the row and holds its marker
+ * against that share's left edge. The connector is simply the rest of the
+ * share — from this marker's right edge to the share's right edge, which is
+ * exactly where the next marker starts. The last step is only as wide as its
+ * marker, so it lands against the right edge and carries no connector.
+ *
+ * Even spacing, edge-to-edge alignment and connectors that touch both circles
+ * all fall out of that, with nothing measured in JavaScript. The earlier version
+ * centred each marker in its share and drew the connector between two centres,
+ * which left the row inset at both ends and needed a hand-picked gap to keep the
+ * line off the circles.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	display: flex;
+	align-items: flex-start;
+	margin: 0;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark:last-child {
+	flex: 0 0 auto;
+}
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark::before {
+	content: "";
+	position: absolute;
+	top: calc( var( --cf7nl-mark ) / 2 );
+	left: var( --cf7nl-mark );
+	right: 0;
+	height: 2px;
+	margin-top: -1px;
+	background: var( --cf7nl-border, #d9d3c9 );
+	transition: background 0.25s ease;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark:last-child::before {
+	display: none;
+}
+/*
+ * The connector now belongs to the step it leaves, not the one it arrives at,
+ * so it fills once that step is behind you. The segment leaving the step you are
+ * on stays empty — you have not walked it yet.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-done::before {
+	background: var( --cf7nl-primary, #1b1b22 );
+}
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-num {
+	position: relative;
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: var( --cf7nl-mark );
+	height: var( --cf7nl-mark );
+	box-sizing: border-box;
+	border-radius: 999px;
+	background: var( --cf7nl-surface-alt, #faf9f7 );
+	box-shadow: inset 0 0 0 2px var( --cf7nl-border, #d9d3c9 );
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	color: var( --cf7nl-muted, #6f665d );
+	transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-done .cf7nl-steps-mark-num,
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-current .cf7nl-steps-mark-num {
+	background: var( --cf7nl-primary, #1b1b22 );
+	box-shadow: inset 0 0 0 2px var( --cf7nl-primary, #1b1b22 );
+	color: var( --cf7nl-primary-contrast, #fff );
+}
+/* The step you are on is the one to find at a glance. */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-current .cf7nl-steps-mark-num {
+	box-shadow:
+		inset 0 0 0 2px var( --cf7nl-primary, #1b1b22 ),
+		0 0 0 4px var( --cf7nl-ring-color, rgba( 27, 27, 34, 0.12 ) );
+}
+
+/*
+ * Taken out of flow on purpose. In flow it is the widest thing in its step, so
+ * the last step — the one sized to its content — would be as wide as its title
+ * and the even spacing every other step depends on would collapse. Out of flow
+ * the marker is the only thing that sets a step's width.
+ */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-label {
+	position: absolute;
+	top: calc( var( --cf7nl-mark ) + 0.55em );
+	left: 0;
+	width: max-content;
+	max-width: 10em;
+	/* The row is already max( 14px, 0.875em ); 0.9em of that floor is 12.6px. */
+	font-size: max( 14px, 0.9em );
+	line-height: 1.35;
+	color: var( --cf7nl-muted, #6f665d );
+	overflow-wrap: break-word;
+	hyphens: auto;
+}
+/* The last title would run off the right edge if it started there. */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark:last-child .cf7nl-steps-mark-label {
+	left: auto;
+	right: 0;
+	text-align: right;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-current .cf7nl-steps-mark-label {
+	font-weight: 600;
+	color: var( --cf7nl-text, #1b1b22 );
+}
+
+/* Kept for a screen reader when the eye does not need it. */
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-label-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset( 50% );
+	white-space: nowrap;
+}
+
+/* ---- the variants ----
+ * The only place `display` is set on the two indicators. The bar is written as
+ * "not one of the others" so a form whose class never arrived still shows
+ * something rather than nothing.
+ */
+:is( .wpcf7-form, .cf7nl-preview ):not( [class*="cf7nl-steps-" ] ) .cf7nl-steps-progress,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-bar .cf7nl-steps-progress {
+	display: block;
+}
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-marks,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-numbers .cf7nl-steps-marks,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-steps-marks {
+	display: flex;
+}
+/* The titles hang below the markers, out of flow, so the row is told to leave
+   room for them. Two lines at the label's line-height, plus its own offset. */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-steps-marks {
+	padding-bottom: 3.2em;
+}
+
+/*
+ * Dots are the same markers, smaller, with the digit hidden.
+ *
+ * `color: transparent`, not `font-size: 0`: the marker is sized in `em`, so
+ * zeroing the font size collapsed it to 0×0 and the dots variant drew nothing
+ * at all. The digit still reaches a screen reader either way.
+ */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-marks {
+	--cf7nl-mark: 0.85em;
+}
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-mark-num {
+	box-shadow: inset 0 0 0 1px var( --cf7nl-border, #d9d3c9 );
+	color: transparent;
+	overflow: hidden;
+}
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-mark-done .cf7nl-steps-mark-num,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-mark-current .cf7nl-steps-mark-num {
+	box-shadow: inset 0 0 0 1px var( --cf7nl-primary, #1b1b22 );
+}
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-mark-current .cf7nl-steps-mark-num {
+	box-shadow:
+		inset 0 0 0 1px var( --cf7nl-primary, #1b1b22 ),
+		0 0 0 3px var( --cf7nl-ring-color, rgba( 27, 27, 34, 0.12 ) );
+}
+
+/* Only "titles" shows the labels; the others keep them for assistive tech. */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-dots .cf7nl-steps-mark-label,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-numbers .cf7nl-steps-mark-label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset( 50% );
+	white-space: nowrap;
+}
+
+/* "None" hides the whole block, margin included — an empty 28px gap above the
+   first field is exactly what a site owner picking None is trying to remove. */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-none .cf7nl-steps-indicator {
+	display: none;
+}
+
+/*
+ * The nav already says "Step 2 of 4". When the indicator says it too that is
+ * the same sentence twice, so it stays for the variants that are purely
+ * graphical and goes for the ones that are not — still spoken either way.
+ */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-numbers .cf7nl-step-status,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-step-status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset( 50% );
+	white-space: nowrap;
+}
+
+/*
+ * Narrow screens.
+ *
+ * Four titles across a phone is four columns of about 65px, and every title
+ * longer than a word breaks up the middle. A label cannot be widened out of its
+ * own column either — it is positioned against the marker, which has to stay
+ * the connector's reference.
+ *
+ * So on a phone this variant shows its numbers and drops the labels. Nothing is
+ * lost: the title of the step you are on is already on screen, set large, in
+ * the step heading directly below. The nav's "Step 2 of 4" comes back with them
+ * to keep the position readable.
+ */
+@media ( max-width: 600px ) {
+	:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-steps-mark-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset( 50% );
+		white-space: nowrap;
+	}
+	:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-step-status {
+		position: static;
+		width: auto;
+		height: auto;
+		clip-path: none;
+	}
+	:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-steps-nav {
+		justify-content: flex-start;
+	}
+}
+
+/* ---- navigation ---- */
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-nav {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+	margin-top: 1.75em;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-status {
+	flex: 1;
+	text-align: center;
+	font-size: max( 14px, 0.9em );
+	font-weight: 600;
+	color: var( --cf7nl-muted, #6f665d );
+}
+/* The status is what separates Back from Next. Hidden, its flex space goes with
+   it, so the spacer takes over and the buttons stay at the two ends. */
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-numbers .cf7nl-steps-nav,
+:is( .wpcf7-form, .cf7nl-preview ).cf7nl-steps-titles .cf7nl-steps-nav {
+	justify-content: space-between;
+}
+
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-btn {
+	cursor: pointer;
+	border: 0;
+	border-radius: var( --cf7nl-radius, 8px );
+	padding: 0.7em 1.5em;
+	font-family: inherit;
+	font-size: max( 14px, 0.95em );
+	font-weight: 600;
+	line-height: 1.2;
+	transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-btn:focus-visible {
+	outline: 2px solid var( --cf7nl-primary, #1b1b22 );
+	outline-offset: 2px;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-next {
+	background: var( --cf7nl-btn-bg, #1b1b22 );
+	color: var( --cf7nl-btn-text, #fff );
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-next:hover {
+	opacity: 0.88;
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-prev {
+	background: transparent;
+	border: 1px solid var( --cf7nl-border, #d9d3c9 );
+	color: var( --cf7nl-text, #1b1b22 );
+}
+:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-prev:hover {
+	border-color: var( --cf7nl-border-hover, #b9b1a3 );
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-progress-fill,
+	:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark::before,
+	:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-steps-mark-num,
+	:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-step-btn {
+		transition: none;
+	}
+}
