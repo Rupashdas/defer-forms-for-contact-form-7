@@ -99,6 +99,25 @@ final class Schema {
 		$table   = self::table();
 		$charset = $wpdb->get_charset_collate();
 
+		/*
+		 * `stage` is how far you have got with an entry, which is not what the
+		 * entry is. `status` says submitted or spam — a fact about the message.
+		 * `stage` says new, replied or done — a fact about you. An entry can be
+		 * submitted AND done; spam is never either, which is why one column
+		 * could not carry both.
+		 *
+		 * Empty rather than 'new', so an entry nobody has touched says so at no
+		 * cost and every row that already existed is correct without being
+		 * rewritten.
+		 *
+		 * Its index pairs with created_at because that is how the list asks:
+		 * these ones, newest first. Added with the column, since an index added
+		 * later is a second migration.
+		 *
+		 * Nothing in here may carry a comment. dbDelta reads this statement line
+		 * by line to work out what the table should look like, and MySQL does not
+		 * take // at all.
+		 */
 		$sql = "CREATE TABLE {$table} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 			form_id bigint(20) unsigned NOT NULL,
@@ -107,12 +126,14 @@ final class Schema {
 			ip varchar(45) DEFAULT NULL,
 			created_at datetime NOT NULL,
 			read_at datetime DEFAULT NULL,
+			stage varchar(20) NOT NULL DEFAULT '',
 			PRIMARY KEY  (id),
 			KEY form_id (form_id),
 			KEY created_at (created_at),
 			KEY read_at (read_at),
 			KEY form_created (form_id,created_at),
-			KEY status_created (status,created_at)
+			KEY status_created (status,created_at),
+			KEY stage_created (stage,created_at)
 		) {$charset};";
 
 		dbDelta( $sql );

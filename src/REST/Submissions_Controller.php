@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace CF7NL\REST;
 
+use CF7NL\CF7\Reply;
 use CF7NL\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
@@ -83,6 +84,13 @@ final class Submissions_Controller extends Controller {
 						// '' is "any status", which is why it is in the list.
 						'enum'    => array_merge( array( '' ), Submissions_Repository::STATUSES ),
 					),
+					'stage'     => array(
+						'type'    => 'string',
+						'default' => '',
+						// Same again — and note 'new' is a stage of its own here,
+						// stored as empty but asked for by name.
+						'enum'    => array_merge( array( '' ), Submissions_Repository::STAGES ),
+					),
 					'form_id'   => array(
 						'type'    => 'integer',
 						'default' => 0,
@@ -142,6 +150,29 @@ final class Submissions_Controller extends Controller {
 
 		register_rest_route(
 			self::NAMESPACE,
+			'/submissions/stage',
+			array(
+				'methods'             => 'POST',
+				'permission_callback' => self::can_manage(),
+				'callback'            => array( $this, 'rest_set_stage' ),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/submissions/(?P<id>\d+)/reply',
+			array(
+				'methods'             => 'POST',
+				'permission_callback' => self::can_manage(),
+				'callback'            => array( $this, 'rest_reply' ),
+				'args'                => array(
+					'id' => array( 'type' => 'integer' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
 			'/stats',
 			array(
 				'methods'             => 'GET',
@@ -179,13 +210,105 @@ final class Submissions_Controller extends Controller {
 		);
 	}
 
+	/**
+	 * Move entries to a stage.
+	 *
+	 * Named ids only, and `stage` has to be one the repository knows — a typo
+	 * that stored "don" would leave rows in a state no filter can find and no
+	 * screen can show.
+	 */
+	public function rest_set_stage( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
+		$params = (array) $request->get_json_params();
+		$ids    = array_values( array_filter( array_map( 'intval', (array) ( $params['ids'] ?? array() ) ) ) );
+		$stage  = (string) ( $params['stage'] ?? '' );
+
+		if ( empty( $ids ) ) {
+			return self::error( 'nothing_to_move', __( 'No entries were named.', 'cf7-nova-lite' ), 400 );
+		}
+
+		if ( ! in_array( $stage, Submissions_Repository::STAGES, true ) ) {
+			return self::error( 'unknown_stage', __( 'There is no such stage.', 'cf7-nova-lite' ), 400 );
+		}
+
+		$repo = $this->container->make( 'submissions.repository' );
+
+		return new \WP_REST_Response(
+			array(
+				'moved' => $repo->set_stage( $ids, $stage ),
+				'stage' => $stage,
+			),
+			200
+		);
+	}
+
+	/**
+	 * Answer one entry, at the address it came from.
+	 *
+	 * The address is not taken from the request. Whoever is replying sees it on
+	 * screen and it is found again here from the stored entry, so a reply can
+	 * only ever go to the person who wrote in — this route cannot be asked to
+	 * send mail to an address of somebody's choosing.
+	 *
+	 * A sent reply moves the entry to 'replied' unless it is already 'done',
+	 * which is a further-along answer and should not be walked back.
+	 */
+	public function rest_reply( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
+		$id     = (int) $request->get_param( 'id' );
+		$params = (array) $request->get_json_params();
+
+		$repo  = $this->container->make( 'submissions.repository' );
+		$entry = $repo->find( $id );
+
+		if ( ! $entry ) {
+			return self::error( 'not_found', __( 'That entry no longer exists.', 'cf7-nova-lite' ), 404 );
+		}
+
+		$data  = json_decode( (string) ( $entry['data'] ?? '' ), true );
+		$error = Reply::send(
+			is_array( $data ) ? $data : array(),
+			(string) ( $params['subject'] ?? '' ),
+			(string) ( $params['message'] ?? '' )
+		);
+
+		if ( '' !== $error ) {
+			return self::error( 'reply_failed', $error, 400 );
+		}
+
+		if ( 'done' !== ( $entry['stage'] ?? '' ) ) {
+			$repo->set_stage( array( $id ), 'replied' );
+		}
+
+		return new \WP_REST_Response( array( 'sent' => true ), 200 );
+	}
+
 	public function rest_list_submissions( \WP_REST_Request $request ): \WP_REST_Response {
 		$repo = $this->container->make( 'submissions.repository' );
 		$args = $this->collect_list_args( $request );
 
+		$items = $repo->list( $args );
+
+		/*
+		 * Who each entry can be answered at, worked out here rather than in the
+		 * browser.
+		 *
+		 * The screen shows the address and the reply route sends to it. If the
+		 * two found it separately they could disagree, and a reply going
+		 * somewhere other than the address on screen is the worst way for that to
+		 * show up. One rule, in Reply, used by both.
+		 *
+		 * '' means the form asked for no address at all, and the screen says so
+		 * rather than offering a box that could not send anything.
+		 */
+		foreach ( $items as &$item ) {
+			$data = json_decode( (string) ( $item['data'] ?? '' ), true );
+
+			$item['reply_to'] = Reply::address_in( is_array( $data ) ? $data : array() );
+		}
+		unset( $item );
+
 		return new \WP_REST_Response(
 			array(
-				'items' => $repo->list( $args ),
+				'items' => $items,
 				'total' => $repo->count( $args ),
 			),
 			200
@@ -265,6 +388,7 @@ final class Submissions_Controller extends Controller {
 			'page'      => (int) $request->get_param( 'page' ),
 			'search'    => (string) $request->get_param( 'search' ),
 			'status'    => (string) $request->get_param( 'status' ),
+			'stage'     => (string) $request->get_param( 'stage' ),
 			'form_id'   => (int) $request->get_param( 'form_id' ),
 			'date_from' => (string) $request->get_param( 'date_from' ),
 			'date_to'   => (string) $request->get_param( 'date_to' ),

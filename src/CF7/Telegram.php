@@ -147,7 +147,6 @@ final class Telegram {
 	 *
 	 * Values are printed as the visitor sent them, including the empty ones —
 	 * a question left blank is worth seeing on a form that asked it.
-	 *
 	 */
 	private static function compose( Notification $entry ): string {
 		$lines = array(

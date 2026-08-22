@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,12 @@ No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
 No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
 
 == Changelog ==
+
+= 2.3.0 =
+* New: mark an entry Replied or Done, so the list stops being a log and starts being an inbox. Press the same button again to take it back off, and filter the list by it.
+* New: answer an enquiry from the entry itself, without copying the address into a mail client. Forms that never asked for an email address say so instead of offering a box that could not send.
+* The entry panel was rearranged. It is wider, the answers are laid out in two columns, and the reply box waits until you ask for it — it was taking up more room than the entry it was about.
+* Fixed: on a quiz field the required star appeared under the box instead of beside the question.
 
 = 2.2.0 =
 * New: Slack and Discord. Every submission is posted into a channel as it arrives, alongside Telegram. One webhook URL each, with a button to test it before you switch it on.

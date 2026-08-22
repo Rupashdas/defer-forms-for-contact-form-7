@@ -44,13 +44,13 @@ final class Menu {
 	 */
 	private static function pages(): array {
 		return array(
-			self::SLUG             => array( 'dashboard', __( 'Dashboard', 'cf7-nova-lite' ) ),
-			'cf7-nova-forms'       => array( 'forms', __( 'Forms', 'cf7-nova-lite' ) ),
+			self::SLUG               => array( 'dashboard', __( 'Dashboard', 'cf7-nova-lite' ) ),
+			'cf7-nova-forms'         => array( 'forms', __( 'Forms', 'cf7-nova-lite' ) ),
 			// Straight after Forms, not buried in Settings: this is the look of
 			// every form on the site, and it is the first thing anyone goes
 			// looking for after making one.
-			'cf7-nova-styling'     => array( 'styling', __( 'Styling', 'cf7-nova-lite' ) ),
-			'cf7-nova-submissions' => array( 'submissions', __( 'Submissions', 'cf7-nova-lite' ) ),
+			'cf7-nova-styling'       => array( 'styling', __( 'Styling', 'cf7-nova-lite' ) ),
+			'cf7-nova-submissions'   => array( 'submissions', __( 'Submissions', 'cf7-nova-lite' ) ),
 			// Under Submissions, because that is the order of the work: entries
 			// arrive, then somebody is told about them.
 			//
@@ -60,9 +60,9 @@ final class Menu {
 			// preference — and the routing rules to come need somewhere to live
 			// that is not a seventh tab.
 			'cf7-nova-notifications' => array( 'notifications', __( 'Notifications', 'cf7-nova-lite' ) ),
-			'cf7-nova-templates'   => array( 'templates', __( 'Templates', 'cf7-nova-lite' ) ),
-			'cf7-nova-settings'    => array( 'settings', __( 'Settings', 'cf7-nova-lite' ) ),
-			'cf7-nova-features'    => array( 'features', __( 'Features', 'cf7-nova-lite' ) ),
+			'cf7-nova-templates'     => array( 'templates', __( 'Templates', 'cf7-nova-lite' ) ),
+			'cf7-nova-settings'      => array( 'settings', __( 'Settings', 'cf7-nova-lite' ) ),
+			'cf7-nova-features'      => array( 'features', __( 'Features', 'cf7-nova-lite' ) ),
 		);
 	}
 

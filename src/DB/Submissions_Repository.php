@@ -46,6 +46,19 @@ final class Submissions_Repository {
 	public const STATUSES = array( 'submitted', 'spam' );
 
 	/**
+	 * How far somebody has got with an entry, which is not what the entry is.
+	 *
+	 * STATUSES says submitted or spam — a fact about the message. This says new,
+	 * replied or done — a fact about the person reading it. An entry is both at
+	 * once, which is why they are two columns.
+	 *
+	 * 'new' is what '' is called on the way in and out. Stored empty, because an
+	 * entry nobody has touched should not have to say so, and because it makes
+	 * every row that existed before this column correct without rewriting one.
+	 */
+	public const STAGES = array( 'new', 'replied', 'done' );
+
+	/**
 	 * Insert a new submission row.
 	 *
 	 * @param int                  $form_id CF7 form ID.
@@ -98,7 +111,7 @@ final class Submissions_Repository {
 		$params[] = $per_page;
 		$params[] = $offset;
 
-		$sql = "SELECT id, form_id, status, data, ip, created_at, read_at
+		$sql = "SELECT id, form_id, status, data, ip, created_at, read_at, stage
 				FROM {$this->table}
 				WHERE {$where}
 				ORDER BY {$column} {$order}
@@ -153,6 +166,17 @@ final class Submissions_Repository {
 		if ( in_array( $status, self::STATUSES, true ) ) {
 			$where   .= ' AND status = %s';
 			$params[] = $status;
+		}
+
+		$stage = (string) ( $args['stage'] ?? '' );
+		if ( in_array( $stage, self::STAGES, true ) ) {
+			/*
+			 * '' is a real value here — it means nobody has touched this one —
+			 * so the filter cannot use "empty means no filter" the way the
+			 * others do. 'new' is the word for it on the way in.
+			 */
+			$where   .= ' AND stage = %s';
+			$params[] = 'new' === $stage ? '' : $stage;
 		}
 
 		$form_id = (int) ( $args['form_id'] ?? 0 );
@@ -533,12 +557,10 @@ final class Submissions_Repository {
 			return array();
 		}
 
-		$counts = $wpdb->get_results(
-			"SELECT form_id, COUNT(*) AS submission_count, MAX( created_at ) AS last_at
-			FROM {$this->table}
-			GROUP BY form_id",
-			ARRAY_A
-		); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+		// phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+		$sql = "SELECT form_id, COUNT(*) AS submission_count, MAX( created_at ) AS last_at FROM {$this->table} GROUP BY form_id";
+
+		$counts = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
 
 		$totals = array();
 
@@ -721,6 +743,57 @@ final class Submissions_Repository {
 		);
 
 		return false === $done ? 0 : (int) $done;
+	}
+
+	/**
+	 * One entry, by id, or null.
+	 *
+	 * The list route has never needed this — it returns whole rows, and the
+	 * screen reads the one it wants out of what it already has. Replying does:
+	 * the address has to come from the stored entry rather than from the
+	 * request, so that a reply can only go to the person who wrote in.
+	 *
+	 * @return array<string, mixed>|null
+	 */
+	public function find( int $id ): ?array {
+		global $wpdb;
+
+		$row = $wpdb->get_row(
+			$wpdb->prepare( "SELECT id, form_id, status, data, created_at, read_at, stage FROM {$this->table} WHERE id = %d", $id ), // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+			ARRAY_A
+		);
+
+		return is_array( $row ) ? $row : null;
+	}
+
+	/**
+	 * Move entries to a stage, or back to new.
+	 *
+	 * Ids rather than "all", unlike mark_read: marking everything read is a
+	 * thing people mean, and marking everything done is a thing nobody means by
+	 * accident but would be very sorry to have done.
+	 *
+	 * @param array<int, int> $ids
+	 * @return int How many rows changed.
+	 */
+	public function set_stage( array $ids, string $stage ): int {
+		global $wpdb;
+
+		$ids = array_values( array_filter( array_map( 'intval', $ids ) ) );
+
+		if ( empty( $ids ) || ! in_array( $stage, self::STAGES, true ) ) {
+			return 0;
+		}
+
+		$slots = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+		$value = 'new' === $stage ? '' : $stage;
+
+		return (int) $wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$this->table} SET stage = %s WHERE id IN ( {$slots} )", // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
+				array_merge( array( $value ), $ids )
+			)
+		);
 	}
 
 	/**

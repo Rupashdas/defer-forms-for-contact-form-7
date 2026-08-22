@@ -1,4 +1,4 @@
-import{c as b,o as n,S as c,y as p,H as y,l as t,n as W,p as m,q as G,r as x,P as Q,F as V,B as X,v as Y,X as Z}from"../../chunks/admin.Bch7nIR1.js";import{C as J,S as K,s as nn}from"../../chunks/submission-fields.-E3QytYs.js";import{P as en}from"../../chunks/palette.DxBcTAib.js";import{S as tn}from"../../chunks/settings.2t9q0OoL.js";import{I as F}from"../../chunks/inbox.DMDeDlx-.js";import{L as an}from"../../chunks/layout-template.C1hyxt0p.js";import{M as sn}from"../../chunks/minus.DpNCmzCg.js";/**
+import{c as b,o as n,S as c,y as p,H as y,l as t,n as W,p as m,q as G,r as x,P as Q,F as V,B as X,v as Y,X as Z}from"../../chunks/admin.6-cHM2mQ.js";import{C as J,S as K,s as nn}from"../../chunks/submission-fields.YBocV5qW.js";import{P as en}from"../../chunks/palette.GsJAEnKW.js";import{S as tn}from"../../chunks/settings.DThT-QdS.js";import{I as F}from"../../chunks/inbox.C0vC_Vrx.js";import{L as an}from"../../chunks/layout-template.JYXTa5WL.js";import{M as sn}from"../../chunks/minus.CnXeZkKj.js";/**
  * @license lucide-react v1.17.0 - ISC
  *
  * This source code is licensed under the ISC license.

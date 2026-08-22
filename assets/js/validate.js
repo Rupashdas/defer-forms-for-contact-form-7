@@ -190,7 +190,24 @@
 		// An acceptance box puts its own text in a span beside the checkbox; the
 		// outer label is the one carrying the wording.
 		var inner = control.closest( '.wpcf7-list-item-label' );
-		return inner || control.closest( 'label' );
+		if ( inner ) {
+			return inner;
+		}
+
+		var label = control.closest( 'label' );
+
+		/*
+		 * A quiz keeps its question in a span of its own, and the label wraps the
+		 * question AND the box. Returning the label put the star after the last
+		 * thing in it, which is the box — so the mark sat under the field instead
+		 * of beside the question it belongs to.
+		 *
+		 * Every other field type has its wording last inside the label, or in a
+		 * legend, which is why this was the only one that showed it.
+		 */
+		var quiz = label ? label.querySelector( '.wpcf7-quiz-label' ) : null;
+
+		return quiz || label;
 	}
 
 	/**
