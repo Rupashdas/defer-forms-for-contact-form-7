@@ -47,16 +47,19 @@ searchable select and a drag-and-drop file upload with previews.
 
 - Submissions database with search, filtering and CSV export
 - Uploaded files are kept — Contact Form 7 discards them after mailing
+- Mark an entry replied or done, and answer it from the entry itself
+- Telegram, Slack and Discord — every submission posted into a chat or channel as it arrives
 - Redirect after submit, to a page or a URL
 - Privacy: submissions answer WordPress's own export and erase requests
 
 **Everything else**
 
-- Styling controls for colours, typography and spacing, with no CSS to write
+- Styling controls for colours, typography and spacing, with no CSS to write, and a CSS class of your own for the one form that needs it
 - Spam protection: honeypot, time-trap and a duplicate check
 
-Telegram forwarding and AI generation are planned, not built. The plugin's own **Features** screen
-marks them as such rather than implying they are there.
+The plugin's own **Features** screen lists what is here and what is not. Nothing is listed there as
+coming: Telegram was the last thing waiting on that list and it shipped, and the AI generator was
+dropped rather than built.
 
 ## Support
 

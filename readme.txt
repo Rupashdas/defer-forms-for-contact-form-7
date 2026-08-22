@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keepi
 * Visual drag-and-drop builder (React + dnd-kit)
 * Unlimited multi-step forms with progress bar
 * Submissions database with search, filter, and CSV export
+* Mark an entry replied or done, and answer it from the entry itself
 * Attachment storage — Contact Form 7 discards uploads; these are kept
 * Visual conditional logic (AND/OR rule builder)
 * Grid layout (1–4 columns, responsive)
@@ -27,11 +28,11 @@ CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keepi
 * Extra fields: star rating, country, password, dynamic text, product, quiz, character count
 * Import / export — move forms between sites as one JSON file
 * Revisions — the last ten versions of a form, with one-click rollback
-* Styling controls (colors, typography, spacing)
+* Styling controls (colors, typography, spacing), plus a CSS class of your own per form
 * Spam protection (honeypot, time-trap, duplicate check)
 * Privacy: submissions join WordPress's own export and erase tools
 * 20+ ready-made templates
-* Telegram: every submission forwarded to a chat as it arrives
+* Telegram, Slack and Discord: every submission posted into a chat or channel as it arrives
 
 The Features screen lists everything this plugin does, and nothing it does not.
 
@@ -53,6 +54,11 @@ No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
 No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
 
 == Changelog ==
+
+= 2.3.1 =
+* The Features screen lists marking and answering an entry, which shipped in 2.3.0 without being added to it.
+* Fixed: File Uploads Kept drew a generic icon instead of its own.
+* The plugin description was out of date — it still described Telegram alone, with no mention of Slack, Discord, or answering an entry.
 
 = 2.3.0 =
 * New: mark an entry Replied or Done, so the list stops being a log and starts being an inbox. Press the same button again to take it back off, and filter the list by it.

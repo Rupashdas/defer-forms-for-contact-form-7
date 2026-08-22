@@ -48,6 +48,10 @@ final class Registry {
 			// Built since before this list was written and never on it: uploads
 			// are kept with the entry, downloadable from it, and removed with it.
 			array( 'attachments', __( 'File Uploads Kept', 'cf7-nova-lite' ), __( 'Uploaded files are stored with the entry and downloadable from it.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'paperclip' ),
+			// Added with 2.3.0. The list is what the page draws, so a feature
+			// that ships without an entry here simply does not exist to anyone
+			// reading that screen.
+			array( 'entry_workflow', __( 'Entry Workflow', 'cf7-nova-lite' ), __( 'Mark an entry replied or done, and answer it without leaving the screen.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'reply' ),
 			array( 'builder', __( 'Visual Builder', 'cf7-nova-lite' ), __( 'Drag-and-drop builder for Contact Form 7 fields.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'layout' ),
 			array( 'grid', __( 'Grid Layout', 'cf7-nova-lite' ), __( 'Arrange fields in 1–4 responsive columns.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'grid' ),
 			array( 'multistep', __( 'Multi-Step Forms', 'cf7-nova-lite' ), __( 'Split long forms into steps with a progress bar.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'list-ordered' ),
