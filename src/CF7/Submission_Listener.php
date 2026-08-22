@@ -57,7 +57,22 @@ final class Submission_Listener {
 			return;
 		}
 
-		if ( 'spam' === $status && ! $this->should_store_spam() ) {
+		$store = 'spam' !== $status || $this->should_store_spam();
+
+		/**
+		 * Whether this submission is stored at all.
+		 *
+		 * The setting decides first and this has the last word, so a site can
+		 * keep a form out of the table entirely -- one that asks for something
+		 * there is no reason to hold on to, or one whose entries are kept
+		 * somewhere else already. The mail still goes: this is about the row,
+		 * not the form.
+		 *
+		 * @param bool               $store        Whether to store it.
+		 * @param \WPCF7_ContactForm $contact_form The form it was posted to.
+		 * @param string             $status       Either 'submitted' or 'spam'.
+		 */
+		if ( ! apply_filters( 'cf7nl_store_submission', $store, $contact_form, $status ) ) {
 			return;
 		}
 
@@ -73,6 +88,25 @@ final class Submission_Listener {
 
 		$data = self::without_our_own_fields( (array) $submission->get_posted_data() );
 		$data = self::without_unstorable( $data, $contact_form );
+
+		/**
+		 * The entry as it will be stored.
+		 *
+		 * Runs before the row is written, so what is dropped here is never in
+		 * the table -- a field that has to reach somebody by mail but has no
+		 * business being kept for years. What is added here is treated as an
+		 * answer everywhere afterwards: the entry panel, the CSV, the chat
+		 * notifications and the reply all read this one array.
+		 *
+		 * Keys beginning with an underscore are the plugin's own bookkeeping
+		 * and are skipped by the things that display an entry, so a key added
+		 * here should not start with one.
+		 *
+		 * @param array<string, mixed> $data         The submitted fields.
+		 * @param \WPCF7_ContactForm   $contact_form The form it was posted to.
+		 * @param string               $status       Either 'submitted' or 'spam'.
+		 */
+		$data = (array) apply_filters( 'cf7nl_submission_data', $data, $contact_form, $status );
 
 		$id = $this->repository->insert( (int) $contact_form->id(), $data, $ip, $status );
 
@@ -103,6 +137,46 @@ final class Submission_Listener {
 			Telegram::notify( $this->settings->get_section( 'telegram' ), $entry );
 			Slack::notify( $this->settings->get_section( 'slack' ), $entry );
 			Discord::notify( $this->settings->get_section( 'discord' ), $entry );
+
+			/**
+			 * A fourth place to announce an entry.
+			 *
+			 * The three above are the ones with a screen to configure them. This
+			 * is for anywhere else -- Teams, Mattermost, a pager, an endpoint of
+			 * your own -- which means the address it sends to lives in code
+			 * rather than in Settings.
+			 *
+			 * Submitted entries only, like the three above it. Spam is stored so
+			 * a misfiring check can be undone, not so a bot can make somebody's
+			 * pocket buzz.
+			 *
+			 * @param Notification $entry The entry, already described.
+			 */
+			do_action( 'cf7nl_notify', $entry );
+		}
+
+		/**
+		 * Fires once an entry is stored and complete.
+		 *
+		 * Last, and after the notifications, for two reasons. The file field
+		 * values are the names the visitor chose by this point rather than the
+		 * hash Contact Form 7 uploaded under -- keeping the files is what
+		 * changes them -- and the row exists, so $id can be linked to.
+		 *
+		 * The other reason is that this is where somebody else's code runs. A
+		 * fatal in a callback here takes the rest of the request with it, and
+		 * everything this plugin had to do is already done.
+		 *
+		 * Spam fires too, with $status saying so: a site forwarding entries
+		 * somewhere should be able to decide that for itself.
+		 *
+		 * @param int                  $id           The stored entry.
+		 * @param array<string, mixed> $data         The entry as stored.
+		 * @param \WPCF7_ContactForm   $contact_form The form it was posted to.
+		 * @param string               $status       Either 'submitted' or 'spam'.
+		 */
+		if ( $id > 0 ) {
+			do_action( 'cf7nl_submission_stored', $id, $data, $contact_form, $status );
 		}
 	}
 

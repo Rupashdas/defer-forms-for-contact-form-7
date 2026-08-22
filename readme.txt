@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,10 @@ CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keepi
 
 The Features screen lists everything this plugin does, and nothing it does not.
 
+**For developers**
+
+Submissions can be filtered before they are stored and hooked once they are — enough to keep a form out of the table, redact a field, or forward every entry somewhere of your own. See HOOKS.md in the plugin folder.
+
 CF7 Nova **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
 == Installation ==
@@ -54,6 +58,11 @@ No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
 No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
 
 == Changelog ==
+
+= 2.4.0 =
+* New for developers: four hooks on a submission — keep a form out of the table, change what is stored before it is written, announce an entry somewhere of your own, or act on one once it exists. Documented in HOOKS.md.
+* Fixed: search boxes and other text fields were four pixels taller than the buttons beside them. WordPress imposes a minimum height on inputs that a plugin has to undo; nineteen controls across six screens were affected.
+* Fixed: one file was reported as allowing direct access even though it blocked it. The check only reads the first fifty lines of a file, and that one had too many imports above the line.
 
 = 2.3.1 =
 * The Features screen lists marking and answering an entry, which shipped in 2.3.0 without being added to it.

@@ -61,6 +61,12 @@ The plugin's own **Features** screen lists what is here and what is not. Nothing
 coming: Telegram was the last thing waiting on that list and it shipped, and the AI generator was
 dropped rather than built.
 
+## For developers
+
+Entries can be filtered before they are stored, and hooked once they are —
+enough to keep a form out of the table, redact a field, or forward every
+submission somewhere of your own. See [HOOKS.md](HOOKS.md).
+
 ## Support
 
 Found something broken? Open an issue with the WordPress version, the PHP version, the Contact

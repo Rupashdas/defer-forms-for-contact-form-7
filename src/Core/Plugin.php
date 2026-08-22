@@ -9,6 +9,20 @@ declare(strict_types=1);
 
 namespace CF7NL\Core;
 
+/*
+ * Above the imports rather than below them.
+ *
+ * Plugin Check reads the first fifty lines of a file looking for this line and
+ * gives up after them. Its other route — walking the parsed file — only reads
+ * top-level statements, and in a namespaced file every statement sits inside
+ * the namespace, so it matches nothing here. Those fifty lines are all there
+ * is.
+ *
+ * This file imports forty classes. The guard was on line 52, and the file was
+ * reported as having none at all.
+ */
+defined( 'ABSPATH' ) || exit;
+
 use CF7NL\Admin\Assets;
 use CF7NL\Admin\Attachment_Download;
 use CF7NL\Admin\Cf7_Integration;
@@ -48,8 +62,6 @@ use CF7NL\REST\Submissions_Controller;
 use CF7NL\REST\Templates_Controller;
 use CF7NL\REST\Transfer_Controller;
 use CF7NL\Templates\Registry as Template_Registry;
-
-defined( 'ABSPATH' ) || exit;
 
 final class Plugin {
 
