@@ -2,12 +2,12 @@
 /**
  * Database schema installer and migrator.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\DB;
+namespace CF7E\DB;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,11 +19,11 @@ final class Schema {
 	 * Public because Submissions_Repository queries the same table and uninstall
 	 * drops it; three separate spellings of one name is a typo waiting to be made.
 	 */
-	public const TABLE = 'cf7nl_submissions';
+	public const TABLE = 'cf7e_submissions';
 
-	private const VERSION_KEY = 'cf7nl_db_version';
+	private const VERSION_KEY = 'cf7e_db_version';
 
-	private const LOCK_KEY = 'cf7nl_db_upgrading';
+	private const LOCK_KEY = 'cf7e_db_upgrading';
 
 	/** How long a claim on the upgrade lock is believed before it is treated as abandoned. */
 	private const LOCK_TIMEOUT = MINUTE_IN_SECONDS;
@@ -46,7 +46,7 @@ final class Schema {
 	 * always the schema this code expects — that makes a rollback converge too.
 	 */
 	public static function maybe_upgrade(): void {
-		if ( (string) get_option( self::VERSION_KEY, '' ) === (string) CF7NL_DB_VERSION ) {
+		if ( (string) get_option( self::VERSION_KEY, '' ) === (string) CF7E_DB_VERSION ) {
 			return;
 		}
 
@@ -55,18 +55,10 @@ final class Schema {
 		 * reach this at once. Without a lock they all run dbDelta together and
 		 * race on the same ALTER TABLE.
 		 *
-		 * `add_option()` rather than a get-then-set on a transient. Reading a
-		 * transient and then writing it is two statements with a gap between
-		 * them, and two requests can both pass the read before either writes —
-		 * which made the thing that reads like a lock not one. `add_option()`
-		 * returns false when the row already exists, so the claim is decided by
-		 * MySQL's uniqueness constraint in a single statement, and exactly one
-		 * caller can win it.
-		 *
 		 * Not autoloaded, because it exists for seconds and only under an
 		 * upgrade — there is no reason for it to ride along on every page load.
 		 */
-		if ( ! add_option( self::LOCK_KEY, time(), '', false ) ) {
+		if ( ! self::claim_lock() ) {
 			/*
 			 * Somebody holds it — unless they died holding it. The transient this
 			 * replaced expired on its own, so a request that fatalled mid-upgrade
@@ -81,7 +73,16 @@ final class Schema {
 				return;
 			}
 
-			update_option( self::LOCK_KEY, time(), false );
+			/*
+			 * Abandoned mid-upgrade. Released and re-claimed through the same
+			 * single-statement insert, so requests that all saw the same stale
+			 * lock are still settled one winner at a time.
+			 */
+			delete_option( self::LOCK_KEY );
+
+			if ( ! self::claim_lock() ) {
+				return;
+			}
 		}
 
 		try {
@@ -89,6 +90,52 @@ final class Schema {
 		} finally {
 			delete_option( self::LOCK_KEY );
 		}
+	}
+
+	/**
+	 * Take the upgrade lock, or say who won.
+	 *
+	 * A direct INSERT IGNORE, not add_option(): modern WordPress spells that
+	 * INSERT … ON DUPLICATE KEY UPDATE, so when two requests race past its
+	 * existence pre-check, the loser's insert succeeds as an update and both
+	 * believe they hold the lock. INSERT IGNORE has no such second act — the
+	 * duplicate is swallowed, zero rows are affected, and the unique key on
+	 * option_name settles the claim in one statement.
+	 *
+	 * Impure, and it has to be said out loud: it takes no arguments and returns
+	 * a bool, so static analysis reads a second call as certain to answer what
+	 * the first one did. The answer is a row in the database, and the whole
+	 * point of the retry above is that it can have changed.
+	 *
+	 * @phpstan-impure
+	 *
+	 * @return bool True when this request now holds the lock.
+	 */
+	private static function claim_lock(): bool {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- being one statement is the whole point; see above.
+		$inserted = $wpdb->query(
+			$wpdb->prepare(
+				'INSERT IGNORE INTO ' . $wpdb->options . ' (option_name, option_value, autoload) VALUES (%s, %s, %s)',
+				self::LOCK_KEY,
+				(string) time(),
+				'off'
+			)
+		);
+
+		/*
+		 * Written behind add_option()'s back, so the caches it maintains are
+		 * cleared by hand. On both outcomes, not just the winning one: it is the
+		 * loser that reads this row next, and a `notoptions` entry naming the key
+		 * would answer that read with "no lock" while the winner is holding it —
+		 * whereupon the loser would call the lock abandoned, delete it, and both
+		 * would upgrade at once.
+		 */
+		wp_cache_delete( self::LOCK_KEY, 'options' );
+		wp_cache_delete( 'notoptions', 'options' );
+
+		return 1 === (int) $inserted;
 	}
 
 	public static function install(): void {
@@ -138,6 +185,6 @@ final class Schema {
 
 		dbDelta( $sql );
 
-		update_option( self::VERSION_KEY, CF7NL_DB_VERSION );
+		update_option( self::VERSION_KEY, CF7E_DB_VERSION );
 	}
 }

@@ -1,12 +1,12 @@
 # Hooks
 
-Everything CF7 Nova Lite offers another plugin or a theme's `functions.php`.
+Everything Essentials for Contact Form 7 offers another plugin or a theme's `functions.php`.
 
 These are a promise. Once a version ships with one, sites depend on it, so a
 name here does not change and an argument does not move. If one has to go it is
 deprecated first and kept working.
 
-Contact Form 7's own hooks all still apply — Nova does not replace CF7, so
+Contact Form 7's own hooks all still apply — CF7 Essentials does not replace CF7, so
 `wpcf7_before_send_mail`, `wpcf7_mail_components` and the rest are unaffected.
 What is here is only the part CF7 has no equivalent for: the stored entry.
 
@@ -15,18 +15,18 @@ What is here is only the part CF7 has no equivalent for: the stored entry.
 One submission runs through these in this order:
 
 ```
-cf7nl_store_submission  →  cf7nl_submission_data  →  [ row written ]
-                        →  [ files kept ]  →  cf7nl_notify  →  cf7nl_submission_stored
+cf7e_store_submission  →  cf7e_submission_data  →  [ row written ]
+                        →  [ files kept ]  →  cf7e_notify  →  cf7e_submission_stored
 ```
 
-The order matters twice. `cf7nl_submission_data` is before the row, so what you
-remove is never written at all. `cf7nl_submission_stored` is after the files are
+The order matters twice. `cf7e_submission_data` is before the row, so what you
+remove is never written at all. `cf7e_submission_stored` is after the files are
 kept, which is what turns a file field's value from the hash CF7 uploaded under
 into the name the visitor chose.
 
 ---
 
-### `cf7nl_store_submission` — filter
+### `cf7e_store_submission` — filter
 
 Whether this submission is stored at all. The mail still goes: this is about the
 row, not the form.
@@ -39,7 +39,7 @@ row, not the form.
 
 ```php
 // A form whose answers there is no reason to keep.
-add_filter( 'cf7nl_store_submission', function ( $store, $form ) {
+add_filter( 'cf7e_store_submission', function ( $store, $form ) {
 	return 42 === $form->id() ? false : $store;
 }, 10, 2 );
 ```
@@ -49,7 +49,7 @@ to be about.
 
 ---
 
-### `cf7nl_submission_data` — filter
+### `cf7e_submission_data` — filter
 
 The entry as it will be stored, before it is written.
 
@@ -61,13 +61,13 @@ The entry as it will be stored, before it is written.
 
 ```php
 // Mail it, do not keep it.
-add_filter( 'cf7nl_submission_data', function ( $data ) {
+add_filter( 'cf7e_submission_data', function ( $data ) {
 	unset( $data['nid-number'] );
 	return $data;
 } );
 
 // Or the other way: something the form never asked for.
-add_filter( 'cf7nl_submission_data', function ( $data ) {
+add_filter( 'cf7e_submission_data', function ( $data ) {
 	$data['utm_source'] = $_COOKIE['utm_source'] ?? 'direct';
 	$data['landed_on']  = get_the_title();
 	return $data;
@@ -82,16 +82,16 @@ and the screens that display an entry skip them.
 
 ---
 
-### `cf7nl_notify` — action
+### `cf7e_notify` — action
 
 A fourth place to announce an entry, beside Telegram, Slack and Discord.
 
 | | |
 |---|---|
-| `$entry` | `CF7NL\CF7\Notification` |
+| `$entry` | `CF7E\CF7\Notification` |
 
 ```php
-add_action( 'cf7nl_notify', function ( $entry ) {
+add_action( 'cf7e_notify', function ( $entry ) {
 	wp_remote_post( 'https://example.webhook.office.com/…', array(
 		'headers' => array( 'Content-Type' => 'application/json' ),
 		'body'    => wp_json_encode( array( 'text' => $entry->title . ' — ' . $entry->link ) ),
@@ -105,7 +105,7 @@ in wp-admin). Formatting is yours: the three built-in destinations each mark up
 text their own way, so only the content is shared.
 
 Submitted entries only. Spam is stored so a misfiring check can be undone, not
-so a bot can make somebody's pocket buzz — use `cf7nl_submission_stored` if you
+so a bot can make somebody's pocket buzz — use `cf7e_submission_stored` if you
 want to hear about it.
 
 The three built-in destinations have a settings screen. This one does not, so
@@ -113,7 +113,7 @@ whatever it sends to lives in your code.
 
 ---
 
-### `cf7nl_submission_stored` — action
+### `cf7e_submission_stored` — action
 
 An entry is stored and complete. This is the one to integrate with.
 
@@ -125,7 +125,7 @@ An entry is stored and complete. This is the one to integrate with.
 | `$status` | `string` — `submitted` or `spam` |
 
 ```php
-add_action( 'cf7nl_submission_stored', function ( $id, $data, $form, $status ) {
+add_action( 'cf7e_submission_stored', function ( $id, $data, $form, $status ) {
 	if ( 'spam' === $status ) {
 		return;
 	}
@@ -145,17 +145,33 @@ the visitor's request: a slow endpoint here is a slow form for them.
 
 ## Elsewhere
 
-### `cf7nl_capability` — filter
+### `cf7e_capability` — filter
 
-What every CF7 Nova screen and REST route asks for. Defaults to
+What every CF7 Essentials screen and REST route asks for. Defaults to
 `manage_options`.
 
 ```php
 // Hand the submissions screen to editors without handing over wp-admin.
-add_filter( 'cf7nl_capability', fn() => 'edit_pages' );
+add_filter( 'cf7e_capability', fn() => 'edit_pages' );
 ```
 
-### `cf7nl_submissions_deleted` — action
+### `cf7e_attachment_limit` — filter
+
+How many bytes of attachments the site will keep before it stops keeping any
+more. Defaults to 1 GB; zero or less means no ceiling.
+
+There has to be one. A form that takes uploads is a public endpoint that writes
+to the disk, and nothing upstream bounds how often it is used — the spam checks
+label a submission rather than refuse it, and retention is a broom rather than a
+wall. Past the ceiling the submission is still stored and its mail still sent;
+only the copy is refused, and the admin screens say so.
+
+```php
+// A site with room, and a reason.
+add_filter( 'cf7e_attachment_limit', fn() => 20 * GB_IN_BYTES );
+```
+
+### `cf7e_submissions_deleted` — action
 
 Fires before entries are removed, with the rows still intact. `$rows` is an
 array of the rows about to go. The plugin uses this itself to delete the files

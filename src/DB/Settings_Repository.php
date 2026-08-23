@@ -2,20 +2,20 @@
 /**
  * Settings storage backed by a single WP option.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\DB;
+namespace CF7E\DB;
 
-use CF7NL\CF7\Design;
+use CF7E\CF7\Design;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Settings_Repository {
 
-	private const OPTION_KEY = 'cf7nl_settings';
+	private const OPTION_KEY = 'cf7e_settings';
 
 	/**
 	 * @var array<string, array<string, mixed>>
@@ -33,6 +33,10 @@ final class Settings_Repository {
 			// real enquiry with no trace. Kept for a month rather than forever,
 			// because a bot can write a row per attempt.
 			'store_spam'          => true,
+			// Off by default, unlike the row itself. A stored spam row costs a few
+			// kilobytes and buys back a misfiled enquiry; its attachments cost a
+			// megabyte each and are the cheapest way to fill a disk from outside.
+			'spam_attachments'    => false,
 			'spam_retention_days' => 30,
 		),
 		'privacy'  => array(
@@ -55,7 +59,7 @@ final class Settings_Repository {
 			'enabled'     => false,
 			'webhook_url' => '',
 		),
-		// Mirrors the --cf7nl-* contract in assets/css/controls.css. Defaults are
+		// Mirrors the --cf7e-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
 		'design'   => array(
@@ -154,6 +158,7 @@ final class Settings_Repository {
 					'time_trap_enabled'   => (bool) ( $input['time_trap_enabled'] ?? false ),
 					'dedup_enabled'       => (bool) ( $input['dedup_enabled'] ?? false ),
 					'store_spam'          => (bool) ( $input['store_spam'] ?? false ),
+					'spam_attachments'    => (bool) ( $input['spam_attachments'] ?? false ),
 					'spam_retention_days' => max( 0, min( 3650, (int) ( $input['spam_retention_days'] ?? 30 ) ) ),
 				);
 
@@ -238,8 +243,8 @@ final class Settings_Repository {
 
 		if ( ! in_array( $host, $hosts[ $section ], true ) ) {
 			return 'slack' === $section
-				? __( 'That is not a Slack webhook URL. It should begin https://hooks.slack.com/services/', 'cf7-nova-lite' )
-				: __( 'That is not a Discord webhook URL. It should begin https://discord.com/api/webhooks/', 'cf7-nova-lite' );
+				? __( 'That is not a Slack webhook URL. It should begin https://hooks.slack.com/services/', 'essentials-for-contact-form-7' )
+				: __( 'That is not a Discord webhook URL. It should begin https://discord.com/api/webhooks/', 'essentials-for-contact-form-7' );
 		}
 
 		return '';

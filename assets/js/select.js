@@ -1,5 +1,5 @@
 /**
- * CF7 Nova — select widget.
+ * CF7 Essentials — select widget.
  *
  * Progressive enhancement: the real <select> never leaves the DOM. It is only
  * moved out of sight, and every interaction writes back to it and fires a
@@ -7,12 +7,12 @@
  * reading the same source of truth. If this script fails to load, the visitor
  * simply gets the native control.
  *
- * A `cf7nl-search` marker class on the select turns on the filter box.
+ * A `cf7e-search` marker class on the select turns on the filter box.
  */
 ( function () {
 	'use strict';
 
-	var l10n = window.cf7nlSelectL10n || {};
+	var l10n = window.cf7eSelectL10n || {};
 	var TEXT = {
 		one:    l10n.placeholder      || 'Select…',
 		many:   l10n.placeholderMulti || 'Select options…',
@@ -41,28 +41,28 @@
 		} );
 	} );
 
-	var el = window.cf7nl.el;
+	var el = window.cf7e.el;
 
 	function enhance( select ) {
-		if ( select.dataset.cf7nlSelect || select.disabled ) {
+		if ( select.dataset.cf7eSelect || select.disabled ) {
 			return;
 		}
-		select.dataset.cf7nlSelect = '1';
+		select.dataset.cf7eSelect = '1';
 
 		var multiple   = select.multiple;
-		var searchable = select.classList.contains( 'cf7nl-search' );
+		var searchable = select.classList.contains( 'cf7e-search' );
 		var options    = Array.prototype.slice.call( select.options );
 
 		// The blank option doubles as the placeholder label when it has text.
 		var blank = options.filter( function ( option ) { return '' === option.value; } )[ 0 ];
 		var placeholder = ( blank && blank.textContent.trim() ) || ( multiple ? TEXT.many : TEXT.one );
 
-		var wrap = el( 'div', 'cf7nl-select' + ( multiple ? ' cf7nl-select--multiple' : '' ) );
+		var wrap = el( 'div', 'cf7e-select' + ( multiple ? ' cf7e-select--multiple' : '' ) );
 		select.parentNode.insertBefore( wrap, select );
 		wrap.appendChild( select );
-		select.classList.add( 'cf7nl-select-native' );
+		select.classList.add( 'cf7e-select-native' );
 
-		var trigger = el( 'button', 'cf7nl-select-trigger' );
+		var trigger = el( 'button', 'cf7e-select-trigger' );
 		trigger.type = 'button';
 		trigger.setAttribute( 'aria-haspopup', 'listbox' );
 		trigger.setAttribute( 'aria-expanded', 'false' );
@@ -79,38 +79,38 @@
 			trigger.setAttribute( 'aria-label', ( caption.textContent || '' ).trim() );
 		}
 
-		var value = el( 'span', 'cf7nl-select-value' );
+		var value = el( 'span', 'cf7e-select-value' );
 		trigger.appendChild( value );
-		trigger.appendChild( el( 'span', 'cf7nl-select-arrow' ) );
+		trigger.appendChild( el( 'span', 'cf7e-select-arrow' ) );
 		wrap.appendChild( trigger );
 
-		var panel = el( 'div', 'cf7nl-select-panel' );
+		var panel = el( 'div', 'cf7e-select-panel' );
 		panel.hidden = true;
 		wrap.appendChild( panel );
 
 		var search = null;
 		if ( searchable ) {
-			search = el( 'input', 'cf7nl-select-search' );
+			search = el( 'input', 'cf7e-select-search' );
 			search.type = 'text';
 			search.placeholder = TEXT.search;
 			search.setAttribute( 'aria-label', TEXT.search );
 			panel.appendChild( search );
 		}
 
-		var list = el( 'div', 'cf7nl-select-list' );
+		var list = el( 'div', 'cf7e-select-list' );
 		list.setAttribute( 'role', 'listbox' );
 		if ( multiple ) {
 			list.setAttribute( 'aria-multiselectable', 'true' );
 		}
 		panel.appendChild( list );
 
-		var empty = el( 'div', 'cf7nl-select-empty', TEXT.empty );
+		var empty = el( 'div', 'cf7e-select-empty', TEXT.empty );
 		empty.hidden = true;
 		panel.appendChild( empty );
 
 		// One row per real <option>, kept in the same order.
 		var rows = options.map( function ( option ) {
-			var row = el( 'div', 'cf7nl-select-option', option.textContent );
+			var row = el( 'div', 'cf7e-select-option', option.textContent );
 			row.setAttribute( 'role', 'option' );
 			row.dataset.value = option.value;
 			if ( option.disabled ) {
@@ -155,13 +155,13 @@
 
 			value.innerHTML = '';
 			if ( ! chosen.length ) {
-				value.appendChild( el( 'span', 'cf7nl-select-placeholder', placeholder ) );
+				value.appendChild( el( 'span', 'cf7e-select-placeholder', placeholder ) );
 			} else if ( ! multiple ) {
 				value.appendChild( document.createTextNode( chosen[ 0 ].textContent ) );
 			} else {
 				chosen.forEach( function ( option ) {
-					var chip = el( 'span', 'cf7nl-select-chip', option.textContent );
-					var remove = el( 'button', 'cf7nl-select-chip-remove', '×' );
+					var chip = el( 'span', 'cf7e-select-chip', option.textContent );
+					var remove = el( 'button', 'cf7e-select-chip-remove', '×' );
 					remove.type = 'button';
 					remove.setAttribute( 'aria-label', TEXT.remove + ': ' + option.textContent );
 					remove.addEventListener( 'click', function ( e ) {
@@ -314,13 +314,13 @@
 		// A reset does not come through above: it dispatches no event of any
 		// kind, so the widget went on naming a country the select no longer held.
 		if ( select.form ) {
-			window.cf7nl.onReset( select.form, render );
+			window.cf7e.onReset( select.form, render );
 		}
 
 		render();
 	}
 
-	window.cf7nl.forms( function ( form ) {
+	window.cf7e.forms( function ( form ) {
 		form.querySelectorAll( 'select' ).forEach( enhance );
 	} );
 } )();

@@ -2,15 +2,15 @@
 /**
  * REST: Reading, deleting and counting stored submissions.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\REST;
+namespace CF7E\REST;
 
-use CF7NL\CF7\Reply;
-use CF7NL\DB\Submissions_Repository;
+use CF7E\CF7\Reply;
+use CF7E\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -195,7 +195,7 @@ final class Submissions_Controller extends Controller {
 		$ids    = array_values( array_filter( array_map( 'intval', (array) ( $params['ids'] ?? array() ) ) ) );
 
 		if ( ! $all && empty( $ids ) ) {
-			return self::error( 'nothing_to_mark', __( 'No entries were named to mark as read.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'nothing_to_mark', __( 'No entries were named to mark as read.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$repo   = $this->container->make( 'submissions.repository' );
@@ -223,11 +223,11 @@ final class Submissions_Controller extends Controller {
 		$stage  = (string) ( $params['stage'] ?? '' );
 
 		if ( empty( $ids ) ) {
-			return self::error( 'nothing_to_move', __( 'No entries were named.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'nothing_to_move', __( 'No entries were named.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		if ( ! in_array( $stage, Submissions_Repository::STAGES, true ) ) {
-			return self::error( 'unknown_stage', __( 'There is no such stage.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'unknown_stage', __( 'There is no such stage.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$repo = $this->container->make( 'submissions.repository' );
@@ -260,7 +260,7 @@ final class Submissions_Controller extends Controller {
 		$entry = $repo->find( $id );
 
 		if ( ! $entry ) {
-			return self::error( 'not_found', __( 'That entry no longer exists.', 'cf7-nova-lite' ), 404 );
+			return self::error( 'not_found', __( 'That entry no longer exists.', 'essentials-for-contact-form-7' ), 404 );
 		}
 
 		$data  = json_decode( (string) ( $entry['data'] ?? '' ), true );
@@ -320,7 +320,7 @@ final class Submissions_Controller extends Controller {
 		$deleted = $repo->delete( array( (int) $request->get_param( 'id' ) ) );
 
 		if ( 0 === $deleted ) {
-			return self::error( 'not_found', __( 'That entry no longer exists.', 'cf7-nova-lite' ), 404 );
+			return self::error( 'not_found', __( 'That entry no longer exists.', 'essentials-for-contact-form-7' ), 404 );
 		}
 
 		return new \WP_REST_Response( array( 'deleted' => $deleted ), 200 );
@@ -330,7 +330,7 @@ final class Submissions_Controller extends Controller {
 		$ids = (array) ( $request->get_json_params()['ids'] ?? array() );
 
 		if ( empty( $ids ) ) {
-			return self::error( 'no_ids', __( 'No entries were named to delete.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'no_ids', __( 'No entries were named to delete.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$repo    = $this->container->make( 'submissions.repository' );

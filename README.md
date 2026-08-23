@@ -1,12 +1,12 @@
-# CF7 Nova Lite
+# Essentials for Contact Form 7
 
 A modern layer on top of [Contact Form 7](https://wordpress.org/plugins/contact-form-7/): a
 drag-and-drop builder, multi-step forms, conditional logic, and a submissions database — without
 changing how Contact Form 7 itself works.
 
-Nova **extends** Contact Form 7. It does not replace it, and it does not rewrite your existing
+CF7 Essentials **extends** Contact Form 7. It does not replace it, and it does not rewrite your existing
 forms: every form it builds is ordinary CF7 form-tag markup, so anything already on your site keeps
-working, and you can stop using Nova at any time without losing a form.
+working, and you can stop using CF7 Essentials at any time without losing a form.
 
 ## Requirements
 
@@ -20,10 +20,10 @@ working, and you can stop using Nova at any time without losing a form.
 
 1. Download this repository as a ZIP — **Code → Download ZIP**.
 2. In WordPress, go to **Plugins → Add New → Upload Plugin** and choose the file.
-3. Activate. A **CF7 Nova** menu appears in the sidebar.
+3. Activate. A **CF7 Essentials** menu appears in the sidebar.
 
 The download is ready to run: the admin bundles are compiled and included, so there is nothing to
-build. GitHub names the folder `cf7-nova-lite-main`; renaming it to `cf7-nova-lite` is tidier but
+build. GitHub names the folder `essentials-for-contact-form-7-main`; renaming it to `essentials-for-contact-form-7` is tidier but
 not required.
 
 ## What it does

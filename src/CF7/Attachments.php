@@ -22,14 +22,14 @@
  * The first two are belt and braces — Nginx ignores .htaccess — but the third
  * holds on any server.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
-use CF7NL\Core\Filesystem;
+use CF7E\Core\Filesystem;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,14 +38,143 @@ final class Attachments {
 	public function register_hooks(): void {
 		// The repository says which rows are going; deciding that files went with
 		// them is this class's business, not a data-access class's.
-		add_action( 'cf7nl_submissions_deleted', array( __CLASS__, 'remove_for' ) );
+		add_action( 'cf7e_submissions_deleted', array( __CLASS__, 'remove_for' ) );
 	}
 
 	/** Folder under wp-content/uploads. */
-	private const FOLDER = 'cf7nl-attachments';
+	private const FOLDER = 'cf7e-attachments';
 
 	/** Key the file list travels under, out of the way of the visitor's answers. */
-	public const DATA_KEY = '_cf7nl_files';
+	public const DATA_KEY = '_cf7e_files';
+
+	/** Running total of the bytes under FOLDER, so the ceiling costs no disk read. */
+	private const BYTES_KEY = 'cf7e_attachment_bytes';
+
+	/** How much of the disk this may take before it stops taking any more. */
+	private const DEFAULT_LIMIT = 1024 * MB_IN_BYTES;
+
+	/**
+	 * The ceiling, in bytes. Zero and below mean no ceiling.
+	 *
+	 * There has to be one. A form that accepts uploads is a public endpoint that
+	 * writes to the disk, and nothing upstream of here bounds how often it is
+	 * used: the spam checks label a submission, they do not stop it being stored,
+	 * and retention is a broom rather than a wall — thirty days of a flood is
+	 * still thirty days of a flood. Without a ceiling the worst case is the size
+	 * of the disk.
+	 *
+	 * A gigabyte is a guess at "more than any honest site needs and less than any
+	 * host gives you", which is why it is filterable:
+	 *
+	 *     add_filter( 'cf7e_attachment_limit', fn() => 5 * GB_IN_BYTES );
+	 */
+	public static function limit(): int {
+		return (int) apply_filters( 'cf7e_attachment_limit', self::DEFAULT_LIMIT );
+	}
+
+	/**
+	 * How many bytes are already down there.
+	 *
+	 * Kept as a running total rather than measured, because this is read on the
+	 * submission path: walking the tree on every upload would hand an attacker a
+	 * cheaper way to hurt the site than filling the disk was. Measured only when
+	 * the total has never been written — a site upgrading into this feature, or
+	 * one whose option was deleted.
+	 */
+	public static function used(): int {
+		$stored = get_option( self::BYTES_KEY, null );
+
+		if ( null === $stored ) {
+			$measured = self::measure();
+			update_option( self::BYTES_KEY, $measured, false );
+
+			return $measured;
+		}
+
+		return max( 0, (int) $stored );
+	}
+
+	/**
+	 * Move the running total, and never below nothing.
+	 *
+	 * It drifts: a file removed by hand, a folder lost with the uploads
+	 * directory, a delete that half worked. Drift downward is harmless and drift
+	 * upward would eventually refuse uploads a site has room for, so
+	 * `recount()` puts it right once a day rather than this trying to be exact.
+	 */
+	private static function remember( int $delta ): void {
+		update_option( self::BYTES_KEY, max( 0, self::used() + $delta ), false );
+	}
+
+	/**
+	 * Put the running total back in step with the disk. Daily, from cron.
+	 */
+	public static function recount(): void {
+		if ( '' === self::root() ) {
+			return;
+		}
+
+		update_option( self::BYTES_KEY, self::measure(), false );
+	}
+
+	/**
+	 * Total size of one submission's kept files.
+	 *
+	 * Reads the sizes recorded when the copies were made rather than asking the
+	 * disk again, so removing a submission costs nothing even when its folder is
+	 * already gone.
+	 *
+	 * @param array<string, array<int, array<string, mixed>>> $fields As stored under DATA_KEY.
+	 */
+	private static function bytes_in( array $fields ): int {
+		$bytes = 0;
+
+		foreach ( $fields as $files ) {
+			foreach ( (array) $files as $file ) {
+				$bytes += (int) ( $file['size'] ?? 0 );
+			}
+		}
+
+		return $bytes;
+	}
+
+	/** Whether uploads are currently being turned away, for the admin notice. */
+	public const FULL_KEY = 'cf7e_attachments_full';
+
+	/**
+	 * Say that a file was turned away.
+	 *
+	 * A transient rather than an option: once the site has room again — retention
+	 * ran, somebody deleted a year of entries, the filter was raised — the notice
+	 * should stop on its own rather than wait to be dismissed.
+	 */
+	private static function report_full(): void {
+		set_transient( self::FULL_KEY, time(), DAY_IN_SECONDS );
+	}
+
+	/** Every byte under the attachments root, counted the slow way. */
+	private static function measure(): int {
+		$root = self::root();
+
+		if ( '' === $root || ! is_dir( $root ) ) {
+			return 0;
+		}
+
+		$bytes = 0;
+
+		$walk = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator( $root, \FilesystemIterator::SKIP_DOTS ),
+			\RecursiveIteratorIterator::LEAVES_ONLY
+		);
+
+		foreach ( $walk as $file ) {
+			if ( $file->isFile() ) {
+				$bytes += (int) $file->getSize();
+			}
+		}
+
+		return $bytes;
+	}
 
 	/**
 	 * Absolute path to the attachments root, or '' if uploads is unusable.
@@ -88,6 +217,23 @@ final class Attachments {
 			return array();
 		}
 
+		/*
+		 * Checked before anything is written, and the whole submission is refused
+		 * rather than filled to the brim — a ceiling that admits files until the
+		 * exact byte would keep a flood alive at a trickle, and half of somebody's
+		 * three attachments is not a kept submission either.
+		 *
+		 * The row is still written and the mail has already gone. What is lost is
+		 * the copy, which is the only part that costs disk.
+		 */
+		$limit = self::limit();
+
+		if ( $limit > 0 && self::used() >= $limit ) {
+			self::report_full();
+
+			return array();
+		}
+
 		// The random half is what stops a path being guessed from the id alone.
 		$folder = $submission_id . '-' . wp_generate_password( 20, false, false );
 		$dir    = $root . '/' . $folder;
@@ -122,6 +268,8 @@ final class Attachments {
 			}
 			return array();
 		}
+
+		self::remember( self::bytes_in( $fields ) );
 
 		return array(
 			'dir'    => $folder,
@@ -227,15 +375,24 @@ final class Attachments {
 			return;
 		}
 
+		$freed = 0;
+
 		foreach ( $rows as $row ) {
 			$data = json_decode( (string) ( $row['data'] ?? '' ), true );
-			$dir  = is_array( $data ) ? (string) ( $data[ self::DATA_KEY ]['dir'] ?? '' ) : '';
+			$kept = is_array( $data ) ? (array) ( $data[ self::DATA_KEY ] ?? array() ) : array();
+			$dir  = (string) ( $kept['dir'] ?? '' );
 
 			if ( '' === $dir ) {
 				continue;
 			}
 
 			self::rmdir( $root . '/' . wp_basename( $dir ) );
+
+			$freed += self::bytes_in( (array) ( $kept['fields'] ?? array() ) );
+		}
+
+		if ( $freed > 0 ) {
+			self::remember( -$freed );
 		}
 	}
 

@@ -17,19 +17,19 @@
  * them, and storing them would make every row bigger while implying a
  * protection that is not being offered.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Revisions {
 
 	/** One meta row per revision, so pruning is a delete rather than a rewrite. */
-	private const META = '_cf7nl_revision';
+	private const META = '_cf7e_revision';
 
 	/** How many states a form remembers. A decision, not a setting. */
 	private const KEEP = 10;

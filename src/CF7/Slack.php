@@ -7,12 +7,12 @@
  * is no second field to get wrong — and no way to be told "chat not found"
  * because there is no chat to name.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,7 +46,7 @@ final class Slack {
 		// request, and the visitor has been thanked and gone.
 		if ( '' !== $error && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- the only channel a background failure has.
-			error_log( 'CF7 Nova: Slack refused a notification — ' . $error );
+			error_log( 'CF7 Essentials: Slack refused a notification — ' . $error );
 		}
 	}
 
@@ -61,8 +61,8 @@ final class Slack {
 	public static function test( array $config ): string {
 		return self::send(
 			(string) ( $config['webhook_url'] ?? '' ),
-			'*' . self::escape( __( 'CF7 Nova', 'cf7-nova-lite' ) ) . "*\n"
-				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'cf7-nova-lite' ) )
+			'*' . self::escape( __( 'CF7 Essentials', 'essentials-for-contact-form-7' ) ) . "*\n"
+				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'essentials-for-contact-form-7' ) )
 		);
 	}
 
@@ -86,7 +86,7 @@ final class Slack {
 		}
 
 		$lines[] = '';
-		$lines[] = '<' . esc_url_raw( $entry->link ) . '|' . self::escape( __( 'Open this entry', 'cf7-nova-lite' ) ) . '>';
+		$lines[] = '<' . esc_url_raw( $entry->link ) . '|' . self::escape( __( 'Open this entry', 'essentials-for-contact-form-7' ) ) . '>';
 
 		$message = implode( "\n", $lines );
 
@@ -94,7 +94,7 @@ final class Slack {
 			return $message;
 		}
 
-		$notice = "\n\n" . self::escape( __( '(truncated)', 'cf7-nova-lite' ) );
+		$notice = "\n\n" . self::escape( __( '(truncated)', 'essentials-for-contact-form-7' ) );
 
 		return mb_substr( $message, 0, self::LIMIT - mb_strlen( $notice ) ) . $notice;
 	}
@@ -107,7 +107,7 @@ final class Slack {
 	 */
 	private static function send( string $url, string $message ): string {
 		if ( '' === $url ) {
-			return __( 'No webhook URL is set.', 'cf7-nova-lite' );
+			return __( 'No webhook URL is set.', 'essentials-for-contact-form-7' );
 		}
 
 		$response = wp_remote_post(
@@ -137,7 +137,7 @@ final class Slack {
 
 		return '' !== $body
 			? $body
-			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Slack answered %d.', 'cf7-nova-lite' ), (int) wp_remote_retrieve_response_code( $response ) );
+			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Slack answered %d.', 'essentials-for-contact-form-7' ), (int) wp_remote_retrieve_response_code( $response ) );
 	}
 
 	/**

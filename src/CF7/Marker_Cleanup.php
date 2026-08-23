@@ -11,14 +11,14 @@
  *    them.
  * 2. Removes any marker still standing, as a backstop. Every class that owns one
  *    is always registered, so this should never fire — but a marker reaching a
- *    visitor as literal `[cf7nl_row]` text is bad enough to keep a net under.
+ *    visitor as literal `[cf7e_row]` text is bad enough to keep a net under.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -34,13 +34,13 @@ final class Marker_Cleanup {
 	 * that somehow reached the page unconverted must not print at anybody.
 	 */
 	private const MARKERS = array(
-		'\[cf7nl_row(?:\s+cols="\d+")?\]',
-		'\[\/cf7nl_row\]',
-		'\[cf7nl_col\]',
-		'\[\/cf7nl_col\]',
-		'\[cf7nl_pagebreak(?:\s+[^\]]*)?\]',
-		'\[cf7nl_if\s+[^\]]*\]',
-		'\[\/cf7nl_if\]',
+		'\[cf7e_row(?:\s+cols="\d+")?\]',
+		'\[\/cf7e_row\]',
+		'\[cf7e_col\]',
+		'\[\/cf7e_col\]',
+		'\[cf7e_pagebreak(?:\s+[^\]]*)?\]',
+		'\[cf7e_if\s+[^\]]*\]',
+		'\[\/cf7e_if\]',
 	);
 
 	public function register_hooks(): void {
@@ -48,11 +48,11 @@ final class Marker_Cleanup {
 	}
 
 	public function tidy( string $elements ): string {
-		if ( false !== strpos( $elements, '[cf7nl_' ) ) {
+		if ( false !== strpos( $elements, '[cf7e_' ) ) {
 			$elements = $this->strip_markers( $elements );
 		}
 
-		if ( false !== strpos( $elements, 'cf7nl-' ) ) {
+		if ( false !== strpos( $elements, 'cf7e-' ) ) {
 			$elements = $this->undo_autop( $elements );
 		}
 
@@ -65,7 +65,7 @@ final class Marker_Cleanup {
 	 * Remove markers, and the line ending each one occupies.
 	 *
 	 * Taking the marker alone leaves the break behind — a run of empty space
-	 * where the layout used to be. The form does not print `[cf7nl_row]` at
+	 * where the layout used to be. The form does not print `[cf7e_row]` at
 	 * anybody, it just falls apart quietly instead.
 	 */
 	private function strip_markers( string $elements ): string {
@@ -85,7 +85,7 @@ final class Marker_Cleanup {
 	 * Peel the <p>/<br> wrapping autop put around our block-level divs.
 	 */
 	private function undo_autop( string $elements ): string {
-		$open = '<div[^>]*class="[^"]*cf7nl-[^"]*"[^>]*>';
+		$open = '<div[^>]*class="[^"]*cf7e-[^"]*"[^>]*>';
 
 		return (string) preg_replace(
 			array(

@@ -7,21 +7,21 @@
  * place the checks can live: the capability, a nonce, and a path that has to
  * resolve inside the attachments directory.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
-use CF7NL\CF7\Attachments;
-use CF7NL\Core\Capability;
+use CF7E\CF7\Attachments;
+use CF7E\Core\Capability;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Attachment_Download {
 
-	public const ACTION = 'cf7nl_attachment';
+	public const ACTION = 'cf7e_attachment';
 
 	public function register_hooks(): void {
 		add_action( 'admin_post_' . self::ACTION, array( $this, 'serve' ) );
@@ -29,7 +29,7 @@ final class Attachment_Download {
 
 	public function serve(): void {
 		if ( ! Capability::granted() ) {
-			wp_die( esc_html__( 'Permission denied.', 'cf7-nova-lite' ), 403 );
+			wp_die( esc_html__( 'Permission denied.', 'essentials-for-contact-form-7' ), 403 );
 		}
 
 		check_admin_referer( self::ACTION );
@@ -42,7 +42,7 @@ final class Attachment_Download {
 		$path = Attachments::path( $folder, $file );
 
 		if ( '' === $path ) {
-			wp_die( esc_html__( 'That file is no longer available.', 'cf7-nova-lite' ), 404 );
+			wp_die( esc_html__( 'That file is no longer available.', 'essentials-for-contact-form-7' ), 404 );
 		}
 
 		$name = isset( $_GET['name'] ) ? sanitize_file_name( wp_unslash( $_GET['name'] ) ) : wp_basename( $path );

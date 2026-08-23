@@ -1,6 +1,6 @@
 <?php
 /**
- * Who may use CF7 Nova.
+ * Who may use CF7 Essentials.
  *
  * `manage_options` was spelled out in six places — every REST controller through
  * Controller::can_manage(), the admin menu, the CSV export and the attachment
@@ -12,30 +12,30 @@
  * the forms — could not open the submissions those forms collected. The honest
  * answer is that this is one rule, stated once, and a site may narrow or widen it.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Core;
+namespace CF7E\Core;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Capability {
 
 	/**
-	 * What everything under CF7 Nova asks for.
+	 * What everything under CF7 Essentials asks for.
 	 *
 	 * Filterable so a site can hand the submissions screen to an editor without
 	 * also handing over the whole of wp-admin:
 	 *
-	 *     add_filter( 'cf7nl_capability', fn() => 'edit_pages' );
+	 *     add_filter( 'cf7e_capability', fn() => 'edit_pages' );
 	 *
 	 * The default stays `manage_options`, so an untouched install behaves exactly
 	 * as it did.
 	 */
 	public static function required(): string {
-		$capability = apply_filters( 'cf7nl_capability', 'manage_options' );
+		$capability = apply_filters( 'cf7e_capability', 'manage_options' );
 
 		// A filter that returns nothing must not open the plugin to everybody.
 		return is_string( $capability ) && '' !== $capability ? $capability : 'manage_options';

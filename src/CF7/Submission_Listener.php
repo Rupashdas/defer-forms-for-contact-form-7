@@ -2,15 +2,15 @@
 /**
  * Listens for Contact Form 7 submissions and persists them.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
-use CF7NL\DB\Settings_Repository;
-use CF7NL\DB\Submissions_Repository;
+use CF7E\DB\Settings_Repository;
+use CF7E\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -72,7 +72,7 @@ final class Submission_Listener {
 		 * @param \WPCF7_ContactForm $contact_form The form it was posted to.
 		 * @param string             $status       Either 'submitted' or 'spam'.
 		 */
-		if ( ! apply_filters( 'cf7nl_store_submission', $store, $contact_form, $status ) ) {
+		if ( ! apply_filters( 'cf7e_store_submission', $store, $contact_form, $status ) ) {
 			return;
 		}
 
@@ -106,7 +106,7 @@ final class Submission_Listener {
 		 * @param \WPCF7_ContactForm   $contact_form The form it was posted to.
 		 * @param string               $status       Either 'submitted' or 'spam'.
 		 */
-		$data = (array) apply_filters( 'cf7nl_submission_data', $data, $contact_form, $status );
+		$data = (array) apply_filters( 'cf7e_submission_data', $data, $contact_form, $status );
 
 		$id = $this->repository->insert( (int) $contact_form->id(), $data, $ip, $status );
 
@@ -114,7 +114,7 @@ final class Submission_Listener {
 			// Returned, not just stored: keeping the files is also what turns a
 			// file field's value from the hash CF7 uploaded under into the name
 			// the visitor chose, and the notifications below print that value.
-			$data = $this->keep_attachments( $id, $submission, $data );
+			$data = $this->keep_attachments( $id, $submission, $data, $this->should_copy_files( $status ) );
 		}
 
 		/*
@@ -152,7 +152,7 @@ final class Submission_Listener {
 			 *
 			 * @param Notification $entry The entry, already described.
 			 */
-			do_action( 'cf7nl_notify', $entry );
+			do_action( 'cf7e_notify', $entry );
 		}
 
 		/**
@@ -176,14 +176,14 @@ final class Submission_Listener {
 		 * @param string               $status       Either 'submitted' or 'spam'.
 		 */
 		if ( $id > 0 ) {
-			do_action( 'cf7nl_submission_stored', $id, $data, $contact_form, $status );
+			do_action( 'cf7e_submission_stored', $id, $data, $contact_form, $status );
 		}
 	}
 
 	/**
 	 * Fields the plugin puts in the form itself, which are not answers.
 	 *
-	 * `cf7nl_ts` is the time-trap's signed token and `cf7nl_hp` the honeypot.
+	 * `cf7e_ts` is the time-trap's signed token and `cf7e_hp` the honeypot.
 	 * They were being stored and then shown to the admin as though somebody had
 	 * typed them — and a signed token has no business sitting in a table for
 	 * years either. CF7 already drops anything starting with an underscore, which
@@ -194,7 +194,7 @@ final class Submission_Listener {
 	 */
 	private static function without_our_own_fields( array $data ): array {
 		foreach ( array_keys( $data ) as $key ) {
-			if ( 0 === strpos( (string) $key, 'cf7nl_' ) ) {
+			if ( 0 === strpos( (string) $key, 'cf7e_' ) ) {
 				unset( $data[ $key ] );
 			}
 		}
@@ -252,7 +252,7 @@ final class Submission_Listener {
 	 * @param array<string, mixed> $data
 	 * @return array<string, mixed> The entry as it now reads, with real filenames.
 	 */
-	private function keep_attachments( int $id, object $submission, array $data ): array {
+	private function keep_attachments( int $id, object $submission, array $data, bool $copy ): array {
 		if ( ! method_exists( $submission, 'uploaded_files' ) ) {
 			return $data;
 		}
@@ -263,21 +263,50 @@ final class Submission_Listener {
 			return $data;
 		}
 
-		$kept = Attachments::store( $id, $uploaded );
+		$kept = $copy ? Attachments::store( $id, $uploaded ) : array();
 
-		if ( empty( $kept ) ) {
-			return $data;
+		if ( ! empty( $kept ) ) {
+			foreach ( $kept['fields'] as $field => $files ) {
+				$data[ $field ] = wp_list_pluck( $files, 'name' );
+			}
+
+			$data[ Attachments::DATA_KEY ] = $kept;
+		} else {
+			/*
+			 * Nothing was copied — refused for spam, refused for space, or there
+			 * was nowhere to put it. The value CF7 leaves behind is a sha256 of
+			 * the file's contents, which tells the person reading the entry
+			 * nothing at all, so the names go in regardless of whether the files
+			 * did. What was sent is worth knowing even when it was not kept.
+			 */
+			foreach ( $uploaded as $field => $paths ) {
+				$names = array_map( 'wp_basename', array_map( 'strval', (array) $paths ) );
+
+				if ( ! empty( $names ) ) {
+					$data[ (string) $field ] = $names;
+				}
+			}
 		}
-
-		foreach ( $kept['fields'] as $field => $files ) {
-			$data[ $field ] = wp_list_pluck( $files, 'name' );
-		}
-
-		$data[ Attachments::DATA_KEY ] = $kept;
 
 		$this->repository->update_data( $id, $data );
 
 		return $data;
+	}
+
+	/**
+	 * Whether this submission's uploads are worth a copy on the disk.
+	 *
+	 * A form that takes files is a public endpoint that writes to the disk, and
+	 * nothing above stops it being used: the spam checks label a submission
+	 * rather than refuse it, so a caught bot's attachment was kept exactly as a
+	 * real one's was — a megabyte per attempt, for as long as spam is retained.
+	 *
+	 * Off by default and switchable, because the row itself is kept for a reason
+	 * — a misfiring check should not destroy a real enquiry without trace — and a
+	 * site that would rather have the file too can say so.
+	 */
+	private function should_copy_files( string $status ): bool {
+		return 'spam' !== $status || ! empty( $this->settings->get_section( 'spam' )['spam_attachments'] );
 	}
 
 	/**

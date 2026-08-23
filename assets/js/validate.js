@@ -1,12 +1,12 @@
 /**
- * CF7 Nova — live validation.
+ * CF7 Essentials — live validation.
  *
  * CF7 only tells the visitor what is wrong after they submit. This checks a
  * field as soon as they leave it, and clears the complaint the moment they fix
  * it — so nobody fills a long form only to be sent back to the top.
  *
  * It is also the single owner of "is this field valid": steps.js calls into
- * `window.cf7nlValidate` for its per-step gate, so both use identical rules.
+ * `window.cf7eValidate` for its per-step gate, so both use identical rules.
  *
  * Nothing here blocks submission — CF7's own server-side validation remains the
  * authority. This is only a faster, kinder message.
@@ -14,7 +14,7 @@
 ( function () {
 	'use strict';
 
-	var l10n = window.cf7nlValidateL10n || {};
+	var l10n = window.cf7eValidateL10n || {};
 	var TEXT = {
 		required: l10n.required || 'Please complete this field.',
 		invalid:  l10n.invalid  || 'Please check this entry.'
@@ -54,7 +54,7 @@
 	 * required", read rather than guessed.
 	 */
 	function isRequired( control ) {
-		if ( 'radio' === control.type && ! control.closest( '.cf7nl-rating' ) ) {
+		if ( 'radio' === control.type && ! control.closest( '.cf7e-rating' ) ) {
 			return true;
 		}
 
@@ -70,7 +70,7 @@
 		return control.closest( '.wpcf7-form-control-wrap' ) || control.parentNode;
 	}
 
-	/** CF7 marks its own findings with this; ours are `.cf7nl-field-error`. */
+	/** CF7 marks its own findings with this; ours are `.cf7e-field-error`. */
 	function cf7Complaint( wrap ) {
 		return wrap ? wrap.querySelector( '.wpcf7-not-valid-tip' ) : null;
 	}
@@ -84,16 +84,16 @@
 			// Undo only what we put there. CF7's own validator sets the same
 			// class, and stripping that left its message on screen with the
 			// styling gone — a red-flagged field that no longer looks flagged.
-			if ( ! one.hasAttribute( 'data-cf7nl-invalid' ) ) {
+			if ( ! one.hasAttribute( 'data-cf7e-invalid' ) ) {
 				return;
 			}
-			one.removeAttribute( 'data-cf7nl-invalid' );
+			one.removeAttribute( 'data-cf7e-invalid' );
 			one.classList.remove( 'wpcf7-not-valid' );
 			one.removeAttribute( 'aria-invalid' );
 		} );
 
 		if ( wrap ) {
-			var tip = wrap.querySelector( '.cf7nl-field-error' );
+			var tip = wrap.querySelector( '.cf7e-field-error' );
 			if ( tip ) {
 				tip.parentNode.removeChild( tip );
 			}
@@ -110,7 +110,7 @@
 			return;
 		}
 
-		control.setAttribute( 'data-cf7nl-invalid', '1' );
+		control.setAttribute( 'data-cf7e-invalid', '1' );
 		control.classList.add( 'wpcf7-not-valid' );
 		control.setAttribute( 'aria-invalid', 'true' );
 
@@ -120,7 +120,7 @@
 			return;
 		}
 		var tip = document.createElement( 'span' );
-		tip.className = 'cf7nl-field-error';
+		tip.className = 'cf7e-field-error';
 		tip.setAttribute( 'role', 'alert' );
 		tip.textContent = message;
 		wrap.appendChild( tip );
@@ -226,7 +226,7 @@
 			}
 
 			var caption = captionFor( control );
-			if ( ! caption || caption.querySelector( '.cf7nl-required' ) ) {
+			if ( ! caption || caption.querySelector( '.cf7e-required' ) ) {
 				return;
 			}
 
@@ -237,7 +237,7 @@
 			}
 
 			var star = document.createElement( 'span' );
-			star.className = 'cf7nl-required';
+			star.className = 'cf7e-required';
 			// aria-required already tells a screen reader; this is for eyes only.
 			star.setAttribute( 'aria-hidden', 'true' );
 			star.textContent = '*';
@@ -271,7 +271,7 @@
 	function dropOursWhereCf7Spoke( form ) {
 		Array.prototype.forEach.call( form.querySelectorAll( '.wpcf7-not-valid-tip' ), function ( theirs ) {
 			var wrap = theirs.closest( '.wpcf7-form-control-wrap' ) || theirs.parentNode;
-			var ours = wrap ? wrap.querySelector( '.cf7nl-field-error' ) : null;
+			var ours = wrap ? wrap.querySelector( '.cf7e-field-error' ) : null;
 			if ( ours ) {
 				ours.parentNode.removeChild( ours );
 			}
@@ -310,10 +310,10 @@
 	}
 
 	function watch( form ) {
-		if ( form.dataset.cf7nlValidate ) {
+		if ( form.dataset.cf7eValidate ) {
 			return;
 		}
-		form.dataset.cf7nlValidate = '1';
+		form.dataset.cf7eValidate = '1';
 
 		markRequired( form );
 		releaseSubmit( form );
@@ -357,13 +357,13 @@
 
 		// CF7 re-renders its own messages after a submit; ours would be stale.
 		form.addEventListener( 'wpcf7submit', function () {
-			Array.prototype.forEach.call( form.querySelectorAll( '.cf7nl-field-error' ), function ( tip ) {
+			Array.prototype.forEach.call( form.querySelectorAll( '.cf7e-field-error' ), function ( tip ) {
 				tip.parentNode.removeChild( tip );
 			} );
 		} );
 	}
 
-	window.cf7nlValidate = { field: field, container: container, clear: clear, isEmpty: isEmpty, isRequired: isRequired };
+	window.cf7eValidate = { field: field, container: container, clear: clear, isEmpty: isEmpty, isRequired: isRequired };
 
-	window.cf7nl.forms( watch );
+	window.cf7e.forms( watch );
 } )();

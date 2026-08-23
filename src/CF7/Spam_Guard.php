@@ -6,20 +6,20 @@
  *  - Dedup: an identical submission repeated within a short window is a flood /
  *    double-post, tracked with a short-lived transient (no DB schema needed).
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
-use CF7NL\DB\Settings_Repository;
+use CF7E\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Spam_Guard {
 
-	private const TS_FIELD    = 'cf7nl_ts';
+	private const TS_FIELD    = 'cf7e_ts';
 	private const MIN_SECONDS = 3;
 	private const DUP_WINDOW  = 60;
 
@@ -139,7 +139,7 @@ final class Spam_Guard {
 	private function dup_key( $submission ): string {
 		$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
 		foreach ( array_keys( $data ) as $key ) {
-			if ( 0 === strpos( $key, '_' ) || 0 === strpos( $key, 'cf7nl_' ) ) {
+			if ( 0 === strpos( $key, '_' ) || 0 === strpos( $key, 'cf7e_' ) ) {
 				unset( $data[ $key ] );
 			}
 		}
@@ -151,7 +151,7 @@ final class Spam_Guard {
 		// with nothing to tell them why.
 		$who = (string) ( $submission && method_exists( $submission, 'get_meta' ) ? $submission->get_meta( 'remote_ip' ) : '' );
 
-		return 'cf7nl_dup_' . md5( self::form_id_of( $submission ) . '|' . $who . '|' . wp_json_encode( $data ) );
+		return 'cf7e_dup_' . md5( self::form_id_of( $submission ) . '|' . $who . '|' . wp_json_encode( $data ) );
 	}
 
 	/**

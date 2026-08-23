@@ -28,21 +28,21 @@
  *    time by esc_attr() in Steps.php and read back with textContent in
  *    steps.js. Escaping them here as well would double-encode them.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Form_Markup {
 
 	/** Phone field markers. The format is base64url so it survives being a class. */
-	public const TEL_DIGITS = 'cf7nl-tel';
+	public const TEL_DIGITS = 'cf7e-tel';
 
-	public const TEL_FORMAT = 'cf7nl-telfmt-';
+	public const TEL_FORMAT = 'cf7e-telfmt-';
 
 	/** Settings a page break carries, and the order they are written back in. */
 	public const STEP_ATTRS = array( 'title', 'desc', 'prev', 'next', 'class', 'id' );

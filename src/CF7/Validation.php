@@ -2,20 +2,20 @@
 /**
  * Live validation.
  *
- * Loads assets/js/validate.js on every Nova-rendered form. It runs at priority
- * 8 — ahead of Steps at 9 — because steps.js declares `cf7nl-validate` as a
+ * Loads assets/js/validate.js on every form this plugin renders. It runs at priority
+ * 8 — ahead of Steps at 9 — because steps.js declares `cf7e-validate` as a
  * dependency, and WordPress silently drops a script whose dependency was never
  * registered.
  *
  * The message itself is styled in assets/css/controls.css, which every form
  * loads.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,25 +26,25 @@ final class Validation {
 	}
 
 	/**
-	 * The shared front-end helpers (`window.cf7nl.ready/forms/el`).
+	 * The shared front-end helpers (`window.cf7e.ready/forms/el`).
 	 *
 	 * Registered here for the same reason validate.js is enqueued here: this
 	 * filter runs at priority 8, ahead of every other one of ours, and WordPress
-	 * silently drops a script whose dependency was never registered. Every cf7nl
+	 * silently drops a script whose dependency was never registered. Every cf7e
 	 * script declares this one, so it has to exist before any of them ask.
 	 */
-	public const BASE = 'cf7nl-nova';
+	public const BASE = 'cf7e-base';
 
 	public function enqueue( string $elements ): string {
-		wp_enqueue_script( self::BASE, CF7NL_URL . 'assets/js/nova.js', array(), cf7nl_asset_ver( 'assets/js/nova.js' ), true );
-		wp_enqueue_script( 'cf7nl-validate', CF7NL_URL . 'assets/js/validate.js', array( self::BASE ), cf7nl_asset_ver( 'assets/js/validate.js' ), true );
+		wp_enqueue_script( self::BASE, CF7E_URL . 'assets/js/base.js', array(), cf7e_asset_ver( 'assets/js/base.js' ), true );
+		wp_enqueue_script( 'cf7e-validate', CF7E_URL . 'assets/js/validate.js', array( self::BASE ), cf7e_asset_ver( 'assets/js/validate.js' ), true );
 
 		wp_localize_script(
-			'cf7nl-validate',
-			'cf7nlValidateL10n',
+			'cf7e-validate',
+			'cf7eValidateL10n',
 			array(
-				'required' => __( 'Please complete this field.', 'cf7-nova-lite' ),
-				'invalid'  => __( 'Please check this entry.', 'cf7-nova-lite' ),
+				'required' => __( 'Please complete this field.', 'essentials-for-contact-form-7' ),
+				'invalid'  => __( 'Please check this entry.', 'essentials-for-contact-form-7' ),
 			)
 		);
 

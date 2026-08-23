@@ -12,14 +12,14 @@
  * comment as pending or not for everyone. On a site with two admins, one opening
  * an entry settles it for both.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
-use CF7NL\DB\Submissions_Repository;
+use CF7E\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 

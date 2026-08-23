@@ -2,12 +2,12 @@
 /**
  * Plugin orchestrator.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\Core;
+namespace CF7E\Core;
 
 /*
  * Above the imports rather than below them.
@@ -23,45 +23,45 @@ namespace CF7NL\Core;
  */
 defined( 'ABSPATH' ) || exit;
 
-use CF7NL\Admin\Assets;
-use CF7NL\Admin\Attachment_Download;
-use CF7NL\Admin\Cf7_Integration;
-use CF7NL\Admin\Csv_Export;
-use CF7NL\Admin\Menu;
-use CF7NL\CF7\Attachments;
-use CF7NL\CF7\Conditional;
-use CF7NL\CF7\Country;
-use CF7NL\CF7\Date_Picker;
-use CF7NL\CF7\Design;
-use CF7NL\CF7\Dynamic_Text;
-use CF7NL\CF7\File_Field;
-use CF7NL\CF7\Form_Class;
-use CF7NL\CF7\Form_Styles;
-use CF7NL\CF7\Grid;
-use CF7NL\CF7\Honeypot;
-use CF7NL\CF7\Marker_Cleanup;
-use CF7NL\CF7\Password;
-use CF7NL\CF7\Prefill;
-use CF7NL\CF7\Product_Field;
-use CF7NL\CF7\Rating;
-use CF7NL\CF7\Spam_Guard;
-use CF7NL\CF7\Redirect;
-use CF7NL\CF7\Revisions;
-use CF7NL\CF7\Steps;
-use CF7NL\CF7\Submission_Id;
-use CF7NL\CF7\Submission_Listener;
-use CF7NL\CF7\Validation;
-use CF7NL\DB\Settings_Repository;
-use CF7NL\DB\Submissions_Repository;
-use CF7NL\Privacy\Privacy;
-use CF7NL\Modules\Registry;
-use CF7NL\REST\Forms_Controller;
-use CF7NL\REST\Modules_Controller;
-use CF7NL\REST\Settings_Controller;
-use CF7NL\REST\Submissions_Controller;
-use CF7NL\REST\Templates_Controller;
-use CF7NL\REST\Transfer_Controller;
-use CF7NL\Templates\Registry as Template_Registry;
+use CF7E\Admin\Assets;
+use CF7E\Admin\Attachment_Download;
+use CF7E\Admin\Cf7_Integration;
+use CF7E\Admin\Csv_Export;
+use CF7E\Admin\Menu;
+use CF7E\CF7\Attachments;
+use CF7E\CF7\Conditional;
+use CF7E\CF7\Country;
+use CF7E\CF7\Date_Picker;
+use CF7E\CF7\Design;
+use CF7E\CF7\Dynamic_Text;
+use CF7E\CF7\File_Field;
+use CF7E\CF7\Form_Class;
+use CF7E\CF7\Form_Styles;
+use CF7E\CF7\Grid;
+use CF7E\CF7\Honeypot;
+use CF7E\CF7\Marker_Cleanup;
+use CF7E\CF7\Password;
+use CF7E\CF7\Prefill;
+use CF7E\CF7\Product_Field;
+use CF7E\CF7\Rating;
+use CF7E\CF7\Spam_Guard;
+use CF7E\CF7\Redirect;
+use CF7E\CF7\Revisions;
+use CF7E\CF7\Steps;
+use CF7E\CF7\Submission_Id;
+use CF7E\CF7\Submission_Listener;
+use CF7E\CF7\Validation;
+use CF7E\DB\Settings_Repository;
+use CF7E\DB\Submissions_Repository;
+use CF7E\Privacy\Privacy;
+use CF7E\Modules\Registry;
+use CF7E\REST\Forms_Controller;
+use CF7E\REST\Modules_Controller;
+use CF7E\REST\Settings_Controller;
+use CF7E\REST\Submissions_Controller;
+use CF7E\REST\Templates_Controller;
+use CF7E\REST\Transfer_Controller;
+use CF7E\Templates\Registry as Template_Registry;
 
 final class Plugin {
 
@@ -135,10 +135,10 @@ final class Plugin {
 		}
 
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
-		add_action( 'cf7nl_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
+		add_action( 'cf7e_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
 
-		if ( ! wp_next_scheduled( 'cf7nl_daily_cleanup' ) ) {
-			wp_schedule_event( time(), 'daily', 'cf7nl_daily_cleanup' );
+		if ( ! wp_next_scheduled( 'cf7e_daily_cleanup' ) ) {
+			wp_schedule_event( time(), 'daily', 'cf7e_daily_cleanup' );
 		}
 	}
 
@@ -176,6 +176,13 @@ final class Plugin {
 		if ( $spam_days > 0 ) {
 			$repository->delete_older_than( $spam_days, 'spam' );
 		}
+
+		// Last, so it counts what the two deletions above have left behind. The
+		// running total the upload path reads is adjusted rather than measured,
+		// and anything that moves a file without telling it — a hand-deleted
+		// folder, a restore from backup — leaves it a little wrong. Once a day is
+		// often enough for a number whose only job is to hold a ceiling up.
+		Attachments::recount();
 	}
 
 	private function register_services(): void {

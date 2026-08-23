@@ -5,12 +5,12 @@
  * The plugin stored the message and the address and then sent you to an email
  * client to copy them out. This closes that.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class Reply {
 	 * the order the fields were filled in.
 	 *
 	 * Underscored keys are skipped: they are the plugin's own bookkeeping, and
-	 * _cf7nl_files holds filenames rather than answers.
+	 * _cf7e_files holds filenames rather than answers.
 	 *
 	 * @param array<string, mixed> $data The submitted fields.
 	 */
@@ -66,14 +66,14 @@ final class Reply {
 		$to = self::address_in( $data );
 
 		if ( '' === $to ) {
-			return __( 'This entry has no email address to reply to.', 'cf7-nova-lite' );
+			return __( 'This entry has no email address to reply to.', 'essentials-for-contact-form-7' );
 		}
 
 		$subject = trim( wp_strip_all_tags( $subject ) );
 		$message = trim( wp_strip_all_tags( $message ) );
 
 		if ( '' === $subject || '' === $message ) {
-			return __( 'A reply needs a subject and a message.', 'cf7-nova-lite' );
+			return __( 'A reply needs a subject and a message.', 'essentials-for-contact-form-7' );
 		}
 
 		/*
@@ -96,6 +96,6 @@ final class Reply {
 
 		$sent = wp_mail( $to, $subject, $message, $headers );
 
-		return $sent ? '' : __( 'WordPress could not send the mail. Check the site&#8217;s email setup.', 'cf7-nova-lite' );
+		return $sent ? '' : __( 'WordPress could not send the mail. Check the site&#8217;s email setup.', 'essentials-for-contact-form-7' );
 	}
 }

@@ -10,12 +10,12 @@
  * with a dozen fields reaches it — and it answers a successful post with 204
  * and an empty body rather than 200.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,7 +48,7 @@ final class Discord {
 
 		if ( '' !== $error && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- the only channel a background failure has.
-			error_log( 'CF7 Nova: Discord refused a notification — ' . $error );
+			error_log( 'CF7 Essentials: Discord refused a notification — ' . $error );
 		}
 	}
 
@@ -60,8 +60,8 @@ final class Discord {
 	public static function test( array $config ): string {
 		return self::send(
 			(string) ( $config['webhook_url'] ?? '' ),
-			'**' . self::escape( __( 'CF7 Nova', 'cf7-nova-lite' ) ) . "**\n"
-				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'cf7-nova-lite' ) )
+			'**' . self::escape( __( 'CF7 Essentials', 'essentials-for-contact-form-7' ) ) . "**\n"
+				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'essentials-for-contact-form-7' ) )
 		);
 	}
 
@@ -100,7 +100,7 @@ final class Discord {
 		 * is exactly what somebody does when the message was too long to show
 		 * them everything.
 		 */
-		$tail = "\n\n" . self::escape( __( '(truncated)', 'cf7-nova-lite' ) ) . "\n" . esc_url_raw( $entry->link );
+		$tail = "\n\n" . self::escape( __( '(truncated)', 'essentials-for-contact-form-7' ) ) . "\n" . esc_url_raw( $entry->link );
 		$room = self::LIMIT - mb_strlen( $tail );
 
 		return mb_substr( $message, 0, max( 0, $room ) ) . $tail;
@@ -111,7 +111,7 @@ final class Discord {
 	 */
 	private static function send( string $url, string $message ): string {
 		if ( '' === $url ) {
-			return __( 'No webhook URL is set.', 'cf7-nova-lite' );
+			return __( 'No webhook URL is set.', 'essentials-for-contact-form-7' );
 		}
 
 		$response = wp_remote_post(
@@ -140,7 +140,7 @@ final class Discord {
 
 		return is_array( $body ) && ! empty( $body['message'] )
 			? (string) $body['message']
-			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Discord answered %d.', 'cf7-nova-lite' ), $code );
+			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Discord answered %d.', 'essentials-for-contact-form-7' ), $code );
 	}
 
 	/**

@@ -7,12 +7,12 @@
  * saying the same thing seven times, in the file a reviewer opens first, where a
  * fix to one copy silently left the other six behind.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -90,7 +90,7 @@ final class Assets {
 			return $manifest;
 		}
 
-		$path = CF7NL_PATH . 'build/manifest.json';
+		$path = CF7E_PATH . 'build/manifest.json';
 
 		// The readable check stays in front of it: an unbuilt checkout is a
 		// normal state for a developer, and wp_json_file_decode() announces a
@@ -116,7 +116,7 @@ final class Assets {
 	 * @return string The script handle, so a caller can localise against it.
 	 */
 	public static function enqueue( string $entry ): string {
-		$handle = 'cf7nl-' . $entry;
+		$handle = 'cf7e-' . $entry;
 		$asset  = self::entry( $entry );
 
 		if ( ! $asset || ! isset( $asset['file'] ) ) {
@@ -125,9 +125,9 @@ final class Assets {
 
 		wp_enqueue_script(
 			$handle,
-			CF7NL_URL . 'build/' . $asset['file'],
+			CF7E_URL . 'build/' . $asset['file'],
 			self::DEPS,
-			CF7NL_VERSION,
+			CF7E_VERSION,
 			true
 		);
 
@@ -138,7 +138,7 @@ final class Assets {
 		// translations to the browser and `__()` hands back the English it was
 		// given — on a fully translated site, in every language. `wp-i18n` is
 		// already in DEPS, which is what this needs to attach to.
-		wp_set_script_translations( $handle, 'cf7-nova-lite', CF7NL_PATH . 'languages' );
+		wp_set_script_translations( $handle, 'essentials-for-contact-form-7', CF7E_PATH . 'languages' );
 
 		// One entry can pull in several stylesheets, and each needs a handle of its
 		// own or the later ones silently replace the first.
@@ -147,9 +147,9 @@ final class Assets {
 
 			wp_enqueue_style(
 				$style,
-				CF7NL_URL . 'build/' . $css_file,
+				CF7E_URL . 'build/' . $css_file,
 				array(),
-				CF7NL_VERSION
+				CF7E_VERSION
 			);
 
 			self::$styles[] = $style;

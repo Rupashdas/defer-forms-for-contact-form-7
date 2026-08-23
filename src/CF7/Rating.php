@@ -5,12 +5,12 @@
  * through our callback, collects its posted value, and includes it in mail. The
  * widget is a reversed radio group styled into stars by rating.css (CSS-only).
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,7 +44,7 @@ final class Rating {
 			return '';
 		}
 
-		wp_enqueue_style( 'cf7nl-rating', CF7NL_URL . 'assets/css/rating.css', array(), cf7nl_asset_ver( 'assets/css/rating.css' ) );
+		wp_enqueue_style( 'cf7e-rating', CF7E_URL . 'assets/css/rating.css', array(), cf7e_asset_ver( 'assets/css/rating.css' ) );
 
 		$max = (int) $tag->get_option( 'max', 'int', true );
 		$max = ( $max < 1 ) ? 5 : min( 10, $max );
@@ -68,7 +68,7 @@ final class Rating {
 		}
 
 		return sprintf(
-			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><span class="cf7nl-rating %2$s">%3$s</span>%4$s</span>',
+			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><span class="cf7e-rating %2$s">%3$s</span>%4$s</span>',
 			esc_attr( $tag->name ),
 			esc_attr( wpcf7_form_controls_class( $tag->type ) ),
 			$stars,

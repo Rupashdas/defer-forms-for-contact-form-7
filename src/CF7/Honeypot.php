@@ -3,14 +3,14 @@
  * Honeypot spam protection: injects a hidden field and rejects submissions
  * that fill it (only bots do).
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
-use CF7NL\DB\Settings_Repository;
+use CF7E\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,11 +19,11 @@ final class Honeypot {
 	/**
 	 * The trap's name, per site.
 	 *
-	 * It used to be the constant `cf7nl_hp`, which any bot that had met this
+	 * It used to be the constant `cf7e_hp`, which any bot that had met this
 	 * plugin once could skip by name. Hashing it per site means a list of field
 	 * names learned from one install says nothing about the next.
 	 *
-	 * The `cf7nl_` prefix stays: it is what Submission_Listener strips before
+	 * The `cf7e_` prefix stays: it is what Submission_Listener strips before
 	 * writing a row, and what the dedup key ignores, so a name without it would
 	 * quietly start being stored and shown as though somebody had typed it.
 	 */
@@ -31,7 +31,7 @@ final class Honeypot {
 		static $name = null;
 
 		if ( null === $name ) {
-			$name = 'cf7nl_hp_' . substr( wp_hash( 'cf7nl_honeypot_field' ), 0, 10 );
+			$name = 'cf7e_hp_' . substr( wp_hash( 'cf7e_honeypot_field' ), 0, 10 );
 		}
 
 		return $name;
@@ -54,9 +54,9 @@ final class Honeypot {
 		}
 
 		$field = sprintf(
-			'<span class="cf7nl-hp" aria-hidden="true" style="position:absolute !important;left:-9999px !important;top:-9999px !important;">'
+			'<span class="cf7e-hp" aria-hidden="true" style="position:absolute !important;left:-9999px !important;top:-9999px !important;">'
 				. '<label>%s<input type="text" name="%s" value="" tabindex="-1" autocomplete="off"></label></span>',
-			esc_html__( 'Leave this field empty', 'cf7-nova-lite' ),
+			esc_html__( 'Leave this field empty', 'essentials-for-contact-form-7' ),
 			esc_attr( self::field() )
 		);
 

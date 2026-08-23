@@ -1,5 +1,5 @@
 /**
- * CF7 Nova — file drop zone.
+ * CF7 Essentials — file drop zone.
  *
  * Same contract as the select widget: the real <input type="file"> stays in the
  * DOM and remains what the browser submits. We only hide it, and every drop or
@@ -13,7 +13,7 @@
 ( function () {
 	'use strict';
 
-	var l10n = window.cf7nlFileL10n || {};
+	var l10n = window.cf7eFileL10n || {};
 	var TEXT = {
 		drop:     l10n.drop     || 'Drag files here or click to browse',
 		dropOne:  l10n.dropOne  || 'Drag a file here or click to browse',
@@ -60,7 +60,7 @@
 		} );
 	} );
 
-	var el = window.cf7nl.el;
+	var el = window.cf7e.el;
 
 	/** Does the file satisfy the input's `accept` list? */
 	function accepted( file, accept ) {
@@ -86,26 +86,26 @@
 	}
 
 	function setup( input ) {
-		if ( input.dataset.cf7nlFile ) {
+		if ( input.dataset.cf7eFile ) {
 			return;
 		}
-		input.dataset.cf7nlFile = '1';
+		input.dataset.cf7eFile = '1';
 
 		var multiple = input.multiple;
 		var accept   = input.getAttribute( 'accept' ) || '';
 		var limit    = parseInt( input.dataset.limit || '0', 10 );
 		var maxFiles = parseInt( input.dataset.maxfiles || '0', 10 );
 
-		var wrap = el( 'div', 'cf7nl-file' );
+		var wrap = el( 'div', 'cf7e-file' );
 		input.parentNode.insertBefore( wrap, input );
 		wrap.appendChild( input );
-		input.classList.add( 'cf7nl-file-native' );
+		input.classList.add( 'cf7e-file-native' );
 
-		var zone = el( 'div', 'cf7nl-file-zone' );
+		var zone = el( 'div', 'cf7e-file-zone' );
 		zone.setAttribute( 'role', 'button' );
 		zone.setAttribute( 'tabindex', '0' );
-		zone.appendChild( el( 'span', 'cf7nl-file-icon' ) );
-		zone.appendChild( el( 'span', 'cf7nl-file-text', multiple ? TEXT.drop : TEXT.dropOne ) );
+		zone.appendChild( el( 'span', 'cf7e-file-icon' ) );
+		zone.appendChild( el( 'span', 'cf7e-file-text', multiple ? TEXT.drop : TEXT.dropOne ) );
 
 		var hint = [];
 		if ( accept ) {
@@ -118,12 +118,12 @@
 			hint.push( sprintf( TEXT.tooMany, maxFiles ) );
 		}
 		if ( hint.length ) {
-			zone.appendChild( el( 'span', 'cf7nl-file-hint', hint.join( ' · ' ) ) );
+			zone.appendChild( el( 'span', 'cf7e-file-hint', hint.join( ' · ' ) ) );
 		}
 		wrap.appendChild( zone );
 
-		var list   = el( 'ul', 'cf7nl-file-list' );
-		var errors = el( 'div', 'cf7nl-file-errors' );
+		var list   = el( 'ul', 'cf7e-file-list' );
+		var errors = el( 'div', 'cf7e-file-errors' );
 		wrap.appendChild( list );
 		wrap.appendChild( errors );
 
@@ -140,7 +140,7 @@
 		function showErrors( messages ) {
 			errors.innerHTML = '';
 			messages.forEach( function ( message ) {
-				errors.appendChild( el( 'p', 'cf7nl-file-error', message ) );
+				errors.appendChild( el( 'p', 'cf7e-file-error', message ) );
 			} );
 		}
 
@@ -148,24 +148,24 @@
 			list.innerHTML = '';
 
 			chosen.forEach( function ( file, index ) {
-				var item = el( 'li', 'cf7nl-file-item' );
+				var item = el( 'li', 'cf7e-file-item' );
 
 				if ( file.type.indexOf( 'image/' ) === 0 ) {
-					var thumb = el( 'img', 'cf7nl-file-thumb' );
+					var thumb = el( 'img', 'cf7e-file-thumb' );
 					thumb.alt = '';
 					thumb.src = URL.createObjectURL( file );
 					thumb.addEventListener( 'load', function () { URL.revokeObjectURL( thumb.src ); } );
 					item.appendChild( thumb );
 				} else {
-					item.appendChild( el( 'span', 'cf7nl-file-thumb cf7nl-file-thumb--doc' ) );
+					item.appendChild( el( 'span', 'cf7e-file-thumb cf7e-file-thumb--doc' ) );
 				}
 
-				var meta = el( 'span', 'cf7nl-file-meta' );
-				meta.appendChild( el( 'span', 'cf7nl-file-name', file.name ) );
-				meta.appendChild( el( 'span', 'cf7nl-file-size', formatSize( file.size ) ) );
+				var meta = el( 'span', 'cf7e-file-meta' );
+				meta.appendChild( el( 'span', 'cf7e-file-name', file.name ) );
+				meta.appendChild( el( 'span', 'cf7e-file-size', formatSize( file.size ) ) );
 				item.appendChild( meta );
 
-				var remove = el( 'button', 'cf7nl-file-remove', '×' );
+				var remove = el( 'button', 'cf7e-file-remove', '×' );
 				remove.type = 'button';
 				remove.setAttribute( 'aria-label', TEXT.remove + ': ' + file.name );
 				remove.addEventListener( 'click', function () {
@@ -265,7 +265,7 @@
 		// form left every thumbnail on screen over an input holding nothing —
 		// files the visitor could see attached and that would never be sent.
 		if ( input.form ) {
-			window.cf7nl.onReset( input.form, function () {
+			window.cf7e.onReset( input.form, function () {
 				chosen = [];
 				showErrors( [] );
 				renderList();
@@ -275,7 +275,7 @@
 		renderList();
 	}
 
-	window.cf7nl.forms( function ( form ) {
+	window.cf7e.forms( function ( form ) {
 		form.querySelectorAll( 'input[type="file"]' ).forEach( setup );
 	} );
 } )();

@@ -11,12 +11,12 @@
  * Built once per submission and handed to all three, which also means the time
  * on three notifications about one entry is the same time.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,7 +45,7 @@ final class Notification {
 			: '';
 
 		// A form nobody named still has to be announced as something.
-		$this->title = '' !== $title ? $title : __( 'New submission', 'cf7-nova-lite' );
+		$this->title = '' !== $title ? $title : __( 'New submission', 'essentials-for-contact-form-7' );
 
 		$this->when = (string) ( wp_date( 'j M Y, g:i a' ) ?: '' );
 
@@ -56,7 +56,7 @@ final class Notification {
 
 			/*
 			 * Underscored keys are the plugin's own bookkeeping, not answers.
-			 * Keeping the files writes _cf7nl_files into the entry — where the
+			 * Keeping the files writes _cf7e_files into the entry — where the
 			 * files were put and under what names — and a notification listing
 			 * that as though somebody had typed it is noise at best.
 			 *
@@ -70,7 +70,7 @@ final class Notification {
 			$this->fields[ $field ] = self::flatten( $value );
 		}
 
-		$this->link = admin_url( 'admin.php?page=cf7-nova-submissions&entry=' . $entry_id );
+		$this->link = admin_url( 'admin.php?page=cf7-essentials-submissions&entry=' . $entry_id );
 	}
 
 	/**

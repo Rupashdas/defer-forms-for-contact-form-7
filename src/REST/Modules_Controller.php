@@ -5,14 +5,14 @@
  * Read-only. There is nothing to write: every feature is on, and the list it
  * serves is a constant. See Modules\Registry for why the switches went.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\REST;
+namespace CF7E\REST;
 
-use CF7NL\Modules\Registry;
+use CF7E\Modules\Registry;
 
 defined( 'ABSPATH' ) || exit;
 

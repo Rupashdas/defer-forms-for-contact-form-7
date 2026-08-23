@@ -8,21 +8,21 @@
  *
  * Every route is admin-only; `can_manage()` is the single place that says so.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\REST;
+namespace CF7E\REST;
 
-use CF7NL\Core\Capability;
-use CF7NL\Core\Container;
+use CF7E\Core\Capability;
+use CF7E\Core\Container;
 
 defined( 'ABSPATH' ) || exit;
 
 abstract class Controller {
 
-	protected const NAMESPACE = 'cf7nl/v1';
+	protected const NAMESPACE = 'cf7e/v1';
 
 	protected Container $container;
 

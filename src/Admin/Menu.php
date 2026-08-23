@@ -1,29 +1,30 @@
 <?php
 /**
- * The CF7 Nova admin menu, and the page bodies behind it.
+ * The CF7 Essentials admin menu, and the page bodies behind it.
  *
  * Every screen is the same three things: enqueue a bundle, print a root element,
  * let React take over. So there is one render method and a table of screens,
  * rather than seven functions that each said it again.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
-use CF7NL\CF7\Design;
-use CF7NL\CF7\Product_Field;
-use CF7NL\Core\Capability;
-use CF7NL\DB\Submissions_Repository;
-use CF7NL\Modules\Registry;
+use CF7E\CF7\Attachments;
+use CF7E\CF7\Design;
+use CF7E\CF7\Product_Field;
+use CF7E\Core\Capability;
+use CF7E\DB\Submissions_Repository;
+use CF7E\Modules\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Menu {
 
-	private const SLUG = 'cf7-nova';
+	private const SLUG = 'cf7-essentials';
 
 	private Design $design;
 
@@ -38,19 +39,19 @@ final class Menu {
 	 * The submenu, in order: page slug => [ entry name, label ].
 	 *
 	 * The entry name is both the Vite entry under ui/apps/ and half the id React
-	 * mounts on (`cf7nl-<entry>-root`), which is why neither has to be repeated.
+	 * mounts on (`cf7e-<entry>-root`), which is why neither has to be repeated.
 	 *
 	 * @return array<string, array{0: string, 1: string}>
 	 */
 	private static function pages(): array {
 		return array(
-			self::SLUG               => array( 'dashboard', __( 'Dashboard', 'cf7-nova-lite' ) ),
-			'cf7-nova-forms'         => array( 'forms', __( 'Forms', 'cf7-nova-lite' ) ),
+			self::SLUG                     => array( 'dashboard', __( 'Dashboard', 'essentials-for-contact-form-7' ) ),
+			'cf7-essentials-forms'         => array( 'forms', __( 'Forms', 'essentials-for-contact-form-7' ) ),
 			// Straight after Forms, not buried in Settings: this is the look of
 			// every form on the site, and it is the first thing anyone goes
 			// looking for after making one.
-			'cf7-nova-styling'       => array( 'styling', __( 'Styling', 'cf7-nova-lite' ) ),
-			'cf7-nova-submissions'   => array( 'submissions', __( 'Submissions', 'cf7-nova-lite' ) ),
+			'cf7-essentials-styling'       => array( 'styling', __( 'Styling', 'essentials-for-contact-form-7' ) ),
+			'cf7-essentials-submissions'   => array( 'submissions', __( 'Submissions', 'essentials-for-contact-form-7' ) ),
 			// Under Submissions, because that is the order of the work: entries
 			// arrive, then somebody is told about them.
 			//
@@ -59,15 +60,42 @@ final class Menu {
 			// button that goes and tries them, which is a job rather than a
 			// preference — and the routing rules to come need somewhere to live
 			// that is not a seventh tab.
-			'cf7-nova-notifications' => array( 'notifications', __( 'Notifications', 'cf7-nova-lite' ) ),
-			'cf7-nova-templates'     => array( 'templates', __( 'Templates', 'cf7-nova-lite' ) ),
-			'cf7-nova-settings'      => array( 'settings', __( 'Settings', 'cf7-nova-lite' ) ),
-			'cf7-nova-features'      => array( 'features', __( 'Features', 'cf7-nova-lite' ) ),
+			'cf7-essentials-notifications' => array( 'notifications', __( 'Notifications', 'essentials-for-contact-form-7' ) ),
+			'cf7-essentials-templates'     => array( 'templates', __( 'Templates', 'essentials-for-contact-form-7' ) ),
+			'cf7-essentials-settings'      => array( 'settings', __( 'Settings', 'essentials-for-contact-form-7' ) ),
+			'cf7-essentials-features'      => array( 'features', __( 'Features', 'essentials-for-contact-form-7' ) ),
 		);
 	}
 
 	public function register_hooks(): void {
 		add_action( 'admin_menu', array( $this, 'register' ) );
+		add_action( 'admin_notices', array( $this, 'storage_notice' ) );
+	}
+
+	/**
+	 * Say so when attachments are being turned away.
+	 *
+	 * The submission still arrives and the mail still goes; only the copy is
+	 * refused. That is a quiet failure — an admin would find out by opening an
+	 * entry and finding the file gone — so it is said out loud instead.
+	 */
+	public function storage_notice(): void {
+		if ( ! Capability::granted() || ! get_transient( Attachments::FULL_KEY ) ) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-warning"><p><strong>%s</strong> %s</p></div>',
+			esc_html__( 'CF7 Essentials: uploads are no longer being kept.', 'essentials-for-contact-form-7' ),
+			esc_html(
+				sprintf(
+					/* translators: 1: bytes in use, 2: the limit. */
+					__( 'Stored attachments have reached %1$s of the %2$s limit. Submissions and their mail are unaffected — only the copies are being refused. Delete old entries, set a retention period, or raise the limit with the cf7e_attachment_limit filter.', 'essentials-for-contact-form-7' ),
+					size_format( Attachments::used() ),
+					size_format( Attachments::limit() )
+				)
+			)
+		);
 	}
 
 	public function register(): void {
@@ -78,8 +106,8 @@ final class Menu {
 		$unread = Unread::bubble();
 
 		add_menu_page(
-			__( 'CF7 Nova', 'cf7-nova-lite' ),
-			__( 'CF7 Nova', 'cf7-nova-lite' ) . $unread,
+			__( 'CF7 Essentials', 'essentials-for-contact-form-7' ),
+			__( 'CF7 Essentials', 'essentials-for-contact-form-7' ) . $unread,
 			$capability,
 			self::SLUG,
 			fn() => $this->render( 'dashboard' ),
@@ -91,7 +119,7 @@ final class Menu {
 			add_submenu_page(
 				self::SLUG,
 				$label,
-				'cf7-nova-submissions' === $slug ? $label . $unread : $label,
+				'cf7-essentials-submissions' === $slug ? $label . $unread : $label,
 				$capability,
 				$slug,
 				fn() => $this->render( $entry )
@@ -104,10 +132,10 @@ final class Menu {
 		// deprecation for every admin page load.
 		$builder = add_submenu_page(
 			'',
-			__( 'Form Builder', 'cf7-nova-lite' ),
-			__( 'Form Builder', 'cf7-nova-lite' ),
+			__( 'Form Builder', 'essentials-for-contact-form-7' ),
+			__( 'Form Builder', 'essentials-for-contact-form-7' ),
 			$capability,
-			'cf7-nova-builder',
+			'cf7-essentials-builder',
 			fn() => $this->render( 'builder' )
 		);
 
@@ -127,7 +155,7 @@ final class Menu {
 				'load-' . $builder,
 				static function (): void {
 					// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- this global IS the mechanism: get_admin_page_title() sets it and admin-header.php reads it, and for a page with no parent nothing else will.
-					$GLOBALS['title'] = __( 'Form Builder', 'cf7-nova-lite' );
+					$GLOBALS['title'] = __( 'Form Builder', 'essentials-for-contact-form-7' );
 				}
 			);
 		}
@@ -143,7 +171,7 @@ final class Menu {
 		$this->skin_preview();
 
 		printf(
-			'<div class="wrap"><div id="cf7nl-%1$s-root"%2$s></div></div>',
+			'<div class="wrap"><div id="cf7e-%1$s-root"%2$s></div></div>',
 			esc_attr( $entry ),
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- `%d` over an absint(); the attribute cannot carry anything but digits.
 			'builder' === $entry ? sprintf( ' data-form-id="%d"', self::requested_form_id() ) : ''
@@ -151,7 +179,7 @@ final class Menu {
 	}
 
 	/**
-	 * The saved design tokens, so a `.cf7nl-preview` looks like the real form.
+	 * The saved design tokens, so a `.cf7e-preview` looks like the real form.
 	 *
 	 * Here rather than on a hook of Design's own, because here is the one moment
 	 * the handle exists: `wp_add_inline_style()` will not attach to a stylesheet
@@ -160,7 +188,7 @@ final class Menu {
 	 * bundle was registered, and therefore before the rules it needed to outrank.
 	 *
 	 * Every screen gets it, not just the two that draw a preview. The tokens are
-	 * scoped to `.cf7nl-preview`, so on a screen without one they match nothing,
+	 * scoped to `.cf7e-preview`, so on a screen without one they match nothing,
 	 * and picking the screens by hand is a list to keep in step with the markup.
 	 */
 	private function skin_preview(): void {
@@ -188,7 +216,7 @@ final class Menu {
 			// capability read as "" or "1" is a trap for the next one added.
 			wp_add_inline_script(
 				$handle,
-				'window.cf7nlBuilder = ' . wp_json_encode( array( 'woocommerce' => Product_Field::is_available() ) ) . ';',
+				'window.cf7eBuilder = ' . wp_json_encode( array( 'woocommerce' => Product_Field::is_available() ) ) . ';',
 				'before'
 			);
 
@@ -207,7 +235,7 @@ final class Menu {
 			 */
 			wp_add_inline_script(
 				$handle,
-				'window.cf7nlDashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
+				'window.cf7eDashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
 				'before'
 			);
 
@@ -230,7 +258,7 @@ final class Menu {
 			 */
 			wp_add_inline_script(
 				$handle,
-				'window.cf7nlFeatures = ' . wp_json_encode( array( 'items' => Registry::definitions() ) ) . ';',
+				'window.cf7eFeatures = ' . wp_json_encode( array( 'items' => Registry::definitions() ) ) . ';',
 				'before'
 			);
 
@@ -243,10 +271,10 @@ final class Menu {
 
 		wp_localize_script(
 			$handle,
-			'cf7nlSubmissions',
+			'cf7eSubmissions',
 			array(
 				'exportUrl'       => admin_url( 'admin-post.php' ),
-				'exportNonce'     => wp_create_nonce( 'cf7nl_export_csv' ),
+				'exportNonce'     => wp_create_nonce( 'cf7e_export_csv' ),
 				// Attachments go through admin-post.php too, under their own nonce.
 				'attachmentNonce' => wp_create_nonce( Attachment_Download::ACTION ),
 			)

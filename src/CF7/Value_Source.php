@@ -7,12 +7,12 @@
  * `user:email|name|login|id|first|last`, `referrer`, `today`, `now`.
  * Anything else is returned as a literal.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

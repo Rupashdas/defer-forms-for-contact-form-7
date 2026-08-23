@@ -11,17 +11,17 @@
  * that has nothing to do with the other, and overwriting one of them on the
  * strength of its name is a way to lose a form nobody backed up.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\REST;
+namespace CF7E\REST;
 
-use CF7NL\CF7\Form_Bundle;
-use CF7NL\CF7\Form_Html;
-use CF7NL\CF7\Redirect;
-use CF7NL\CF7\Steps;
+use CF7E\CF7\Form_Bundle;
+use CF7E\CF7\Form_Html;
+use CF7E\CF7\Redirect;
+use CF7E\CF7\Steps;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -65,13 +65,13 @@ final class Transfer_Controller extends Controller {
 	 */
 	public function rest_export( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! class_exists( 'WPCF7_ContactForm' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$ids = array_filter( array_map( 'absint', (array) $request->get_param( 'ids' ) ) );
 
 		if ( empty( $ids ) ) {
-			return self::error( 'no_forms', __( 'No forms were chosen to export.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'no_forms', __( 'No forms were chosen to export.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$forms = array();
@@ -95,7 +95,7 @@ final class Transfer_Controller extends Controller {
 		}
 
 		if ( empty( $forms ) ) {
-			return self::error( 'no_forms', __( 'None of the chosen forms could be read.', 'cf7-nova-lite' ), 404 );
+			return self::error( 'no_forms', __( 'None of the chosen forms could be read.', 'essentials-for-contact-form-7' ), 404 );
 		}
 
 		return new \WP_REST_Response( Form_Bundle::pack( $forms ), 200 );
@@ -110,26 +110,26 @@ final class Transfer_Controller extends Controller {
 	 */
 	public function rest_import( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! function_exists( 'wpcf7_save_contact_form' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		// The route is admin-only already; this is CF7's own gate on creating a
 		// contact form, and a site that has narrowed it should still be obeyed.
 		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
-			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'cf7-nova-lite' ), 403 );
+			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'essentials-for-contact-form-7' ), 403 );
 		}
 
 		$params = $request->get_json_params();
 		$bundle = is_array( $params ) ? ( $params['bundle'] ?? null ) : null;
 
 		if ( ! is_array( $bundle ) ) {
-			return self::error( 'not_a_bundle', __( 'That file is not a Nova form bundle.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'not_a_bundle', __( 'That file is not a form bundle from this plugin.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$forms = Form_Bundle::unpack( $bundle );
 
 		if ( empty( $forms ) ) {
-			return self::error( 'nothing_to_import', __( 'The bundle holds no forms this version can read.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'nothing_to_import', __( 'The bundle holds no forms this version can read.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$created = array();
@@ -175,7 +175,7 @@ final class Transfer_Controller extends Controller {
 			$created[] = array(
 				'form_id'     => $id,
 				'title'       => $saved->title(),
-				'builder_url' => admin_url( 'admin.php?page=cf7-nova-builder&form=' . $id ),
+				'builder_url' => admin_url( 'admin.php?page=cf7-essentials-builder&form=' . $id ),
 			);
 		}
 

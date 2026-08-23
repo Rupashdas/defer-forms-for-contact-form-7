@@ -10,15 +10,16 @@
  * submissions store their fields as JSON — so the set of columns is only known
  * once every row has been looked at. Both passes stream.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
-use CF7NL\Core\Capability;
-use CF7NL\DB\Submissions_Repository;
+use CF7E\CF7\Entry_Fields;
+use CF7E\Core\Capability;
+use CF7E\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,22 +32,33 @@ final class Csv_Export {
 	}
 
 	public function register_hooks(): void {
-		add_action( 'admin_post_cf7nl_export_csv', array( $this, 'handle' ) );
+		add_action( 'admin_post_cf7e_export_csv', array( $this, 'handle' ) );
 	}
 
 	public function handle(): void {
 		if ( ! Capability::granted() ) {
-			wp_die( esc_html__( 'Permission denied.', 'cf7-nova-lite' ), 403 );
+			wp_die( esc_html__( 'Permission denied.', 'essentials-for-contact-form-7' ), 403 );
 		}
 
-		check_admin_referer( 'cf7nl_export_csv' );
+		check_admin_referer( 'cf7e_export_csv' );
 
 		$args    = $this->filters();
 		$columns = $this->columns( $args );
 
+		/*
+		 * Before the headers, so a stream that refuses to open is answered with a
+		 * normal admin error page rather than one written into a download that has
+		 * already begun.
+		 */
+		$output = fopen( 'php://output', 'w' );
+
+		if ( false === $output ) {
+			wp_die( esc_html__( 'The export could not be started.', 'essentials-for-contact-form-7' ), 500 );
+		}
+
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename="cf7-nova-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
+		header( 'Content-Disposition: attachment; filename="cf7-essentials-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
 
 		// A long export must not be cut short by the default execution limit.
 		// Discouraged in general because most code has no business extending it;
@@ -71,7 +83,6 @@ final class Csv_Export {
 		 * write directly — it puts contents at a path. There is no path here and
 		 * no file. The fwrite and fclose below are on that output handle.
 		 */
-		$output = fopen( 'php://output', 'w' );
 
 		// Byte-order mark, so Excel opens UTF-8 as UTF-8.
 		fwrite( $output, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- see above; the response, not a file.
@@ -80,10 +91,10 @@ final class Csv_Export {
 		// exactly as the form spelled them. Nothing re-imports this file, so
 		// there is no machine on the other side to keep the headings stable for.
 		$headings = array(
-			__( 'ID', 'cf7-nova-lite' ),
-			__( 'Form ID', 'cf7-nova-lite' ),
-			__( 'Status', 'cf7-nova-lite' ),
-			__( 'Date', 'cf7-nova-lite' ),
+			__( 'ID', 'essentials-for-contact-form-7' ),
+			__( 'Form ID', 'essentials-for-contact-form-7' ),
+			__( 'Status', 'essentials-for-contact-form-7' ),
+			__( 'Date', 'essentials-for-contact-form-7' ),
 		);
 
 		fputcsv( $output, array_map( array( $this, 'defuse' ), array_merge( $headings, $columns ) ) );
@@ -121,24 +132,6 @@ final class Csv_Export {
 	}
 
 	/**
-	 * Is this stored key something a visitor answered, rather than something the
-	 * plugin put in the form itself?
-	 *
-	 * Two prefixes are not answers. `_` covers Contact Form 7's own bookkeeping
-	 * and our `_cf7nl_files`; `cf7nl_` covers the honeypot and the time-trap's
-	 * signed token.
-	 *
-	 * Submission_Listener drops the second group before a row is written, so this
-	 * looks redundant — and is not. That strip only ever applied to rows written
-	 * after it existed, and every install upgraded from an earlier version still
-	 * holds rows carrying a signed token. An export is the last place one should
-	 * reappear: it leaves the site, and nothing else in the row is a secret.
-	 */
-	public static function is_answer( string $key ): bool {
-		return 0 !== strpos( $key, '_' ) && 0 !== strpos( $key, 'cf7nl_' );
-	}
-
-	/**
 	 * Every field name across the matching submissions, in first-seen order.
 	 *
 	 * @param array<string, mixed> $args
@@ -153,7 +146,7 @@ final class Csv_Export {
 				continue;
 			}
 			foreach ( array_keys( $data ) as $key ) {
-				if ( self::is_answer( (string) $key ) ) {
+				if ( Entry_Fields::is_answer( (string) $key ) ) {
 					$columns[ $key ] = true;
 				}
 			}

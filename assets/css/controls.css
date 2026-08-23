@@ -1,48 +1,48 @@
 /**
- * Form control skin — the single source of truth for how Nova fields look.
+ * Form control skin — the single source of truth for how CF7 Essentials fields look.
  *
  * Loaded twice from this one file: on the front end by Form_Styles, and into
  * the admin bundle by ui/shared/styles/admin.css, so the builder preview and
  * the real form can never drift apart.
  *
- * Everything is driven by `--cf7nl-*` custom properties declared on the form
+ * Everything is driven by `--cf7e-*` custom properties declared on the form
  * itself; src/CF7/Design.php writes them from the Design settings. Fonts are
  * inherited from the theme on purpose — we own the shape, not the type.
  */
 
-:is( .wpcf7-form, .cf7nl-preview ) {
+:is( .wpcf7-form, .cf7e-preview ) {
 	/* Type */
-	--cf7nl-font-size: 1rem;
+	--cf7e-font-size: 1rem;
 
 	/* Colour */
-	--cf7nl-text: #1b1b22;
-	--cf7nl-muted: #8a8580;
-	--cf7nl-bg: #ffffff;
-	--cf7nl-surface: #ffffff;
-	--cf7nl-surface-alt: #faf9f7;
-	--cf7nl-border: #d9d3c9;
-	--cf7nl-border-hover: #b9b1a3;
-	--cf7nl-primary: #1b1b22;
-	--cf7nl-primary-contrast: #ffffff;
-	--cf7nl-error: #dc2626;
+	--cf7e-text: #1b1b22;
+	--cf7e-muted: #8a8580;
+	--cf7e-bg: #ffffff;
+	--cf7e-surface: #ffffff;
+	--cf7e-surface-alt: #faf9f7;
+	--cf7e-border: #d9d3c9;
+	--cf7e-border-hover: #b9b1a3;
+	--cf7e-primary: #1b1b22;
+	--cf7e-primary-contrast: #ffffff;
+	--cf7e-error: #dc2626;
 
 	/* Shape and space */
-	--cf7nl-radius: 8px;
-	--cf7nl-control-height: 46px;
-	--cf7nl-padding-y: 11px;
-	--cf7nl-padding-x: 14px;
-	--cf7nl-gap: 18px;
+	--cf7e-radius: 8px;
+	--cf7e-control-height: 46px;
+	--cf7e-padding-y: 11px;
+	--cf7e-padding-x: 14px;
+	--cf7e-gap: 18px;
 
-	/* Focus ring. Set --cf7nl-ring to 0 to remove it entirely. */
-	--cf7nl-ring: 3px;
-	--cf7nl-ring-color: rgba( 27, 27, 34, 0.12 );
+	/* Focus ring. Set --cf7e-ring to 0 to remove it entirely. */
+	--cf7e-ring: 3px;
+	--cf7e-ring-color: rgba( 27, 27, 34, 0.12 );
 
-	--cf7nl-shadow: 0 10px 30px rgba( 27, 27, 34, 0.14 );
+	--cf7e-shadow: 0 10px 30px rgba( 27, 27, 34, 0.14 );
 
 	/* The button follows the primary colour unless it is given its own. */
-	--cf7nl-btn-bg: var( --cf7nl-primary );
-	--cf7nl-btn-text: var( --cf7nl-primary-contrast );
-	--cf7nl-btn-radius: var( --cf7nl-radius );
+	--cf7e-btn-bg: var( --cf7e-primary );
+	--cf7e-btn-text: var( --cf7e-primary-contrast );
+	--cf7e-btn-radius: var( --cf7e-radius );
 
 	/*
 	 * Icons are whole tokens, not just colours: a data: URI cannot read a custom
@@ -50,16 +50,16 @@
 	 * Design.php rebuilds these with the chosen colours; the values here are the
 	 * defaults and must stay in step with the colour tokens above.
 	 */
-	--cf7nl-icon-chevron: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>" );
-	--cf7nl-icon-tick: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>" );
-	--cf7nl-icon-check: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1b22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>" );
-	--cf7nl-icon-upload: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M7 10l5-5 5 5'/><path d='M12 5v12'/></svg>" );
-	--cf7nl-icon-doc: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/></svg>" );
+	--cf7e-icon-chevron: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>" );
+	--cf7e-icon-tick: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>" );
+	--cf7e-icon-check: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1b22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>" );
+	--cf7e-icon-upload: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M7 10l5-5 5 5'/><path d='M12 5v12'/></svg>" );
+	--cf7e-icon-doc: url( "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/></svg>" );
 }
 
 /* The controls that share one box model. Checkboxes, radios and buttons are
    deliberately excluded — they get their own treatment. */
-:is( .wpcf7-form, .cf7nl-preview ) :is(
+:is( .wpcf7-form, .cf7e-preview ) :is(
 	input[type='text'],
 	input[type='email'],
 	input[type='url'],
@@ -75,16 +75,16 @@
 	display: block;
 	box-sizing: border-box;
 	width: 100%;
-	min-height: var( --cf7nl-control-height );
+	min-height: var( --cf7e-control-height );
 	margin: 0;
-	padding: var( --cf7nl-padding-y ) var( --cf7nl-padding-x );
+	padding: var( --cf7e-padding-y ) var( --cf7e-padding-x );
 	font-family: inherit;
-	font-size: var( --cf7nl-font-size );
+	font-size: var( --cf7e-font-size );
 	line-height: 1.4;
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-bg );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-bg );
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
 	box-shadow: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -92,48 +92,48 @@
 	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input, select, textarea ):hover:not( :disabled ):not( :focus ) {
-	border-color: var( --cf7nl-border-hover );
+:is( .wpcf7-form, .cf7e-preview ) :is( input, select, textarea ):hover:not( :disabled ):not( :focus ) {
+	border-color: var( --cf7e-border-hover );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input, select, textarea ):focus {
+:is( .wpcf7-form, .cf7e-preview ) :is( input, select, textarea ):focus {
 	outline: none;
-	border-color: var( --cf7nl-primary );
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+	border-color: var( --cf7e-primary );
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input, textarea )::placeholder {
-	color: var( --cf7nl-muted );
+:is( .wpcf7-form, .cf7e-preview ) :is( input, textarea )::placeholder {
+	color: var( --cf7e-muted );
 	opacity: 1;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input, select, textarea ):disabled {
-	background-color: var( --cf7nl-surface-alt );
-	color: var( --cf7nl-muted );
+:is( .wpcf7-form, .cf7e-preview ) :is( input, select, textarea ):disabled {
+	background-color: var( --cf7e-surface-alt );
+	color: var( --cf7e-muted );
 	cursor: not-allowed;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) textarea {
+:is( .wpcf7-form, .cf7e-preview ) textarea {
 	min-height: 120px;
 	resize: vertical;
 }
 
 /* Native select keeps its own arrow when appearance is reset, so draw one. */
-:is( .wpcf7-form, .cf7nl-preview ) select:not( [multiple] ) {
-	padding-right: calc( var( --cf7nl-padding-x ) + 22px );
-	background-image: var( --cf7nl-icon-chevron );
+:is( .wpcf7-form, .cf7e-preview ) select:not( [multiple] ) {
+	padding-right: calc( var( --cf7e-padding-x ) + 22px );
+	background-image: var( --cf7e-icon-chevron );
 	background-repeat: no-repeat;
-	background-position: right var( --cf7nl-padding-x ) center;
+	background-position: right var( --cf7e-padding-x ) center;
 	background-size: 16px 16px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) select[multiple] {
+:is( .wpcf7-form, .cf7e-preview ) select[multiple] {
 	padding: 6px;
 }
 
 /* CF7 flags a failed control with this class. */
-:is( .wpcf7-form, .cf7nl-preview ) :is( input, select, textarea ).wpcf7-not-valid {
-	border-color: var( --cf7nl-error );
+:is( .wpcf7-form, .cf7e-preview ) :is( input, select, textarea ).wpcf7-not-valid {
+	border-color: var( --cf7e-error );
 }
 
 /* ---------------------------------------------------------------------------
@@ -143,39 +143,39 @@
  * these rules away from the star-rating widget, whose radios are visually
  * hidden by rating.css and must stay that way.
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) :is( .wpcf7-checkbox, .wpcf7-radio, .wpcf7-acceptance ) {
+:is( .wpcf7-form, .cf7e-preview ) :is( .wpcf7-checkbox, .wpcf7-radio, .wpcf7-acceptance ) {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item {
 	margin: 0;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item > label {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item > label {
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
 	margin: 0;
 	font-family: inherit;
-	font-size: var( --cf7nl-font-size );
+	font-size: var( --cf7e-font-size );
 	line-height: 1.4;
-	color: var( --cf7nl-text );
+	color: var( --cf7e-text );
 	cursor: pointer;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ) {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ) {
 	flex: 0 0 auto;
 	width: 20px;
 	height: 20px;
 	margin: 0;
 	padding: 0;
-	background-color: var( --cf7nl-bg );
+	background-color: var( --cf7e-bg );
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 13px 13px;
-	border: 1px solid var( --cf7nl-border );
+	border: 1px solid var( --cf7e-border );
 	box-shadow: none;
 	cursor: pointer;
 	transition: background-color 0.12s ease, border-color 0.12s ease;
@@ -190,151 +190,151 @@
  * checked::before` and a white dot on the radio's — neither is undone by
  * `appearance: none`, so the styling preview showed two ticks stacked.
  */
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] )::before,
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] )::after {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] )::before,
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] )::after {
 	content: none;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item input[type='checkbox'] {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item input[type='checkbox'] {
 	border-radius: 5px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item input[type='radio'] {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item input[type='radio'] {
 	border-radius: 50%;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):hover:not( :disabled ) {
-	border-color: var( --cf7nl-border-hover );
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):hover:not( :disabled ) {
+	border-color: var( --cf7e-border-hover );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):checked {
-	background-color: var( --cf7nl-primary );
-	border-color: var( --cf7nl-primary );
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):checked {
+	background-color: var( --cf7e-primary );
+	border-color: var( --cf7e-primary );
 }
 
 /* Tick drawn as an SVG so it inherits nothing from the theme. */
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item input[type='checkbox']:checked {
-	background-image: var( --cf7nl-icon-tick );
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item input[type='checkbox']:checked {
+	background-image: var( --cf7e-icon-tick );
 }
 
 /* The radio's dot is an inset ring, so it always centres perfectly. */
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item input[type='radio']:checked {
-	box-shadow: inset 0 0 0 4px var( --cf7nl-bg );
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item input[type='radio']:checked {
+	box-shadow: inset 0 0 0 4px var( --cf7e-bg );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):focus-visible {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):focus-visible {
 	outline: none;
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item input[type='radio']:checked:focus-visible {
-	box-shadow: inset 0 0 0 4px var( --cf7nl-bg ), 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item input[type='radio']:checked:focus-visible {
+	box-shadow: inset 0 0 0 4px var( --cf7e-bg ), 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):disabled {
+:is( .wpcf7-form, .cf7e-preview ) .wpcf7-list-item :is( input[type='checkbox'], input[type='radio'] ):disabled {
 	opacity: 0.55;
 	cursor: not-allowed;
 }
 
 /* Layout variants. The builder writes these marker classes onto the control. */
-:is( .wpcf7-form, .cf7nl-preview ) :is( .wpcf7-checkbox, .wpcf7-radio ).cf7nl-inline {
+:is( .wpcf7-form, .cf7e-preview ) :is( .wpcf7-checkbox, .wpcf7-radio ).cf7e-inline {
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 10px 22px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( .wpcf7-checkbox, .wpcf7-radio ).cf7nl-cards {
+:is( .wpcf7-form, .cf7e-preview ) :is( .wpcf7-checkbox, .wpcf7-radio ).cf7e-cards {
 	gap: 10px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-cards .wpcf7-list-item {
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
-	background-color: var( --cf7nl-bg );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-cards .wpcf7-list-item {
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
+	background-color: var( --cf7e-bg );
 	transition: border-color 0.12s ease, background-color 0.12s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-cards .wpcf7-list-item > label {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-cards .wpcf7-list-item > label {
 	width: 100%;
 	box-sizing: border-box;
-	padding: var( --cf7nl-padding-y ) var( --cf7nl-padding-x );
+	padding: var( --cf7e-padding-y ) var( --cf7e-padding-x );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-cards .wpcf7-list-item:hover {
-	border-color: var( --cf7nl-border-hover );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-cards .wpcf7-list-item:hover {
+	border-color: var( --cf7e-border-hover );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-cards .wpcf7-list-item:has( input:checked ) {
-	border-color: var( --cf7nl-primary );
-	background-color: var( --cf7nl-surface-alt );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-cards .wpcf7-list-item:has( input:checked ) {
+	border-color: var( --cf7e-primary );
+	background-color: var( --cf7e-surface-alt );
 }
 
 /* ---------------------------------------------------------------------------
  * File input — plain but consistent. The drop zone lands in a later phase.
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) input[type='file'] {
+:is( .wpcf7-form, .cf7e-preview ) input[type='file'] {
 	display: block;
 	box-sizing: border-box;
 	width: 100%;
 	padding: 9px;
 	font-family: inherit;
-	font-size: var( --cf7nl-font-size );
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-surface-alt );
-	border: 1px dashed var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
+	font-size: var( --cf7e-font-size );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-surface-alt );
+	border: 1px dashed var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
 	cursor: pointer;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) input[type='file']::file-selector-button {
+:is( .wpcf7-form, .cf7e-preview ) input[type='file']::file-selector-button {
 	margin-right: 12px;
 	padding: 8px 14px;
 	font-family: inherit;
 	font-size: max( 14px, 0.9em );
 	font-weight: 600;
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-bg );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: calc( var( --cf7nl-radius ) - 2px );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-bg );
+	border: 1px solid var( --cf7e-border );
+	border-radius: calc( var( --cf7e-radius ) - 2px );
 	cursor: pointer;
 	transition: border-color 0.12s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) input[type='file']:hover::file-selector-button {
-	border-color: var( --cf7nl-border-hover );
+:is( .wpcf7-form, .cf7e-preview ) input[type='file']:hover::file-selector-button {
+	border-color: var( --cf7e-border-hover );
 }
 
 /* ---------------------------------------------------------------------------
  * Submit
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) :is( input[type='submit'], button[type='submit'] ) {
+:is( .wpcf7-form, .cf7e-preview ) :is( input[type='submit'], button[type='submit'] ) {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	min-height: var( --cf7nl-control-height );
-	padding: var( --cf7nl-padding-y ) calc( var( --cf7nl-padding-x ) * 1.8 );
+	min-height: var( --cf7e-control-height );
+	padding: var( --cf7e-padding-y ) calc( var( --cf7e-padding-x ) * 1.8 );
 	font-family: inherit;
-	font-size: var( --cf7nl-font-size );
+	font-size: var( --cf7e-font-size );
 	font-weight: 600;
 	line-height: 1.2;
-	color: var( --cf7nl-btn-text );
-	background-color: var( --cf7nl-btn-bg );
+	color: var( --cf7e-btn-text );
+	background-color: var( --cf7e-btn-bg );
 	border: 0;
-	border-radius: var( --cf7nl-btn-radius );
+	border-radius: var( --cf7e-btn-radius );
 	cursor: pointer;
 	transition: opacity 0.15s ease;
 	-webkit-appearance: none;
 	appearance: none;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input[type='submit'], button[type='submit'] ):hover:not( :disabled ) {
+:is( .wpcf7-form, .cf7e-preview ) :is( input[type='submit'], button[type='submit'] ):hover:not( :disabled ) {
 	opacity: 0.88;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) :is( input[type='submit'], button[type='submit'] ):focus-visible {
+:is( .wpcf7-form, .cf7e-preview ) :is( input[type='submit'], button[type='submit'] ):focus-visible {
 	outline: none;
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
 /* ---------------------------------------------------------------------------
@@ -344,11 +344,11 @@
  * out of sight. Everything below is the visible replacement, and the builder
  * preview renders the same class names so both look identical.
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select {
 	position: relative;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-native {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-native {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -361,40 +361,40 @@
 	border: 0;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-trigger {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-trigger {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	box-sizing: border-box;
 	width: 100%;
-	min-height: var( --cf7nl-control-height );
-	padding: calc( var( --cf7nl-padding-y ) - 3px ) var( --cf7nl-padding-x );
+	min-height: var( --cf7e-control-height );
+	padding: calc( var( --cf7e-padding-y ) - 3px ) var( --cf7e-padding-x );
 	font-family: inherit;
-	font-size: var( --cf7nl-font-size );
+	font-size: var( --cf7e-font-size );
 	line-height: 1.4;
 	text-align: left;
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-bg );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-bg );
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
 	cursor: pointer;
 	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 	-webkit-appearance: none;
 	appearance: none;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-trigger:hover {
-	border-color: var( --cf7nl-border-hover );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-trigger:hover {
+	border-color: var( --cf7e-border-hover );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-trigger:focus-visible,
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select.is-open .cf7nl-select-trigger {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-trigger:focus-visible,
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select.is-open .cf7e-select-trigger {
 	outline: none;
-	border-color: var( --cf7nl-primary );
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+	border-color: var( --cf7e-primary );
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-value {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-value {
 	display: flex;
 	flex: 1 1 auto;
 	flex-wrap: wrap;
@@ -404,47 +404,47 @@
 	overflow: hidden;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select:not( .cf7nl-select--multiple ) .cf7nl-select-value {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select:not( .cf7e-select--multiple ) .cf7e-select-value {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-placeholder {
-	color: var( --cf7nl-muted );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-placeholder {
+	color: var( --cf7e-muted );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-arrow {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-arrow {
 	flex: 0 0 auto;
 	width: 16px;
 	height: 16px;
-	background-image: var( --cf7nl-icon-chevron );
+	background-image: var( --cf7e-icon-chevron );
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 16px 16px;
 	transition: transform 0.15s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select.is-open .cf7nl-select-arrow {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select.is-open .cf7e-select-arrow {
 	transform: rotate( 180deg );
 }
 
 /* Chips (multiple) */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-chip {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-chip {
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	padding: 3px 4px 3px 9px;
 	font-size: max( 14px, 0.9em );
 	line-height: 1.4;
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-surface-alt );
-	border: 1px solid var( --cf7nl-border );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-surface-alt );
+	border: 1px solid var( --cf7e-border );
 	border-radius: 999px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-chip-remove {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-chip-remove {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -453,33 +453,33 @@
 	padding: 0;
 	font-size: 15px;
 	line-height: 1;
-	color: var( --cf7nl-muted );
+	color: var( --cf7e-muted );
 	background: none;
 	border: 0;
 	border-radius: 50%;
 	cursor: pointer;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-chip-remove:hover {
-	color: var( --cf7nl-primary-contrast );
-	background-color: var( --cf7nl-primary );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-chip-remove:hover {
+	color: var( --cf7e-primary-contrast );
+	background-color: var( --cf7e-primary );
 }
 
 /* Panel */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-panel {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-panel {
 	position: absolute;
 	z-index: 50;
 	top: calc( 100% + 6px );
 	right: 0;
 	left: 0;
 	padding: 6px;
-	background-color: var( --cf7nl-surface );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
-	box-shadow: var( --cf7nl-shadow );
+	background-color: var( --cf7e-surface );
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
+	box-shadow: var( --cf7e-shadow );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-search {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-search {
 	display: block;
 	box-sizing: border-box;
 	width: 100%;
@@ -488,19 +488,19 @@
 	padding: 8px 10px;
 	font-family: inherit;
 	font-size: max( 14px, 0.95em );
-	color: var( --cf7nl-text );
-	background-color: var( --cf7nl-bg );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: calc( var( --cf7nl-radius ) - 2px );
+	color: var( --cf7e-text );
+	background-color: var( --cf7e-bg );
+	border: 1px solid var( --cf7e-border );
+	border-radius: calc( var( --cf7e-radius ) - 2px );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-list {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-list {
 	max-height: 240px;
 	overflow-y: auto;
 	overscroll-behavior: contain;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -508,41 +508,41 @@
 	padding: 8px 10px;
 	font-size: max( 14px, 0.97em );
 	line-height: 1.35;
-	color: var( --cf7nl-text );
-	border-radius: calc( var( --cf7nl-radius ) - 3px );
+	color: var( --cf7e-text );
+	border-radius: calc( var( --cf7e-radius ) - 3px );
 	cursor: pointer;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option:hover,
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option.is-active {
-	background-color: var( --cf7nl-surface-alt );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option:hover,
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option.is-active {
+	background-color: var( --cf7e-surface-alt );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option.is-selected {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option.is-selected {
 	font-weight: 600;
 }
 
 /* Tick on the chosen row, drawn rather than typed so no font is involved. */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option.is-selected::after {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option.is-selected::after {
 	content: '';
 	flex: 0 0 auto;
 	width: 15px;
 	height: 15px;
-	background-image: var( --cf7nl-icon-check );
+	background-image: var( --cf7e-icon-check );
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-option.is-disabled {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-option.is-disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-select-empty {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-select-empty {
 	padding: 10px;
 	font-size: max( 14px, 0.95em );
-	color: var( --cf7nl-muted );
+	color: var( --cf7e-muted );
 	text-align: center;
 }
 
@@ -552,7 +552,7 @@
  * The plain `input[type=file]` rules above stay as the no-JS fallback; once the
  * script wraps the input it is hidden and this takes over.
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-native {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-native {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -564,7 +564,7 @@
 	border: 0;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-zone {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-zone {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -573,42 +573,42 @@
 	padding: 26px 18px;
 	font-size: max( 14px, 0.95em );
 	line-height: 1.4;
-	color: var( --cf7nl-text );
+	color: var( --cf7e-text );
 	text-align: center;
-	background-color: var( --cf7nl-surface-alt );
-	border: 1.5px dashed var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
+	background-color: var( --cf7e-surface-alt );
+	border: 1.5px dashed var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
 	cursor: pointer;
 	transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-zone:hover,
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-zone:focus-visible {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-zone:hover,
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-zone:focus-visible {
 	outline: none;
-	border-color: var( --cf7nl-primary );
+	border-color: var( --cf7e-primary );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-zone.is-dragging {
-	border-color: var( --cf7nl-primary );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-zone.is-dragging {
+	border-color: var( --cf7e-primary );
 	border-style: solid;
-	background-color: var( --cf7nl-bg );
+	background-color: var( --cf7e-bg );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-icon {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-icon {
 	width: 26px;
 	height: 26px;
-	background-image: var( --cf7nl-icon-upload );
+	background-image: var( --cf7e-icon-upload );
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-hint {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-hint {
 	font-size: max( 14px, 0.9em );
-	color: var( --cf7nl-muted );
+	color: var( --cf7e-muted );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-list {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-list {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -617,53 +617,53 @@
 	list-style: none;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-item {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-item {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	margin: 0;
 	padding: 8px 10px;
-	background-color: var( --cf7nl-bg );
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
+	background-color: var( --cf7e-bg );
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-thumb {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-thumb {
 	flex: 0 0 auto;
 	width: 38px;
 	height: 38px;
 	object-fit: cover;
-	background-color: var( --cf7nl-surface-alt );
-	border-radius: calc( var( --cf7nl-radius ) - 3px );
+	background-color: var( --cf7e-surface-alt );
+	border-radius: calc( var( --cf7e-radius ) - 3px );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-thumb--doc {
-	background-image: var( --cf7nl-icon-doc );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-thumb--doc {
+	background-image: var( --cf7e-icon-doc );
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 20px 20px;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-meta {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-meta {
 	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
 	min-width: 0;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-name {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-name {
 	overflow: hidden;
 	font-size: max( 14px, 0.95em );
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-size {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-size {
 	font-size: max( 14px, 0.9em );
-	color: var( --cf7nl-muted );
+	color: var( --cf7e-muted );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-remove {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-remove {
 	display: flex;
 	flex: 0 0 auto;
 	align-items: center;
@@ -673,22 +673,22 @@
 	padding: 0;
 	font-size: 18px;
 	line-height: 1;
-	color: var( --cf7nl-muted );
+	color: var( --cf7e-muted );
 	background: none;
 	border: 0;
 	border-radius: 50%;
 	cursor: pointer;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-remove:hover {
-	color: var( --cf7nl-primary-contrast );
-	background-color: var( --cf7nl-primary );
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-remove:hover {
+	color: var( --cf7e-primary-contrast );
+	background-color: var( --cf7e-primary );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-file-error {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-file-error {
 	margin: 8px 0 0;
 	font-size: max( 14px, 0.9em );
-	color: var( --cf7nl-error );
+	color: var( --cf7e-error );
 }
 
 /*
@@ -704,17 +704,17 @@
  * to `.wpcf7-not-valid-tip`: a visitor should not be able to tell which half of
  * the plugin is talking to them.
  */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-field-error {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-field-error {
 	display: block;
 	margin-top: 4px;
 	font-size: max( 14px, 1em );
 	font-weight: normal;
-	color: var( --cf7nl-error );
+	color: var( --cf7e-error );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-required {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-required {
 	margin-left: 0.25em;
-	color: var( --cf7nl-error );
+	color: var( --cf7e-error );
 	font-weight: 600;
 }
 
@@ -732,17 +732,17 @@
  * listed here are the ones a field-level label actually lands in — the form
  * itself, CF7's autop paragraph, a grid column, a conditional or step block.
  * ------------------------------------------------------------------------- */
-:is( .wpcf7-form, .cf7nl-preview ) > label,
-:is( .wpcf7-form, .cf7nl-preview ) :is( p, .cf7nl-col, .cf7nl-if, .cf7nl-step ) > label {
+:is( .wpcf7-form, .cf7e-preview ) > label,
+:is( .wpcf7-form, .cf7e-preview ) :is( p, .cf7e-col, .cf7e-if, .cf7e-step ) > label {
 	display: block;
 	font-weight: 600;
-	color: var( --cf7nl-text );
+	color: var( --cf7e-text );
 }
 
 /* The control sits *inside* the label, so the weight above reaches it — and
    the hint and error lines under a field along with it. */
-:is( .wpcf7-form, .cf7nl-preview ) label :is( input, select, textarea ),
-:is( .wpcf7-form, .cf7nl-preview ) label .wpcf7-form-control-wrap {
+:is( .wpcf7-form, .cf7e-preview ) label :is( input, select, textarea ),
+:is( .wpcf7-form, .cf7e-preview ) label .wpcf7-form-control-wrap {
 	font-weight: 400;
 }
 
@@ -757,11 +757,11 @@
  * validate.js inserts the required star before that <br>; hidden or not, it is
  * still the node after the caption text, so the star lands where it did.
  */
-:is( .wpcf7-form, .cf7nl-preview ) label > br {
+:is( .wpcf7-form, .cf7e-preview ) label > br {
 	display: none;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) label > .wpcf7-form-control-wrap {
+:is( .wpcf7-form, .cf7e-preview ) label > .wpcf7-form-control-wrap {
 	display: block;
 	margin-top: 0.35em;
 }
@@ -771,10 +771,10 @@
  * filtered-out rows above set display:flex and would stay on screen. Restate it
  * with enough specificity for the elements the widgets toggle.
  */
-:is( .wpcf7-form, .cf7nl-preview ) :is(
-	.cf7nl-select-option,
-	.cf7nl-select-panel,
-	.cf7nl-select-empty
+:is( .wpcf7-form, .cf7e-preview ) :is(
+	.cf7e-select-option,
+	.cf7e-select-panel,
+	.cf7e-select-empty
 )[hidden] {
 	display: none;
 }
@@ -785,23 +785,23 @@
  * of them.
  *
  * Deliberately a descendant selector, not a child one: steps.js moves fields
- * into `.cf7nl-step` wrappers, conditional fields sit inside `.cf7nl-if`, and
- * grid fields inside `.cf7nl-col`. A `>` rule reached none of those, so the
+ * into `.cf7e-step` wrappers, conditional fields sit inside `.cf7e-if`, and
+ * grid fields inside `.cf7e-col`. A `>` rule reached none of those, so the
  * setting appeared to do nothing on any real form.
  *
  * `margin-top: 0` matters as much as the bottom: the browser's default 1em top
  * margin on <p> would otherwise fight the token.
  *
- * `.nv-fieldset` is in the list because wpautop leaves block-level HTML alone,
+ * `.cf7e-fieldset` is in the list because wpautop leaves block-level HTML alone,
  * and a captioned radio/checkbox/file group is a <fieldset> — so it never got a
  * <p> to carry the gap, and those fields sat flush against the next one.
  */
-:is( .wpcf7-form, .cf7nl-preview ) :is( p, .nv-fieldset, .cf7nl-row, .cf7nl-step, .cf7nl-if ) {
+:is( .wpcf7-form, .cf7e-preview ) :is( p, .cf7e-fieldset, .cf7e-row, .cf7e-step, .cf7e-if ) {
 	margin-top: 0;
-	margin-bottom: var( --cf7nl-gap );
+	margin-bottom: var( --cf7e-gap );
 }
 
 /* No trailing gap under the last field in any container. */
-:is( .wpcf7-form, .cf7nl-preview ) :is( p, .nv-fieldset, .cf7nl-row, .cf7nl-step, .cf7nl-if ):last-child {
+:is( .wpcf7-form, .cf7e-preview ) :is( p, .cf7e-fieldset, .cf7e-row, .cf7e-step, .cf7e-if ):last-child {
 	margin-bottom: 0;
 }

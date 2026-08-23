@@ -2,21 +2,33 @@
 /**
  * REST: Reading and writing the plugin settings sections.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare(strict_types=1);
 
-namespace CF7NL\REST;
+namespace CF7E\REST;
 
-use CF7NL\CF7\Discord;
-use CF7NL\CF7\Slack;
-use CF7NL\CF7\Telegram;
-use CF7NL\DB\Settings_Repository;
+use CF7E\CF7\Discord;
+use CF7E\CF7\Slack;
+use CF7E\CF7\Telegram;
+use CF7E\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Settings_Controller extends Controller {
+
+	/**
+	 * The one field per section that must not travel back to the browser whole.
+	 *
+	 * A webhook URL belongs here beside the bot token: anyone holding it can
+	 * post into the channel it names, which is the whole of what it protects.
+	 */
+	private const SECRETS = array(
+		'telegram' => 'bot_token',
+		'slack'    => 'webhook_url',
+		'discord'  => 'webhook_url',
+	);
 
 	public function register_routes(): void {
 		register_rest_route(
@@ -64,7 +76,16 @@ final class Settings_Controller extends Controller {
 
 	public function rest_get_settings(): \WP_REST_Response {
 		$repo = $this->container->make( 'settings.repository' );
-		return new \WP_REST_Response( $repo->all(), 200 );
+		$all  = $repo->all();
+
+		// Masked here and only here. Everything server-side — Telegram::notify,
+		// Slack::notify, the test route below — reads the real value through the
+		// repository, so masking there would break the messages it configures.
+		foreach ( self::SECRETS as $section => $key ) {
+			$all[ $section ][ $key ] = self::mask( $key, (string) $all[ $section ][ $key ] );
+		}
+
+		return new \WP_REST_Response( $all, 200 );
 	}
 
 	/**
@@ -77,10 +98,24 @@ final class Settings_Controller extends Controller {
 		$section = (string) $request->get_param( 'section' );
 
 		if ( ! Settings_Repository::has_section( $section ) ) {
-			return self::error( 'unknown_section', __( 'There is no settings section by that name.', 'cf7-nova-lite' ), 400 );
+			return self::error( 'unknown_section', __( 'There is no settings section by that name.', 'essentials-for-contact-form-7' ), 400 );
 		}
 
 		$values = (array) $request->get_json_params();
+
+		$repo   = $this->container->make( 'settings.repository' );
+		$secret = self::SECRETS[ $section ] ?? '';
+
+		// Before problem(), so what gets validated is the value that will be
+		// stored. A mask reaching the URL check would pass it — the host is the
+		// half a mask keeps — and be saved as a webhook that goes nowhere.
+		if ( '' !== $secret ) {
+			$values[ $secret ] = self::keep_or_replace(
+				$secret,
+				isset( $values[ $secret ] ) ? (string) $values[ $secret ] : null,
+				(string) $repo->get_section( $section )[ $secret ]
+			);
+		}
 
 		// Refused rather than quietly corrected, so the reason reaches the person
 		// who typed it. See Settings_Repository::problem().
@@ -90,10 +125,74 @@ final class Settings_Controller extends Controller {
 			return self::error( 'invalid_setting', $problem, 400 );
 		}
 
-		$repo    = $this->container->make( 'settings.repository' );
 		$updated = $repo->update_section( $section, $values );
 
+		if ( '' !== $secret ) {
+			$updated[ $secret ] = self::mask( $secret, (string) $updated[ $secret ] );
+		}
+
 		return new \WP_REST_Response( $updated, 200 );
+	}
+
+	/**
+	 * Turn what the browser sent for a secret into what should be stored.
+	 *
+	 * The browser was handed the masked form, and a form that saves the whole
+	 * section hands it straight back — untouched fields included. So the mask
+	 * means "no change", and so does a field the request never mentioned.
+	 *
+	 * An empty one does not. Emptying the box is the only way a credential that
+	 * should not be on the site any more can be taken off it, and it is already
+	 * what clearing means for a webhook URL everywhere else — see
+	 * Settings_Repository::problem(). Turning the destination off leaves the
+	 * secret in the database; this removes it.
+	 *
+	 * @param string      $key      Which secret, so it is compared against the mask it was shown as.
+	 * @param string|null $incoming What the request carried, or null if it carried nothing.
+	 * @param string      $stored   What is in the database now.
+	 */
+	private static function keep_or_replace( string $key, ?string $incoming, string $stored ): string {
+		if ( null === $incoming ) {
+			return $stored;
+		}
+
+		$incoming = trim( $incoming );
+
+		if ( '' !== $incoming && self::mask( $key, $stored ) === $incoming ) {
+			return $stored;
+		}
+
+		return $incoming;
+	}
+
+	/**
+	 * Enough of a secret to recognise it, not enough to use it.
+	 *
+	 * A webhook URL keeps its host instead of its first four characters: every
+	 * Slack URL begins the same way, so ends-only masking would show nothing
+	 * worth showing, while the host says which destination this is and is not
+	 * the part that authorises anything. The path is.
+	 *
+	 * @return string The masked form, or '' when nothing is stored.
+	 */
+	private static function mask( string $key, string $value ): string {
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( 'webhook_url' === $key ) {
+			$parts = (array) wp_parse_url( $value );
+
+			if ( ! empty( $parts['host'] ) ) {
+				return ( $parts['scheme'] ?? 'https' ) . '://' . $parts['host'] . '/…' . substr( $value, -4 );
+			}
+		}
+
+		if ( strlen( $value ) <= 12 ) {
+			return '••••••••';
+		}
+
+		return substr( $value, 0, 4 ) . '…' . substr( $value, -4 );
 	}
 
 	/**
@@ -122,8 +221,8 @@ final class Settings_Controller extends Controller {
 				return self::error(
 					'not_configured',
 					'telegram' === $section
-						? __( 'Fill in the bot token and the chat ID first.', 'cf7-nova-lite' )
-						: __( 'Fill in the webhook URL first.', 'cf7-nova-lite' ),
+						? __( 'Fill in the bot token and the chat ID first.', 'essentials-for-contact-form-7' )
+						: __( 'Fill in the webhook URL first.', 'essentials-for-contact-form-7' ),
 					400
 				);
 			}

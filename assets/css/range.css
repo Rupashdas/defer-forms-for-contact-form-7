@@ -1,22 +1,22 @@
 /**
- * CF7 Nova — range slider. Replaces the browser's native slider with our own
- * track and thumb. The filled part of the track is driven by `--nv-range-p`,
+ * CF7 Essentials — range slider. Replaces the browser's native slider with our own
+ * track and thumb. The filled part of the track is driven by `--cf7e-range-p`,
  * which range.js keeps in sync with the value (Firefox uses ::-moz-range-progress
  * instead). Without JS the control still looks right, just without live fill.
  *
- * Colours come from the `--cf7nl-*` tokens, so a re-skinned form brings its
+ * Colours come from the `--cf7e-*` tokens, so a re-skinned form brings its
  * slider with it. Scoped to both hosts so the builder preview reads the very
  * same rules.
  */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-range {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-range {
 	display: flex;
 	align-items: center;
 	gap: 0.85em;
 	width: 100%;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range {
-	--nv-range-p: 50%;
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range {
+	--cf7e-range-p: 50%;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -31,82 +31,82 @@
 }
 
 /* ---- Track ---- */
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range::-webkit-slider-runnable-track {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range::-webkit-slider-runnable-track {
 	height: 6px;
 	border-radius: 999px;
 	background: linear-gradient(
 		to right,
-		var( --cf7nl-primary ) 0 var( --nv-range-p ),
-		var( --cf7nl-border ) var( --nv-range-p ) 100%
+		var( --cf7e-primary ) 0 var( --cf7e-range-p ),
+		var( --cf7e-border ) var( --cf7e-range-p ) 100%
 	);
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range::-moz-range-track {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range::-moz-range-track {
 	height: 6px;
 	border-radius: 999px;
-	background: var( --cf7nl-border );
+	background: var( --cf7e-border );
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range::-moz-range-progress {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range::-moz-range-progress {
 	height: 6px;
 	border-radius: 999px;
-	background: var( --cf7nl-primary );
+	background: var( --cf7e-primary );
 }
 
 /* ---- Thumb ---- */
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range::-webkit-slider-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 18px;
 	height: 18px;
 	margin-top: -6px; /* centre on the 6px track */
-	border: 2px solid var( --cf7nl-primary );
+	border: 2px solid var( --cf7e-primary );
 	border-radius: 50%;
-	background: var( --cf7nl-bg );
+	background: var( --cf7e-bg );
 	box-shadow: 0 1px 3px rgba( 27, 27, 34, 0.25 );
 	transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range::-moz-range-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range::-moz-range-thumb {
 	width: 18px;
 	height: 18px;
-	border: 2px solid var( --cf7nl-primary );
+	border: 2px solid var( --cf7e-primary );
 	border-radius: 50%;
-	background: var( --cf7nl-bg );
+	background: var( --cf7e-bg );
 	box-shadow: 0 1px 3px rgba( 27, 27, 34, 0.25 );
 	transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:hover::-webkit-slider-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:hover::-webkit-slider-thumb {
 	transform: scale( 1.12 );
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:hover::-moz-range-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:hover::-moz-range-thumb {
 	transform: scale( 1.12 );
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:active::-webkit-slider-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:active::-webkit-slider-thumb {
 	transform: scale( 1.18 );
-	box-shadow: 0 0 0 6px var( --cf7nl-ring-color );
+	box-shadow: 0 0 0 6px var( --cf7e-ring-color );
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:active::-moz-range-thumb {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:active::-moz-range-thumb {
 	transform: scale( 1.18 );
-	box-shadow: 0 0 0 6px var( --cf7nl-ring-color );
+	box-shadow: 0 0 0 6px var( --cf7e-ring-color );
 }
 
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:focus {
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:focus {
 	outline: none;
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:focus-visible::-webkit-slider-thumb {
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:focus-visible::-webkit-slider-thumb {
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
-:is( .wpcf7-form, .cf7nl-preview ) input[type='range'].wpcf7-range:focus-visible::-moz-range-thumb {
-	box-shadow: 0 0 0 var( --cf7nl-ring ) var( --cf7nl-ring-color );
+:is( .wpcf7-form, .cf7e-preview ) input[type='range'].wpcf7-range:focus-visible::-moz-range-thumb {
+	box-shadow: 0 0 0 var( --cf7e-ring ) var( --cf7e-ring-color );
 }
 
 /* ---- Value badge ---- */
-:is( .wpcf7-form, .cf7nl-preview ) .cf7nl-range-value {
+:is( .wpcf7-form, .cf7e-preview ) .cf7e-range-value {
 	min-width: 2.75em;
 	padding: 0.25em 0.6em;
-	border: 1px solid var( --cf7nl-border );
-	border-radius: var( --cf7nl-radius );
-	background: var( --cf7nl-bg );
-	color: var( --cf7nl-text );
+	border: 1px solid var( --cf7e-border );
+	border-radius: var( --cf7e-radius );
+	background: var( --cf7e-bg );
+	color: var( --cf7e-text );
 	font-size: max( 14px, 0.9em );
 	font-weight: 700;
 	line-height: 1.4;

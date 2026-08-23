@@ -5,14 +5,15 @@
  * whose stored values contain the requested email address count as that person's
  * data.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Privacy;
+namespace CF7E\Privacy;
 
-use CF7NL\DB\Submissions_Repository;
+use CF7E\CF7\Entry_Fields;
+use CF7E\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -36,8 +37,8 @@ final class Privacy {
 	 * @return array<string, mixed>
 	 */
 	public function register_exporter( array $exporters ): array {
-		$exporters['cf7-nova-lite'] = array(
-			'exporter_friendly_name' => __( 'Contact form submissions (Nova)', 'cf7-nova-lite' ),
+		$exporters['essentials-for-contact-form-7'] = array(
+			'exporter_friendly_name' => __( 'Contact form submissions (CF7 Essentials)', 'essentials-for-contact-form-7' ),
 			'callback'               => array( $this, 'export' ),
 		);
 		return $exporters;
@@ -48,8 +49,8 @@ final class Privacy {
 	 * @return array<string, mixed>
 	 */
 	public function register_eraser( array $erasers ): array {
-		$erasers['cf7-nova-lite'] = array(
-			'eraser_friendly_name' => __( 'Contact form submissions (Nova)', 'cf7-nova-lite' ),
+		$erasers['essentials-for-contact-form-7'] = array(
+			'eraser_friendly_name' => __( 'Contact form submissions (CF7 Essentials)', 'essentials-for-contact-form-7' ),
 			'callback'             => array( $this, 'erase' ),
 		);
 		return $erasers;
@@ -67,9 +68,9 @@ final class Privacy {
 
 		foreach ( $rows as $row ) {
 			$items[] = array(
-				'group_id'    => 'cf7nl-submissions',
-				'group_label' => __( 'Contact form submissions', 'cf7-nova-lite' ),
-				'item_id'     => 'cf7nl-submission-' . (int) $row['id'],
+				'group_id'    => 'cf7e-submissions',
+				'group_label' => __( 'Contact form submissions', 'essentials-for-contact-form-7' ),
+				'item_id'     => 'cf7e-submission-' . (int) $row['id'],
 				'data'        => $this->row_fields( $row ),
 			);
 		}
@@ -179,9 +180,23 @@ final class Privacy {
 
 		if ( is_array( $data ) ) {
 			foreach ( $data as $key => $value ) {
+				/*
+				 * The plugin's own keys are not this person's data, and two of
+				 * them must not travel at all: `_cf7e_files` names the folder
+				 * the attachments were put in — the unguessable name is what
+				 * guards them — and a row written by an older version can still
+				 * carry the time-trap's signed token. The CSV export has skipped
+				 * both for as long as the rule has existed, and this is the path
+				 * where an entry leaves the site to a member of the public rather
+				 * than to an admin.
+				 */
+				if ( ! Entry_Fields::is_answer( (string) $key ) ) {
+					continue;
+				}
+
 				$fields[] = array(
 					'name'  => (string) $key,
-					'value' => is_array( $value ) ? implode( ', ', array_map( 'strval', $value ) ) : (string) $value,
+					'value' => self::flatten( $value ),
 				);
 			}
 		}
@@ -191,16 +206,34 @@ final class Privacy {
 		// regulation asks for.
 		if ( ! empty( $row['ip'] ) ) {
 			$fields[] = array(
-				'name'  => __( 'IP address', 'cf7-nova-lite' ),
+				'name'  => __( 'IP address', 'essentials-for-contact-form-7' ),
 				'value' => (string) $row['ip'],
 			);
 		}
 
 		$fields[] = array(
-			'name'  => __( 'Submitted at', 'cf7-nova-lite' ),
+			'name'  => __( 'Submitted at', 'essentials-for-contact-form-7' ),
 			'value' => (string) $row['created_at'],
 		);
 
 		return $fields;
+	}
+
+	/**
+	 * One stored value as a line of text, however deep it goes.
+	 *
+	 * `array_map( 'strval', … )` was only ever right for a flat array. Handed a
+	 * nested one it raised "Array to string conversion" and wrote the word
+	 * `Array` into the export — an answer to a legal request, which is the last
+	 * thing that should depend on the shape a value happens to have.
+	 *
+	 * @param mixed $value
+	 */
+	private static function flatten( $value ): string {
+		if ( ! is_array( $value ) ) {
+			return (string) $value;
+		}
+
+		return implode( ', ', array_map( array( self::class, 'flatten' ), $value ) );
 	}
 }

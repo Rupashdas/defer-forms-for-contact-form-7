@@ -1,11 +1,11 @@
-=== CF7 Nova Lite ===
+=== Essentials for Contact Form 7 - Visual Builder, Multi-Step & Submissions ===
 Contributors: rupashdas
 Tags: contact form 7, form builder, multi-step form, submissions, conditional logic
 Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ The missing modern layer for Contact Form 7 — visual builder, multi-step, subm
 
 == Description ==
 
-CF7 Nova Lite turns Contact Form 7 into a modern visual form builder while keeping CF7's reliability untouched. Drag-and-drop fields, build multi-step flows, capture submissions in a clean dashboard, and apply conditional logic — all without breaking any existing form.
+Essentials for Contact Form 7 turns Contact Form 7 into a modern visual form builder while keeping CF7's reliability untouched. Drag-and-drop fields, build multi-step flows, capture submissions in a clean dashboard, and apply conditional logic — all without breaking any existing form.
 
 **Highlights**
 
@@ -40,25 +40,34 @@ The Features screen lists everything this plugin does, and nothing it does not.
 
 Submissions can be filtered before they are stored and hooked once they are — enough to keep a form out of the table, redact a field, or forward every entry somewhere of your own. See HOOKS.md in the plugin folder.
 
-CF7 Nova **extends** Contact Form 7 — never replaces it, never breaks existing forms.
+CF7 Essentials **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
 == Installation ==
 
 1. Install and activate Contact Form 7.
-2. Upload `cf7-nova-lite/` to `/wp-content/plugins/` (or install via WP admin).
-3. Activate "CF7 Nova Lite" from Plugins screen.
-4. Visit **CF7 Nova** in the admin sidebar.
+2. Upload `essentials-for-contact-form-7/` to `/wp-content/plugins/` (or install via WP admin).
+3. Activate "Essentials for Contact Form 7" from Plugins screen.
+4. Visit **CF7 Essentials** in the admin sidebar.
 
 == Frequently Asked Questions ==
 
 = Does it replace Contact Form 7? =
-No. CF7 Nova Lite sits on top of CF7. CF7 must be installed and active.
+No. Essentials for Contact Form 7 sits on top of CF7. CF7 must be installed and active.
 
 = Will it break my existing forms? =
-No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are opt-in per form.
+No. Existing CF7 shortcodes keep rendering exactly as before. CF7 Essentials features are opt-in per form.
 
 == Changelog ==
 
+= 2.5.0 =
+* The plugin has been renamed. It was CF7 Nova Lite; it is Essentials for Contact Form 7 now, and the admin menu says CF7 Essentials. The old name said nothing about what the plugin does, and its folder name broke a wordpress.org naming rule.
+* New: attachments have a size ceiling — 1 GB by default. Past it, submissions and their mail arrive as normal but the files are no longer copied to the server, and the admin is told. A form that takes uploads is a public endpoint that writes to the disk, and nothing bounded how often it was used. Raise or remove the ceiling with the cf7e_attachment_limit filter.
+* New: blocked submissions no longer keep their file uploads. The entry is still stored and still lists what was sent, so a real enquiry caught by mistake can be found — but a caught bot now costs a few kilobytes instead of a megabyte. There is a switch under "Keep blocked submissions" for sites that want the files as well.
+* Changed: the Telegram bot token and the Slack and Discord webhook URLs are no longer sent to the browser in full. Every visit to the Notifications page used to carry them across the wire in plain text. They travel masked now; emptying the box removes the stored one, and leaving it alone keeps it.
+* Changed: a notification destination shows its settings only while it is switched on.
+* Fixed: a personal data export carried the plugin's own bookkeeping keys — including the folder attachments are kept in, and, on sites upgraded from an older version, a signed spam-check token. That file is mailed to whoever asked for it. It now carries only what the visitor answered.
+* Fixed: two requests could hold the schema upgrade lock at the same time and run the upgrade together. WordPress core spells add_option() as an INSERT that succeeds for both racers; the lock is a single INSERT IGNORE now.
+* Fixed: the CSV export opened its output stream after sending the download headers, so a stream that would not open wrote its error into a half-begun file.
 = 2.4.0 =
 * New for developers: four hooks on a submission — keep a form out of the table, change what is stored before it is written, announce an entry somewhere of your own, or act on one once it exists. Documented in HOOKS.md.
 * Fixed: search boxes and other text fields were four pixels taller than the buttons beside them. WordPress imposes a minimum height on inputs that a plugin has to undo; nineteen controls across six screens were affected.
@@ -113,7 +122,7 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Nova features are 
 
 = 2.0.1 =
 * Removed the "See Pro" button from the Features screen. It pointed at a placeholder address, which reads as a broken plugin rather than as a feature that has not been built. Pro is not being built until the free version has had time with real users; the screen still says what it will hold.
-* The Features screen moved to a matching address. It was reached at `admin.php?page=cf7-nova-modules`, left over from when these were modules with a switch beside each one, and is now `admin.php?page=cf7-nova-features`. Update any bookmark.
+* The Features screen moved to a matching address. It was reached at `admin.php?page=cf7-essentials-modules`, left over from when these were modules with a switch beside each one, and is now `admin.php?page=cf7-essentials-features`. Update any bookmark.
 
 = 2.0.0 =
 * Full architectural rebuild from scratch.

@@ -2,17 +2,17 @@
 /**
  * Multi-step forms.
  *
- * `[cf7nl_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
+ * `[cf7e_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
  * text and this filter turns it into a divider. Whatever settings the break was
  * given ride along as data attributes for assets/js/steps.js, which does the
  * actual splitting in the browser.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ final class Steps {
 		'id'    => 'id',
 	);
 
-	private const META = '_cf7nl_steps';
+	private const META = '_cf7e_steps';
 
 	/** How the progress through a multi-step form is drawn. */
 	public const INDICATORS = array( 'bar', 'dots', 'numbers', 'titles', 'none' );
@@ -88,11 +88,11 @@ final class Steps {
 	 */
 	public function indicator_class( string $class ): string {
 		$form = self::current_form();
-		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[cf7nl_pagebreak' ) ) {
+		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[cf7e_pagebreak' ) ) {
 			return $class;
 		}
 
-		return $class . ' cf7nl-steps-' . self::config( $form->id() )['indicator'];
+		return $class . ' cf7e-steps-' . self::config( $form->id() )['indicator'];
 	}
 
 	private static function current_form(): ?object {
@@ -106,36 +106,36 @@ final class Steps {
 	}
 
 	public function maybe_render( string $elements ): string {
-		if ( false === strpos( $elements, '[cf7nl_pagebreak' ) ) {
+		if ( false === strpos( $elements, '[cf7e_pagebreak' ) ) {
 			return $elements;
 		}
 
-		wp_enqueue_style( 'cf7nl-steps', CF7NL_URL . 'assets/css/steps.css', array(), cf7nl_asset_ver( 'assets/css/steps.css' ) );
+		wp_enqueue_style( 'cf7e-steps', CF7E_URL . 'assets/css/steps.css', array(), cf7e_asset_ver( 'assets/css/steps.css' ) );
 		// Declared as a dependency, not just loaded alongside: steps.js hands its
-		// Next-button gate to window.cf7nlValidate, which validate.js defines.
-		wp_enqueue_script( 'cf7nl-steps', CF7NL_URL . 'assets/js/steps.js', array( 'cf7nl-validate' ), cf7nl_asset_ver( 'assets/js/steps.js' ), true );
+		// Next-button gate to window.cf7eValidate, which validate.js defines.
+		wp_enqueue_script( 'cf7e-steps', CF7E_URL . 'assets/js/steps.js', array( 'cf7e-validate' ), cf7e_asset_ver( 'assets/js/steps.js' ), true );
 
 		// The navigation is drawn in the browser, so its wording has to travel to
 		// it — the same way file.js and select.js get theirs. Without this the
 		// buttons stay English on every site, in every language.
 		wp_localize_script(
-			'cf7nl-steps',
-			'cf7nlStepsL10n',
+			'cf7e-steps',
+			'cf7eStepsL10n',
 			array(
-				'prev'   => __( 'Back', 'cf7-nova-lite' ),
-				'next'   => __( 'Next', 'cf7-nova-lite' ),
+				'prev'   => __( 'Back', 'essentials-for-contact-form-7' ),
+				'next'   => __( 'Next', 'essentials-for-contact-form-7' ),
 				// Worded exactly as the builder preview words it: gettext merges the
 				// two by their text, and a translator shown two different notes for
 				// one string has to guess which one applies.
 				/* translators: 1: current step, 2: total steps. */
-				'status' => __( 'Step %1$d of %2$d', 'cf7-nova-lite' ),
+				'status' => __( 'Step %1$d of %2$d', 'essentials-for-contact-form-7' ),
 				/* translators: %d: step number. */
-				'step'   => __( 'Step %d', 'cf7-nova-lite' ),
+				'step'   => __( 'Step %d', 'essentials-for-contact-form-7' ),
 			)
 		);
 
 		return (string) preg_replace_callback(
-			'/\[cf7nl_pagebreak(?:\s+([^\]]*))?\]/',
+			'/\[cf7e_pagebreak(?:\s+([^\]]*))?\]/',
 			static function ( array $match ): string {
 				$args = $match[1] ?? '';
 				$atts = '';
@@ -146,7 +146,7 @@ final class Steps {
 					}
 				}
 
-				return '<div class="cf7nl-pagebreak" aria-hidden="true"' . $atts . '></div>';
+				return '<div class="cf7e-pagebreak" aria-hidden="true"' . $atts . '></div>';
 			},
 			$elements
 		);

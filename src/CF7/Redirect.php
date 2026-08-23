@@ -2,22 +2,22 @@
 /**
  * Redirect after submit.
  *
- * The settings live in one `_cf7nl_redirect` post meta and are handed to the
+ * The settings live in one `_cf7e_redirect` post meta and are handed to the
  * browser as data attributes on a hidden marker, which assets/js/redirect.js
  * acts on once CF7 fires its `wpcf7mailsent` success event.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Redirect {
 
-	private const META = '_cf7nl_redirect';
+	private const META = '_cf7e_redirect';
 
 	public function register_hooks(): void {
 		add_filter( 'wpcf7_form_elements', array( $this, 'inject' ), 9 );
@@ -168,10 +168,10 @@ final class Redirect {
 			return $elements;
 		}
 
-		wp_enqueue_script( 'cf7nl-redirect', CF7NL_URL . 'assets/js/redirect.js', array(), cf7nl_asset_ver( 'assets/js/redirect.js' ), true );
+		wp_enqueue_script( 'cf7e-redirect', CF7E_URL . 'assets/js/redirect.js', array(), cf7e_asset_ver( 'assets/js/redirect.js' ), true );
 
 		return $elements . sprintf(
-			'<input type="hidden" class="cf7nl-redirect" value="%1$s" data-delay="%2$d" data-target="%3$s" data-method="%4$s" data-params="%5$s" />',
+			'<input type="hidden" class="cf7e-redirect" value="%1$s" data-delay="%2$d" data-target="%3$s" data-method="%4$s" data-params="%5$s" />',
 			esc_attr( $destination ),
 			$config['delay'],
 			esc_attr( $config['target'] ),

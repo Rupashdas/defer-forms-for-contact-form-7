@@ -11,12 +11,12 @@
  * so a background job would add a moving part for no gain — and a failure would
  * have nowhere to be seen.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -64,7 +64,7 @@ final class Telegram {
 		 */
 		if ( '' !== $error && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- the only channel a background failure has.
-			error_log( 'CF7 Nova: Telegram refused a notification — ' . $error );
+			error_log( 'CF7 Essentials: Telegram refused a notification — ' . $error );
 		}
 	}
 
@@ -81,8 +81,8 @@ final class Telegram {
 		return self::send(
 			(string) ( $config['bot_token'] ?? '' ),
 			(string) ( $config['chat_id'] ?? '' ),
-			'<b>' . self::escape( __( 'CF7 Nova', 'cf7-nova-lite' ) ) . '</b>' . "\n"
-				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'cf7-nova-lite' ) )
+			'<b>' . self::escape( __( 'CF7 Essentials', 'essentials-for-contact-form-7' ) ) . '</b>' . "\n"
+				. self::escape( __( 'This is a test. Your form submissions will arrive here.', 'essentials-for-contact-form-7' ) )
 		);
 	}
 
@@ -134,7 +134,7 @@ final class Telegram {
 
 		return is_array( $body ) && ! empty( $body['description'] )
 			? (string) $body['description']
-			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Telegram answered %d.', 'cf7-nova-lite' ), $code );
+			: sprintf( /* translators: %d: an HTTP status code. */ __( 'Telegram answered %d.', 'essentials-for-contact-form-7' ), $code );
 	}
 
 	/**
@@ -161,7 +161,7 @@ final class Telegram {
 
 		$lines[] = '';
 		$lines[] = '<a href="' . esc_url( $entry->link ) . '">'
-			. self::escape( __( 'Open this entry', 'cf7-nova-lite' ) ) . '</a>';
+			. self::escape( __( 'Open this entry', 'essentials-for-contact-form-7' ) ) . '</a>';
 
 		$message = implode( "\n", $lines );
 
@@ -171,7 +171,7 @@ final class Telegram {
 
 		// Cut with room for the notice, so the result is under the limit rather
 		// than exactly at it.
-		$notice = "\n\n" . self::escape( __( '(truncated)', 'cf7-nova-lite' ) );
+		$notice = "\n\n" . self::escape( __( '(truncated)', 'essentials-for-contact-form-7' ) );
 
 		return mb_substr( $message, 0, self::LIMIT - mb_strlen( $notice ) ) . $notice;
 	}

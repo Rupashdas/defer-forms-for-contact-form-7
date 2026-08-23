@@ -1,19 +1,19 @@
 <?php
 /**
- * Ways into the Nova builder from Contact Form 7's own screens.
+ * Ways into the visual builder from Contact Form 7's own screens.
  *
  * Someone who already lives in CF7's form editor should not have to learn a new
  * menu to find this. Two entry points: a button on the single-form screen, and a
  * row action in the forms list.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Admin;
+namespace CF7E\Admin;
 
-use CF7NL\Core\Capability;
+use CF7E\Core\Capability;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,7 +26,7 @@ final class Cf7_Integration {
 
 	/** Everything up to the form id, which the two callers finish differently. */
 	private static function builder_url_base(): string {
-		return admin_url( 'admin.php?page=cf7-nova-builder&form=' );
+		return admin_url( 'admin.php?page=cf7-essentials-builder&form=' );
 	}
 
 	private static function builder_url( int $form_id ): string {
@@ -45,7 +45,7 @@ final class Cf7_Integration {
 		printf(
 			'<a href="%s" class="button button-primary button-large" style="width:100%%;justify-content:center;">%s</a>',
 			esc_url( self::builder_url( (int) $post_id ) ),
-			esc_html__( 'Edit with Nova Builder', 'cf7-nova-lite' )
+			esc_html__( 'Edit with the visual builder', 'essentials-for-contact-form-7' )
 		);
 		echo '</div>';
 	}
@@ -61,7 +61,7 @@ final class Cf7_Integration {
 		}
 
 		$base  = self::builder_url_base();
-		$label = __( 'Nova Builder', 'cf7-nova-lite' );
+		$label = __( 'Visual Builder', 'essentials-for-contact-form-7' );
 		?>
 		<script>
 		( function () {
@@ -76,7 +76,7 @@ final class Cf7_Integration {
 				a.href = base + m[ 1 ];
 				a.textContent = label;
 				var span = document.createElement( 'span' );
-				span.className = 'nova-builder';
+				span.className = 'cf7e-builder-link';
 				span.appendChild( document.createTextNode( ' | ' ) );
 				span.appendChild( a );
 				actions.appendChild( span );

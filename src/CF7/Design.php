@@ -2,20 +2,20 @@
 /**
  * Styling controls.
  *
- * Turns the Design settings into the `--cf7nl-*` custom properties that
+ * Turns the Design settings into the `--cf7e-*` custom properties that
  * assets/css/controls.css already reads, so changing a colour here re-skins
  * every control without a line of CSS. The same declarations are emitted twice:
- * onto `.wpcf7-form` on the front end and onto `.cf7nl-preview` in the builder,
+ * onto `.wpcf7-form` on the front end and onto `.cf7e-preview` in the builder,
  * which is what keeps the preview honest.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
-use CF7NL\DB\Settings_Repository;
+use CF7E\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -126,18 +126,18 @@ final class Design {
 			if ( ! isset( $values[ $key ] ) ) {
 				continue;
 			}
-			$out .= '--cf7nl-' . $token . ':' . $values[ $key ] . $unit . ';';
+			$out .= '--cf7e-' . $token . ':' . $values[ $key ] . $unit . ';';
 		}
 
 		// A softened primary makes a focus ring that always suits the palette.
 		if ( isset( $values['primary'] ) ) {
-			$out .= '--cf7nl-ring-color:' . self::six_digit( (string) $values['primary'] ) . '24;';
+			$out .= '--cf7e-ring-color:' . self::six_digit( (string) $values['primary'] ) . '24;';
 		}
 
 		if ( ! empty( $values['button_custom'] ) ) {
 			foreach ( self::BUTTON_TOKENS as $key => $token ) {
 				if ( isset( $values[ $key ] ) ) {
-					$out .= '--cf7nl-' . $token . ':' . $values[ $key ] . ';';
+					$out .= '--cf7e-' . $token . ':' . $values[ $key ] . ';';
 				}
 			}
 		}
@@ -182,19 +182,19 @@ final class Design {
 		$out = '';
 
 		if ( '' !== $muted ) {
-			$out .= '--cf7nl-icon-chevron:' . $svg( "<path d='m6 9 6 6 6-6'/>", $muted, '2' );
-			$out .= '--cf7nl-icon-upload:' . $svg( "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M7 10l5-5 5 5'/><path d='M12 5v12'/>", $muted, '1.7' );
-			$out .= '--cf7nl-icon-doc:' . $svg( "<path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/>", $muted, '1.6' );
+			$out .= '--cf7e-icon-chevron:' . $svg( "<path d='m6 9 6 6 6-6'/>", $muted, '2' );
+			$out .= '--cf7e-icon-upload:' . $svg( "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M7 10l5-5 5 5'/><path d='M12 5v12'/>", $muted, '1.7' );
+			$out .= '--cf7e-icon-doc:' . $svg( "<path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/>", $muted, '1.6' );
 		}
 
 		// The tick sits on the primary fill, so it takes the contrast colour.
 		if ( '' !== $contrast ) {
-			$out .= '--cf7nl-icon-tick:' . $svg( "<path d='M20 6 9 17l-5-5'/>", $contrast, '3.5' );
+			$out .= '--cf7e-icon-tick:' . $svg( "<path d='M20 6 9 17l-5-5'/>", $contrast, '3.5' );
 		}
 
 		// The chosen-option tick sits on the panel, so it takes the primary.
 		if ( '' !== $primary ) {
-			$out .= '--cf7nl-icon-check:' . $svg( "<path d='M20 6 9 17l-5-5'/>", $primary, '3' );
+			$out .= '--cf7e-icon-check:' . $svg( "<path d='M20 6 9 17l-5-5'/>", $primary, '3' );
 		}
 
 		return $out;
@@ -219,7 +219,7 @@ final class Design {
 	 * which left an `echo` with a phpcs:ignore over it and a hand-rolled
 	 * `str_ireplace` guarding against an early `</style`. And once in
 	 * specificity: `admin_head` runs before the page's render callback enqueues
-	 * the admin bundle, so the bundle's own `:is( .wpcf7-form, .cf7nl-preview )`
+	 * the admin bundle, so the bundle's own `:is( .wpcf7-form, .cf7e-preview )`
 	 * defaults printed *after* this block at the same single-class weight and
 	 * won on source order. The class was doubled to climb over that.
 	 *
@@ -232,6 +232,6 @@ final class Design {
 	public function preview_css(): string {
 		$declarations = $this->declarations();
 
-		return '' === $declarations ? '' : '.cf7nl-preview{' . $declarations . '}';
+		return '' === $declarations ? '' : '.cf7e-preview{' . $declarations . '}';
 	}
 }

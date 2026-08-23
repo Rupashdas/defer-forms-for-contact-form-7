@@ -19,12 +19,12 @@
  * storing an attachment at all, so anything that can hold the file can be
  * written to directly.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Core;
+namespace CF7E\Core;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -9,12 +9,12 @@
  * so this is where escaping happens — see Form_Markup::escape_text(), and
  * option_value() for the characters that would end a tag early.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\CF7;
+namespace CF7E\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -109,22 +109,22 @@ final class Form_Serializer {
 		$default_ok = $placeholder_ok || in_array( $type, array( 'range', 'dynamictext', 'hidden' ), true );
 
 		// Class → one `class:` token per word (CF7 supports repeats). A styled
-		// date field also carries the cf7nl-fp marker the front-end picker reads.
+		// date field also carries the cf7e-fp marker the front-end picker reads.
 		$classes = array_values( array_filter( preg_split( '/\s+/', trim( (string) ( $options['class'] ?? '' ) ) ) ?: array() ) );
 		unset( $options['class'] );
 		if ( 'date' === $type && 'native' !== ( $field['picker'] ?? 'styled' ) ) {
-			$classes[] = 'cf7nl-fp';
+			$classes[] = 'cf7e-fp';
 		}
 		// Choice layout rides along as a marker class CF7 puts on the control.
 		if ( in_array( $type, array( 'checkbox', 'radio' ), true ) ) {
 			$layout = (string) ( $field['layout'] ?? 'list' );
 			if ( in_array( $layout, array( 'inline', 'cards' ), true ) ) {
-				$classes[] = 'cf7nl-' . $layout;
+				$classes[] = 'cf7e-' . $layout;
 			}
 		}
 		// Same for the search box on dropdowns.
 		if ( in_array( $type, array( 'select', 'country' ), true ) && ! empty( $field['searchable'] ) ) {
-			$classes[] = 'cf7nl-search';
+			$classes[] = 'cf7e-search';
 		}
 		// A phone format carries punctuation and spaces, so it cannot ride as a
 		// CF7 option value; base64url makes it class-safe. The digits-only marker
@@ -208,7 +208,7 @@ final class Form_Serializer {
 			// radio/checkbox option selection and file dropzones — those get a
 			// <fieldset>/<legend> caption instead.
 			if ( in_array( $type, array( 'radio', 'checkbox', 'file', 'rating' ), true ) ) {
-				return self::wrap_condition( $field, "<fieldset class=\"nv-fieldset\"><legend>{$label}</legend>\n{$tag}</fieldset>" );
+				return self::wrap_condition( $field, "<fieldset class=\"cf7e-fieldset\"><legend>{$label}</legend>\n{$tag}</fieldset>" );
 			}
 			return self::wrap_condition( $field, "<label>{$label}\n{$tag}</label>" );
 		}
@@ -263,7 +263,7 @@ final class Form_Serializer {
 	}
 
 	/**
-	 * Wrap a field's markup in a `[cf7nl_if]` region when it carries a condition.
+	 * Wrap a field's markup in a `[cf7e_if]` region when it carries a condition.
 	 * The marker is an unregistered tag, so CF7 leaves it literal and the
 	 * front-end converts it to a `data-`flagged div.
 	 *
@@ -311,11 +311,11 @@ final class Form_Serializer {
 		// contain a quote or `]` that would break the marker.
 		$encoded_groups = base64_encode( (string) wp_json_encode( $clean_groups ) );
 
-		return "[cf7nl_if action=\"{$action}\" groups=\"{$encoded_groups}\"]\n{$html}\n[/cf7nl_if]";
+		return "[cf7e_if action=\"{$action}\" groups=\"{$encoded_groups}\"]\n{$html}\n[/cf7e_if]";
 	}
 
 	/**
-	 * A grid row → `[cf7nl_row cols="N"][cf7nl_col] … [/cf7nl_col] … [/cf7nl_row]`.
+	 * A grid row → `[cf7e_row cols="N"][cf7e_col] … [/cf7e_col] … [/cf7e_row]`.
 	 * Each column wraps its own serialized items. The markers are unregistered
 	 * tags, so CF7 leaves them literal and Grid converts them to divs.
 	 *
@@ -337,10 +337,10 @@ final class Form_Serializer {
 		$cells = array();
 		foreach ( $columns as $col ) {
 			$inner   = self::serialize( (array) $col );
-			$cells[] = "[cf7nl_col]\n{$inner}\n[/cf7nl_col]";
+			$cells[] = "[cf7e_col]\n{$inner}\n[/cf7e_col]";
 		}
 
-		return '[cf7nl_row cols="' . count( $columns ) . "\"]\n" . implode( "\n", $cells ) . "\n[/cf7nl_row]";
+		return '[cf7e_row cols="' . count( $columns ) . "\"]\n" . implode( "\n", $cells ) . "\n[/cf7e_row]";
 	}
 
 	/**
@@ -354,7 +354,7 @@ final class Form_Serializer {
 	 * the key absent the test passes on a default the branch then discards,
 	 * reading the missing key again and casting null — so the fallback never ran
 	 * and the value came out empty. A heading saved without one lost its tag
-	 * name: `< class="nv-h nv-h- nv-align-">`.
+	 * name: `< class="cf7e-h cf7e-h- cf7e-align-">`.
 	 *
 	 * @param array<string, mixed> $item
 	 * @param array<int, string>   $allowed
@@ -366,7 +366,7 @@ final class Form_Serializer {
 	}
 	/**
 	 * A content block (heading/paragraph/divider/spacer) → its HTML, carrying
-	 * nv- classes the front-end styles.
+	 * cf7e- classes the front-end styles.
 	 *
 	 * @param array<string, mixed> $item
 	 */
@@ -377,21 +377,21 @@ final class Form_Serializer {
 
 		if ( 'heading' === $type ) {
 			$level = self::one_of( $item, 'level', array( 'h2', 'h3', 'h4' ), 'h2' );
-			return "<{$level} class=\"nv-h nv-h-{$level} nv-align-{$align}\">{$text}</{$level}>";
+			return "<{$level} class=\"cf7e-h cf7e-h-{$level} cf7e-align-{$align}\">{$text}</{$level}>";
 		}
 		if ( 'paragraph' === $type ) {
 			$size = self::one_of( $item, 'size', array( 'sm', 'md', 'lg' ), 'md' );
-			return "<p class=\"nv-p nv-p-{$size} nv-align-{$align}\">{$text}</p>";
+			return "<p class=\"cf7e-p cf7e-p-{$size} cf7e-align-{$align}\">{$text}</p>";
 		}
 		if ( 'divider' === $type ) {
 			$style     = self::one_of( $item, 'style', array( 'solid', 'dashed', 'dotted' ), 'solid' );
 			$tier      = self::one_of( $item, 'tier', array( 'subtle', 'normal', 'strong' ), 'subtle' );
 			$thickness = max( 1, min( 6, (int) ( $item['thickness'] ?? 1 ) ) );
-			return "<hr class=\"nv-hr nv-hr-{$style} nv-hr-{$tier}\" style=\"border-top-width:{$thickness}px\" />";
+			return "<hr class=\"cf7e-hr cf7e-hr-{$style} cf7e-hr-{$tier}\" style=\"border-top-width:{$thickness}px\" />";
 		}
 		if ( 'spacer' === $type ) {
 			$height = max( 0, min( 200, (int) ( $item['height'] ?? 16 ) ) );
-			return "<div class=\"nv-spacer\" style=\"height:{$height}px\" aria-hidden=\"true\"></div>";
+			return "<div class=\"cf7e-spacer\" style=\"height:{$height}px\" aria-hidden=\"true\"></div>";
 		}
 		return '';
 	}
@@ -402,7 +402,7 @@ final class Form_Serializer {
 	 * @param array<string, mixed> $item
 	 */
 	private static function serialize_step( array $item ): string {
-		$tag_parts = array( 'cf7nl_pagebreak' );
+		$tag_parts = array( 'cf7e_pagebreak' );
 
 		foreach ( Form_Markup::STEP_ATTRS as $key ) {
 			// A quote would close the attribute early, so it never goes in.

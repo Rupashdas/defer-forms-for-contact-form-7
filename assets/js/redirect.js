@@ -139,7 +139,7 @@
 
 	document.addEventListener( 'wpcf7mailsent', function ( e ) {
 		var form = e.target;
-		var marker = form ? form.querySelector( '.cf7nl-redirect' ) : null;
+		var marker = form ? form.querySelector( '.cf7e-redirect' ) : null;
 
 		if ( ! marker ) {
 			return;

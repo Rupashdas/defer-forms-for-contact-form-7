@@ -25,12 +25,12 @@
  *
  * phpcs:disable WordPress.DB.DirectDatabaseQuery -- see above.
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\DB;
+namespace CF7E\DB;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -303,12 +303,12 @@ final class Submissions_Repository {
 			 *
 			 * @param array<int, array<string, mixed>> $rows Rows about to be deleted.
 			 */
-			do_action( 'cf7nl_submissions_deleted', $rows );
+			do_action( 'cf7e_submissions_deleted', $rows );
 		}
 	}
 
 	/** Transient holding the unread count; see count_unread(). */
-	private const UNREAD_CACHE = 'cf7nl_unread_count';
+	private const UNREAD_CACHE = 'cf7e_unread_count';
 
 	/**
 	 * Throw away the cached unread count.

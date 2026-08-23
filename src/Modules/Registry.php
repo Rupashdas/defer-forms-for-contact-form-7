@@ -25,12 +25,12 @@
  * The Lite vs Pro split mirrors the original plugin inventory
  * (see cf7-companion-guide/01-audit-and-inventory.md, L1–L19 / P1–P15).
  *
- * @package CF7_Nova_Lite
+ * @package CF7_Essentials
  */
 
 declare( strict_types=1 );
 
-namespace CF7NL\Modules;
+namespace CF7E\Modules;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,27 +44,27 @@ final class Registry {
 	 */
 	public static function definitions(): array {
 		$lite = array(
-			array( 'submissions', __( 'Submissions Database', 'cf7-nova-lite' ), __( 'Store every form entry with search, filtering and export.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'database' ),
+			array( 'submissions', __( 'Submissions Database', 'essentials-for-contact-form-7' ), __( 'Store every form entry with search, filtering and export.', 'essentials-for-contact-form-7' ), __( 'Core', 'essentials-for-contact-form-7' ), 'database' ),
 			// Built since before this list was written and never on it: uploads
 			// are kept with the entry, downloadable from it, and removed with it.
-			array( 'attachments', __( 'File Uploads Kept', 'cf7-nova-lite' ), __( 'Uploaded files are stored with the entry and downloadable from it.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'paperclip' ),
+			array( 'attachments', __( 'File Uploads Kept', 'essentials-for-contact-form-7' ), __( 'Uploaded files are stored with the entry and downloadable from it.', 'essentials-for-contact-form-7' ), __( 'Core', 'essentials-for-contact-form-7' ), 'paperclip' ),
 			// Added with 2.3.0. The list is what the page draws, so a feature
 			// that ships without an entry here simply does not exist to anyone
 			// reading that screen.
-			array( 'entry_workflow', __( 'Entry Workflow', 'cf7-nova-lite' ), __( 'Mark an entry replied or done, and answer it without leaving the screen.', 'cf7-nova-lite' ), __( 'Core', 'cf7-nova-lite' ), 'reply' ),
-			array( 'builder', __( 'Visual Builder', 'cf7-nova-lite' ), __( 'Drag-and-drop builder for Contact Form 7 fields.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'layout' ),
-			array( 'grid', __( 'Grid Layout', 'cf7-nova-lite' ), __( 'Arrange fields in 1–4 responsive columns.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'grid' ),
-			array( 'multistep', __( 'Multi-Step Forms', 'cf7-nova-lite' ), __( 'Split long forms into steps with a progress bar.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'list-ordered' ),
-			array( 'conditional', __( 'Conditional Logic', 'cf7-nova-lite' ), __( 'Show or hide fields based on what the user selects.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'git-branch' ),
-			array( 'redirect', __( 'Redirect', 'cf7-nova-lite' ), __( 'Send users to a thank-you or external page after submit.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'external-link' ),
-			array( 'templates', __( 'Template Library', 'cf7-nova-lite' ), __( 'Start from 20+ ready-made form templates.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'layout-template' ),
-			array( 'styling', __( 'Styling Controls', 'cf7-nova-lite' ), __( 'Customise colors, typography and spacing without CSS, or give one form a class of your own.', 'cf7-nova-lite' ), __( 'Design', 'cf7-nova-lite' ), 'palette' ),
-			array( 'fields', __( 'Lite Fields', 'cf7-nova-lite' ), __( 'Star rating, country, password, dynamic text and more.', 'cf7-nova-lite' ), __( 'Fields', 'cf7-nova-lite' ), 'text-cursor-input' ),
-			array( 'spam', __( 'Spam Protection', 'cf7-nova-lite' ), __( 'Block bots with a honeypot, time-trap and dedup checks.', 'cf7-nova-lite' ), __( 'Protection', 'cf7-nova-lite' ), 'shield' ),
-			array( 'privacy', __( 'Privacy & GDPR', 'cf7-nova-lite' ), __( 'Data export and erase helpers for compliance.', 'cf7-nova-lite' ), __( 'Protection', 'cf7-nova-lite' ), 'lock' ),
-			array( 'import_export', __( 'Import / Export', 'cf7-nova-lite' ), __( 'Move forms between sites as JSON.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'arrow-down-up' ),
-			array( 'revisions', __( 'Revisions', 'cf7-nova-lite' ), __( 'Keep the last ten versions of a form and roll one back.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'history' ),
-			array( 'notifications', __( 'Chat Notifications', 'cf7-nova-lite' ), __( 'Send every submission to Telegram, Slack or Discord as it arrives.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'send' ),
+			array( 'entry_workflow', __( 'Entry Workflow', 'essentials-for-contact-form-7' ), __( 'Mark an entry replied or done, and answer it without leaving the screen.', 'essentials-for-contact-form-7' ), __( 'Core', 'essentials-for-contact-form-7' ), 'reply' ),
+			array( 'builder', __( 'Visual Builder', 'essentials-for-contact-form-7' ), __( 'Drag-and-drop builder for Contact Form 7 fields.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'layout' ),
+			array( 'grid', __( 'Grid Layout', 'essentials-for-contact-form-7' ), __( 'Arrange fields in 1–4 responsive columns.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'grid' ),
+			array( 'multistep', __( 'Multi-Step Forms', 'essentials-for-contact-form-7' ), __( 'Split long forms into steps with a progress bar.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'list-ordered' ),
+			array( 'conditional', __( 'Conditional Logic', 'essentials-for-contact-form-7' ), __( 'Show or hide fields based on what the user selects.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'git-branch' ),
+			array( 'redirect', __( 'Redirect', 'essentials-for-contact-form-7' ), __( 'Send users to a thank-you or external page after submit.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'external-link' ),
+			array( 'templates', __( 'Template Library', 'essentials-for-contact-form-7' ), __( 'Start from 20+ ready-made form templates.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'layout-template' ),
+			array( 'styling', __( 'Styling Controls', 'essentials-for-contact-form-7' ), __( 'Customise colors, typography and spacing without CSS, or give one form a class of your own.', 'essentials-for-contact-form-7' ), __( 'Design', 'essentials-for-contact-form-7' ), 'palette' ),
+			array( 'fields', __( 'Lite Fields', 'essentials-for-contact-form-7' ), __( 'Star rating, country, password, dynamic text and more.', 'essentials-for-contact-form-7' ), __( 'Fields', 'essentials-for-contact-form-7' ), 'text-cursor-input' ),
+			array( 'spam', __( 'Spam Protection', 'essentials-for-contact-form-7' ), __( 'Block bots with a honeypot, time-trap and dedup checks.', 'essentials-for-contact-form-7' ), __( 'Protection', 'essentials-for-contact-form-7' ), 'shield' ),
+			array( 'privacy', __( 'Privacy & GDPR', 'essentials-for-contact-form-7' ), __( 'Data export and erase helpers for compliance.', 'essentials-for-contact-form-7' ), __( 'Protection', 'essentials-for-contact-form-7' ), 'lock' ),
+			array( 'import_export', __( 'Import / Export', 'essentials-for-contact-form-7' ), __( 'Move forms between sites as JSON.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'arrow-down-up' ),
+			array( 'revisions', __( 'Revisions', 'essentials-for-contact-form-7' ), __( 'Keep the last ten versions of a form and roll one back.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'history' ),
+			array( 'notifications', __( 'Chat Notifications', 'essentials-for-contact-form-7' ), __( 'Send every submission to Telegram, Slack or Discord as it arrives.', 'essentials-for-contact-form-7' ), __( 'Notifications', 'essentials-for-contact-form-7' ), 'send' ),
 		);
 
 		/**
@@ -80,19 +80,19 @@ final class Registry {
 		$planned = array();
 
 		$pro = array(
-			array( 'analytics', __( 'Analytics', 'cf7-nova-lite' ), __( 'Track views, conversion, abandonment and field drop-off.', 'cf7-nova-lite' ), __( 'Insights', 'cf7-nova-lite' ), 'bar-chart' ),
-			array( 'ab_testing', __( 'A/B Testing', 'cf7-nova-lite' ), __( 'Test form variants and pick the winner.', 'cf7-nova-lite' ), __( 'Insights', 'cf7-nova-lite' ), 'split' ),
-			array( 'payments', __( 'Payments', 'cf7-nova-lite' ), __( 'Collect Stripe and PayPal payments from forms.', 'cf7-nova-lite' ), __( 'Integrations', 'cf7-nova-lite' ), 'credit-card' ),
-			array( 'crm', __( 'CRM Integrations', 'cf7-nova-lite' ), __( 'Sync entries to Mailchimp, HubSpot, ActiveCampaign, ConvertKit.', 'cf7-nova-lite' ), __( 'Integrations', 'cf7-nova-lite' ), 'users' ),
-			array( 'webhook', __( 'Webhook Builder', 'cf7-nova-lite' ), __( 'Send submission data to any endpoint with a JSON payload.', 'cf7-nova-lite' ), __( 'Integrations', 'cf7-nova-lite' ), 'webhook' ),
-			array( 'pro_fields', __( 'Advanced Fields', 'cf7-nova-lite' ), __( 'Signature, repeater, calculation, range, image-choice and more.', 'cf7-nova-lite' ), __( 'Fields', 'cf7-nova-lite' ), 'pen-tool' ),
-			array( 'pdf', __( 'PDF Export', 'cf7-nova-lite' ), __( 'Generate a PDF of each submission with Dompdf.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'file-text' ),
-			array( 'save_continue', __( 'Save & Continue', 'cf7-nova-lite' ), __( 'Let users save progress and resume from a link.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'save' ),
-			array( 'autosave', __( 'Draft Autosave', 'cf7-nova-lite' ), __( 'Auto-save drafts to the database and localStorage.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'refresh-cw' ),
-			array( 'step_branching', __( 'Step Branching', 'cf7-nova-lite' ), __( 'Jump to different steps based on field values.', 'cf7-nova-lite' ), __( 'Forms', 'cf7-nova-lite' ), 'git-fork' ),
-			array( 'workflows', __( 'Email Workflows', 'cf7-nova-lite' ), __( 'Build trigger → condition → action email sequences.', 'cf7-nova-lite' ), __( 'Notifications', 'cf7-nova-lite' ), 'workflow' ),
-			array( 'team', __( 'Team Collaboration', 'cf7-nova-lite' ), __( 'Notes, activity log and mentions on submissions.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'message-square' ),
-			array( 'white_label', __( 'White Label', 'cf7-nova-lite' ), __( 'Replace the plugin name, logo and hide Pro CTAs.', 'cf7-nova-lite' ), __( 'Tools', 'cf7-nova-lite' ), 'tag' ),
+			array( 'analytics', __( 'Analytics', 'essentials-for-contact-form-7' ), __( 'Track views, conversion, abandonment and field drop-off.', 'essentials-for-contact-form-7' ), __( 'Insights', 'essentials-for-contact-form-7' ), 'bar-chart' ),
+			array( 'ab_testing', __( 'A/B Testing', 'essentials-for-contact-form-7' ), __( 'Test form variants and pick the winner.', 'essentials-for-contact-form-7' ), __( 'Insights', 'essentials-for-contact-form-7' ), 'split' ),
+			array( 'payments', __( 'Payments', 'essentials-for-contact-form-7' ), __( 'Collect Stripe and PayPal payments from forms.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'credit-card' ),
+			array( 'crm', __( 'CRM Integrations', 'essentials-for-contact-form-7' ), __( 'Sync entries to Mailchimp, HubSpot, ActiveCampaign, ConvertKit.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'users' ),
+			array( 'webhook', __( 'Webhook Builder', 'essentials-for-contact-form-7' ), __( 'Send submission data to any endpoint with a JSON payload.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'webhook' ),
+			array( 'pro_fields', __( 'Advanced Fields', 'essentials-for-contact-form-7' ), __( 'Signature, repeater, calculation, range, image-choice and more.', 'essentials-for-contact-form-7' ), __( 'Fields', 'essentials-for-contact-form-7' ), 'pen-tool' ),
+			array( 'pdf', __( 'PDF Export', 'essentials-for-contact-form-7' ), __( 'Generate a PDF of each submission with Dompdf.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'file-text' ),
+			array( 'save_continue', __( 'Save & Continue', 'essentials-for-contact-form-7' ), __( 'Let users save progress and resume from a link.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'save' ),
+			array( 'autosave', __( 'Draft Autosave', 'essentials-for-contact-form-7' ), __( 'Auto-save drafts to the database and localStorage.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'refresh-cw' ),
+			array( 'step_branching', __( 'Step Branching', 'essentials-for-contact-form-7' ), __( 'Jump to different steps based on field values.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'git-fork' ),
+			array( 'workflows', __( 'Email Workflows', 'essentials-for-contact-form-7' ), __( 'Build trigger → condition → action email sequences.', 'essentials-for-contact-form-7' ), __( 'Notifications', 'essentials-for-contact-form-7' ), 'workflow' ),
+			array( 'team', __( 'Team Collaboration', 'essentials-for-contact-form-7' ), __( 'Notes, activity log and mentions on submissions.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'message-square' ),
+			array( 'white_label', __( 'White Label', 'essentials-for-contact-form-7' ), __( 'Replace the plugin name, logo and hide Pro CTAs.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'tag' ),
 		);
 
 		$out = array();

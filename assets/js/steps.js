@@ -1,12 +1,12 @@
 /**
- * CF7 Nova — multi-step forms. Splits a form into steps at each `.cf7nl-pagebreak`
+ * CF7 Essentials — multi-step forms. Splits a form into steps at each `.cf7e-pagebreak`
  * divider and adds Next/Back navigation with a progress bar. Steps are hidden with
  * CSS (not removed), so every field still submits from the final step.
  */
 ( function () {
 	'use strict';
 
-	var l10n = window.cf7nlStepsL10n || {};
+	var l10n = window.cf7eStepsL10n || {};
 	var TEXT = {
 		prev:   l10n.prev   || 'Back',
 		next:   l10n.next   || 'Next',
@@ -76,7 +76,7 @@
 			( form.closest( '.wpcf7' ) && form.closest( '.wpcf7' ).id ) ||
 			form.id;
 
-		return 'cf7nl_step_' + ( tag || 'form' );
+		return 'cf7e_step_' + ( tag || 'form' );
 	}
 
 	function readStep( form ) {
@@ -113,12 +113,12 @@
 	 * you were not looking at simply refused to submit with nothing on screen.
 	 */
 	function firstBadStep( steps ) {
-		if ( ! window.cf7nlValidate ) {
+		if ( ! window.cf7eValidate ) {
 			return -1;
 		}
 
 		for ( var i = 0; i < steps.length; i++ ) {
-			if ( window.cf7nlValidate.container( steps[ i ] ) ) {
+			if ( window.cf7eValidate.container( steps[ i ] ) ) {
 				return i;
 			}
 		}
@@ -159,10 +159,10 @@
 	}
 
 	function build( form ) {
-		if ( form.dataset.cf7nlSteps || ! form.querySelector( '.cf7nl-pagebreak' ) ) {
+		if ( form.dataset.cf7eSteps || ! form.querySelector( '.cf7e-pagebreak' ) ) {
 			return;
 		}
-		form.dataset.cf7nlSteps = '1';
+		form.dataset.cf7eSteps = '1';
 
 		// Group children into steps, splitting at each pagebreak divider. A divider
 		// also carries the settings for the step that follows it, so they are read
@@ -171,7 +171,7 @@
 		// its settings have to go with it rather than slide onto its neighbour.
 		var groups = [ { settings: {}, nodes: [] } ];
 		Array.prototype.slice.call( form.children ).forEach( function ( node ) {
-			if ( node.classList && node.classList.contains( 'cf7nl-pagebreak' ) ) {
+			if ( node.classList && node.classList.contains( 'cf7e-pagebreak' ) ) {
 				groups.push( { settings: Object.assign( {}, node.dataset ), nodes: [] } );
 				node.parentNode.removeChild( node );
 			} else if ( ! isStructural( node ) ) {
@@ -188,7 +188,7 @@
 			var step  = document.createElement( 'div' );
 			var nodes = group.nodes;
 
-			step.className = 'cf7nl-step' + ( group.settings.class ? ' ' + group.settings.class : '' );
+			step.className = 'cf7e-step' + ( group.settings.class ? ' ' + group.settings.class : '' );
 			if ( group.settings.id ) {
 				step.id = group.settings.id;
 			}
@@ -209,15 +209,15 @@
 		// Both indicators are always built; which one is seen is a class on the
 		// form and a CSS rule, so a site owner changing the style never depends on
 		// this file having been re-read from cache.
-		var bar  = el( 'div', 'cf7nl-steps-progress' );
-		var fill = el( 'div', 'cf7nl-steps-progress-fill' );
+		var bar  = el( 'div', 'cf7e-steps-progress' );
+		var fill = el( 'div', 'cf7e-steps-progress-fill' );
 		bar.appendChild( fill );
 
-		var marks = el( 'ol', 'cf7nl-steps-marks' );
+		var marks = el( 'ol', 'cf7e-steps-marks' );
 		var dots  = groups.map( function ( group, index ) {
-			var mark  = el( 'li', 'cf7nl-steps-mark' );
-			var num   = el( 'span', 'cf7nl-steps-mark-num' );
-			var label = el( 'span', 'cf7nl-steps-mark-label' );
+			var mark  = el( 'li', 'cf7e-steps-mark' );
+			var num   = el( 'span', 'cf7e-steps-mark-num' );
+			var label = el( 'span', 'cf7e-steps-mark-label' );
 
 			num.textContent   = String( index + 1 );
 			label.textContent = group.settings.title || sprintf( TEXT.step, index + 1 );
@@ -227,15 +227,15 @@
 			return mark;
 		} );
 
-		var indicator = el( 'div', 'cf7nl-steps-indicator' );
+		var indicator = el( 'div', 'cf7e-steps-indicator' );
 		indicator.appendChild( bar );
 		indicator.appendChild( marks );
 		steps[ 0 ].parentNode.insertBefore( indicator, steps[ 0 ] );
 
-		var nav    = el( 'div', 'cf7nl-steps-nav' );
-		var prev   = btn( 'cf7nl-step-prev', TEXT.prev );
-		var status = el( 'span', 'cf7nl-step-status' );
-		var next   = btn( 'cf7nl-step-next', TEXT.next );
+		var nav    = el( 'div', 'cf7e-steps-nav' );
+		var prev   = btn( 'cf7e-step-prev', TEXT.prev );
+		var status = el( 'span', 'cf7e-step-status' );
+		var next   = btn( 'cf7e-step-next', TEXT.next );
 		nav.appendChild( prev );
 		nav.appendChild( status );
 		nav.appendChild( next );
@@ -248,7 +248,7 @@
 		function show( index, scroll, remember ) {
 			current = Math.max( 0, Math.min( total - 1, index ) );
 			steps.forEach( function ( step, idx ) {
-				step.classList.toggle( 'cf7nl-step-active', idx === current );
+				step.classList.toggle( 'cf7e-step-active', idx === current );
 			} );
 			prev.style.display   = 0 === current ? 'none' : '';
 			next.style.display   = current === total - 1 ? 'none' : '';
@@ -259,8 +259,8 @@
 			status.textContent   = sprintf( TEXT.status, current + 1, total );
 			fill.style.width     = ( ( current + 1 ) / total * 100 ) + '%';
 			dots.forEach( function ( mark, idx ) {
-				mark.classList.toggle( 'cf7nl-steps-mark-done', idx < current );
-				mark.classList.toggle( 'cf7nl-steps-mark-current', idx === current );
+				mark.classList.toggle( 'cf7e-steps-mark-done', idx < current );
+				mark.classList.toggle( 'cf7e-steps-mark-current', idx === current );
 				mark.setAttribute( 'aria-current', idx === current ? 'step' : 'false' );
 			} );
 			if ( false !== remember ) {
@@ -307,7 +307,7 @@
 		 * The reset after a send reaches here too, a tick later, and is the one
 		 * case that must not move anybody.
 		 */
-		window.cf7nl.onReset( form, function () {
+		window.cf7e.onReset( form, function () {
 			if ( sent ) {
 				sent = false;
 				return;
@@ -361,11 +361,11 @@
 	// messages can never disagree. That file is enqueued as our dependency; the
 	// fallback only matters if it somehow failed to load.
 	function validStep( step ) {
-		if ( ! window.cf7nlValidate ) {
+		if ( ! window.cf7eValidate ) {
 			return true;
 		}
 
-		var first = window.cf7nlValidate.container( step );
+		var first = window.cf7eValidate.container( step );
 		if ( ! first ) {
 			return true;
 		}
@@ -385,16 +385,16 @@
 	 * can type into, and there is no reason for markup to survive that trip.
 	 */
 	function heading( settings ) {
-		var box = el( 'div', 'cf7nl-step-heading' );
+		var box = el( 'div', 'cf7e-step-heading' );
 
 		if ( settings.title ) {
-			var title = el( 'h3', 'cf7nl-step-title' );
+			var title = el( 'h3', 'cf7e-step-title' );
 			title.textContent = settings.title;
 			box.appendChild( title );
 		}
 
 		if ( settings.desc ) {
-			var desc = el( 'p', 'cf7nl-step-desc' );
+			var desc = el( 'p', 'cf7e-step-desc' );
 			desc.textContent = settings.desc;
 			box.appendChild( desc );
 		}
@@ -402,7 +402,7 @@
 		return box;
 	}
 
-	var el = window.cf7nl.el;
+	var el = window.cf7e.el;
 
 	/**
 	 * A navigation button.
@@ -414,10 +414,10 @@
 	 * reached yet.
 	 */
 	function btn( className, label ) {
-		var button = el( 'button', 'cf7nl-step-btn ' + className, label );
+		var button = el( 'button', 'cf7e-step-btn ' + className, label );
 		button.type = 'button';
 		return button;
 	}
 
-	window.cf7nl.forms( build );
+	window.cf7e.forms( build );
 } )();
