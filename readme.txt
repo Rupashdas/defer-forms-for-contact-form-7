@@ -1,11 +1,11 @@
-=== Essentials for Contact Form 7 - Visual Builder, Multi-Step & Submissions ===
+=== Essentials for Contact Form 7 ===
 Contributors: deferstudio, rupash
 Tags: contact form 7, form builder, multi-step form, submissions, conditional logic
 Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ The Features screen lists everything this plugin does, and nothing it does not.
 
 **For developers**
 
-Submissions can be filtered before they are stored and hooked once they are — enough to keep a form out of the table, redact a field, or forward every entry somewhere of your own. See HOOKS.md in the plugin folder.
+Submissions can be filtered before they are stored and hooked once they are — enough to keep a form out of the table, redact a field, or forward every entry somewhere of your own. Every hook is listed under "Hooks" below.
 
 CF7 Essentials **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
@@ -60,6 +60,33 @@ No. Existing CF7 shortcodes keep rendering exactly as before. CF7 Essentials fea
 
 = Does the plugin send my data anywhere? =
 Only if you switch on a notification destination and give it a token or a URL of your own. Nothing leaves your site otherwise — there is no telemetry, no licence check and no remote asset. See "External services" below.
+
+== Hooks ==
+
+Contact Form 7's own hooks are untouched — `wpcf7_before_send_mail`, `wpcf7_mail_components` and the rest fire exactly as they always did. These are the ones this plugin adds.
+
+A submission passes through the first four in this order: whether to store it, what to store, where to announce it, and what it became.
+
+`apply_filters( 'cf7e_store_submission', $store, $contact_form, $status )`
+Return false to keep an entry out of the table entirely. The mail is still sent; nothing is written. `$status` is either 'submitted' or 'spam'.
+
+`apply_filters( 'cf7e_submission_data', $data, $contact_form, $status )`
+The fields on their way into the table. Redact a value, drop a field, or add one of your own. Keys beginning with an underscore are the plugin's own bookkeeping and are never shown as answers.
+
+`do_action( 'cf7e_notify', $entry )`
+One submission, described once, for sending anywhere the Notifications screen does not already reach. `$entry` carries `entry_id`, `form_id`, `title`, `when`, `at` (ISO 8601), `fields` and `link`. Submitted entries only — spam never fires this.
+
+`do_action( 'cf7e_submission_stored', $id, $data, $contact_form, $status )`
+The entry exists and is complete: uploads are kept and `$id` can be linked to. Spam fires too, with `$status` saying so. This is where somebody else's code runs, so it is last.
+
+`apply_filters( 'cf7e_capability', 'manage_options' )`
+The capability the admin screens and the REST routes require.
+
+`apply_filters( 'cf7e_attachment_limit', $bytes )`
+The ceiling on kept uploads across the site. Past it, submissions and their mail arrive as normal but files are no longer copied to the server.
+
+`do_action( 'cf7e_submissions_deleted', $rows )`
+Entries that have just been removed, with their data, so anything mirroring them elsewhere can keep up.
 
 == External services ==
 
@@ -96,6 +123,10 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 8. Notifications — Telegram, Slack, Discord and a webhook.
 
 == Changelog ==
+
+= 2.6.1 =
+* Changed: the hook reference has moved out of HOOKS.md and into this readme, under "Hooks". It is the same seven hooks with the same signatures — but the plugin no longer carries a markdown file most people never open, and the reference now appears on the plugin page itself, where somebody looking for it would actually go.
+* Changed: the title of this readme is the plugin's name and nothing else. It used to carry search keywords the plugin header did not, which is a mismatch between the two names WordPress reads.
 
 = 2.6.0 =
 * New: a webhook. Every submission is posted as JSON to an address you give it — a Zapier or Make catch hook, an n8n running on your own server, or an endpoint you wrote yourself — which is how a Contact Form 7 entry reaches a spreadsheet row, a mailing list, a CRM record or a task without this plugin having to integrate with each of them. Notifications → Webhook. Spam is never sent, and the test button posts the same shape a real submission will, so the far end can be mapped before a visitor ever fills the form in.
@@ -183,6 +214,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.6.1 =
+Documentation only. The hook reference moved into the readme, so it now shows on the plugin page; nothing about how the plugin behaves has changed.
 
 = 2.6.0 =
 Adds a webhook destination: every submission posted as JSON to an address of your own, which is how Zapier, Make and n8n connect a form to the rest of what you use. Nothing changes for existing installs until you switch it on.

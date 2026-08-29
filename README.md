@@ -66,7 +66,9 @@ dropped rather than built.
 
 Entries can be filtered before they are stored, and hooked once they are —
 enough to keep a form out of the table, redact a field, or forward every
-submission somewhere of your own. See [HOOKS.md](HOOKS.md).
+submission somewhere of your own. Every hook is listed, with its signature and
+what it is for, under **Hooks** in `readme.txt` — which is also what the
+wordpress.org plugin page shows.
 
 ## Support
 
