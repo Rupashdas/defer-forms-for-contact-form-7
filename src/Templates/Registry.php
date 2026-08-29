@@ -13,6 +13,8 @@ declare( strict_types=1 );
 
 namespace CF7E\Templates;
 
+use CF7E\CF7\Form_Serializer;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Registry {
@@ -112,9 +114,10 @@ final class Registry {
 						'required' => true,
 					),
 					array(
-						'type'  => 'acceptance',
-						'name'  => 'accept-this',
-						'label' => __( 'I agree to receive the newsletter.', 'essentials-for-contact-form-7' ),
+						'type'     => 'acceptance',
+						'name'     => 'accept-this',
+						'required' => true,
+						'label'    => __( 'I agree to receive the newsletter.', 'essentials-for-contact-form-7' ),
 					),
 				),
 			),
@@ -422,9 +425,10 @@ final class Registry {
 						),
 					),
 					array(
-						'type'  => 'acceptance',
-						'name'  => 'accept-this',
-						'label' => __( 'I agree to be contacted about my enquiry.', 'essentials-for-contact-form-7' ),
+						'type'     => 'acceptance',
+						'name'     => 'accept-this',
+						'required' => true,
+						'label'    => __( 'I agree to be contacted about my enquiry.', 'essentials-for-contact-form-7' ),
 					),
 				),
 			),
@@ -600,9 +604,10 @@ final class Registry {
 						),
 					),
 					array(
-						'type'  => 'acceptance',
-						'name'  => 'accept-this',
-						'label' => __( 'Please keep me updated on how my donation is used.', 'essentials-for-contact-form-7' ),
+						'type'     => 'acceptance',
+						'name'     => 'accept-this',
+						'required' => true,
+						'label'    => __( 'Please keep me updated on how my donation is used.', 'essentials-for-contact-form-7' ),
 					),
 				),
 			),
@@ -781,9 +786,10 @@ final class Registry {
 						'label' => __( 'Your photo', 'essentials-for-contact-form-7' ),
 					),
 					array(
-						'type'  => 'acceptance',
-						'name'  => 'accept-this',
-						'label' => __( 'You may publish this on your website.', 'essentials-for-contact-form-7' ),
+						'type'     => 'acceptance',
+						'name'     => 'accept-this',
+						'required' => true,
+						'label'    => __( 'You may publish this on your website.', 'essentials-for-contact-form-7' ),
 					),
 				),
 			),
@@ -962,57 +968,59 @@ final class Registry {
 	}
 
 	/**
+	 * Template fields → the markup a form starts life with.
+	 *
+	 * Through Form_Serializer, which is the same code the builder saves with.
+	 * This used to write its own tags, and a second implementation of one job is
+	 * a second set of rules to keep in step — which they were not.
+	 *
+	 * The one that showed: a radio or checkbox group was captioned with a
+	 * `<label>`, and a `<label>` forwards a click to the first control inside
+	 * it. Clicking "How satisfied are you?" answered it for the visitor. Nine of
+	 * the twenty-one templates shipped that way, and opening one in the builder
+	 * and saving silently corrected it — so the bug lived exactly as long as
+	 * nobody touched the form.
+	 *
 	 * @param array<int, array<string, mixed>> $fields
 	 */
 	private static function build_form_markup( array $fields ): string {
-		$blocks = array();
+		return Form_Serializer::serialize( self::items( $fields ) );
+	}
+
+	/**
+	 * A template's compact field list in the shape the builder speaks.
+	 *
+	 * The two differ in one word — a template calls a choice list `options`,
+	 * where the builder means form-tag options by that and keeps choices under
+	 * `choices`. Handing the templates straight over would have produced radio
+	 * groups with nothing to choose from.
+	 *
+	 * @param array<int, array<string, mixed>> $fields
+	 * @return array<int, array<string, mixed>>
+	 */
+	private static function items( array $fields ): array {
+		$items = array();
+
 		foreach ( $fields as $field ) {
-			$blocks[] = self::field_markup( $field );
-		}
-		$blocks[] = '[submit "Submit"]';
-		return implode( "\n\n", $blocks );
-	}
-
-	/**
-	 * @param array<string, mixed> $field
-	 */
-	private static function field_markup( array $field ): string {
-		$type          = (string) $field['type'];
-		$name          = (string) $field['name'];
-		$label         = (string) $field['label'];
-		$required_star = empty( $field['required'] ) ? '' : '*';
-
-		if ( 'acceptance' === $type ) {
-			return "[acceptance {$name}] {$label} [/acceptance]";
+			$items[] = array(
+				'kind'     => 'field',
+				'type'     => (string) $field['type'],
+				'name'     => (string) $field['name'],
+				'label'    => (string) $field['label'],
+				'required' => ! empty( $field['required'] ),
+				'choices'  => array_map( 'strval', (array) ( $field['options'] ?? array() ) ),
+				'options'  => array(),
+			);
 		}
 
-		switch ( $type ) {
-			case 'textarea':
-				$control = "[textarea{$required_star} {$name}]";
-				break;
-			case 'select':
-				$control = "[select{$required_star} {$name} " . self::quote_options( $field['options'] ?? array() ) . ']';
-				break;
-			case 'radio':
-				$control = "[radio {$name} use_label_element " . self::quote_options( $field['options'] ?? array() ) . ']';
-				break;
-			case 'checkbox':
-				$control = "[checkbox {$name} use_label_element " . self::quote_options( $field['options'] ?? array() ) . ']';
-				break;
-			default:
-				// text, email, tel, number, date, file.
-				$control = "[{$type}{$required_star} {$name}]";
-				break;
-		}
+		$items[] = array(
+			'kind'    => 'field',
+			'type'    => 'submit',
+			'label'   => 'Submit',
+			'options' => array(),
+		);
 
-		return "<label> {$label}\n    {$control} </label>";
-	}
-
-	/**
-	 * @param array<int, string> $options
-	 */
-	private static function quote_options( array $options ): string {
-		return implode( ' ', array_map( static fn( string $option ): string => '"' . $option . '"', $options ) );
+		return $items;
 	}
 
 	/**

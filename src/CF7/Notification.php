@@ -24,9 +24,26 @@ final class Notification {
 
 	public int $entry_id;
 
+	/**
+	 * The form's post ID.
+	 *
+	 * For the webhook, which is read by a machine that has to tell one form from
+	 * another. The title cannot do that job — renaming a form would silently
+	 * break whatever was matching on it.
+	 */
+	public int $form_id;
+
 	public string $title;
 
 	public string $when;
+
+	/**
+	 * The same moment as `when`, in ISO 8601.
+	 *
+	 * `when` is written for somebody to read and is translated and localised
+	 * with it; this is the one a receiving system can parse.
+	 */
+	public string $at;
 
 	/** @var array<string, string> Field name to value, in the order they were filled in. */
 	public array $fields;
@@ -47,7 +64,12 @@ final class Notification {
 		// A form nobody named still has to be announced as something.
 		$this->title = '' !== $title ? $title : __( 'New submission', 'essentials-for-contact-form-7' );
 
+		$this->form_id = null !== $contact_form && method_exists( $contact_form, 'id' )
+			? (int) $contact_form->id()
+			: 0;
+
 		$this->when = (string) ( wp_date( 'j M Y, g:i a' ) ?: '' );
+		$this->at   = (string) ( wp_date( 'c' ) ?: '' );
 
 		$this->fields = array();
 

@@ -49,6 +49,7 @@ searchable select and a drag-and-drop file upload with previews.
 - Uploaded files are kept — Contact Form 7 discards them after mailing
 - Mark an entry replied or done, and answer it from the entry itself
 - Telegram, Slack and Discord — every submission posted into a chat or channel as it arrives
+- A webhook — every submission posted as JSON to an address of your own, which is how Zapier, Make and n8n reach the rest of what you use
 - Redirect after submit, to a page or a URL
 - Privacy: submissions answer WordPress's own export and erase requests
 

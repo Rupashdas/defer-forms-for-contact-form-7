@@ -529,9 +529,21 @@ final class Form_Parser {
 				$open_html  = (string) $item['html'];
 				$close_html = (string) $items[ $i + 2 ]['html'];
 
-				// Opening html ends with `<label …>CAPTION` (no nested tags) and
-				// the following html starts with `</label>`.
-				if ( preg_match( '/^(.*?)<label\b[^>]*>([^<>]*?)\s*$/s', $open_html, $om )
+				/*
+				 * Opening html ends with `<label …>CAPTION` (no nested tags) and
+				 * the following html starts with `</label>`.
+				 *
+				 * The caption excludes `<`, which is what "no nested tags" means
+				 * — a tag cannot start without one, and Form_Markup::escape_text
+				 * has already turned any the user typed into `&lt;`.
+				 *
+				 * It used to exclude `>` as well, and that is not the same rule.
+				 * A lone `>` is ordinary text that the serializer deliberately
+				 * leaves alone, so `Price > 100` did not match here: the label
+				 * went unrecognised, the field came back with no caption at all,
+				 * and the form gained two stray blocks of raw HTML around it.
+				 */
+				if ( preg_match( '/^(.*?)<label\b[^>]*>([^<]*?)\s*$/s', $open_html, $om )
 					&& preg_match( '#^\s*</label>(.*)$#s', $close_html, $cm )
 				) {
 					$prefix    = $om[1];
@@ -744,9 +756,24 @@ final class Form_Parser {
 	 * @param array<int, string> $allowed
 	 */
 	private static function class_token( string $classes, string $prefix, array $allowed, string $default ): string {
-		if ( preg_match( '/\b' . preg_quote( $prefix, '/' ) . '([a-z0-9]+)\b/', $classes, $match ) && in_array( $match[1], $allowed, true ) ) {
-			return $match[1];
+		/*
+		 * Every token off the prefix, not the first one. A divider writes two
+		 * of them — `cf7e-hr-dashed cf7e-hr-normal`, the line style and the
+		 * weight — and reading only the first meant asking for the weight got
+		 * `dashed`, which is not a weight, so it fell to the default. Every
+		 * divider that was not subtle became subtle the moment somebody opened
+		 * the form and pressed Save, with nothing on screen to say so.
+		 */
+		if ( ! preg_match_all( '/\b' . preg_quote( $prefix, '/' ) . '([a-z0-9]+)\b/', $classes, $matches ) ) {
+			return $default;
 		}
+
+		foreach ( $matches[1] as $token ) {
+			if ( in_array( $token, $allowed, true ) ) {
+				return $token;
+			}
+		}
+
 		return $default;
 	}
 }

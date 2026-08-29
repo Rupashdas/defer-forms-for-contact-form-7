@@ -127,24 +127,28 @@ final class Submission_Listener {
 		 */
 		if ( $id > 0 && 'submitted' === $status ) {
 			/*
-			 * One description of the entry, three places it can go. Each of them
-			 * marks up text its own way — Telegram parses HTML, Slack and
+			 * One description of the entry, four places it can go. The first
+			 * three mark up text their own way — Telegram parses HTML, Slack and
 			 * Discord each parse their own markdown — so the formatting is
-			 * theirs and only the content is shared.
+			 * theirs and only the content is shared. The fourth has no reader to
+			 * format for and sends the same content as JSON.
 			 */
 			$entry = new Notification( $id, $contact_form, $data );
 
 			Telegram::notify( $this->settings->get_section( 'telegram' ), $entry );
 			Slack::notify( $this->settings->get_section( 'slack' ), $entry );
 			Discord::notify( $this->settings->get_section( 'discord' ), $entry );
+			Webhook::notify( $this->settings->get_section( 'webhook' ), $entry );
 
 			/**
-			 * A fourth place to announce an entry.
+			 * A fifth place to announce an entry.
 			 *
-			 * The three above are the ones with a screen to configure them. This
-			 * is for anywhere else -- Teams, Mattermost, a pager, an endpoint of
-			 * your own -- which means the address it sends to lives in code
-			 * rather than in Settings.
+			 * The four above are the ones with a screen to configure them, and
+			 * the webhook among them will reach most endpoints already. This is
+			 * for the rest: a second destination, a payload of another shape, or
+			 * anywhere that needs a header or a signature this plugin does not
+			 * send. What it costs is that the address lives in code rather than
+			 * in Settings.
 			 *
 			 * Submitted entries only, like the three above it. Spam is stored so
 			 * a misfiring check can be undone, not so a bot can make somebody's

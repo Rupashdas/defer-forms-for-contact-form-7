@@ -1,0 +1,51 @@
+{
+    "name": "essentials-for-contact-form-7",
+    "version": "2.0.0",
+    "private": true,
+    "description": "Build pipeline for Essentials for Contact Form 7 admin UI (React + Vite).",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "test": "node tests/run.js",
+        "i18n": "php vendor/wp-cli/wp-cli/php/boot-fs.php i18n make-pot . languages/essentials-for-contact-form-7.pot --domain=essentials-for-contact-form-7 --exclude=node_modules,vendor,build,tests,tools,docs",
+        "i18n:json": "php vendor/wp-cli/wp-cli/php/boot-fs.php i18n make-json languages --no-purge",
+        "preview": "vite preview",
+        "lint": "eslint \"ui/**/*.{js,jsx}\"",
+        "lint:fix": "eslint \"ui/**/*.{js,jsx}\" --fix",
+        "format": "prettier --write \"ui/**/*.{js,jsx,css,scss,json,md}\""
+    },
+    "dependencies": {
+        "@dnd-kit/core": "^6.1.0",
+        "@dnd-kit/sortable": "^8.0.0",
+        "@dnd-kit/utilities": "^3.2.2",
+        "flatpickr": "^4.6.13",
+        "framer-motion": "^12.40.0",
+        "lucide-react": "^1.17.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.1",
+        "@wordpress/api-fetch": "^7.5.0",
+        "@wordpress/components": "^28.5.0",
+        "@wordpress/element": "^6.5.0",
+        "@wordpress/eslint-plugin": "^20.2.0",
+        "@wordpress/i18n": "^5.5.0",
+        "autoprefixer": "^10.5.0",
+        "eslint": "^8.57.0",
+        "jsdom": "^30.0.1",
+        "postcss": "^8.5.15",
+        "prettier": "^3.3.3",
+        "sass": "^1.77.8",
+        "tailwindcss": "^3.4.19",
+        "vite": "^5.4.2"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
+    },
+    "browserslist": [
+        "extends @wordpress/browserslist-config"
+    ]
+}

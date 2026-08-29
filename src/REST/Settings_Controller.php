@@ -12,6 +12,7 @@ namespace CF7E\REST;
 use CF7E\CF7\Discord;
 use CF7E\CF7\Slack;
 use CF7E\CF7\Telegram;
+use CF7E\CF7\Webhook;
 use CF7E\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
@@ -28,6 +29,7 @@ final class Settings_Controller extends Controller {
 		'telegram' => 'bot_token',
 		'slack'    => 'webhook_url',
 		'discord'  => 'webhook_url',
+		'webhook'  => 'webhook_url',
 	);
 
 	public function register_routes(): void {
@@ -62,7 +64,7 @@ final class Settings_Controller extends Controller {
 		 */
 		register_rest_route(
 			self::NAMESPACE,
-			'/settings/(?P<section>telegram|slack|discord)/test',
+			'/settings/(?P<section>telegram|slack|discord|webhook)/test',
 			array(
 				'methods'             => 'POST',
 				'permission_callback' => self::can_manage(),
@@ -249,6 +251,9 @@ final class Settings_Controller extends Controller {
 
 			case 'discord':
 				return Discord::test( $config );
+
+			case 'webhook':
+				return Webhook::test( $config );
 
 			default:
 				return Telegram::test( $config );

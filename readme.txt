@@ -1,11 +1,11 @@
 === Essentials for Contact Form 7 - Visual Builder, Multi-Step & Submissions ===
-Contributors: rupashdas
+Contributors: deferstudio, rupash
 Tags: contact form 7, form builder, multi-step form, submissions, conditional logic
 Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.5.0
+Stable tag: 2.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,7 @@ Essentials for Contact Form 7 turns Contact Form 7 into a modern visual form bui
 * Privacy: submissions join WordPress's own export and erase tools
 * 20+ ready-made templates
 * Telegram, Slack and Discord: every submission posted into a chat or channel as it arrives
+* A webhook: every submission posted as JSON to an address of your own, which is how Zapier, Make and n8n reach the rest of what you use
 
 The Features screen lists everything this plugin does, and nothing it does not.
 
@@ -57,7 +58,54 @@ No. Essentials for Contact Form 7 sits on top of CF7. CF7 must be installed and 
 = Will it break my existing forms? =
 No. Existing CF7 shortcodes keep rendering exactly as before. CF7 Essentials features are opt-in per form.
 
+= Does the plugin send my data anywhere? =
+Only if you switch on a notification destination and give it a token or a URL of your own. Nothing leaves your site otherwise — there is no telemetry, no licence check and no remote asset. See "External services" below.
+
+== External services ==
+
+This plugin can forward a submission to a chat service, or to an address of your own. All four destinations are **off by default**: nothing is sent until you enter your own credentials under **Submissions → Notifications** and switch that destination on.
+
+When a destination is switched on, each submission is posted to it at the moment the form is submitted. The message contains the form's title, the time of the submission, every field name and the value the visitor entered, and a link back to the entry in your WordPress admin (which includes your site's address). Submissions caught as spam are never sent. The "Send a test message" button on the Notifications screen posts one message containing no visitor data.
+
+**Telegram** — messages are sent to the Telegram Bot API at `https://api.telegram.org`, using the bot token and chat ID you supply.
+Terms of Service: https://telegram.org/tos — Privacy Policy: https://telegram.org/privacy
+
+**Slack** — messages are sent to the Slack incoming webhook URL you supply, at `https://hooks.slack.com`.
+Terms of Service: https://slack.com/terms-of-service — Privacy Policy: https://slack.com/trust/privacy/privacy-policy
+
+**Discord** — messages are sent to the Discord webhook URL you supply, at `https://discord.com`.
+Terms of Service: https://discord.com/terms — Privacy Policy: https://discord.com/privacy
+
+**Webhook** — this one has no fixed service behind it. The submission is posted, as JSON, to whatever address you enter in the Webhook tab, and to no other. Nothing is sent anywhere until you enter one and switch it on, and the plugin neither chooses that address nor contacts it for any other reason. Whose service it belongs to, and what their terms and privacy policy are, is therefore yours to decide before you paste it in — commonly it is an automation service such as Zapier, Make or n8n, or a server of your own.
+
+== Source code ==
+
+The admin screens are React, compiled with Vite into `build/`. The unminified source of every one of those files ships with the plugin, in `ui/`, alongside the build configuration (`package.json`, `vite.config.js`, `tailwind.config.js`, `postcss.config.js`). Run `npm install && npm run build` in the plugin folder to rebuild `build/` from it.
+
+The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](https://github.com/flatpickr/flatpickr), MIT licensed.
+
+== Screenshots ==
+
+1. The visual builder — drag fields in, arrange them in columns, and see the form as you go.
+2. Submissions — every entry in one list, with search, filters and CSV export.
+3. An entry opened, with the reply box.
+4. Multi-step forms, with the step settings and progress indicator.
+5. Conditional logic — an AND/OR rule builder on any field.
+6. Styling controls, shared by the front end and the builder preview.
+7. The template library — 20+ ready-made forms.
+8. Notifications — Telegram, Slack, Discord and a webhook.
+
 == Changelog ==
+
+= 2.6.0 =
+* New: a webhook. Every submission is posted as JSON to an address you give it — a Zapier or Make catch hook, an n8n running on your own server, or an endpoint you wrote yourself — which is how a Contact Form 7 entry reaches a spreadsheet row, a mailing list, a CRM record or a task without this plugin having to integrate with each of them. Notifications → Webhook. Spam is never sent, and the test button posts the same shape a real submission will, so the far end can be mapped before a visitor ever fills the form in.
+
+= 2.5.1 =
+* Fixed: opening an existing Contact Form 7 form in the builder and saving it could change the form. `[text your-name 40/100]` came back as `40100` — forty thousand characters wide with no limit — and a field with a minimum lost it, with nothing on screen to say so. Round-tripping a form the builder did not write is now covered by its own test suite.
+* Fixed: a caption containing a greater-than sign — `Price > 100`, `Age >= 18` — was not recognised. The field came back with no caption and the form gained two blocks of raw HTML, from nothing worse than opening it and pressing Save.
+* Fixed: on nine of the starter templates, clicking the question above a radio or checkbox group answered it for the visitor. The templates were writing their own form-tags instead of using the builder's serializer, and captioned those groups with a `<label>`. All twenty-one templates now survive a trip through the builder byte-identically.
+* Fixed: the four consent boxes in the templates are required again, and are now written as required rather than relying on the old code ignoring the flag.
+* Fixed: every divider that was not the lightest weight became the lightest weight the first time a form was opened in the builder and saved. A divider writes two classes off the same prefix — the line style and the weight — and only the first was ever read.
 
 = 2.5.0 =
 * The plugin has been renamed. It was CF7 Nova Lite; it is Essentials for Contact Form 7 now, and the admin menu says CF7 Essentials. The old name said nothing about what the plugin does, and its folder name broke a wordpress.org naming rule.
@@ -133,3 +181,11 @@ No. Existing CF7 shortcodes keep rendering exactly as before. CF7 Essentials fea
 * Import / export: move forms between sites as one JSON file.
 * Redirect after submit, to a page or a URL.
 * Privacy: submissions answer WordPress's own export and erase requests.
+
+== Upgrade Notice ==
+
+= 2.6.0 =
+Adds a webhook destination: every submission posted as JSON to an address of your own, which is how Zapier, Make and n8n connect a form to the rest of what you use. Nothing changes for existing installs until you switch it on.
+
+= 2.5.1 =
+Fixes four ways a form could be damaged by being opened in the builder and saved, including a length limit that turned into a width and a caption lost to a greater-than sign. Recommended for everyone.

@@ -64,7 +64,7 @@ final class Registry {
 			array( 'privacy', __( 'Privacy & GDPR', 'essentials-for-contact-form-7' ), __( 'Data export and erase helpers for compliance.', 'essentials-for-contact-form-7' ), __( 'Protection', 'essentials-for-contact-form-7' ), 'lock' ),
 			array( 'import_export', __( 'Import / Export', 'essentials-for-contact-form-7' ), __( 'Move forms between sites as JSON.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'arrow-down-up' ),
 			array( 'revisions', __( 'Revisions', 'essentials-for-contact-form-7' ), __( 'Keep the last ten versions of a form and roll one back.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'history' ),
-			array( 'notifications', __( 'Chat Notifications', 'essentials-for-contact-form-7' ), __( 'Send every submission to Telegram, Slack or Discord as it arrives.', 'essentials-for-contact-form-7' ), __( 'Notifications', 'essentials-for-contact-form-7' ), 'send' ),
+			array( 'notifications', __( 'Instant Notifications', 'essentials-for-contact-form-7' ), __( 'Send every submission to Telegram, Slack, Discord, or a webhook of your own, the moment it arrives.', 'essentials-for-contact-form-7' ), __( 'Notifications', 'essentials-for-contact-form-7' ), 'send' ),
 		);
 
 		/**
@@ -84,7 +84,10 @@ final class Registry {
 			array( 'ab_testing', __( 'A/B Testing', 'essentials-for-contact-form-7' ), __( 'Test form variants and pick the winner.', 'essentials-for-contact-form-7' ), __( 'Insights', 'essentials-for-contact-form-7' ), 'split' ),
 			array( 'payments', __( 'Payments', 'essentials-for-contact-form-7' ), __( 'Collect Stripe and PayPal payments from forms.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'credit-card' ),
 			array( 'crm', __( 'CRM Integrations', 'essentials-for-contact-form-7' ), __( 'Sync entries to Mailchimp, HubSpot, ActiveCampaign, ConvertKit.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'users' ),
-			array( 'webhook', __( 'Webhook Builder', 'essentials-for-contact-form-7' ), __( 'Send submission data to any endpoint with a JSON payload.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'webhook' ),
+			// Sending to one endpoint is free and on the Notifications screen.
+			// What is left to sell has to be what the free one deliberately does
+			// not do, or this card is describing something the reader already has.
+			array( 'webhook', __( 'Webhook Builder', 'essentials-for-contact-form-7' ), __( 'Several endpoints, a different one per form, a payload shaped the way the far end wants it, and a log of what was delivered.', 'essentials-for-contact-form-7' ), __( 'Integrations', 'essentials-for-contact-form-7' ), 'webhook' ),
 			array( 'pro_fields', __( 'Advanced Fields', 'essentials-for-contact-form-7' ), __( 'Signature, repeater, calculation, range, image-choice and more.', 'essentials-for-contact-form-7' ), __( 'Fields', 'essentials-for-contact-form-7' ), 'pen-tool' ),
 			array( 'pdf', __( 'PDF Export', 'essentials-for-contact-form-7' ), __( 'Generate a PDF of each submission with Dompdf.', 'essentials-for-contact-form-7' ), __( 'Tools', 'essentials-for-contact-form-7' ), 'file-text' ),
 			array( 'save_continue', __( 'Save & Continue', 'essentials-for-contact-form-7' ), __( 'Let users save progress and resume from a link.', 'essentials-for-contact-form-7' ), __( 'Forms', 'essentials-for-contact-form-7' ), 'save' ),

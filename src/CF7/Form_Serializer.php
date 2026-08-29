@@ -140,12 +140,37 @@ final class Form_Serializer {
 		}
 
 		foreach ( $options as $option_name => $raw_value ) {
-			$option_name = (string) preg_replace( '/[^a-zA-Z0-9_-]/', '', (string) $option_name );
+			$option_name = (string) $option_name;
+
+			/*
+			 * CF7's length spec — `40`, `40/100`, `40x10` — is a bare token in
+			 * the tag, so the parser files it under options along with the real
+			 * flags. It is not a name, and the sanitiser below strips the slash
+			 * out of it: `[text your-name 40/100]` came back as
+			 * `[text your-name 40100]`, turning a field forty characters wide
+			 * with a hundred-character limit into one with no limit at all.
+			 */
+			if ( true === $raw_value && preg_match( '#^\d+(?:[/x]\d+)?$#', $option_name ) ) {
+				$tag_parts[] = $option_name;
+				continue;
+			}
+
+			$option_name = (string) preg_replace( '/[^a-zA-Z0-9_-]/', '', $option_name );
 			if ( '' === $option_name ) {
 				continue;
 			}
-			// A flag option is written bare: `readonly`, not `readonly:1`.
-			if ( true === $raw_value || '1' === $raw_value || 1 === $raw_value ) {
+
+			/*
+			 * A flag option is written bare: `readonly`, not `readonly:1`.
+			 *
+			 * Only a real boolean. The parser writes `true` for a bare token and
+			 * a string for `name:value`, so there was never a reason to read '1'
+			 * as a flag — and doing so threw the value away from every option
+			 * that legitimately holds one. `[number qty min:1 max:10]` came back
+			 * as `[number qty min max:10]`: the minimum silently gone from a
+			 * quantity field, on a form the builder was only asked to open.
+			 */
+			if ( true === $raw_value ) {
 				$tag_parts[] = $option_name;
 			} elseif ( '' !== $raw_value && null !== $raw_value ) {
 				$clean_value = self::option_value( (string) $raw_value );

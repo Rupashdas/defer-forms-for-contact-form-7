@@ -1,0 +1,289 @@
+/*
+ * The builder preview wears the same skin as the real form. Imported from the
+ * front-end stylesheets so the two can never drift; `.cf7e-preview` on the
+ * preview wrapper is what the shared selectors hook onto. Must stay above every
+ * rule — CSS ignores a late @import.
+ *
+ * Every rule in these five files is scoped to `:is( .wpcf7-form, .cf7e-preview )`,
+ * and neither class exists anywhere else in the admin, so nothing here can
+ * reach the rest of the page.
+ */
+@import "../../../assets/css/controls.css";
+@import "../../../assets/css/form.css";
+@import "../../../assets/css/steps.css";
+@import "../../../assets/css/range.css";
+@import "../../../assets/css/rating.css";
+
+@tailwind components;
+
+/*
+ * Preflight is disabled to protect the WP admin, but Tailwind's base layer is
+ * also what seeds the --tw-* custom properties that transform / ring / filter
+ * utilities read. Without them var() resolves to nothing and the whole
+ * declaration is dropped (translateY never applies, focus rings don't render).
+ * Re-seed just the variables, scoped to our app roots. Must come BEFORE
+ * @tailwind utilities so a utility that overrides one variable wins on source
+ * order.
+ */
+[id^='cf7e-'],
+[id^='cf7e-'] *,
+[id^='cf7e-'] ::before,
+[id^='cf7e-'] ::after {
+	/*
+	 * Minimal preflight essentials the utilities assume but that our disabled
+	 * base layer no longer provides: border-box sizing (so h-9 is exact on
+	 * inputs and buttons alike) and a flat 1px-ready border (border-width 0 +
+	 * solid style, so `cf7e-border` renders uniform instead of the UA 3D outset).
+	 */
+	box-sizing: border-box;
+	border-width: 0;
+	border-style: solid;
+	border-color: #ebe7e1;
+
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+	--tw-gradient-from-position: ;
+	--tw-gradient-via-position: ;
+	--tw-gradient-to-position: ;
+	--tw-ring-inset: ;
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: #fff;
+	--tw-ring-color: rgb(81 69 230 / 0.4);
+	--tw-ring-offset-shadow: 0 0 #0000;
+	--tw-ring-shadow: 0 0 #0000;
+	--tw-shadow: 0 0 #0000;
+	--tw-shadow-colored: 0 0 #0000;
+	--tw-blur: ;
+	--tw-brightness: ;
+	--tw-contrast: ;
+	--tw-grayscale: ;
+	--tw-hue-rotate: ;
+	--tw-invert: ;
+	--tw-saturate: ;
+	--tw-sepia: ;
+	--tw-drop-shadow: ;
+	--tw-backdrop-blur: ;
+	--tw-backdrop-brightness: ;
+	--tw-backdrop-contrast: ;
+	--tw-backdrop-grayscale: ;
+	--tw-backdrop-hue-rotate: ;
+	--tw-backdrop-invert: ;
+	--tw-backdrop-opacity: ;
+	--tw-backdrop-saturate: ;
+	--tw-backdrop-sepia: ;
+}
+
+@tailwind utilities;
+
+/* ---- CF7 Essentials design system ---- */
+
+/*
+ * No font-family. WordPress sets one on `body` in wp-admin/css/common.css and
+ * this root is inside it, so leaving the property alone is what makes our
+ * screens read as part of wp-admin rather than as a visitor in it. The line
+ * that used to be here named 'Hanken Grotesk', which the plugin never shipped
+ * or loaded — so it was a font nobody had, followed by a stack that only
+ * roughly agreed with WordPress's own.
+ *
+ * Controls need no help either: wp-admin/css/forms.css already declares
+ * `font-family: inherit` on input, select, textarea and button.
+ */
+[id^='cf7e-'] {
+	--cf7e-accent: #1b1b22;
+	color: #1b1b22;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Preflight is off, so native <button>/<input>/<select> keep the browser's
+ * default chrome — including the 3D "outset" button border that renders lighter
+ * on the top-left and darker on the bottom-right (looks like an uneven border /
+ * drop shadow). Flatten our form controls so only the Tailwind border shows,
+ * uniform on all four sides. Checkboxes / radios are excluded so they keep
+ * their native control and accent color.
+ */
+[id^='cf7e-'] button,
+[id^='cf7e-'] input,
+[id^='cf7e-'] select,
+[id^='cf7e-'] textarea {
+	box-shadow: none;
+}
+[id^='cf7e-'] button,
+[id^='cf7e-'] select,
+[id^='cf7e-'] textarea,
+[id^='cf7e-'] input:not([type='checkbox']):not([type='radio']) {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-image: none;
+	max-width: none;
+}
+
+/*
+ * The one WordPress imposes that a class cannot argue with.
+ *
+ * wp-admin/css/forms.css sets `min-height: 40px` on every text-ish input, and a
+ * min-height beats a smaller height — so every field carrying the shared 36px
+ * control token rendered at 40 while the buttons beside it rendered at 36. It
+ * showed up worst in a filter bar, where a search box sat four pixels taller
+ * than the five buttons on the same row.
+ *
+ * Reported as one search box; it was nineteen controls across six screens, all
+ * of them this. Fixed here rather than by adding a height to each, because a
+ * per-control fix is one somebody has to remember on the twentieth.
+ *
+ * Textareas keep theirs: 40px is a floor there, not a size, and `rows` sets
+ * what they actually are.
+ */
+[id^='cf7e-'] input:not([type='checkbox']):not([type='radio']),
+[id^='cf7e-'] select {
+	min-height: 0;
+}
+
+/* Numbers and data columns line up cleanly. */
+[id^='cf7e-'] .cf7e-tnum {
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: 'tnum';
+}
+
+/* Quiet, branded scrollbar for the detail drawer. */
+[id^='cf7e-'] .cf7e-scroll {
+	scrollbar-width: thin;
+	scrollbar-color: #ddd7ce transparent;
+}
+[id^='cf7e-'] .cf7e-scroll::-webkit-scrollbar {
+	width: 11px;
+}
+[id^='cf7e-'] .cf7e-scroll::-webkit-scrollbar-thumb {
+	background: #e3ded7;
+	border: 3px solid #fff;
+	border-radius: 999px;
+}
+[id^='cf7e-'] .cf7e-scroll::-webkit-scrollbar-thumb:hover {
+	background: #d0c9bf;
+}
+
+/* Branded text selection. */
+[id^='cf7e-'] ::selection {
+	background: #e4e1fb;
+}
+
+/*
+ * The admin's own sliders — the Design tab's size controls. Not a preview of
+ * anything: a form's range field is drawn by assets/css/range.css, which the
+ * import block above brings in. This is the WP admin's native track replaced
+ * with something that matches the rest of our chrome, in the admin palette,
+ * and it reads its fill position from --cf7e-range-p like the front-end one does.
+ */
+[id^='cf7e-'] input[type='range'].cf7e-range {
+	--cf7e-range-p: 50%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	height: 22px;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	cursor: pointer;
+}
+[id^='cf7e-'] input[type='range'].cf7e-range::-webkit-slider-runnable-track {
+	height: 6px;
+	border-radius: 999px;
+	background: linear-gradient(
+		to right,
+		#1b1b22 0 var(--cf7e-range-p),
+		#ebe7e1 var(--cf7e-range-p) 100%
+	);
+}
+[id^='cf7e-'] input[type='range'].cf7e-range::-moz-range-track {
+	height: 6px;
+	border-radius: 999px;
+	background: #ebe7e1;
+}
+[id^='cf7e-'] input[type='range'].cf7e-range::-moz-range-progress {
+	height: 6px;
+	border-radius: 999px;
+	background: #1b1b22;
+}
+[id^='cf7e-'] input[type='range'].cf7e-range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	margin-top: -6px;
+	border: 2px solid #1b1b22;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba( 27, 27, 34, 0.25 );
+}
+[id^='cf7e-'] input[type='range'].cf7e-range::-moz-range-thumb {
+	width: 18px;
+	height: 18px;
+	border: 2px solid #1b1b22;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba( 27, 27, 34, 0.25 );
+}
+
+/*
+ * The preview pane is a narrow column inside a wide admin window, so the
+ * `min-width: 600px` query in form.css measures the window and answers for a
+ * desktop — which is the right answer, since the preview is a picture of the
+ * form on a page rather than on a phone. Stated here so it is true by design
+ * and not by whatever the admin layout happens to be.
+ */
+.cf7e-preview .cf7e-cols-2 { grid-template-columns: repeat( 2, 1fr ); }
+.cf7e-preview .cf7e-cols-3 { grid-template-columns: repeat( 3, 1fr ); }
+.cf7e-preview .cf7e-cols-4 { grid-template-columns: repeat( 4, 1fr ); }
+
+
+/*
+ * One focus ring for everything you can click.
+ *
+ * Reported as: some elements ring black, some blue, across the whole plugin.
+ * The black ones were the inputs, which carry a shared token; the blue ones
+ * were everything with no focus style of its own, falling through to what the
+ * browser and the WordPress admin stylesheet do by default. Buttons were the
+ * biggest group — the shared button classes had no focus style at all.
+ *
+ * A rule rather than a class on forty call sites: a class is a thing to
+ * remember, and the next button added would be blue again with nothing on
+ * screen to say why.
+ *
+ * `:focus-visible`, not `:focus`. Clicking a link and being left with a ring
+ * around it was half the complaint. A text field still shows it either way —
+ * browsers treat typing-capable elements as focus-visible however they were
+ * focused — so this is one appearance and one rule, not two behaviours.
+ *
+ * The `:focus` half is not decoration: WordPress paints its own blue ring
+ * there, and turning ours on without turning theirs off leaves both.
+ */
+[id^='cf7e-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus {
+	outline: none;
+	box-shadow: none;
+}
+
+[id^='cf7e-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus-visible {
+	outline: none;
+	/* The same ring the inputs draw: 3px of ink at a tenth. */
+	box-shadow: 0 0 0 3px rgb( 27 27 34 / 0.1 );
+}
+
+/*
+ * A table row is the clickable thing on Submissions, and a ring on a <tr> is
+ * clipped by the cells. The row is given the ring through its cells' shared
+ * background instead, which is what a row can actually draw.
+ */
+[id^='cf7e-'] tr:focus-visible {
+	outline: 2px solid rgb( 27 27 34 / 0.35 );
+	outline-offset: -2px;
+	box-shadow: none;
+}

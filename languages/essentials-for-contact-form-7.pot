@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Essentials for Contact Form 7 2.4.0\n"
+"Project-Id-Version: Essentials for Contact Form 7 2.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/essentials-for-contact-form-7\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-23T01:52:39+00:00\n"
+"POT-Creation-Date: 2026-08-24T01:07:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: essentials-for-contact-form-7\n"
@@ -82,7 +82,7 @@ msgid "Status"
 msgstr ""
 
 #: src/Admin/Csv_Export.php:97
-#: src/Templates/Registry.php:731
+#: src/Templates/Registry.php:736
 #: ui/apps/builder/fields.js:63
 #: ui/apps/submissions/index.jsx:610
 #: ui/apps/submissions/index.jsx:1196
@@ -110,7 +110,7 @@ msgid "Forms"
 msgstr ""
 
 #: src/Admin/Menu.php:53
-#: ui/apps/builder/index.jsx:2533
+#: ui/apps/builder/index.jsx:2534
 #: ui/apps/dashboard/index.jsx:505
 #: ui/apps/forms/index.jsx:658
 #: ui/apps/styling/index.jsx:214
@@ -135,7 +135,7 @@ msgid "Templates"
 msgstr ""
 
 #: src/Admin/Menu.php:65
-#: ui/apps/builder/index.jsx:2572
+#: ui/apps/builder/index.jsx:2573
 #: ui/apps/dashboard/index.jsx:511
 #: ui/apps/settings/index.jsx:243
 msgid "Settings"
@@ -167,12 +167,12 @@ msgstr ""
 #: src/Admin/Menu.php:135
 #: src/Admin/Menu.php:136
 #: src/Admin/Menu.php:158
-#: ui/apps/builder/index.jsx:2499
+#: ui/apps/builder/index.jsx:2500
 msgid "Form Builder"
 msgstr ""
 
 #: src/CF7/Country.php:86
-#: ui/apps/builder/index.jsx:1941
+#: ui/apps/builder/index.jsx:1942
 msgid "Select a country…"
 msgstr ""
 
@@ -976,19 +976,19 @@ msgid "Discord answered %d."
 msgstr ""
 
 #: src/CF7/Form_Styles.php:59
-#: ui/apps/builder/index.jsx:1887
+#: ui/apps/builder/index.jsx:1888
 msgid "Drag files here or click to browse"
 msgstr ""
 
 #: src/CF7/Form_Styles.php:60
-#: ui/apps/builder/index.jsx:1888
+#: ui/apps/builder/index.jsx:1889
 msgid "Drag a file here or click to browse"
 msgstr ""
 
 #: src/CF7/Form_Styles.php:61
 #: src/CF7/Form_Styles.php:84
-#: ui/apps/builder/index.jsx:524
-#: ui/apps/builder/index.jsx:1170
+#: ui/apps/builder/index.jsx:525
+#: ui/apps/builder/index.jsx:1171
 msgid "Remove"
 msgstr ""
 
@@ -1017,7 +1017,7 @@ msgid "%s was already added."
 msgstr ""
 
 #: src/CF7/Form_Styles.php:80
-#: ui/apps/builder/index.jsx:1856
+#: ui/apps/builder/index.jsx:1857
 #: ui/apps/templates/index.jsx:106
 msgid "Select…"
 msgstr ""
@@ -1050,7 +1050,7 @@ msgid "WooCommerce is not active, so there are no products to list."
 msgstr ""
 
 #: src/CF7/Product_Field.php:60
-#: ui/apps/builder/index.jsx:1940
+#: ui/apps/builder/index.jsx:1941
 msgid "Select a product…"
 msgstr ""
 
@@ -1078,27 +1078,27 @@ msgid "Slack answered %d."
 msgstr ""
 
 #: src/CF7/Steps.php:125
-#: ui/apps/builder/index.jsx:2101
+#: ui/apps/builder/index.jsx:2102
 msgid "Back"
 msgstr ""
 
 #: src/CF7/Steps.php:126
-#: ui/apps/builder/index.jsx:2112
+#: ui/apps/builder/index.jsx:2113
 msgid "Next"
 msgstr ""
 
 #. translators: 1: current step, 2: total steps.
 #: src/CF7/Steps.php:131
-#: ui/apps/builder/index.jsx:2104
+#: ui/apps/builder/index.jsx:2105
 #, php-format,js-format
 msgid "Step %1$d of %2$d"
 msgstr ""
 
 #. translators: %d: step number.
 #: src/CF7/Steps.php:133
-#: ui/apps/builder/index.jsx:1705
-#: ui/apps/builder/index.jsx:2043
-#: ui/apps/builder/index.jsx:2820
+#: ui/apps/builder/index.jsx:1706
+#: ui/apps/builder/index.jsx:2044
+#: ui/apps/builder/index.jsx:2821
 #, php-format,js-format
 msgid "Step %d"
 msgstr ""
@@ -1208,7 +1208,7 @@ msgid "Customise colors, typography and spacing without CSS, or give one form a 
 msgstr ""
 
 #: src/Modules/Registry.php:61
-#: src/Templates/Registry.php:913
+#: src/Templates/Registry.php:919
 msgid "Design"
 msgstr ""
 
@@ -1532,816 +1532,816 @@ msgstr ""
 msgid "The bundle holds no forms this version can read."
 msgstr ""
 
-#: src/Templates/Registry.php:27
+#: src/Templates/Registry.php:29
 msgid "Simple Contact"
 msgstr ""
 
-#: src/Templates/Registry.php:28
+#: src/Templates/Registry.php:30
 msgid "A clean contact form with name, email, subject and message."
 msgstr ""
 
-#: src/Templates/Registry.php:29
-#: src/Templates/Registry.php:61
-#: src/Templates/Registry.php:353
-#: src/Templates/Registry.php:435
-#: ui/apps/builder/index.jsx:364
+#: src/Templates/Registry.php:31
+#: src/Templates/Registry.php:63
+#: src/Templates/Registry.php:356
+#: src/Templates/Registry.php:439
+#: ui/apps/builder/index.jsx:365
 #: ui/apps/settings/index.jsx:18
 #: ui/apps/settings/index.jsx:45
 msgid "General"
 msgstr ""
 
-#: src/Templates/Registry.php:35
-#: src/Templates/Registry.php:67
-#: src/Templates/Registry.php:105
-#: src/Templates/Registry.php:131
-#: src/Templates/Registry.php:175
-#: src/Templates/Registry.php:219
-#: src/Templates/Registry.php:307
-#: src/Templates/Registry.php:441
-#: src/Templates/Registry.php:577
-#: src/Templates/Registry.php:666
-#: src/Templates/Registry.php:764
-#: src/Templates/Registry.php:800
-#: src/Templates/Registry.php:849
-#: src/Templates/Registry.php:897
+#: src/Templates/Registry.php:37
+#: src/Templates/Registry.php:69
+#: src/Templates/Registry.php:107
+#: src/Templates/Registry.php:134
+#: src/Templates/Registry.php:178
+#: src/Templates/Registry.php:222
+#: src/Templates/Registry.php:310
+#: src/Templates/Registry.php:445
+#: src/Templates/Registry.php:581
+#: src/Templates/Registry.php:671
+#: src/Templates/Registry.php:769
+#: src/Templates/Registry.php:806
+#: src/Templates/Registry.php:855
+#: src/Templates/Registry.php:903
 msgid "Your name"
 msgstr ""
 
-#: src/Templates/Registry.php:41
-#: src/Templates/Registry.php:73
-#: src/Templates/Registry.php:111
-#: src/Templates/Registry.php:137
-#: src/Templates/Registry.php:181
-#: src/Templates/Registry.php:225
-#: src/Templates/Registry.php:313
-#: src/Templates/Registry.php:482
+#: src/Templates/Registry.php:43
+#: src/Templates/Registry.php:75
+#: src/Templates/Registry.php:113
+#: src/Templates/Registry.php:140
+#: src/Templates/Registry.php:184
+#: src/Templates/Registry.php:228
+#: src/Templates/Registry.php:316
+#: src/Templates/Registry.php:486
 #: ui/apps/styling/index.jsx:164
 msgid "Your email"
 msgstr ""
 
-#: src/Templates/Registry.php:47
-#: src/Templates/Registry.php:154
+#: src/Templates/Registry.php:49
+#: src/Templates/Registry.php:157
 #: ui/apps/submissions/index.jsx:521
 msgid "Subject"
 msgstr ""
 
-#: src/Templates/Registry.php:53
+#: src/Templates/Registry.php:55
 msgid "Your message"
 msgstr ""
 
-#: src/Templates/Registry.php:59
+#: src/Templates/Registry.php:61
 msgid "Feedback"
 msgstr ""
 
-#: src/Templates/Registry.php:60
+#: src/Templates/Registry.php:62
 msgid "Collect a rating and comments from your visitors."
 msgstr ""
 
-#: src/Templates/Registry.php:79
+#: src/Templates/Registry.php:81
 msgid "How would you rate us?"
 msgstr ""
 
-#: src/Templates/Registry.php:81
+#: src/Templates/Registry.php:83
 msgid "Excellent"
 msgstr ""
 
-#: src/Templates/Registry.php:82
+#: src/Templates/Registry.php:84
 msgid "Good"
 msgstr ""
 
-#: src/Templates/Registry.php:83
+#: src/Templates/Registry.php:85
 msgid "Average"
 msgstr ""
 
-#: src/Templates/Registry.php:84
+#: src/Templates/Registry.php:86
 msgid "Poor"
 msgstr ""
 
-#: src/Templates/Registry.php:90
+#: src/Templates/Registry.php:92
 msgid "Your feedback"
 msgstr ""
 
-#: src/Templates/Registry.php:97
+#: src/Templates/Registry.php:99
 msgid "Newsletter Signup"
 msgstr ""
 
-#: src/Templates/Registry.php:98
+#: src/Templates/Registry.php:100
 msgid "A compact opt-in form for your mailing list."
 msgstr ""
 
-#: src/Templates/Registry.php:99
-#: src/Templates/Registry.php:393
-#: src/Templates/Registry.php:758
+#: src/Templates/Registry.php:101
+#: src/Templates/Registry.php:396
+#: src/Templates/Registry.php:763
 msgid "Marketing"
 msgstr ""
 
-#: src/Templates/Registry.php:117
+#: src/Templates/Registry.php:120
 msgid "I agree to receive the newsletter."
 msgstr ""
 
-#: src/Templates/Registry.php:123
+#: src/Templates/Registry.php:126
 msgid "Support Request"
 msgstr ""
 
-#: src/Templates/Registry.php:124
+#: src/Templates/Registry.php:127
 msgid "A help-desk style ticket with priority and subject."
 msgstr ""
 
-#: src/Templates/Registry.php:125
-#: src/Templates/Registry.php:476
-#: src/Templates/Registry.php:843
+#: src/Templates/Registry.php:128
+#: src/Templates/Registry.php:480
+#: src/Templates/Registry.php:849
 msgid "Support"
 msgstr ""
 
-#: src/Templates/Registry.php:143
+#: src/Templates/Registry.php:146
 msgid "Priority"
 msgstr ""
 
-#: src/Templates/Registry.php:145
+#: src/Templates/Registry.php:148
 msgid "Low"
 msgstr ""
 
-#: src/Templates/Registry.php:146
-#: ui/apps/builder/index.jsx:699
+#: src/Templates/Registry.php:149
+#: ui/apps/builder/index.jsx:700
 msgid "Normal"
 msgstr ""
 
-#: src/Templates/Registry.php:147
+#: src/Templates/Registry.php:150
 msgid "High"
 msgstr ""
 
-#: src/Templates/Registry.php:148
+#: src/Templates/Registry.php:151
 msgid "Urgent"
 msgstr ""
 
-#: src/Templates/Registry.php:160
+#: src/Templates/Registry.php:163
 msgid "Describe your issue"
 msgstr ""
 
-#: src/Templates/Registry.php:167
+#: src/Templates/Registry.php:170
 msgid "Quote Request"
 msgstr ""
 
-#: src/Templates/Registry.php:168
+#: src/Templates/Registry.php:171
 msgid "Let prospects request a quote with service details."
 msgstr ""
 
-#: src/Templates/Registry.php:169
-#: src/Templates/Registry.php:248
-#: src/Templates/Registry.php:301
-#: src/Templates/Registry.php:660
-#: src/Templates/Registry.php:713
-#: src/Templates/Registry.php:794
-#: src/Templates/Registry.php:891
+#: src/Templates/Registry.php:172
+#: src/Templates/Registry.php:251
+#: src/Templates/Registry.php:304
+#: src/Templates/Registry.php:665
+#: src/Templates/Registry.php:718
+#: src/Templates/Registry.php:800
+#: src/Templates/Registry.php:897
 msgid "Business"
 msgstr ""
 
-#: src/Templates/Registry.php:187
-#: src/Templates/Registry.php:266
-#: src/Templates/Registry.php:319
-#: src/Templates/Registry.php:411
-#: src/Templates/Registry.php:631
-#: src/Templates/Registry.php:678
-#: src/Templates/Registry.php:725
+#: src/Templates/Registry.php:190
+#: src/Templates/Registry.php:269
+#: src/Templates/Registry.php:322
+#: src/Templates/Registry.php:414
+#: src/Templates/Registry.php:636
+#: src/Templates/Registry.php:683
+#: src/Templates/Registry.php:730
 #: ui/apps/builder/fields.js:59
 msgid "Phone"
 msgstr ""
 
-#: src/Templates/Registry.php:192
+#: src/Templates/Registry.php:195
 msgid "Service needed"
 msgstr ""
 
-#: src/Templates/Registry.php:194
+#: src/Templates/Registry.php:197
 msgid "Web Design"
 msgstr ""
 
-#: src/Templates/Registry.php:195
-#: src/Templates/Registry.php:914
+#: src/Templates/Registry.php:198
+#: src/Templates/Registry.php:920
 msgid "Development"
 msgstr ""
 
-#: src/Templates/Registry.php:196
+#: src/Templates/Registry.php:199
 msgid "SEO"
 msgstr ""
 
-#: src/Templates/Registry.php:197
+#: src/Templates/Registry.php:200
 msgid "Consulting"
 msgstr ""
 
-#: src/Templates/Registry.php:198
-#: src/Templates/Registry.php:328
-#: src/Templates/Registry.php:828
+#: src/Templates/Registry.php:201
+#: src/Templates/Registry.php:331
+#: src/Templates/Registry.php:834
 msgid "Other"
 msgstr ""
 
-#: src/Templates/Registry.php:204
+#: src/Templates/Registry.php:207
 msgid "Project details"
 msgstr ""
 
-#: src/Templates/Registry.php:211
+#: src/Templates/Registry.php:214
 msgid "Event RSVP"
 msgstr ""
 
-#: src/Templates/Registry.php:212
+#: src/Templates/Registry.php:215
 msgid "Confirm attendance and guest count for an event."
 msgstr ""
 
-#: src/Templates/Registry.php:213
-#: src/Templates/Registry.php:544
+#: src/Templates/Registry.php:216
+#: src/Templates/Registry.php:548
 msgid "Events"
 msgstr ""
 
-#: src/Templates/Registry.php:231
+#: src/Templates/Registry.php:234
 msgid "Will you attend?"
 msgstr ""
 
-#: src/Templates/Registry.php:233
+#: src/Templates/Registry.php:236
 msgid "Yes, I will be there"
 msgstr ""
 
-#: src/Templates/Registry.php:234
+#: src/Templates/Registry.php:237
 msgid "Sorry, cannot make it"
 msgstr ""
 
-#: src/Templates/Registry.php:240
-#: src/Templates/Registry.php:737
+#: src/Templates/Registry.php:243
+#: src/Templates/Registry.php:742
 msgid "Number of guests"
 msgstr ""
 
-#: src/Templates/Registry.php:246
+#: src/Templates/Registry.php:249
 msgid "Job Application"
 msgstr ""
 
-#: src/Templates/Registry.php:247
+#: src/Templates/Registry.php:250
 msgid "Applicant details, experience and a resume upload."
 msgstr ""
 
-#: src/Templates/Registry.php:254
-#: src/Templates/Registry.php:399
-#: src/Templates/Registry.php:530
+#: src/Templates/Registry.php:257
+#: src/Templates/Registry.php:402
+#: src/Templates/Registry.php:534
 msgid "Full name"
 msgstr ""
 
-#: src/Templates/Registry.php:260
-#: src/Templates/Registry.php:536
-#: src/Templates/Registry.php:583
-#: src/Templates/Registry.php:625
-#: src/Templates/Registry.php:672
-#: src/Templates/Registry.php:903
+#: src/Templates/Registry.php:263
+#: src/Templates/Registry.php:540
+#: src/Templates/Registry.php:587
+#: src/Templates/Registry.php:630
+#: src/Templates/Registry.php:677
+#: src/Templates/Registry.php:909
 #: ui/apps/builder/fields.js:58
 msgid "Email"
 msgstr ""
 
-#: src/Templates/Registry.php:271
+#: src/Templates/Registry.php:274
 msgid "Position applying for"
 msgstr ""
 
-#: src/Templates/Registry.php:277
+#: src/Templates/Registry.php:280
 msgid "Years of experience"
 msgstr ""
 
-#: src/Templates/Registry.php:279
+#: src/Templates/Registry.php:282
 msgid "0-1 years"
 msgstr ""
 
-#: src/Templates/Registry.php:280
+#: src/Templates/Registry.php:283
 msgid "2-5 years"
 msgstr ""
 
-#: src/Templates/Registry.php:281
+#: src/Templates/Registry.php:284
 msgid "5+ years"
 msgstr ""
 
-#: src/Templates/Registry.php:287
+#: src/Templates/Registry.php:290
 msgid "Resume (PDF)"
 msgstr ""
 
-#: src/Templates/Registry.php:292
+#: src/Templates/Registry.php:295
 msgid "Cover letter"
 msgstr ""
 
-#: src/Templates/Registry.php:299
+#: src/Templates/Registry.php:302
 msgid "Booking / Appointment"
 msgstr ""
 
-#: src/Templates/Registry.php:300
+#: src/Templates/Registry.php:303
 msgid "Date, time and service picker for appointments."
 msgstr ""
 
-#: src/Templates/Registry.php:324
+#: src/Templates/Registry.php:327
 msgid "Service"
 msgstr ""
 
-#: src/Templates/Registry.php:326
+#: src/Templates/Registry.php:329
 msgid "Consultation"
 msgstr ""
 
-#: src/Templates/Registry.php:327
+#: src/Templates/Registry.php:330
 msgid "Follow-up"
 msgstr ""
 
-#: src/Templates/Registry.php:334
+#: src/Templates/Registry.php:337
 msgid "Preferred date"
 msgstr ""
 
-#: src/Templates/Registry.php:340
-#: src/Templates/Registry.php:458
+#: src/Templates/Registry.php:343
+#: src/Templates/Registry.php:462
 msgid "Preferred time"
 msgstr ""
 
-#: src/Templates/Registry.php:345
+#: src/Templates/Registry.php:348
 msgid "Notes"
 msgstr ""
 
-#: src/Templates/Registry.php:351
+#: src/Templates/Registry.php:354
 msgid "Survey"
 msgstr ""
 
-#: src/Templates/Registry.php:352
+#: src/Templates/Registry.php:355
 msgid "A short multiple-choice survey with a comment box."
 msgstr ""
 
-#: src/Templates/Registry.php:359
+#: src/Templates/Registry.php:362
 msgid "Your name (optional)"
 msgstr ""
 
-#: src/Templates/Registry.php:364
+#: src/Templates/Registry.php:367
 msgid "How satisfied are you?"
 msgstr ""
 
-#: src/Templates/Registry.php:366
+#: src/Templates/Registry.php:369
 msgid "Very satisfied"
 msgstr ""
 
-#: src/Templates/Registry.php:367
+#: src/Templates/Registry.php:370
 msgid "Satisfied"
 msgstr ""
 
-#: src/Templates/Registry.php:368
+#: src/Templates/Registry.php:371
 msgid "Neutral"
 msgstr ""
 
-#: src/Templates/Registry.php:369
+#: src/Templates/Registry.php:372
 msgid "Unsatisfied"
 msgstr ""
 
-#: src/Templates/Registry.php:375
+#: src/Templates/Registry.php:378
 msgid "Would you recommend us?"
 msgstr ""
 
-#: src/Templates/Registry.php:377
+#: src/Templates/Registry.php:380
 msgid "Yes"
 msgstr ""
 
-#: src/Templates/Registry.php:378
+#: src/Templates/Registry.php:381
 msgid "No"
 msgstr ""
 
-#: src/Templates/Registry.php:379
+#: src/Templates/Registry.php:382
 msgid "Maybe"
 msgstr ""
 
-#: src/Templates/Registry.php:385
+#: src/Templates/Registry.php:388
 msgid "Any comments?"
 msgstr ""
 
-#: src/Templates/Registry.php:391
+#: src/Templates/Registry.php:394
 msgid "Lead Capture"
 msgstr ""
 
-#: src/Templates/Registry.php:392
+#: src/Templates/Registry.php:395
 msgid "Short and high-converting: just enough to follow up."
 msgstr ""
 
-#: src/Templates/Registry.php:405
-#: src/Templates/Registry.php:812
+#: src/Templates/Registry.php:408
+#: src/Templates/Registry.php:818
 msgid "Work email"
 msgstr ""
 
-#: src/Templates/Registry.php:416
+#: src/Templates/Registry.php:419
 msgid "Budget"
 msgstr ""
 
-#: src/Templates/Registry.php:418
+#: src/Templates/Registry.php:421
 msgid "Under 1k"
 msgstr ""
 
-#: src/Templates/Registry.php:419
+#: src/Templates/Registry.php:422
 msgid "1k to 5k"
 msgstr ""
 
-#: src/Templates/Registry.php:420
+#: src/Templates/Registry.php:423
 msgid "5k to 20k"
 msgstr ""
 
-#: src/Templates/Registry.php:421
+#: src/Templates/Registry.php:424
 msgid "Over 20k"
 msgstr ""
 
-#: src/Templates/Registry.php:427
+#: src/Templates/Registry.php:431
 msgid "I agree to be contacted about my enquiry."
 msgstr ""
 
-#: src/Templates/Registry.php:433
+#: src/Templates/Registry.php:437
 msgid "Request a Callback"
 msgstr ""
 
-#: src/Templates/Registry.php:434
+#: src/Templates/Registry.php:438
 msgid "Let visitors pick a day and time that suits them."
 msgstr ""
 
-#: src/Templates/Registry.php:447
+#: src/Templates/Registry.php:451
 msgid "Phone number"
 msgstr ""
 
-#: src/Templates/Registry.php:453
+#: src/Templates/Registry.php:457
 msgid "Preferred day"
 msgstr ""
 
-#: src/Templates/Registry.php:460
+#: src/Templates/Registry.php:464
 msgid "Morning"
 msgstr ""
 
-#: src/Templates/Registry.php:461
+#: src/Templates/Registry.php:465
 msgid "Afternoon"
 msgstr ""
 
-#: src/Templates/Registry.php:462
+#: src/Templates/Registry.php:466
 msgid "Evening"
 msgstr ""
 
-#: src/Templates/Registry.php:468
+#: src/Templates/Registry.php:472
 msgid "What is it about?"
 msgstr ""
 
-#: src/Templates/Registry.php:474
+#: src/Templates/Registry.php:478
 msgid "Bug Report"
 msgstr ""
 
-#: src/Templates/Registry.php:475
+#: src/Templates/Registry.php:479
 msgid "Everything needed to reproduce a problem, including a screenshot."
 msgstr ""
 
-#: src/Templates/Registry.php:488
+#: src/Templates/Registry.php:492
 msgid "Summary"
 msgstr ""
 
-#: src/Templates/Registry.php:494
+#: src/Templates/Registry.php:498
 msgid "Severity"
 msgstr ""
 
-#: src/Templates/Registry.php:496
+#: src/Templates/Registry.php:500
 msgid "Blocking"
 msgstr ""
 
-#: src/Templates/Registry.php:497
+#: src/Templates/Registry.php:501
 msgid "Major"
 msgstr ""
 
-#: src/Templates/Registry.php:498
+#: src/Templates/Registry.php:502
 msgid "Minor"
 msgstr ""
 
-#: src/Templates/Registry.php:499
+#: src/Templates/Registry.php:503
 msgid "Cosmetic"
 msgstr ""
 
-#: src/Templates/Registry.php:505
+#: src/Templates/Registry.php:509
 msgid "Steps to reproduce"
 msgstr ""
 
-#: src/Templates/Registry.php:511
+#: src/Templates/Registry.php:515
 msgid "What did you expect to happen?"
 msgstr ""
 
-#: src/Templates/Registry.php:516
+#: src/Templates/Registry.php:520
 msgid "Screenshot"
 msgstr ""
 
-#: src/Templates/Registry.php:522
+#: src/Templates/Registry.php:526
 msgid "Volunteer Signup"
 msgstr ""
 
-#: src/Templates/Registry.php:523
+#: src/Templates/Registry.php:527
 msgid "Collect availability and interests from would-be volunteers."
 msgstr ""
 
-#: src/Templates/Registry.php:524
-#: src/Templates/Registry.php:571
+#: src/Templates/Registry.php:528
+#: src/Templates/Registry.php:575
 msgid "Community"
 msgstr ""
 
-#: src/Templates/Registry.php:542
+#: src/Templates/Registry.php:546
 msgid "I can help with"
 msgstr ""
 
-#: src/Templates/Registry.php:545
+#: src/Templates/Registry.php:549
 msgid "Fundraising"
 msgstr ""
 
-#: src/Templates/Registry.php:546
+#: src/Templates/Registry.php:550
 msgid "Admin"
 msgstr ""
 
-#: src/Templates/Registry.php:547
+#: src/Templates/Registry.php:551
 msgid "Outreach"
 msgstr ""
 
-#: src/Templates/Registry.php:553
+#: src/Templates/Registry.php:557
 msgid "When are you free?"
 msgstr ""
 
-#: src/Templates/Registry.php:555
+#: src/Templates/Registry.php:559
 msgid "Weekday mornings"
 msgstr ""
 
-#: src/Templates/Registry.php:556
+#: src/Templates/Registry.php:560
 msgid "Weekday evenings"
 msgstr ""
 
-#: src/Templates/Registry.php:557
+#: src/Templates/Registry.php:561
 msgid "Weekends"
 msgstr ""
 
-#: src/Templates/Registry.php:563
+#: src/Templates/Registry.php:567
 msgid "Tell us about yourself"
 msgstr ""
 
-#: src/Templates/Registry.php:569
+#: src/Templates/Registry.php:573
 msgid "Donation Pledge"
 msgstr ""
 
-#: src/Templates/Registry.php:570
+#: src/Templates/Registry.php:574
 msgid "Record a pledge and how the donor would like to give."
 msgstr ""
 
-#: src/Templates/Registry.php:589
+#: src/Templates/Registry.php:593
 msgid "Pledge amount"
 msgstr ""
 
-#: src/Templates/Registry.php:595
+#: src/Templates/Registry.php:599
 msgid "How often?"
 msgstr ""
 
-#: src/Templates/Registry.php:597
+#: src/Templates/Registry.php:601
 msgid "One-off"
 msgstr ""
 
-#: src/Templates/Registry.php:598
+#: src/Templates/Registry.php:602
 msgid "Monthly"
 msgstr ""
 
-#: src/Templates/Registry.php:599
+#: src/Templates/Registry.php:603
 msgid "Yearly"
 msgstr ""
 
-#: src/Templates/Registry.php:605
+#: src/Templates/Registry.php:610
 msgid "Please keep me updated on how my donation is used."
 msgstr ""
 
-#: src/Templates/Registry.php:611
+#: src/Templates/Registry.php:616
 msgid "Course Enrolment"
 msgstr ""
 
-#: src/Templates/Registry.php:612
+#: src/Templates/Registry.php:617
 msgid "Sign students up for a course or workshop."
 msgstr ""
 
-#: src/Templates/Registry.php:613
+#: src/Templates/Registry.php:618
 msgid "Education"
 msgstr ""
 
-#: src/Templates/Registry.php:619
+#: src/Templates/Registry.php:624
 msgid "Student name"
 msgstr ""
 
-#: src/Templates/Registry.php:636
+#: src/Templates/Registry.php:641
 msgid "Course"
 msgstr ""
 
-#: src/Templates/Registry.php:639
+#: src/Templates/Registry.php:644
 msgid "Beginner"
 msgstr ""
 
-#: src/Templates/Registry.php:640
+#: src/Templates/Registry.php:645
 msgid "Intermediate"
 msgstr ""
 
-#: src/Templates/Registry.php:641
+#: src/Templates/Registry.php:646
 #: ui/apps/builder/fields.js:82
-#: ui/apps/builder/index.jsx:367
+#: ui/apps/builder/index.jsx:368
 msgid "Advanced"
 msgstr ""
 
-#: src/Templates/Registry.php:647
+#: src/Templates/Registry.php:652
 msgid "Preferred start date"
 msgstr ""
 
-#: src/Templates/Registry.php:652
+#: src/Templates/Registry.php:657
 msgid "Any previous experience?"
 msgstr ""
 
-#: src/Templates/Registry.php:658
+#: src/Templates/Registry.php:663
 msgid "Property Enquiry"
 msgstr ""
 
-#: src/Templates/Registry.php:659
+#: src/Templates/Registry.php:664
 msgid "For estate agents: what the buyer wants and what they can spend."
 msgstr ""
 
-#: src/Templates/Registry.php:683
+#: src/Templates/Registry.php:688
 msgid "Looking to"
 msgstr ""
 
-#: src/Templates/Registry.php:685
+#: src/Templates/Registry.php:690
 msgid "Buy"
 msgstr ""
 
-#: src/Templates/Registry.php:686
+#: src/Templates/Registry.php:691
 msgid "Rent"
 msgstr ""
 
-#: src/Templates/Registry.php:687
+#: src/Templates/Registry.php:692
 msgid "Sell"
 msgstr ""
 
-#: src/Templates/Registry.php:693
+#: src/Templates/Registry.php:698
 msgid "Bedrooms"
 msgstr ""
 
-#: src/Templates/Registry.php:695
+#: src/Templates/Registry.php:700
 msgid "Studio"
 msgstr ""
 
-#: src/Templates/Registry.php:699
+#: src/Templates/Registry.php:704
 msgid "4 or more"
 msgstr ""
 
-#: src/Templates/Registry.php:705
+#: src/Templates/Registry.php:710
 msgid "Anything else?"
 msgstr ""
 
-#: src/Templates/Registry.php:711
+#: src/Templates/Registry.php:716
 msgid "Table Reservation"
 msgstr ""
 
-#: src/Templates/Registry.php:712
+#: src/Templates/Registry.php:717
 msgid "Party size, date and time, plus dietary notes."
 msgstr ""
 
-#: src/Templates/Registry.php:719
+#: src/Templates/Registry.php:724
 msgid "Name for the booking"
 msgstr ""
 
-#: src/Templates/Registry.php:744
+#: src/Templates/Registry.php:749
 msgid "6 or more"
 msgstr ""
 
-#: src/Templates/Registry.php:750
+#: src/Templates/Registry.php:755
 msgid "Allergies or dietary needs"
 msgstr ""
 
-#: src/Templates/Registry.php:756
+#: src/Templates/Registry.php:761
 msgid "Testimonial"
 msgstr ""
 
-#: src/Templates/Registry.php:757
+#: src/Templates/Registry.php:762
 msgid "Gather a quote and permission to publish it."
 msgstr ""
 
-#: src/Templates/Registry.php:770
+#: src/Templates/Registry.php:775
 msgid "Company or role"
 msgstr ""
 
-#: src/Templates/Registry.php:775
+#: src/Templates/Registry.php:780
 msgid "Your testimonial"
 msgstr ""
 
-#: src/Templates/Registry.php:781
+#: src/Templates/Registry.php:786
 msgid "Your photo"
 msgstr ""
 
-#: src/Templates/Registry.php:786
+#: src/Templates/Registry.php:792
 msgid "You may publish this on your website."
 msgstr ""
 
-#: src/Templates/Registry.php:792
+#: src/Templates/Registry.php:798
 msgid "Partnership Proposal"
 msgstr ""
 
-#: src/Templates/Registry.php:793
+#: src/Templates/Registry.php:799
 msgid "For inbound business proposals and collaborations."
 msgstr ""
 
-#: src/Templates/Registry.php:806
+#: src/Templates/Registry.php:812
 msgid "Company"
 msgstr ""
 
-#: src/Templates/Registry.php:818
+#: src/Templates/Registry.php:824
 msgid "Website"
 msgstr ""
 
-#: src/Templates/Registry.php:823
+#: src/Templates/Registry.php:829
 msgid "Type of partnership"
 msgstr ""
 
-#: src/Templates/Registry.php:825
+#: src/Templates/Registry.php:831
 msgid "Reseller"
 msgstr ""
 
-#: src/Templates/Registry.php:826
+#: src/Templates/Registry.php:832
 msgid "Affiliate"
 msgstr ""
 
-#: src/Templates/Registry.php:827
+#: src/Templates/Registry.php:833
 msgid "Integration"
 msgstr ""
 
-#: src/Templates/Registry.php:834
+#: src/Templates/Registry.php:840
 msgid "Tell us about the opportunity"
 msgstr ""
 
-#: src/Templates/Registry.php:841
+#: src/Templates/Registry.php:847
 msgid "Returns and Refunds"
 msgstr ""
 
-#: src/Templates/Registry.php:842
+#: src/Templates/Registry.php:848
 msgid "Order details and the reason for sending something back."
 msgstr ""
 
-#: src/Templates/Registry.php:855
+#: src/Templates/Registry.php:861
 msgid "Email used for the order"
 msgstr ""
 
-#: src/Templates/Registry.php:861
+#: src/Templates/Registry.php:867
 msgid "Order number"
 msgstr ""
 
-#: src/Templates/Registry.php:867
+#: src/Templates/Registry.php:873
 msgid "What would you like?"
 msgstr ""
 
-#: src/Templates/Registry.php:869
+#: src/Templates/Registry.php:875
 msgid "Refund"
 msgstr ""
 
-#: src/Templates/Registry.php:870
+#: src/Templates/Registry.php:876
 msgid "Replacement"
 msgstr ""
 
-#: src/Templates/Registry.php:871
+#: src/Templates/Registry.php:877
 msgid "Store credit"
 msgstr ""
 
-#: src/Templates/Registry.php:877
+#: src/Templates/Registry.php:883
 msgid "Reason for return"
 msgstr ""
 
-#: src/Templates/Registry.php:883
+#: src/Templates/Registry.php:889
 msgid "Photo of the item"
 msgstr ""
 
-#: src/Templates/Registry.php:889
+#: src/Templates/Registry.php:895
 msgid "Free Consultation"
 msgstr ""
 
-#: src/Templates/Registry.php:890
+#: src/Templates/Registry.php:896
 msgid "Qualify an enquiry before booking time with it."
 msgstr ""
 
-#: src/Templates/Registry.php:909
+#: src/Templates/Registry.php:915
 msgid "What do you need help with?"
 msgstr ""
 
-#: src/Templates/Registry.php:912
+#: src/Templates/Registry.php:918
 msgid "Strategy"
 msgstr ""
 
-#: src/Templates/Registry.php:915
+#: src/Templates/Registry.php:921
 msgid "Something else"
 msgstr ""
 
-#: src/Templates/Registry.php:921
+#: src/Templates/Registry.php:927
 msgid "Timeline"
 msgstr ""
 
-#: src/Templates/Registry.php:923
+#: src/Templates/Registry.php:929
 msgid "Immediately"
 msgstr ""
 
-#: src/Templates/Registry.php:924
+#: src/Templates/Registry.php:930
 msgid "This month"
 msgstr ""
 
-#: src/Templates/Registry.php:925
+#: src/Templates/Registry.php:931
 msgid "This quarter"
 msgstr ""
 
-#: src/Templates/Registry.php:926
+#: src/Templates/Registry.php:932
 msgid "Just exploring"
 msgstr ""
 
-#: src/Templates/Registry.php:932
+#: src/Templates/Registry.php:938
 msgid "A little background"
 msgstr ""
 
@@ -2350,8 +2350,8 @@ msgid "Inputs"
 msgstr ""
 
 #: ui/apps/builder/fields.js:57
-#: ui/apps/builder/index.jsx:603
-#: ui/apps/builder/index.jsx:639
+#: ui/apps/builder/index.jsx:604
+#: ui/apps/builder/index.jsx:640
 #: ui/apps/styling/index.jsx:262
 msgid "Text"
 msgstr ""
@@ -2437,7 +2437,7 @@ msgid "Submit"
 msgstr ""
 
 #: ui/apps/builder/fields.js:96
-#: ui/apps/builder/index.jsx:1008
+#: ui/apps/builder/index.jsx:1009
 msgid "Layout"
 msgstr ""
 
@@ -2512,653 +2512,653 @@ msgstr ""
 msgid "is not empty"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:365
+#: ui/apps/builder/index.jsx:366
 msgid "Validation"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:366
+#: ui/apps/builder/index.jsx:367
 msgid "Conditional"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:375
+#: ui/apps/builder/index.jsx:376
 msgid "No formatting"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:376
+#: ui/apps/builder/index.jsx:377
 msgid "Bangladesh — 01712-345678"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:377
+#: ui/apps/builder/index.jsx:378
 msgid "Bangladesh with country code"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:378
+#: ui/apps/builder/index.jsx:379
 msgid "US — (212) 555-1234"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:379
+#: ui/apps/builder/index.jsx:380
 msgid "India — 98765 43210"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:380
+#: ui/apps/builder/index.jsx:381
 msgid "International"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:424
+#: ui/apps/builder/index.jsx:425
 msgid "Redirect after submit"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:436
+#: ui/apps/builder/index.jsx:437
 msgid "Nowhere — stay on the page"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:437
+#: ui/apps/builder/index.jsx:438
 msgid "A web address"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:438
+#: ui/apps/builder/index.jsx:439
 msgid "A page on this site"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:445
+#: ui/apps/builder/index.jsx:446
 msgid "Page"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:446
+#: ui/apps/builder/index.jsx:447
 msgid "Stored by page, not by address — renaming the page keeps the redirect working."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:458
+#: ui/apps/builder/index.jsx:459
 msgid "Select a page…"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:468
+#: ui/apps/builder/index.jsx:469
 msgid "Web address"
 msgstr ""
 
 #. translators: %s: an example field name in square brackets.
-#: ui/apps/builder/index.jsx:471
+#: ui/apps/builder/index.jsx:472
 #, js-format
 msgid "Leave empty to stay on the page. A field name in square brackets is filled in from the submission — for example %s."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:503
+#: ui/apps/builder/index.jsx:504
 msgid "Extra query parameters"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:504
+#: ui/apps/builder/index.jsx:505
 msgid "Added to the address. A value in square brackets is filled in from the submission. These end up in the address bar and browser history, so leave personal details out of them."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:511
+#: ui/apps/builder/index.jsx:512
 msgid "name"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:517
+#: ui/apps/builder/index.jsx:518
 msgid "value"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:538
+#: ui/apps/builder/index.jsx:539
 msgid "Add parameter"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:543
+#: ui/apps/builder/index.jsx:544
 msgid "Available fields:"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:565
+#: ui/apps/builder/index.jsx:566
 msgid "Number format"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:566
+#: ui/apps/builder/index.jsx:567
 msgid "Typed digits are laid into this pattern. # is a digit; everything else is punctuation the field adds itself. A format always implies numbers only."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:580
+#: ui/apps/builder/index.jsx:581
 msgid "Custom…"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:584
+#: ui/apps/builder/index.jsx:585
 msgid "Custom pattern"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:607
+#: ui/apps/builder/index.jsx:608
 msgid "Level"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:619
-#: ui/apps/builder/index.jsx:655
+#: ui/apps/builder/index.jsx:620
+#: ui/apps/builder/index.jsx:656
 msgid "Align"
-msgstr ""
-
-#: ui/apps/builder/index.jsx:625
-#: ui/apps/builder/index.jsx:661
-msgid "Left"
 msgstr ""
 
 #: ui/apps/builder/index.jsx:626
 #: ui/apps/builder/index.jsx:662
-msgid "Center"
+msgid "Left"
 msgstr ""
 
 #: ui/apps/builder/index.jsx:627
 #: ui/apps/builder/index.jsx:663
+msgid "Center"
+msgstr ""
+
+#: ui/apps/builder/index.jsx:628
+#: ui/apps/builder/index.jsx:664
 msgid "Right"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:643
+#: ui/apps/builder/index.jsx:644
 msgid "Size"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:649
+#: ui/apps/builder/index.jsx:650
 msgid "Small"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:650
+#: ui/apps/builder/index.jsx:651
 msgid "Medium"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:651
+#: ui/apps/builder/index.jsx:652
 msgid "Large"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:676
+#: ui/apps/builder/index.jsx:677
 msgid "Style"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:682
+#: ui/apps/builder/index.jsx:683
 msgid "Solid"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:683
+#: ui/apps/builder/index.jsx:684
 msgid "Dashed"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:684
+#: ui/apps/builder/index.jsx:685
 msgid "Dotted"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:688
+#: ui/apps/builder/index.jsx:689
 msgid "Thickness (px)"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:692
+#: ui/apps/builder/index.jsx:693
 msgid "Weight"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:698
+#: ui/apps/builder/index.jsx:699
 msgid "Subtle"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:700
+#: ui/apps/builder/index.jsx:701
 msgid "Strong"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:710
+#: ui/apps/builder/index.jsx:711
 msgid "Height (px)"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:759
+#: ui/apps/builder/index.jsx:760
 msgid "Button label"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:783
+#: ui/apps/builder/index.jsx:784
 msgid "Consent text"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:783
+#: ui/apps/builder/index.jsx:784
 msgid "Field label"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:784
+#: ui/apps/builder/index.jsx:785
 msgid "Shown next to the consent checkbox."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:791
+#: ui/apps/builder/index.jsx:792
 msgid "Counts"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:792
+#: ui/apps/builder/index.jsx:793
 msgid "The field being typed into. A count carries the name of that field rather than one of its own."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:803
+#: ui/apps/builder/index.jsx:804
 msgid "Add a text or textarea field first — a count needs something to count."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:808
+#: ui/apps/builder/index.jsx:809
 msgid "Field name"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:808
+#: ui/apps/builder/index.jsx:809
 msgid "The name used in the form tag."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:813
-#: ui/apps/builder/index.jsx:1167
+#: ui/apps/builder/index.jsx:814
+#: ui/apps/builder/index.jsx:1168
 msgid "Value"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:813
+#: ui/apps/builder/index.jsx:814
 msgid "Submitted with the form but never shown to the visitor. Leave empty to fill it from Pre-fill instead."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:820
+#: ui/apps/builder/index.jsx:821
 msgid "Required field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:836
+#: ui/apps/builder/index.jsx:837
 msgid "Numbers only"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:837
+#: ui/apps/builder/index.jsx:838
 msgid "Letters cannot be typed or pasted into the field."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:851
+#: ui/apps/builder/index.jsx:852
 msgid "Styled date picker"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:852
+#: ui/apps/builder/index.jsx:853
 msgid "Off uses the browser native picker."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:860
+#: ui/apps/builder/index.jsx:861
 msgid "Pre-checked"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:861
+#: ui/apps/builder/index.jsx:862
 msgid "Tick the box by default."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:869
+#: ui/apps/builder/index.jsx:870
 msgid "A sequential number, allocated when the form is sent. It is never shown on the page — printing it would tell visitors how many submissions you have had — so use it in the mail template as [your-field-name]."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:872
+#: ui/apps/builder/index.jsx:873
 msgid "Prefix"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:872
+#: ui/apps/builder/index.jsx:873
 msgid "e.g. INV-"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:873
+#: ui/apps/builder/index.jsx:874
 msgid "INV-"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:875
+#: ui/apps/builder/index.jsx:876
 msgid "Digits"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:875
+#: ui/apps/builder/index.jsx:876
 msgid "5 → 00042"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:884
+#: ui/apps/builder/index.jsx:885
 msgid "Category slug"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:884
+#: ui/apps/builder/index.jsx:885
 msgid "Empty lists every category."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:887
+#: ui/apps/builder/index.jsx:888
 msgid "Maximum products"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:892
+#: ui/apps/builder/index.jsx:893
 msgid "Show the price"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:896
+#: ui/apps/builder/index.jsx:897
 msgid "In-stock products only"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:902
+#: ui/apps/builder/index.jsx:903
 msgid "Stars"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:902
+#: ui/apps/builder/index.jsx:903
 msgid "Number of stars (1–10)."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:909
+#: ui/apps/builder/index.jsx:910
 msgid "Dynamic value source"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:910
+#: ui/apps/builder/index.jsx:911
 msgid "url:ref reads ?ref= from the URL. Also: post:title · post:url · post:id · user:email · user:name · today · now."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:914
+#: ui/apps/builder/index.jsx:915
 msgid "Display"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:914
+#: ui/apps/builder/index.jsx:915
 msgid "Hidden posts the value without showing it — best for tracking codes."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:920
+#: ui/apps/builder/index.jsx:921
 msgid "Visible — visitor can edit"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:921
+#: ui/apps/builder/index.jsx:922
 msgid "Read-only — shown, not editable"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:922
+#: ui/apps/builder/index.jsx:923
 msgid "Hidden — not shown"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:929
+#: ui/apps/builder/index.jsx:930
 msgid "Placeholder"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:935
+#: ui/apps/builder/index.jsx:936
 msgid "Selected by default"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:936
+#: ui/apps/builder/index.jsx:937
 msgid "Which choice starts out picked. Reordering or removing choices clears this."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:943
+#: ui/apps/builder/index.jsx:944
 msgid "Nothing"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:952
+#: ui/apps/builder/index.jsx:953
 msgid "Questions, one per line"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:953
+#: ui/apps/builder/index.jsx:954
 msgid "Written question|answer. One is asked at random each time the form is shown, and the answer is matched ignoring case and spacing."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:965
+#: ui/apps/builder/index.jsx:966
 msgid "Count down"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:966
+#: ui/apps/builder/index.jsx:967
 msgid "Characters left rather than characters typed. It needs a maximum length on the counted field to count down from."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:972
+#: ui/apps/builder/index.jsx:973
 msgid "Choices (one per line)"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:983
+#: ui/apps/builder/index.jsx:984
 msgid "Searchable"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:984
+#: ui/apps/builder/index.jsx:985
 msgid "Adds a filter box inside the dropdown."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:993
+#: ui/apps/builder/index.jsx:994
 msgid "Allow multiple selections"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:994
+#: ui/apps/builder/index.jsx:995
 msgid "Renders a multi-select list."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1000
+#: ui/apps/builder/index.jsx:1001
 msgid "Blank first option"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1001
+#: ui/apps/builder/index.jsx:1002
 msgid "Starts empty so nothing is preselected."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1014
+#: ui/apps/builder/index.jsx:1015
 msgid "List — one per line"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1015
+#: ui/apps/builder/index.jsx:1016
 msgid "Inline — side by side"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1016
+#: ui/apps/builder/index.jsx:1017
 msgid "Cards — clickable boxes"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1024
+#: ui/apps/builder/index.jsx:1025
 msgid "Exclusive"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1025
+#: ui/apps/builder/index.jsx:1026
 msgid "Only one box can be ticked at a time."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1037
+#: ui/apps/builder/index.jsx:1038
 msgid "Min length"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1040
+#: ui/apps/builder/index.jsx:1041
 msgid "Max length"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1048
+#: ui/apps/builder/index.jsx:1049
 msgid "Min"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1051
+#: ui/apps/builder/index.jsx:1052
 msgid "Max"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1055
+#: ui/apps/builder/index.jsx:1056
 msgid "Step"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1062
+#: ui/apps/builder/index.jsx:1063
 msgid "Min date"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1065
+#: ui/apps/builder/index.jsx:1066
 msgid "Max date"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1074
+#: ui/apps/builder/index.jsx:1075
 msgid "Allow multiple files"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1075
+#: ui/apps/builder/index.jsx:1076
 msgid "Visitors can attach more than one file."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1080
+#: ui/apps/builder/index.jsx:1081
 msgid "Maximum number of files"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1080
+#: ui/apps/builder/index.jsx:1081
 msgid "Leave empty for no limit."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1084
+#: ui/apps/builder/index.jsx:1085
 msgid "Allowed file types"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1084
+#: ui/apps/builder/index.jsx:1085
 msgid "Extensions separated by | — e.g. jpg|jpeg|png|pdf. Empty allows the WordPress defaults."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1087
+#: ui/apps/builder/index.jsx:1088
 msgid "Maximum file size"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1087
+#: ui/apps/builder/index.jsx:1088
 msgid "Per file — e.g. 2mb or 512kb. Cannot exceed the server upload limit."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1099
+#: ui/apps/builder/index.jsx:1100
 msgid "Conditional display"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1100
+#: ui/apps/builder/index.jsx:1101
 msgid "Show or hide this field based on another field."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1121
+#: ui/apps/builder/index.jsx:1122
 msgid "Show this field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1122
+#: ui/apps/builder/index.jsx:1123
 msgid "Hide this field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1125
+#: ui/apps/builder/index.jsx:1126
 msgid "when"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1132
+#: ui/apps/builder/index.jsx:1133
 msgid "or"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1148
+#: ui/apps/builder/index.jsx:1149
 msgid "and"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1153
+#: ui/apps/builder/index.jsx:1154
 msgid "Field…"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1182
+#: ui/apps/builder/index.jsx:1183
 msgid "AND"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1192
+#: ui/apps/builder/index.jsx:1193
 msgid "OR group"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1198
+#: ui/apps/builder/index.jsx:1199
 msgid "Add another named field first to build a rule."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1207
+#: ui/apps/builder/index.jsx:1208
 msgid "Default value"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1213
+#: ui/apps/builder/index.jsx:1214
 msgid "Pre-fill from"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1214
+#: ui/apps/builder/index.jsx:1215
 msgid "Start the field with a value read at page load: url:ref · cookie:name · user:email · user:name · user:first · user:last · post:title · post:url · referrer · today · now. Overrides the placeholder when it resolves."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1219
-#: ui/apps/builder/index.jsx:1283
-#: ui/apps/builder/index.jsx:2614
+#: ui/apps/builder/index.jsx:1220
+#: ui/apps/builder/index.jsx:1284
+#: ui/apps/builder/index.jsx:2615
 msgid "CSS class"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1219
+#: ui/apps/builder/index.jsx:1220
 msgid "Space-separated class names."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1222
+#: ui/apps/builder/index.jsx:1223
 msgid "ID attribute"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1226
+#: ui/apps/builder/index.jsx:1227
 msgid "Autocomplete"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1226
+#: ui/apps/builder/index.jsx:1227
 msgid "e.g. name, email, tel, off"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1250
+#: ui/apps/builder/index.jsx:1251
 msgid "Step title"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1250
+#: ui/apps/builder/index.jsx:1251
 msgid "Shown above the fields on this step."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1256
+#: ui/apps/builder/index.jsx:1257
 msgid "Your details"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1260
+#: ui/apps/builder/index.jsx:1261
 msgid "Description"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1260
+#: ui/apps/builder/index.jsx:1261
 msgid "A line of guidance under the title."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1271
+#: ui/apps/builder/index.jsx:1272
 msgid "Next button"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1271
+#: ui/apps/builder/index.jsx:1272
 msgid "Default: Next"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1276
+#: ui/apps/builder/index.jsx:1277
 msgid "Back button"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1276
+#: ui/apps/builder/index.jsx:1277
 msgid "Default: Back"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1283
+#: ui/apps/builder/index.jsx:1284
 msgid "Added to this step’s wrapper."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1286
+#: ui/apps/builder/index.jsx:1287
 msgid "CSS id"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1286
+#: ui/apps/builder/index.jsx:1287
 msgid "Must be unique on the page."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1299
+#: ui/apps/builder/index.jsx:1300
 msgid "Needs WooCommerce"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1300
+#: ui/apps/builder/index.jsx:1301
 msgid "Activate WooCommerce to list products in a form."
 msgstr ""
 
 #. translators: %s: a time, e.g. 14:22.
-#: ui/apps/builder/index.jsx:1369
+#: ui/apps/builder/index.jsx:1370
 #, js-format
 msgid "Today at %s"
 msgstr ""
 
 #. translators: %s: a time, e.g. 14:22.
-#: ui/apps/builder/index.jsx:1377
+#: ui/apps/builder/index.jsx:1378
 #, js-format
 msgid "Yesterday at %s"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1399
+#: ui/apps/builder/index.jsx:1400
 msgid "Loading…"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1405
+#: ui/apps/builder/index.jsx:1406
 msgid "No earlier versions yet. One is kept each time you save."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1413
+#: ui/apps/builder/index.jsx:1414
 msgid "Opening a version loads it onto the canvas — nothing is saved until you press Save, and Ctrl+Z puts it back."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1424
+#: ui/apps/builder/index.jsx:1425
 msgid "Latest save"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1429
+#: ui/apps/builder/index.jsx:1430
 msgid "Open"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1463
-#: ui/apps/builder/index.jsx:2863
+#: ui/apps/builder/index.jsx:1464
+#: ui/apps/builder/index.jsx:2864
 #: ui/apps/forms/index.jsx:215
 #: ui/apps/submissions/index.jsx:592
 #: ui/apps/templates/index.jsx:188
@@ -3167,98 +3167,98 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1499
+#: ui/apps/builder/index.jsx:1500
 msgid "Untitled field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1522
-#: ui/apps/builder/index.jsx:1647
-#: ui/apps/builder/index.jsx:1700
+#: ui/apps/builder/index.jsx:1523
+#: ui/apps/builder/index.jsx:1648
+#: ui/apps/builder/index.jsx:1701
 msgid "Drag"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1540
-#: ui/apps/builder/index.jsx:1586
+#: ui/apps/builder/index.jsx:1541
+#: ui/apps/builder/index.jsx:1587
 #: ui/apps/forms/index.jsx:529
 msgid "Edit"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1543
-#: ui/apps/builder/index.jsx:1589
+#: ui/apps/builder/index.jsx:1544
+#: ui/apps/builder/index.jsx:1590
 msgid "Duplicate"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1546
-#: ui/apps/builder/index.jsx:1592
-#: ui/apps/builder/index.jsx:1667
-#: ui/apps/builder/index.jsx:1714
+#: ui/apps/builder/index.jsx:1547
+#: ui/apps/builder/index.jsx:1593
+#: ui/apps/builder/index.jsx:1668
+#: ui/apps/builder/index.jsx:1715
 #: ui/apps/submissions/index.jsx:1054
 #: ui/apps/submissions/index.jsx:1271
 msgid "Delete"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1579
+#: ui/apps/builder/index.jsx:1580
 msgid "Drag to reorder"
 msgstr ""
 
 #. translators: 1: column number, 2: total columns.
-#: ui/apps/builder/index.jsx:1608
+#: ui/apps/builder/index.jsx:1609
 #, js-format
 msgid "Column %1$d / %2$d"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1623
+#: ui/apps/builder/index.jsx:1624
 msgid "Drop a field here"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1628
-#: ui/apps/builder/index.jsx:2730
-#: ui/apps/builder/index.jsx:2797
+#: ui/apps/builder/index.jsx:1629
+#: ui/apps/builder/index.jsx:2731
+#: ui/apps/builder/index.jsx:2798
 msgid "Add field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1652
-#: ui/apps/builder/index.jsx:1729
+#: ui/apps/builder/index.jsx:1653
+#: ui/apps/builder/index.jsx:1730
 msgid "Grid row"
 msgstr ""
 
 #. translators: %d: number of columns.
-#: ui/apps/builder/index.jsx:1660
+#: ui/apps/builder/index.jsx:1661
 #, js-format
 msgid "%d columns"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1664
+#: ui/apps/builder/index.jsx:1665
 msgid "Duplicate row"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1711
+#: ui/apps/builder/index.jsx:1712
 msgid "Step settings"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1809
+#: ui/apps/builder/index.jsx:1810
 #: ui/apps/styling/index.jsx:189
 msgid "Send"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1823
+#: ui/apps/builder/index.jsx:1824
 msgid "I agree"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:1960
+#: ui/apps/builder/index.jsx:1961
 msgid "Dynamic value"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2078
+#: ui/apps/builder/index.jsx:2079
 msgid "Nothing to preview yet."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2330
+#: ui/apps/builder/index.jsx:2331
 msgid "Give this field a name — it identifies the field in submissions, email and conditions."
 msgstr ""
 
 #. translators: %d: form ID.
-#: ui/apps/builder/index.jsx:2500
+#: ui/apps/builder/index.jsx:2501
 #: ui/apps/forms/index.jsx:246
 #: ui/apps/forms/index.jsx:324
 #: ui/apps/forms/index.jsx:482
@@ -3266,62 +3266,62 @@ msgstr ""
 msgid "Form #%d"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2500
+#: ui/apps/builder/index.jsx:2501
 msgid "No form selected."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2511
+#: ui/apps/builder/index.jsx:2512
 msgid "Undo"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2511
+#: ui/apps/builder/index.jsx:2512
 msgid "Undo (Ctrl+Z)"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2514
+#: ui/apps/builder/index.jsx:2515
 msgid "Redo"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2514
+#: ui/apps/builder/index.jsx:2515
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2520
+#: ui/apps/builder/index.jsx:2521
 msgid "History"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2520
+#: ui/apps/builder/index.jsx:2521
 msgid "Earlier saved versions of this form"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2530
+#: ui/apps/builder/index.jsx:2531
 msgid "Colours, shape and spacing for every form"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2542
+#: ui/apps/builder/index.jsx:2543
 #: ui/shared/components/fields.jsx:200
 msgid "Saved"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2542
+#: ui/apps/builder/index.jsx:2543
 msgid "Save"
 msgstr ""
 
 #. translators: %s: when the version was saved, e.g. "Today at 1:49:07 PM".
-#: ui/apps/builder/index.jsx:2557
+#: ui/apps/builder/index.jsx:2558
 #, js-format
 msgid "Showing the version from %s."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2561
+#: ui/apps/builder/index.jsx:2562
 msgid "Nothing has changed on your site yet — press Save to keep it, or Ctrl+Z to go back."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2570
+#: ui/apps/builder/index.jsx:2571
 msgid "Build"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2571
+#: ui/apps/builder/index.jsx:2572
 #: ui/apps/forms/index.jsx:522
 #: ui/apps/styling/index.jsx:348
 #: ui/apps/submissions/index.jsx:1193
@@ -3329,135 +3329,135 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2615
+#: ui/apps/builder/index.jsx:2616
 msgid "Added to this form only, so your theme can style it on its own. Letters, numbers, hyphens and underscores; separate several with spaces."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2630
+#: ui/apps/builder/index.jsx:2631
 msgid "Step indicator"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2631
+#: ui/apps/builder/index.jsx:2632
 msgid "How progress through the steps is shown above the fields."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2637
+#: ui/apps/builder/index.jsx:2638
 msgid "Progress bar"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2638
+#: ui/apps/builder/index.jsx:2639
 msgid "Dots"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2639
+#: ui/apps/builder/index.jsx:2640
 msgid "Numbers"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2640
+#: ui/apps/builder/index.jsx:2641
 msgid "Numbers with step titles"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2641
+#: ui/apps/builder/index.jsx:2642
 msgid "None"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2658
+#: ui/apps/builder/index.jsx:2659
 msgid "Wait before redirecting"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2659
+#: ui/apps/builder/index.jsx:2660
 msgid "Seconds to leave the success message on screen. 0 redirects straight away."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2679
+#: ui/apps/builder/index.jsx:2680
 msgid "Open in"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2681
+#: ui/apps/builder/index.jsx:2682
 msgid "Browsers only allow a new tab for a few seconds after the click, so a wait this long is usually refused and the page opens in this tab instead. Around 2 seconds is reliable."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2688
+#: ui/apps/builder/index.jsx:2689
 msgid "The same tab"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2689
+#: ui/apps/builder/index.jsx:2690
 msgid "A new tab — the form stays open"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2696
+#: ui/apps/builder/index.jsx:2697
 msgid "Browser history"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2697
+#: ui/apps/builder/index.jsx:2698
 msgid "Replacing the entry stops the Back button returning to the submitted form."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2703
+#: ui/apps/builder/index.jsx:2704
 msgid "Keep this page in history"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2704
+#: ui/apps/builder/index.jsx:2705
 msgid "Replace this page in history"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2726
+#: ui/apps/builder/index.jsx:2727
 msgid "Build your form"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2727
+#: ui/apps/builder/index.jsx:2728
 msgid "Add your first field to get started."
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2733
-#: ui/apps/builder/index.jsx:2805
+#: ui/apps/builder/index.jsx:2734
+#: ui/apps/builder/index.jsx:2806
 msgid "Add row"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2742
+#: ui/apps/builder/index.jsx:2743
 msgid "Label"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2743
+#: ui/apps/builder/index.jsx:2744
 msgid "Name"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2744
+#: ui/apps/builder/index.jsx:2745
 msgid "Type"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2813
+#: ui/apps/builder/index.jsx:2814
 msgid "Add page break"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2820
+#: ui/apps/builder/index.jsx:2821
 msgid "Add a field"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2820
+#: ui/apps/builder/index.jsx:2821
 msgid "Field settings"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2828
-#: ui/apps/builder/index.jsx:2836
+#: ui/apps/builder/index.jsx:2829
+#: ui/apps/builder/index.jsx:2837
 #: ui/apps/forms/index.jsx:91
 #: ui/apps/forms/index.jsx:335
 #: ui/apps/submissions/index.jsx:819
 msgid "Cancel"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2833
+#: ui/apps/builder/index.jsx:2834
 msgid "← Back"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2837
+#: ui/apps/builder/index.jsx:2838
 #: ui/apps/submissions/index.jsx:221
 #: ui/apps/submissions/index.jsx:332
 #: ui/apps/submissions/index.jsx:677
 msgid "Done"
 msgstr ""
 
-#: ui/apps/builder/index.jsx:2857
+#: ui/apps/builder/index.jsx:2858
 msgid "Earlier versions"
 msgstr ""
 

@@ -59,6 +59,15 @@ final class Settings_Repository {
 			'enabled'     => false,
 			'webhook_url' => '',
 		),
+		// The same two fields again, and deliberately its own section rather
+		// than a fourth chat service: the others post a written message to a
+		// channel somebody reads, this posts JSON to whatever is listening.
+		// Sharing a section would mean one URL for both, and they are never the
+		// same URL.
+		'webhook'  => array(
+			'enabled'     => false,
+			'webhook_url' => '',
+		),
 		// Mirrors the --cf7e-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
@@ -185,6 +194,7 @@ final class Settings_Repository {
 
 			case 'slack':
 			case 'discord':
+			case 'webhook':
 				/*
 				 * esc_url_raw, not sanitize_text_field: this value is posted to
 				 * as a URL, and it is the one setting on this page that the
@@ -221,6 +231,33 @@ final class Settings_Repository {
 	 * @param array<string, mixed> $input
 	 */
 	public static function problem( string $section, array $input ): string {
+		/*
+		 * The webhook is policed by shape rather than by host, because every
+		 * host is a legitimate one -- that is the point of it. All this can say
+		 * is that the value is an address at all, which still catches the two
+		 * real mistakes: a Zap ID pasted without the URL around it, and a
+		 * "hooks.zapier.com/..." copied without its scheme.
+		 *
+		 * http is allowed alongside https. An n8n running on the same machine as
+		 * the site is a normal way to use this, and it has no certificate.
+		 */
+		if ( 'webhook' === $section ) {
+			$url = trim( (string) ( $input['webhook_url'] ?? '' ) );
+
+			if ( '' === $url ) {
+				return '';
+			}
+
+			$parts  = (array) wp_parse_url( $url );
+			$scheme = strtolower( (string) ( $parts['scheme'] ?? '' ) );
+
+			if ( '' !== (string) ( $parts['host'] ?? '' ) && in_array( $scheme, array( 'http', 'https' ), true ) ) {
+				return '';
+			}
+
+			return __( 'That is not a full URL. It should begin http:// or https://', 'essentials-for-contact-form-7' );
+		}
+
 		$hosts = array(
 			// Slack's incoming webhooks are only ever on this host.
 			'slack'   => array( 'hooks.slack.com' ),
