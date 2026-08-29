@@ -165,9 +165,8 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
  * A URL carries its own destination and identity, so three of the four ask for
  * one field where Telegram needs two that have to match each other.
  *
- * The help text is the whole of the documentation for these. Every value on
- * this page is pasted from somewhere else, and the sentence saying where to go
- * and get it is what stops the tab from being a box with no answer in it.
+ * Every value here is pasted from somebody else's screen, so `help` says which
+ * screen.
  */
 const NOTIFIERS = {
 	telegram: {

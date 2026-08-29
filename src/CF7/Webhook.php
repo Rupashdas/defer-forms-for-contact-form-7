@@ -7,11 +7,6 @@
  * data and lets whatever is listening decide what the entry means. So there is
  * no composing and no escaping here — JSON encoding is the escaping.
  *
- * What it is for in practice is everything this plugin does not integrate with
- * directly. Zapier, Make and n8n all accept an ordinary JSON POST and connect
- * onwards to several thousand applications, which is a great deal more reach
- * than the same effort spent writing one API client.
- *
  * @package CF7_Essentials
  */
 

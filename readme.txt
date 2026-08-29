@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,16 +113,20 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 
 == Screenshots ==
 
-1. The visual builder — drag fields in, arrange them in columns, and see the form as you go.
+1. The visual builder — every field in the form, in the order the visitor meets them.
 2. Submissions — every entry in one list, with search, filters and CSV export.
 3. An entry opened, with the reply box.
-4. Multi-step forms, with the step settings and progress indicator.
+4. A multi-step form as the visitor sees it, with its progress indicator.
 5. Conditional logic — an AND/OR rule builder on any field.
 6. Styling controls, shared by the front end and the builder preview.
 7. The template library — 20+ ready-made forms.
 8. Notifications — Telegram, Slack, Discord and a webhook.
 
 == Changelog ==
+
+= 2.6.2 =
+* Two screenshot captions described more than their screenshot showed. They now describe what is in the picture.
+* Comments only, otherwise: two that argued for a decision rather than recording one have gone. Nothing the plugin does has changed.
 
 = 2.6.1 =
 * Changed: the hook reference has moved out of HOOKS.md and into this readme, under "Hooks". It is the same seven hooks with the same signatures — but the plugin no longer carries a markdown file most people never open, and the reference now appears on the plugin page itself, where somebody looking for it would actually go.
@@ -214,6 +218,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.6.2 =
+Wording only — two screenshot captions and two code comments. Nothing about how the plugin behaves has changed.
 
 = 2.6.1 =
 Documentation only. The hook reference moved into the readme, so it now shows on the plugin page; nothing about how the plugin behaves has changed.

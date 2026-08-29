@@ -3,7 +3,7 @@
  * Plugin Name:       Essentials for Contact Form 7
  * Plugin URI:        https://github.com/Rupashdas/essentials-for-contact-form-7
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.6.1
+ * Version:           2.6.2
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
@@ -37,7 +37,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CF7E_VERSION', '2.6.1' );
+define( 'CF7E_VERSION', '2.6.2' );
 define( 'CF7E_DB_VERSION', '5' );
 define( 'CF7E_FILE', __FILE__ );
 define( 'CF7E_PATH', plugin_dir_path( __FILE__ ) );
