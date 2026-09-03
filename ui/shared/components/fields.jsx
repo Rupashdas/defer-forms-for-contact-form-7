@@ -16,14 +16,14 @@ import { Toggle } from './toggle';
 import { control, btnPrimary } from './ui';
 
 export const FieldLabel = ( { label, help } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-1">
-		<span className="cf7e-text-base cf7e-font-semibold cf7e-text-ink">{ label }</span>
-		{ help && <span className="cf7e-text-[15px] cf7e-leading-relaxed cf7e-text-stone-500">{ help }</span> }
+	<div className="df7-flex df7-flex-col df7-gap-1">
+		<span className="df7-text-base df7-font-semibold df7-text-ink">{ label }</span>
+		{ help && <span className="df7-text-[15px] df7-leading-relaxed df7-text-stone-500">{ help }</span> }
 	</div>
 );
 
-export const TextField = ( { label, help, type = 'text', value, onChange, disabled, width = 'cf7e-w-full', loading = false, ...rest } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
+export const TextField = ( { label, help, type = 'text', value, onChange, disabled, width = 'df7-w-full', loading = false, ...rest } ) => (
+	<div className="df7-flex df7-flex-col df7-gap-2">
 		<FieldLabel label={ label } help={ help } />
 		{ loading ? (
 			// The element itself, for the reason ColorField gives above.
@@ -34,7 +34,7 @@ export const TextField = ( { label, help, type = 'text', value, onChange, disabl
 				readOnly
 				aria-hidden="true"
 				tabIndex={ -1 }
-				className={ `${ control } cf7e-animate-pulse cf7e-border-transparent cf7e-bg-stone-100 ${ width }` }
+				className={ `${ control } df7-animate-pulse df7-border-transparent df7-bg-stone-100 ${ width }` }
 			/>
 		) : (
 		<input
@@ -42,7 +42,7 @@ export const TextField = ( { label, help, type = 'text', value, onChange, disabl
 			value={ value }
 			disabled={ disabled }
 			onChange={ ( event ) => onChange( event.target.value ) }
-			className={ `${ control } disabled:cf7e-bg-stone-50 disabled:cf7e-text-stone-400 ${ width }` }
+			className={ `${ control } disabled:df7-bg-stone-50 disabled:df7-text-stone-400 ${ width }` }
 			{ ...rest }
 		/>
 		) }
@@ -52,12 +52,12 @@ export const TextField = ( { label, help, type = 'text', value, onChange, disabl
 // Swatch and hex box edit the same value; the swatch is the quick way in, the
 // text box is how you paste a brand colour.
 export const ColorField = ( { label, help, value, onChange, loading = false } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
+	<div className="df7-flex df7-flex-col df7-gap-2">
 		<FieldLabel label={ label } help={ help } />
-		<div className="cf7e-flex cf7e-items-center cf7e-gap-2">
+		<div className="df7-flex df7-items-center df7-gap-2">
 			{ loading ? (
 				<>
-					<span className="cf7e-h-9 cf7e-w-12 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
+					<span className="df7-h-9 df7-w-12 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
 					{ /* A real input, disabled. WordPress's admin styles its own
 					     rules onto `input` and win over the h-9 in `control`, so
 					     the box is 40px and a span wearing the same classes is 36.
@@ -70,7 +70,7 @@ export const ColorField = ( { label, help, value, onChange, loading = false } ) 
 						readOnly
 						aria-hidden="true"
 						tabIndex={ -1 }
-						className={ `${ control } cf7e-w-28 cf7e-animate-pulse cf7e-border-transparent cf7e-bg-stone-100` }
+						className={ `${ control } df7-w-28 df7-animate-pulse df7-border-transparent df7-bg-stone-100` }
 					/>
 				</>
 			) : (
@@ -80,14 +80,14 @@ export const ColorField = ( { label, help, value, onChange, loading = false } ) 
 				value={ value }
 				onChange={ ( event ) => onChange( event.target.value ) }
 				aria-label={ label }
-				className="cf7e-h-9 cf7e-w-12 cf7e-cursor-pointer cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-p-1"
+				className="df7-h-9 df7-w-12 df7-cursor-pointer df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-p-1"
 			/>
 			<input
 				type="text"
 				value={ value }
 				spellCheck="false"
 				onChange={ ( event ) => onChange( event.target.value ) }
-				className={ `${ control } cf7e-w-28 cf7e-font-mono` }
+				className={ `${ control } df7-w-28 df7-font-mono` }
 			/>
 			</>
 			) }
@@ -96,20 +96,20 @@ export const ColorField = ( { label, help, value, onChange, loading = false } ) 
 );
 
 // The admin reset strips `appearance` from every input, which also removes a
-// range's native track — `.cf7e-range` in admin.css draws it back, and reads the
-// fill position from --cf7e-range-p.
+// range's native track — `.df7-range` in admin.css draws it back, and reads the
+// fill position from --df7-range-p.
 export const SizeField = ( { label, help, value, onChange, min, max, unit = 'px', loading = false } ) => {
 	const percent = max > min ? ( ( value - min ) / ( max - min ) ) * 100 : 0;
 
 	return (
-		<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
+		<div className="df7-flex df7-flex-col df7-gap-2">
 			<FieldLabel label={ label } help={ help } />
-			<div className="cf7e-flex cf7e-items-center cf7e-gap-4">
+			<div className="df7-flex df7-items-center df7-gap-4">
 				{ loading ? (
 					<>
-						<span className="cf7e-h-1.5 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100" />
-						<span className="cf7e-w-14 cf7e-shrink-0 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-2 cf7e-py-1 cf7e-text-center cf7e-text-[14px] cf7e-text-transparent">
-							<span className="cf7e-block cf7e-animate-pulse cf7e-rounded cf7e-bg-stone-100">{ '\u00a0' }</span>
+						<span className="df7-h-1.5 df7-flex-1 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
+						<span className="df7-w-14 df7-shrink-0 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-px-2 df7-py-1 df7-text-center df7-text-[14px] df7-text-transparent">
+							<span className="df7-block df7-animate-pulse df7-rounded df7-bg-stone-100">{ '\u00a0' }</span>
 						</span>
 					</>
 				) : (
@@ -120,10 +120,10 @@ export const SizeField = ( { label, help, value, onChange, min, max, unit = 'px'
 					max={ max }
 					value={ value }
 					onChange={ ( event ) => onChange( parseInt( event.target.value, 10 ) ) }
-					style={ { '--cf7e-range-p': `${ percent }%` } }
-					className="cf7e-range cf7e-flex-1"
+					style={ { '--df7-range-p': `${ percent }%` } }
+					className="df7-range df7-flex-1"
 				/>
-				<span className="cf7e-w-14 cf7e-shrink-0 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-2 cf7e-py-1 cf7e-text-center cf7e-text-[14px] cf7e-font-bold cf7e-tnum cf7e-text-ink">
+				<span className="df7-w-14 df7-shrink-0 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-px-2 df7-py-1 df7-text-center df7-text-[14px] df7-font-bold df7-tnum df7-text-ink">
 					{ value }{ unit }
 				</span>
 				</>
@@ -134,10 +134,10 @@ export const SizeField = ( { label, help, value, onChange, min, max, unit = 'px'
 };
 
 export const ToggleField = ( { label, help, checked, onChange, disabled, loading = false } ) => (
-	<div className={ `cf7e-flex cf7e-items-start cf7e-justify-between cf7e-gap-6 ${ disabled ? 'cf7e-opacity-60' : '' }` }>
+	<div className={ `df7-flex df7-items-start df7-justify-between df7-gap-6 ${ disabled ? 'df7-opacity-60' : '' }` }>
 		<FieldLabel label={ label } help={ help } />
 		{ loading
-			? <span className="cf7e-h-6 cf7e-w-11 cf7e-shrink-0 cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100" />
+			? <span className="df7-h-6 df7-w-11 df7-shrink-0 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
 			: <Toggle checked={ checked } onChange={ onChange } disabled={ disabled } /> }
 	</div>
 );
@@ -186,33 +186,33 @@ export const SaveBar = ( { dirty, status, problem = '', onSave } ) => {
 	return (
 		<div
 			role="region"
-			aria-label={ __( 'Save changes', 'essentials-for-contact-form-7' ) }
-			className="cf7e-sticky cf7e-bottom-4 cf7e-z-20 cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-justify-end cf7e-gap-3 cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white/95 cf7e-px-4 cf7e-py-3 cf7e-shadow-pop cf7e-backdrop-blur"
+			aria-label={ __( 'Save changes', 'defer-forms-for-contact-form-7' ) }
+			className="df7-sticky df7-bottom-4 df7-z-20 df7-flex df7-flex-wrap df7-items-center df7-justify-end df7-gap-3 df7-rounded-2xl df7-border df7-border-line df7-bg-white/95 df7-px-4 df7-py-3 df7-shadow-pop df7-backdrop-blur"
 		>
 			{ dirty && 'error' !== status && (
-				<span className="cf7e-mr-auto cf7e-text-[15px] cf7e-font-medium cf7e-text-stone-500" aria-live="polite">
-					{ saving ? __( 'Saving…', 'essentials-for-contact-form-7' ) : __( 'You have unsaved changes', 'essentials-for-contact-form-7' ) }
+				<span className="df7-mr-auto df7-text-[15px] df7-font-medium df7-text-stone-500" aria-live="polite">
+					{ saving ? __( 'Saving…', 'defer-forms-for-contact-form-7' ) : __( 'You have unsaved changes', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			) }
 			{ 'saved' === status && (
-				<span className="cf7e-mr-auto cf7e-flex cf7e-items-center cf7e-gap-1.5 cf7e-text-[15px] cf7e-font-medium cf7e-text-emerald-600" aria-live="polite">
-					<Check className="cf7e-h-4 cf7e-w-4" />
-					{ __( 'Saved', 'essentials-for-contact-form-7' ) }
+				<span className="df7-mr-auto df7-flex df7-items-center df7-gap-1.5 df7-text-[15px] df7-font-medium df7-text-emerald-600" aria-live="polite">
+					<Check className="df7-h-4 df7-w-4" />
+					{ __( 'Saved', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			) }
 			{ 'error' === status && (
-				<span className="cf7e-mr-auto cf7e-text-[15px] cf7e-font-medium cf7e-text-red-600" aria-live="polite">
-					{ problem || __( 'Failed to save', 'essentials-for-contact-form-7' ) }
+				<span className="df7-mr-auto df7-text-[15px] df7-font-medium df7-text-red-600" aria-live="polite">
+					{ problem || __( 'Failed to save', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			) }
 			<button
 				type="button"
 				disabled={ saving || ! dirty }
 				onClick={ onSave }
-				className={ `${ btnPrimary } cf7e-px-5` }
+				className={ `${ btnPrimary } df7-px-5` }
 			>
-				{ saving && <Loader2 className="cf7e-h-4 cf7e-w-4 cf7e-animate-spin" /> }
-				{ __( 'Save changes', 'essentials-for-contact-form-7' ) }
+				{ saving && <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> }
+				{ __( 'Save changes', 'defer-forms-for-contact-form-7' ) }
 			</button>
 		</div>
 	);
@@ -228,18 +228,18 @@ export const SaveBar = ( { dirty, status, problem = '', onSave } ) => {
  * first was hand-wrapped in a margin div.
  */
 export const SectionStack = ( { className = '', children } ) => (
-	<div className={ `cf7e-flex cf7e-flex-col cf7e-gap-5 ${ className }` }>{ children }</div>
+	<div className={ `df7-flex df7-flex-col df7-gap-5 ${ className }` }>{ children }</div>
 );
 
 export const SectionCard = ( { title, description, children } ) => (
-	<div className="cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-7">
+	<div className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-7">
 		{ title && (
-			<div className="cf7e-mb-6 cf7e-border-b cf7e-border-line cf7e-pb-4">
-				<h2 className="cf7e-m-0 cf7e-text-xl cf7e-font-bold cf7e-text-ink">{ title }</h2>
-				{ description && <p className="cf7e-mb-0 cf7e-mt-1 cf7e-text-[15px] cf7e-text-stone-500">{ description }</p> }
+			<div className="df7-mb-6 df7-border-b df7-border-line df7-pb-4">
+				<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">{ title }</h2>
+				{ description && <p className="df7-mb-0 df7-mt-1 df7-text-[15px] df7-text-stone-500">{ description }</p> }
 			</div>
 		) }
-		<div className="cf7e-flex cf7e-flex-col cf7e-gap-7">{ children }</div>
+		<div className="df7-flex df7-flex-col df7-gap-7">{ children }</div>
 	</div>
 );
 

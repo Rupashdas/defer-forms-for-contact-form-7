@@ -2,12 +2,12 @@
 /**
  * Database schema installer and migrator.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\DB;
+namespace DF7\DB;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,11 +19,11 @@ final class Schema {
 	 * Public because Submissions_Repository queries the same table and uninstall
 	 * drops it; three separate spellings of one name is a typo waiting to be made.
 	 */
-	public const TABLE = 'cf7e_submissions';
+	public const TABLE = 'df7_submissions';
 
-	private const VERSION_KEY = 'cf7e_db_version';
+	private const VERSION_KEY = 'df7_db_version';
 
-	private const LOCK_KEY = 'cf7e_db_upgrading';
+	private const LOCK_KEY = 'df7_db_upgrading';
 
 	/** How long a claim on the upgrade lock is believed before it is treated as abandoned. */
 	private const LOCK_TIMEOUT = MINUTE_IN_SECONDS;
@@ -46,7 +46,7 @@ final class Schema {
 	 * always the schema this code expects — that makes a rollback converge too.
 	 */
 	public static function maybe_upgrade(): void {
-		if ( (string) get_option( self::VERSION_KEY, '' ) === (string) CF7E_DB_VERSION ) {
+		if ( (string) get_option( self::VERSION_KEY, '' ) === (string) DF7_DB_VERSION ) {
 			return;
 		}
 
@@ -185,6 +185,6 @@ final class Schema {
 
 		dbDelta( $sql );
 
-		update_option( self::VERSION_KEY, CF7E_DB_VERSION );
+		update_option( self::VERSION_KEY, DF7_DB_VERSION );
 	}
 }

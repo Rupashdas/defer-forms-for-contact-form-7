@@ -5,15 +5,15 @@
  * whose stored values contain the requested email address count as that person's
  * data.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\Privacy;
+namespace DF7\Privacy;
 
-use CF7E\CF7\Entry_Fields;
-use CF7E\DB\Submissions_Repository;
+use DF7\CF7\Entry_Fields;
+use DF7\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -37,8 +37,8 @@ final class Privacy {
 	 * @return array<string, mixed>
 	 */
 	public function register_exporter( array $exporters ): array {
-		$exporters['essentials-for-contact-form-7'] = array(
-			'exporter_friendly_name' => __( 'Contact form submissions (CF7 Essentials)', 'essentials-for-contact-form-7' ),
+		$exporters['defer-forms-for-contact-form-7'] = array(
+			'exporter_friendly_name' => __( 'Contact form submissions (Defer Forms)', 'defer-forms-for-contact-form-7' ),
 			'callback'               => array( $this, 'export' ),
 		);
 		return $exporters;
@@ -49,8 +49,8 @@ final class Privacy {
 	 * @return array<string, mixed>
 	 */
 	public function register_eraser( array $erasers ): array {
-		$erasers['essentials-for-contact-form-7'] = array(
-			'eraser_friendly_name' => __( 'Contact form submissions (CF7 Essentials)', 'essentials-for-contact-form-7' ),
+		$erasers['defer-forms-for-contact-form-7'] = array(
+			'eraser_friendly_name' => __( 'Contact form submissions (Defer Forms)', 'defer-forms-for-contact-form-7' ),
 			'callback'             => array( $this, 'erase' ),
 		);
 		return $erasers;
@@ -68,9 +68,9 @@ final class Privacy {
 
 		foreach ( $rows as $row ) {
 			$items[] = array(
-				'group_id'    => 'cf7e-submissions',
-				'group_label' => __( 'Contact form submissions', 'essentials-for-contact-form-7' ),
-				'item_id'     => 'cf7e-submission-' . (int) $row['id'],
+				'group_id'    => 'df7-submissions',
+				'group_label' => __( 'Contact form submissions', 'defer-forms-for-contact-form-7' ),
+				'item_id'     => 'df7-submission-' . (int) $row['id'],
 				'data'        => $this->row_fields( $row ),
 			);
 		}
@@ -182,7 +182,7 @@ final class Privacy {
 			foreach ( $data as $key => $value ) {
 				/*
 				 * The plugin's own keys are not this person's data, and two of
-				 * them must not travel at all: `_cf7e_files` names the folder
+				 * them must not travel at all: `_df7_files` names the folder
 				 * the attachments were put in — the unguessable name is what
 				 * guards them — and a row written by an older version can still
 				 * carry the time-trap's signed token. The CSV export has skipped
@@ -206,13 +206,13 @@ final class Privacy {
 		// regulation asks for.
 		if ( ! empty( $row['ip'] ) ) {
 			$fields[] = array(
-				'name'  => __( 'IP address', 'essentials-for-contact-form-7' ),
+				'name'  => __( 'IP address', 'defer-forms-for-contact-form-7' ),
 				'value' => (string) $row['ip'],
 			);
 		}
 
 		$fields[] = array(
-			'name'  => __( 'Submitted at', 'essentials-for-contact-form-7' ),
+			'name'  => __( 'Submitted at', 'defer-forms-for-contact-form-7' ),
 			'value' => (string) $row['created_at'],
 		);
 

@@ -12,7 +12,7 @@
  *
  * `manage_options` is not `unfiltered_html`. On multisite no site administrator
  * has `unfiltered_html` — only super admins do — and any site that lowered
- * `cf7e_capability` to let editors in is in the same position. Without the
+ * `df7_capability` to let editors in is in the same position. Without the
  * gate, such a user could store `<script>` in a template that then renders for
  * every public visitor.
  *
@@ -20,12 +20,12 @@
  * A caller cannot apply the allow-list and forget the capability, or check the
  * capability and forget the allow-list — there is one way in, and it does both.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

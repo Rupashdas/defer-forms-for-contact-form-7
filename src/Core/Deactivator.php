@@ -2,18 +2,18 @@
 /**
  * Plugin deactivation handler.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\Core;
+namespace DF7\Core;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Deactivator {
 
 	public static function deactivate(): void {
-		wp_clear_scheduled_hook( 'cf7e_daily_cleanup' );
+		wp_clear_scheduled_hook( 'df7_daily_cleanup' );
 	}
 }

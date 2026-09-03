@@ -14,19 +14,19 @@
  *
  * Deliberately free of WordPress, so both halves can be checked without one.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Form_Bundle {
 
 	/** Names the file for what it is, so an unrelated JSON is refused early. */
-	public const FORMAT = 'cf7-essentials-forms';
+	public const FORMAT = 'df7-forms';
 
 	/** Bumped only when a bundle written today would be misread tomorrow. */
 	public const VERSION = 1;

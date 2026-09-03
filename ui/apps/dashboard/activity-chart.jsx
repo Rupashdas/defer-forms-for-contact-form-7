@@ -42,16 +42,16 @@ export const ActivityChart = ( { days, loading = false } ) => {
 	// caption alone was thirty pixels the loading state did not reserve.
 	if ( loading ) {
 		return (
-			<figure className="cf7e-m-0">
-				<svg viewBox="0 0 300 100" preserveAspectRatio="none" className="cf7e-h-32 cf7e-w-full cf7e-animate-pulse" aria-hidden="true">
+			<figure className="df7-m-0">
+				<svg viewBox="0 0 300 100" preserveAspectRatio="none" className="df7-h-32 df7-w-full df7-animate-pulse" aria-hidden="true">
 					{ Array.from( { length: 30 } ).map( ( _, index ) => (
-						<rect key={ index } x={ index * 10 + 2 } y="98" width="6" height="2" rx="2" className="cf7e-fill-line" />
+						<rect key={ index } x={ index * 10 + 2 } y="98" width="6" height="2" rx="2" className="df7-fill-line" />
 					) ) }
 				</svg>
-				<figcaption className="cf7e-mt-2 cf7e-flex cf7e-items-baseline cf7e-justify-between cf7e-text-[14px] cf7e-text-stone-400">
-					<Shimmer w="cf7e-w-12" />
-					<Shimmer w="cf7e-w-28" />
-					<Shimmer w="cf7e-w-12" />
+				<figcaption className="df7-mt-2 df7-flex df7-items-baseline df7-justify-between df7-text-[14px] df7-text-stone-400">
+					<Shimmer w="df7-w-12" />
+					<Shimmer w="df7-w-28" />
+					<Shimmer w="df7-w-12" />
 				</figcaption>
 			</figure>
 		);
@@ -66,15 +66,15 @@ export const ActivityChart = ( { days, loading = false } ) => {
 	const total = days.reduce( ( sum, day ) => sum + day.count, 0 );
 
 	return (
-		<figure className="cf7e-m-0">
+		<figure className="df7-m-0">
 			<svg
 				viewBox={ `0 0 ${ days.length * 10 } 100` }
 				preserveAspectRatio="none"
-				className="cf7e-h-32 cf7e-w-full"
+				className="df7-h-32 df7-w-full"
 				role="img"
 				aria-label={ sprintf(
 					/* translators: 1: number of submissions, 2: number of days. */
-					__( '%1$s submissions over the last %2$s days.', 'essentials-for-contact-form-7' ),
+					__( '%1$s submissions over the last %2$s days.', 'defer-forms-for-contact-form-7' ),
 					total.toLocaleString(),
 					days.length.toLocaleString()
 				) }
@@ -83,7 +83,7 @@ export const ActivityChart = ( { days, loading = false } ) => {
 					const height = day.count ? Math.max( 4, ( day.count / top ) * 92 ) : 2;
 					const label  = sprintf(
 						/* translators: 1: a date, 2: number of submissions on it. */
-						_n( '%1$s — %2$s submission', '%1$s — %2$s submissions', day.count, 'essentials-for-contact-form-7' ),
+						_n( '%1$s — %2$s submission', '%1$s — %2$s submissions', day.count, 'defer-forms-for-contact-form-7' ),
 						readable( day.date ),
 						day.count.toLocaleString()
 					);
@@ -96,7 +96,7 @@ export const ActivityChart = ( { days, loading = false } ) => {
 							width="6"
 							height={ height }
 							rx="2"
-							className={ day.count ? 'cf7e-fill-ink' : 'cf7e-fill-line' }
+							className={ day.count ? 'df7-fill-ink' : 'df7-fill-line' }
 						>
 							<title>{ label }</title>
 						</rect>
@@ -105,13 +105,13 @@ export const ActivityChart = ( { days, loading = false } ) => {
 			</svg>
 
 			{ /* Two dates, not thirty. The ends are what tell you the span. */ }
-			<figcaption className="cf7e-mt-2 cf7e-flex cf7e-items-baseline cf7e-justify-between cf7e-text-[14px] cf7e-text-stone-400">
+			<figcaption className="df7-mt-2 df7-flex df7-items-baseline df7-justify-between df7-text-[14px] df7-text-stone-400">
 				<span>{ readable( days[ 0 ].date ) }</span>
 				{ total > 0 && (
-					<span className="cf7e-font-medium cf7e-text-stone-500">
+					<span className="df7-font-medium df7-text-stone-500">
 						{ sprintf(
 							/* translators: 1: a date, 2: number of submissions on it. */
-							__( 'Busiest: %1$s, %2$s', 'essentials-for-contact-form-7' ),
+							__( 'Busiest: %1$s, %2$s', 'defer-forms-for-contact-form-7' ),
 							readable( peak.date ),
 							peak.count.toLocaleString()
 						) }

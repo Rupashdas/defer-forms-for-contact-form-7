@@ -2,19 +2,19 @@
 /**
  * REST: Listing CF7 forms and loading or saving one in the builder.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare(strict_types=1);
 
-namespace CF7E\REST;
+namespace DF7\REST;
 
-use CF7E\CF7\Form_Class;
-use CF7E\CF7\Form_Html;
-use CF7E\CF7\Form_Tag_Parser;
-use CF7E\CF7\Redirect;
-use CF7E\CF7\Revisions;
-use CF7E\CF7\Steps;
+use DF7\CF7\Form_Class;
+use DF7\CF7\Form_Html;
+use DF7\CF7\Form_Tag_Parser;
+use DF7\CF7\Redirect;
+use DF7\CF7\Revisions;
+use DF7\CF7\Steps;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -176,25 +176,25 @@ final class Forms_Controller extends Controller {
 	 */
 	public function rest_create_form( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! function_exists( 'wpcf7_save_contact_form' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		// The route is admin-only already; this is CF7's own gate on writing a
 		// contact form, and a site that has narrowed it should still be obeyed.
 		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
-			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'essentials-for-contact-form-7' ), 403 );
+			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
 		$title = trim( (string) $request->get_param( 'title' ) );
 
 		if ( '' === $title ) {
-			return self::error( 'title_required', __( 'Give the form a name.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'title_required', __( 'Give the form a name.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		// Long enough to be a mistake rather than a name, and post_title is not
 		// the place to find out.
 		if ( mb_strlen( $title ) > 200 ) {
-			return self::error( 'title_too_long', __( 'That name is too long.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'title_too_long', __( 'That name is too long.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$contact_form = wpcf7_save_contact_form(
@@ -205,7 +205,7 @@ final class Forms_Controller extends Controller {
 		);
 
 		if ( ! $contact_form || ! $contact_form->id() ) {
-			return self::error( 'save_failed', __( 'The form could not be saved. Please try again.', 'essentials-for-contact-form-7' ), 500 );
+			return self::error( 'save_failed', __( 'The form could not be saved. Please try again.', 'defer-forms-for-contact-form-7' ), 500 );
 		}
 
 		$id = (int) $contact_form->id();
@@ -214,7 +214,7 @@ final class Forms_Controller extends Controller {
 			array(
 				'form_id'     => $id,
 				'title'       => $contact_form->title(),
-				'builder_url' => admin_url( 'admin.php?page=cf7-essentials-builder&form=' . $id ),
+				'builder_url' => admin_url( 'admin.php?page=df7-builder&form=' . $id ),
 			),
 			201
 		);
@@ -233,23 +233,23 @@ final class Forms_Controller extends Controller {
 	 */
 	public function rest_delete_form( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! class_exists( 'WPCF7_ContactForm' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$id   = (int) $request->get_param( 'id' );
 		$form = \WPCF7_ContactForm::get_instance( $id );
 
 		if ( ! $form ) {
-			return self::error( 'not_found', __( 'That form no longer exists.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'not_found', __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		// CF7's own gate, per form, which a site may have narrowed.
 		if ( ! current_user_can( 'wpcf7_delete_contact_form', $id ) ) {
-			return self::error( 'forbidden', __( 'You do not have permission to delete this form.', 'essentials-for-contact-form-7' ), 403 );
+			return self::error( 'forbidden', __( 'You do not have permission to delete this form.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
 		if ( ! $form->delete() ) {
-			return self::error( 'delete_failed', __( 'The form could not be deleted. Please try again.', 'essentials-for-contact-form-7' ), 500 );
+			return self::error( 'delete_failed', __( 'The form could not be deleted. Please try again.', 'defer-forms-for-contact-form-7' ), 500 );
 		}
 
 		return new \WP_REST_Response(
@@ -263,14 +263,14 @@ final class Forms_Controller extends Controller {
 
 	public function rest_get_form_builder( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! class_exists( 'WPCF7_ContactForm' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$id   = (int) $request->get_param( 'id' );
 		$form = \WPCF7_ContactForm::get_instance( $id );
 
 		if ( ! $form ) {
-			return self::error( 'not_found', __( 'That form no longer exists.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'not_found', __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		$fields = Form_Tag_Parser::parse( (string) $form->prop( 'form' ) );
@@ -302,7 +302,7 @@ final class Forms_Controller extends Controller {
 		$id = (int) $request->get_param( 'id' );
 
 		if ( ! class_exists( 'WPCF7_ContactForm' ) || ! \WPCF7_ContactForm::get_instance( $id ) ) {
-			return self::error( 'not_found', __( 'That form no longer exists.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'not_found', __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		return new \WP_REST_Response( Revisions::all( $id ), 200 );
@@ -322,13 +322,13 @@ final class Forms_Controller extends Controller {
 		$rev = (int) $request->get_param( 'rev' );
 
 		if ( ! class_exists( 'WPCF7_ContactForm' ) || ! \WPCF7_ContactForm::get_instance( $id ) ) {
-			return self::error( 'not_found', __( 'That form no longer exists.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'not_found', __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		$revision = Revisions::get( $id, $rev );
 
 		if ( null === $revision ) {
-			return self::error( 'no_revision', __( 'That version is no longer kept.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'no_revision', __( 'That version is no longer kept.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		return new \WP_REST_Response(
@@ -345,21 +345,21 @@ final class Forms_Controller extends Controller {
 
 	public function rest_save_form_builder( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! class_exists( 'WPCF7_ContactForm' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$id   = (int) $request->get_param( 'id' );
 		$form = \WPCF7_ContactForm::get_instance( $id );
 
 		if ( ! $form ) {
-			return self::error( 'not_found', __( 'That form no longer exists.', 'essentials-for-contact-form-7' ), 404 );
+			return self::error( 'not_found', __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ), 404 );
 		}
 
 		// CF7's own gate, per form, the same way create and delete ask for theirs.
 		// Without it a site that narrowed who may edit a given form was obeyed
 		// everywhere except on the one route that rewrites the whole template.
 		if ( ! current_user_can( 'wpcf7_edit_contact_form', $id ) ) {
-			return self::error( 'forbidden', __( 'You do not have permission to edit this form.', 'essentials-for-contact-form-7' ), 403 );
+			return self::error( 'forbidden', __( 'You do not have permission to edit this form.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
 		$params = (array) $request->get_json_params();
@@ -374,7 +374,7 @@ final class Forms_Controller extends Controller {
 		 * stopped rendering.
 		 */
 		if ( ! isset( $params['fields'] ) || ! is_array( $params['fields'] ) ) {
-			return self::error( 'no_fields', __( 'That save did not carry the form fields, so nothing was written.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'no_fields', __( 'That save did not carry the form fields, so nothing was written.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$markup = Form_Tag_Parser::serialize( $params['fields'] );

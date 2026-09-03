@@ -1,11 +1,11 @@
-=== Essentials for Contact Form 7 ===
+=== Defer Forms for Contact Form 7 ===
 Contributors: deferstudio, rupash
 Tags: contact form 7, form builder, multi-step form, submissions, conditional logic
 Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.6.2
+Stable tag: 2.6.7
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ The missing modern layer for Contact Form 7 — visual builder, multi-step, subm
 
 == Description ==
 
-Essentials for Contact Form 7 turns Contact Form 7 into a modern visual form builder while keeping CF7's reliability untouched. Drag-and-drop fields, build multi-step flows, capture submissions in a clean dashboard, and apply conditional logic — all without breaking any existing form.
+Defer Forms for Contact Form 7 turns Contact Form 7 into a modern visual form builder while keeping CF7's reliability untouched. Drag-and-drop fields, build multi-step flows, capture submissions in a clean dashboard, and apply conditional logic — all without breaking any existing form.
 
 **Highlights**
 
@@ -41,22 +41,22 @@ The Features screen lists everything this plugin does, and nothing it does not.
 
 Submissions can be filtered before they are stored and hooked once they are — enough to keep a form out of the table, redact a field, or forward every entry somewhere of your own. Every hook is listed under "Hooks" below.
 
-CF7 Essentials **extends** Contact Form 7 — never replaces it, never breaks existing forms.
+Defer Forms **extends** Contact Form 7 — never replaces it, never breaks existing forms.
 
 == Installation ==
 
 1. Install and activate Contact Form 7.
-2. Upload `essentials-for-contact-form-7/` to `/wp-content/plugins/` (or install via WP admin).
-3. Activate "Essentials for Contact Form 7" from Plugins screen.
-4. Visit **CF7 Essentials** in the admin sidebar.
+2. Upload `defer-forms-for-contact-form-7/` to `/wp-content/plugins/` (or install via WP admin).
+3. Activate "Defer Forms for Contact Form 7" from Plugins screen.
+4. Visit **Defer Forms** in the admin sidebar.
 
 == Frequently Asked Questions ==
 
 = Does it replace Contact Form 7? =
-No. Essentials for Contact Form 7 sits on top of CF7. CF7 must be installed and active.
+No. Defer Forms for Contact Form 7 sits on top of CF7. CF7 must be installed and active.
 
 = Will it break my existing forms? =
-No. Existing CF7 shortcodes keep rendering exactly as before. CF7 Essentials features are opt-in per form.
+No. Existing CF7 shortcodes keep rendering exactly as before. Defer Forms features are opt-in per form.
 
 = Does the plugin send my data anywhere? =
 Only if you switch on a notification destination and give it a token or a URL of your own. Nothing leaves your site otherwise — there is no telemetry, no licence check and no remote asset. See "External services" below.
@@ -67,25 +67,25 @@ Contact Form 7's own hooks are untouched — `wpcf7_before_send_mail`, `wpcf7_ma
 
 A submission passes through the first four in this order: whether to store it, what to store, where to announce it, and what it became.
 
-`apply_filters( 'cf7e_store_submission', $store, $contact_form, $status )`
+`apply_filters( 'df7_store_submission', $store, $contact_form, $status )`
 Return false to keep an entry out of the table entirely. The mail is still sent; nothing is written. `$status` is either 'submitted' or 'spam'.
 
-`apply_filters( 'cf7e_submission_data', $data, $contact_form, $status )`
+`apply_filters( 'df7_submission_data', $data, $contact_form, $status )`
 The fields on their way into the table. Redact a value, drop a field, or add one of your own. Keys beginning with an underscore are the plugin's own bookkeeping and are never shown as answers.
 
-`do_action( 'cf7e_notify', $entry )`
+`do_action( 'df7_notify', $entry )`
 One submission, described once, for sending anywhere the Notifications screen does not already reach. `$entry` carries `entry_id`, `form_id`, `title`, `when`, `at` (ISO 8601), `fields` and `link`. Submitted entries only — spam never fires this.
 
-`do_action( 'cf7e_submission_stored', $id, $data, $contact_form, $status )`
+`do_action( 'df7_submission_stored', $id, $data, $contact_form, $status )`
 The entry exists and is complete: uploads are kept and `$id` can be linked to. Spam fires too, with `$status` saying so. This is where somebody else's code runs, so it is last.
 
-`apply_filters( 'cf7e_capability', 'manage_options' )`
+`apply_filters( 'df7_capability', 'manage_options' )`
 The capability the admin screens and the REST routes require.
 
-`apply_filters( 'cf7e_attachment_limit', $bytes )`
+`apply_filters( 'df7_attachment_limit', $bytes )`
 The ceiling on kept uploads across the site. Past it, submissions and their mail arrive as normal but files are no longer copied to the server.
 
-`do_action( 'cf7e_submissions_deleted', $rows )`
+`do_action( 'df7_submissions_deleted', $rows )`
 Entries that have just been removed, with their data, so anything mirroring them elsewhere can keep up.
 
 == External services ==
@@ -124,6 +124,23 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 
 == Changelog ==
 
+= 2.6.7 =
+* Removed the one-time migration that carried existing data across the 2.6.4 internal prefix rename. This plugin has never been distributed under the old `cf7e` prefix, so no install anyone downloads from here on could ever have data for it to find — it was dead code for every fresh install and always would be. Schema upgrades in general are untouched.
+
+= 2.6.6 =
+* Housekeeping only — nothing about the plugin behaves differently. The last remaining internal test-code names and changelog wording from this plugin's two earlier names were cleared out. Nothing shipped was ever affected.
+
+= 2.6.5 =
+* Changed: the admin page addresses now carry the `df7-` prefix, matching the rest of the plugin. Update any bookmark to one of this plugin's admin screens.
+
+= 2.6.4 =
+* Changed: the plugin's internal prefix moved from `cf7e` to `df7`, to match the Defer Forms name — the database table, the developer hooks under "Hooks" below, post meta keys, the REST namespace, and script/style handles all carry the new prefix now.
+* If you filter on any of the hooks listed under "Hooks" below by their old names, update to the current names in this release.
+
+= 2.6.3 =
+* Renamed: the plugin is now Defer Forms for Contact Form 7, following wordpress.org review — the previous name led with a generic word and was too close to an existing plugin's name. The admin menu now says "Defer Forms".
+* Fixed: a row action drawn on the Contact Forms list was printed as an inline `<script>` tag. It is now enqueued as its own file, per wordpress.org's guidelines on JS and CSS.
+
 = 2.6.2 =
 * Two screenshot captions described more than their screenshot showed. They now describe what is in the picture.
 * Comments only, otherwise: two that argued for a decision rather than recording one have gone. Nothing the plugin does has changed.
@@ -143,8 +160,8 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Fixed: every divider that was not the lightest weight became the lightest weight the first time a form was opened in the builder and saved. A divider writes two classes off the same prefix — the line style and the weight — and only the first was ever read.
 
 = 2.5.0 =
-* The plugin has been renamed. It was CF7 Nova Lite; it is Essentials for Contact Form 7 now, and the admin menu says CF7 Essentials. The old name said nothing about what the plugin does, and its folder name broke a wordpress.org naming rule.
-* New: attachments have a size ceiling — 1 GB by default. Past it, submissions and their mail arrive as normal but the files are no longer copied to the server, and the admin is told. A form that takes uploads is a public endpoint that writes to the disk, and nothing bounded how often it was used. Raise or remove the ceiling with the cf7e_attachment_limit filter.
+* The plugin has been renamed. The old name said nothing about what the plugin does, and its folder name broke a wordpress.org naming rule.
+* New: attachments have a size ceiling — 1 GB by default. Past it, submissions and their mail arrive as normal but the files are no longer copied to the server, and the admin is told. A form that takes uploads is a public endpoint that writes to the disk, and nothing bounded how often it was used. Raise or remove the ceiling with the df7_attachment_limit filter.
 * New: blocked submissions no longer keep their file uploads. The entry is still stored and still lists what was sent, so a real enquiry caught by mistake can be found — but a caught bot now costs a few kilobytes instead of a megabyte. There is a switch under "Keep blocked submissions" for sites that want the files as well.
 * Changed: the Telegram bot token and the Slack and Discord webhook URLs are no longer sent to the browser in full. Every visit to the Notifications page used to carry them across the wire in plain text. They travel masked now; emptying the box removes the stored one, and leaving it alone keeps it.
 * Changed: a notification destination shows its settings only while it is switched on.
@@ -205,7 +222,7 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 
 = 2.0.1 =
 * Removed the "See Pro" button from the Features screen. It pointed at a placeholder address, which reads as a broken plugin rather than as a feature that has not been built. Pro is not being built until the free version has had time with real users; the screen still says what it will hold.
-* The Features screen moved to a matching address. It was reached at `admin.php?page=cf7-essentials-modules`, left over from when these were modules with a switch beside each one, and is now `admin.php?page=cf7-essentials-features`. Update any bookmark.
+* The Features screen moved to a matching address, left over from when these were modules with a switch beside each one. Update any bookmark.
 
 = 2.0.0 =
 * Full architectural rebuild from scratch.
@@ -218,6 +235,15 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.6.5 =
+Admin page addresses changed to a new prefix. Update any bookmark; nothing else changes.
+
+= 2.6.4 =
+Internal rename only, including the database table and the developer hooks. If you hook into any filter or action by its old name, see "Hooks" below for the current name.
+
+= 2.6.3 =
+The plugin's name and slug have changed to Defer Forms for Contact Form 7. Existing forms, submissions and settings are unaffected — only the name and the admin menu label change.
 
 = 2.6.2 =
 Wording only — two screenshot captions and two code comments. Nothing about how the plugin behaves has changed.

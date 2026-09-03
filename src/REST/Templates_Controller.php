@@ -2,12 +2,12 @@
 /**
  * REST: The starter-template library and creating a form from one.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare(strict_types=1);
 
-namespace CF7E\REST;
+namespace DF7\REST;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,13 +45,13 @@ final class Templates_Controller extends Controller {
 
 	public function rest_create_from_template( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		if ( ! class_exists( 'WPCF7_ContactForm' ) ) {
-			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'cf7_missing', __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		// Creating from a template is still creating a contact form, so it answers
 		// to CF7's own gate rather than to this route's admin-only check alone.
 		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
-			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'essentials-for-contact-form-7' ), 403 );
+			return self::error( 'forbidden', __( 'You do not have permission to create forms.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
 		$slug     = (string) $request->get_param( 'slug' );
@@ -59,7 +59,7 @@ final class Templates_Controller extends Controller {
 		$template = $registry->get( $slug );
 
 		if ( null === $template ) {
-			return self::error( 'unavailable', __( 'There is no template by that name.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'unavailable', __( 'There is no template by that name.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$contact_form = \WPCF7_ContactForm::get_template( array( 'title' => $template['name'] ) );
@@ -81,7 +81,7 @@ final class Templates_Controller extends Controller {
 		$id = $contact_form->id();
 
 		if ( ! $id ) {
-			return self::error( 'save_failed', __( 'The form could not be saved. Please try again.', 'essentials-for-contact-form-7' ), 500 );
+			return self::error( 'save_failed', __( 'The form could not be saved. Please try again.', 'defer-forms-for-contact-form-7' ), 500 );
 		}
 
 		// The builder, the same place creating a blank form lands. Sending people
@@ -91,7 +91,7 @@ final class Templates_Controller extends Controller {
 		return new \WP_REST_Response(
 			array(
 				'form_id'     => (int) $id,
-				'builder_url' => admin_url( 'admin.php?page=cf7-essentials-builder&form=' . (int) $id ),
+				'builder_url' => admin_url( 'admin.php?page=df7-builder&form=' . (int) $id ),
 			),
 			201
 		);

@@ -7,12 +7,12 @@
  * data and lets whatever is listening decide what the entry means. So there is
  * no composing and no escaping here — JSON encoding is the escaping.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,7 +38,7 @@ final class Webhook {
 
 		if ( '' !== $error && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- the only channel a background failure has.
-			error_log( 'CF7 Essentials: the webhook refused a notification — ' . $error );
+			error_log( 'Defer Forms: the webhook refused a notification — ' . $error );
 		}
 	}
 
@@ -57,7 +57,7 @@ final class Webhook {
 				'test'   => true,
 				'form'   => array(
 					'id'    => 0,
-					'title' => __( 'CF7 Essentials', 'essentials-for-contact-form-7' ),
+					'title' => __( 'Defer Forms', 'defer-forms-for-contact-form-7' ),
 				),
 				'entry'  => array(
 					'id'           => 0,
@@ -65,7 +65,7 @@ final class Webhook {
 					'submitted_at' => (string) ( wp_date( 'c' ) ?: '' ),
 				),
 				'fields' => array(
-					'message' => __( 'This is a test. Your form submissions will arrive here.', 'essentials-for-contact-form-7' ),
+					'message' => __( 'This is a test. Your form submissions will arrive here.', 'defer-forms-for-contact-form-7' ),
 				),
 			)
 		);
@@ -108,7 +108,7 @@ final class Webhook {
 	 */
 	private static function send( string $url, array $payload ): string {
 		if ( '' === $url ) {
-			return __( 'No webhook URL is set.', 'essentials-for-contact-form-7' );
+			return __( 'No webhook URL is set.', 'defer-forms-for-contact-form-7' );
 		}
 
 		$response = wp_remote_post(
@@ -137,7 +137,7 @@ final class Webhook {
 		 */
 		return sprintf(
 			/* translators: %d: an HTTP status code. */
-			__( 'The endpoint answered %d.', 'essentials-for-contact-form-7' ),
+			__( 'The endpoint answered %d.', 'defer-forms-for-contact-form-7' ),
 			$code
 		);
 	}

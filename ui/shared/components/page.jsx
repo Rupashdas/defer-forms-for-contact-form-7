@@ -4,19 +4,19 @@
  */
 
 export const Page = ( { children } ) => (
-	<div className="cf7e-mt-4 cf7e-w-full cf7e-pb-14 cf7e-pr-5">{ children }</div>
+	<div className="df7-mt-4 df7-w-full df7-pb-14 df7-pr-5">{ children }</div>
 );
 
 export const PageHeader = ( { title, subtitle, actions } ) => (
-	<div className="cf7e-mb-6 cf7e-flex cf7e-flex-wrap cf7e-items-end cf7e-justify-between cf7e-gap-4 cf7e-border-b cf7e-border-line cf7e-pb-5">
-		<div className="cf7e-min-w-0">
-			<h1 className="cf7e-m-0 cf7e-p-0 cf7e-text-[30px] cf7e-font-extrabold cf7e-leading-tight cf7e-tracking-tight cf7e-text-ink">
+	<div className="df7-mb-6 df7-flex df7-flex-wrap df7-items-end df7-justify-between df7-gap-4 df7-border-b df7-border-line df7-pb-5">
+		<div className="df7-min-w-0">
+			<h1 className="df7-m-0 df7-p-0 df7-text-[30px] df7-font-extrabold df7-leading-tight df7-tracking-tight df7-text-ink">
 				{ title }
 			</h1>
 			{ subtitle && (
-				<p className="cf7e-mb-0 cf7e-mt-2 cf7e-text-[15px] cf7e-text-stone-500">{ subtitle }</p>
+				<p className="df7-mb-0 df7-mt-2 df7-text-[15px] df7-text-stone-500">{ subtitle }</p>
 			) }
 		</div>
-		{ actions ? <div className="cf7e-flex cf7e-shrink-0 cf7e-items-center cf7e-gap-2">{ actions }</div> : null }
+		{ actions ? <div className="df7-flex df7-shrink-0 df7-items-center df7-gap-2">{ actions }</div> : null }
 	</div>
 );

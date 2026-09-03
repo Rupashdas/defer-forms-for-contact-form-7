@@ -6,12 +6,12 @@
  * WooCommerce is optional: without it the field says so rather than rendering a
  * broken control, and validation still passes so the rest of the form works.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -52,12 +52,12 @@ final class Product_Field {
 		}
 
 		if ( ! self::is_available() ) {
-			return '<span class="cf7e-product-missing">'
-				. esc_html__( 'WooCommerce is not active, so there are no products to list.', 'essentials-for-contact-form-7' )
+			return '<span class="df7-product-missing">'
+				. esc_html__( 'WooCommerce is not active, so there are no products to list.', 'defer-forms-for-contact-form-7' )
 				. '</span>';
 		}
 
-		$options = '<option value="">' . esc_html__( 'Select a product…', 'essentials-for-contact-form-7' ) . '</option>';
+		$options = '<option value="">' . esc_html__( 'Select a product…', 'defer-forms-for-contact-form-7' ) . '</option>';
 
 		foreach ( $this->products( $tag ) as $product ) {
 			$label = $product->get_name();
@@ -71,7 +71,7 @@ final class Product_Field {
 			);
 		}
 
-		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' cf7e-product';
+		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' df7-product';
 
 		return sprintf(
 			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><select name="%1$s" class="%2$s"%3$s>%4$s</select>%5$s</span>',

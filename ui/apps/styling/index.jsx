@@ -2,7 +2,7 @@
  * Styling — the look of every plugin-skinned form, on a page of its own.
  *
  * This was the fourth tab of Settings, behind Spam and Privacy, on a screen
- * whose own subtitle promised "how CF7 Essentials captures and handles submissions".
+ * whose own subtitle promised "how Defer Forms captures and handles submissions".
  * It is the one screen here that is a studio rather than a list of switches —
  * live preview, presets, sliders you drag — and nobody looks for a studio at
  * the end of a settings page.
@@ -63,22 +63,22 @@ const DEFAULTS = {
 const PRESETS = [
 	{
 		id: 'ink',
-		label: __( 'Ink', 'essentials-for-contact-form-7' ),
+		label: __( 'Ink', 'defer-forms-for-contact-form-7' ),
 		values: { primary: '#1b1b22', primary_contrast: '#ffffff', border: '#d9d3c9', bg: '#ffffff', surface_alt: '#faf9f7', radius: 8, control_height: 46, ring: 3 },
 	},
 	{
 		id: 'rounded',
-		label: __( 'Rounded', 'essentials-for-contact-form-7' ),
+		label: __( 'Rounded', 'defer-forms-for-contact-form-7' ),
 		values: { primary: '#2563eb', primary_contrast: '#ffffff', border: '#dbe3ef', bg: '#ffffff', surface_alt: '#f5f8ff', radius: 28, control_height: 50, ring: 4 },
 	},
 	{
 		id: 'sharp',
-		label: __( 'Sharp', 'essentials-for-contact-form-7' ),
+		label: __( 'Sharp', 'defer-forms-for-contact-form-7' ),
 		values: { primary: '#111111', primary_contrast: '#ffffff', border: '#111111', bg: '#ffffff', surface_alt: '#f4f4f4', radius: 0, control_height: 44, ring: 0 },
 	},
 	{
 		id: 'soft',
-		label: __( 'Soft', 'essentials-for-contact-form-7' ),
+		label: __( 'Soft', 'defer-forms-for-contact-form-7' ),
 		values: { primary: '#0f766e', primary_contrast: '#ffffff', border: '#e2e8e6', bg: '#fbfdfc', surface_alt: '#f1f7f5', radius: 12, control_height: 48, ring: 3 },
 	},
 ];
@@ -98,12 +98,12 @@ const PresetCard = ( { preset, active, onApply } ) => (
 		type="button"
 		onClick={ onApply }
 		aria-pressed={ active }
-		className={ `cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-3 cf7e-rounded-xl cf7e-border cf7e-bg-white cf7e-p-2.5 cf7e-text-left cf7e-transition-colors ${
-			active ? 'cf7e-border-ink' : 'cf7e-border-stroke hover:cf7e-bg-stone-50'
+		className={ `df7-flex df7-cursor-pointer df7-items-center df7-gap-3 df7-rounded-xl df7-border df7-bg-white df7-p-2.5 df7-text-left df7-transition-colors ${
+			active ? 'df7-border-ink' : 'df7-border-stroke hover:df7-bg-stone-50'
 		}` }
 	>
 		<span
-			className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-border"
+			className="df7-flex df7-h-8 df7-w-8 df7-shrink-0 df7-items-center df7-justify-center df7-border"
 			style={ {
 				background:   preset.values.surface_alt,
 				borderColor:  preset.values.border,
@@ -111,12 +111,12 @@ const PresetCard = ( { preset, active, onApply } ) => (
 			} }
 		>
 			<span
-				className="cf7e-h-3.5 cf7e-w-3.5"
+				className="df7-h-3.5 df7-w-3.5"
 				style={ { background: preset.values.primary, borderRadius: `${ Math.min( preset.values.radius, 7 ) }px` } }
 			/>
 		</span>
-		<span className="cf7e-flex-1 cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ preset.label }</span>
-		{ active && <Check className="cf7e-h-4 cf7e-w-4 cf7e-shrink-0 cf7e-text-ink" /> }
+		<span className="df7-flex-1 df7-text-sm df7-font-semibold df7-text-ink">{ preset.label }</span>
+		{ active && <Check className="df7-h-4 df7-w-4 df7-shrink-0 df7-text-ink" /> }
 	</button>
 );
 
@@ -127,53 +127,53 @@ const PresetCard = ( { preset, active, onApply } ) => (
  *
  * A null means they have not arrived yet, and then it sets no tokens at all.
  * That is not a blank preview: the page already carries the saved ones as an
- * inline rule for .cf7e-preview, printed by the server that rendered it, so
+ * inline rule for .df7-preview, printed by the server that rendered it, so
  * with nothing overriding them the preview loads at the size it will keep.
  * Standing DEFAULTS in here instead drew a preview of somebody else's settings,
  * and left the card eight pixels short until the fetch corrected it.
  */
 const DesignPreview = ( { values } ) => {
 	const style = ! values ? undefined : {
-		'--cf7e-primary': values.primary,
-		'--cf7e-primary-contrast': values.primary_contrast,
-		'--cf7e-text': values.text,
-		'--cf7e-muted': values.muted,
-		'--cf7e-border': values.border,
-		'--cf7e-bg': values.bg,
-		'--cf7e-surface-alt': values.surface_alt,
-		'--cf7e-error': values.error,
-		'--cf7e-radius': `${ values.radius }px`,
-		'--cf7e-control-height': `${ values.control_height }px`,
-		'--cf7e-font-size': `${ values.font_size }px`,
-		'--cf7e-padding-x': `${ values.padding_x }px`,
-		'--cf7e-padding-y': `${ values.padding_y }px`,
-		'--cf7e-gap': `${ values.gap }px`,
-		'--cf7e-ring': `${ values.ring }px`,
-		'--cf7e-ring-color': `${ values.primary }24`,
+		'--df7-primary': values.primary,
+		'--df7-primary-contrast': values.primary_contrast,
+		'--df7-text': values.text,
+		'--df7-muted': values.muted,
+		'--df7-border': values.border,
+		'--df7-bg': values.bg,
+		'--df7-surface-alt': values.surface_alt,
+		'--df7-error': values.error,
+		'--df7-radius': `${ values.radius }px`,
+		'--df7-control-height': `${ values.control_height }px`,
+		'--df7-font-size': `${ values.font_size }px`,
+		'--df7-padding-x': `${ values.padding_x }px`,
+		'--df7-padding-y': `${ values.padding_y }px`,
+		'--df7-gap': `${ values.gap }px`,
+		'--df7-ring': `${ values.ring }px`,
+		'--df7-ring-color': `${ values.primary }24`,
 	};
 
 	if ( style && values.button_custom ) {
-		style[ '--cf7e-btn-bg' ] = values.button_bg;
-		style[ '--cf7e-btn-text' ] = values.button_text;
+		style[ '--df7-btn-bg' ] = values.button_bg;
+		style[ '--df7-btn-text' ] = values.button_text;
 	}
 
 	return (
-		<div className="cf7e-preview cf7e-rounded-xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5" style={ style }>
+		<div className="df7-preview df7-rounded-xl df7-border df7-border-line df7-bg-white df7-p-5" style={ style }>
 			<p>
 				<label>
-					{ __( 'Your email', 'essentials-for-contact-form-7' ) }
+					{ __( 'Your email', 'defer-forms-for-contact-form-7' ) }
 					<span className="wpcf7-form-control-wrap"><input type="email" placeholder="you@example.com" readOnly /></span>
 				</label>
 			</p>
-			<fieldset className="cf7e-fieldset">
-				<legend>{ __( 'Plan', 'essentials-for-contact-form-7' ) }</legend>
+			<fieldset className="df7-fieldset">
+				<legend>{ __( 'Plan', 'defer-forms-for-contact-form-7' ) }</legend>
 				<span className="wpcf7-form-control-wrap">
 					<span className="wpcf7-form-control wpcf7-radio">
 						<span className="wpcf7-list-item">
-							<label><input type="radio" name="cf7e-demo" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Standard', 'essentials-for-contact-form-7' ) }</span></label>
+							<label><input type="radio" name="df7-demo" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Standard', 'defer-forms-for-contact-form-7' ) }</span></label>
 						</span>
 						<span className="wpcf7-list-item">
-							<label><input type="radio" name="cf7e-demo" readOnly /><span className="wpcf7-list-item-label">{ __( 'Premium', 'essentials-for-contact-form-7' ) }</span></label>
+							<label><input type="radio" name="df7-demo" readOnly /><span className="wpcf7-list-item-label">{ __( 'Premium', 'defer-forms-for-contact-form-7' ) }</span></label>
 						</span>
 					</span>
 				</span>
@@ -181,12 +181,12 @@ const DesignPreview = ( { values } ) => {
 			<p>
 				<span className="wpcf7-form-control wpcf7-acceptance">
 					<span className="wpcf7-list-item">
-						<label><input type="checkbox" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Keep me posted', 'essentials-for-contact-form-7' ) }</span></label>
+						<label><input type="checkbox" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Keep me posted', 'defer-forms-for-contact-form-7' ) }</span></label>
 					</span>
 				</span>
 			</p>
-			<p className="cf7e-mb-0">
-				<button type="submit" onClick={ ( event ) => event.preventDefault() }>{ __( 'Send', 'essentials-for-contact-form-7' ) }</button>
+			<p className="df7-mb-0">
+				<button type="submit" onClick={ ( event ) => event.preventDefault() }>{ __( 'Send', 'defer-forms-for-contact-form-7' ) }</button>
 			</p>
 		</div>
 	);
@@ -211,8 +211,8 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 	return (
 		<>
 			<PageHeader
-				title={ __( 'Styling', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'How your forms look on the front end. Changes apply to every form this plugin styles, and to the builder preview.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'How your forms look on the front end. Changes apply to every form this plugin styles, and to the builder preview.', 'defer-forms-for-contact-form-7' ) }
 				actions={
 					<button
 						type="button"
@@ -220,8 +220,8 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 						onClick={ () => apply( DEFAULTS ) }
 						className={ btnGhost }
 					>
-						<RotateCcw className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Reset to defaults', 'essentials-for-contact-form-7' ) }
+						<RotateCcw className="df7-h-4 df7-w-4" />
+						{ __( 'Reset to defaults', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				}
 			/>
@@ -244,97 +244,97 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 			  * is there to keep true.
 			  */ }
 			<SectionStack>
-				<div className="cf7e-grid cf7e-items-start cf7e-gap-5 xl:cf7e-grid-cols-[minmax(0,1fr)_360px]">
+				<div className="df7-grid df7-items-start df7-gap-5 xl:df7-grid-cols-[minmax(0,1fr)_360px]">
 					<SectionStack>
 						<SectionCard
-							title={ __( 'Colours', 'essentials-for-contact-form-7' ) }
-							description={ __( 'Applied to every form this plugin styles on the front end, and to the builder preview.', 'essentials-for-contact-form-7' ) }
+							title={ __( 'Colours', 'defer-forms-for-contact-form-7' ) }
+							description={ __( 'Applied to every form this plugin styles on the front end, and to the builder preview.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Primary', 'essentials-for-contact-form-7' ) }
-								help={ __( 'Submit button, focus outline, ticked boxes and selected options.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Primary', 'defer-forms-for-contact-form-7' ) }
+								help={ __( 'Submit button, focus outline, ticked boxes and selected options.', 'defer-forms-for-contact-form-7' ) }
 								value={ local.primary }
 								onChange={ ( value ) => setField( 'primary', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Text', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Text', 'defer-forms-for-contact-form-7' ) }
 								value={ local.text }
 								onChange={ ( value ) => setField( 'text', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Border', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Border', 'defer-forms-for-contact-form-7' ) }
 								value={ local.border }
 								onChange={ ( value ) => setField( 'border', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Field background', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Field background', 'defer-forms-for-contact-form-7' ) }
 								value={ local.bg }
 								onChange={ ( value ) => setField( 'bg', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'On primary', 'essentials-for-contact-form-7' ) }
-								help={ __( 'Text and ticks that sit on top of the primary colour. Use a dark value if your primary is light.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'On primary', 'defer-forms-for-contact-form-7' ) }
+								help={ __( 'Text and ticks that sit on top of the primary colour. Use a dark value if your primary is light.', 'defer-forms-for-contact-form-7' ) }
 								value={ local.primary_contrast }
 								onChange={ ( value ) => setField( 'primary_contrast', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Muted', 'essentials-for-contact-form-7' ) }
-								help={ __( 'Placeholders, hints and the small icons.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Muted', 'defer-forms-for-contact-form-7' ) }
+								help={ __( 'Placeholders, hints and the small icons.', 'defer-forms-for-contact-form-7' ) }
 								value={ local.muted }
 								onChange={ ( value ) => setField( 'muted', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Soft background', 'essentials-for-contact-form-7' ) }
-								help={ __( 'Drop zone, chips and the selected card.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Soft background', 'defer-forms-for-contact-form-7' ) }
+								help={ __( 'Drop zone, chips and the selected card.', 'defer-forms-for-contact-form-7' ) }
 								value={ local.surface_alt }
 								onChange={ ( value ) => setField( 'surface_alt', value ) }
 							/>
 							<ColorField
 								loading={ loading }
-								label={ __( 'Error', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Error', 'defer-forms-for-contact-form-7' ) }
 								value={ local.error }
 								onChange={ ( value ) => setField( 'error', value ) }
 							/>
 						</SectionCard>
 
 						<SectionCard
-							title={ __( 'Button', 'essentials-for-contact-form-7' ) }
-							description={ __( 'By default the submit button follows your primary colour.', 'essentials-for-contact-form-7' ) }
+							title={ __( 'Button', 'defer-forms-for-contact-form-7' ) }
+							description={ __( 'By default the submit button follows your primary colour.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<ToggleField
 								loading={ loading }
-								label={ __( 'Give the button its own colours', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Give the button its own colours', 'defer-forms-for-contact-form-7' ) }
 								checked={ !! local.button_custom }
 								onChange={ ( value ) => setField( 'button_custom', value ) }
 							/>
 							{ !! local.button_custom && (
 								<>
-									<ColorField loading={ loading } label={ __( 'Button background', 'essentials-for-contact-form-7' ) } value={ local.button_bg } onChange={ ( value ) => setField( 'button_bg', value ) } />
-									<ColorField loading={ loading } label={ __( 'Button text', 'essentials-for-contact-form-7' ) } value={ local.button_text } onChange={ ( value ) => setField( 'button_text', value ) } />
+									<ColorField loading={ loading } label={ __( 'Button background', 'defer-forms-for-contact-form-7' ) } value={ local.button_bg } onChange={ ( value ) => setField( 'button_bg', value ) } />
+									<ColorField loading={ loading } label={ __( 'Button text', 'defer-forms-for-contact-form-7' ) } value={ local.button_text } onChange={ ( value ) => setField( 'button_text', value ) } />
 								</>
 							) }
 						</SectionCard>
 
 						<SectionCard
-							title={ __( 'Shape and spacing', 'essentials-for-contact-form-7' ) }
-							description={ __( 'Fonts stay inherited from your theme — only the shape of the controls is ours.', 'essentials-for-contact-form-7' ) }
+							title={ __( 'Shape and spacing', 'defer-forms-for-contact-form-7' ) }
+							description={ __( 'Fonts stay inherited from your theme — only the shape of the controls is ours.', 'defer-forms-for-contact-form-7' ) }
 						>
-							<SizeField loading={ loading } label={ __( 'Corner radius', 'essentials-for-contact-form-7' ) } value={ local.radius } onChange={ ( value ) => setField( 'radius', value ) } min={ 0 } max={ 40 } />
-							<SizeField loading={ loading } label={ __( 'Field height', 'essentials-for-contact-form-7' ) } value={ local.control_height } onChange={ ( value ) => setField( 'control_height', value ) } min={ 28 } max={ 80 } />
-							<SizeField loading={ loading } label={ __( 'Font size', 'essentials-for-contact-form-7' ) } value={ local.font_size } onChange={ ( value ) => setField( 'font_size', value ) } min={ 0 } max={ 100 } />
-							<SizeField loading={ loading } label={ __( 'Inner padding — sides', 'essentials-for-contact-form-7' ) } value={ local.padding_x } onChange={ ( value ) => setField( 'padding_x', value ) } min={ 4 } max={ 32 } />
-							<SizeField loading={ loading } label={ __( 'Inner padding — top and bottom', 'essentials-for-contact-form-7' ) } value={ local.padding_y } onChange={ ( value ) => setField( 'padding_y', value ) } min={ 4 } max={ 24 } />
-							<SizeField loading={ loading } label={ __( 'Space between fields', 'essentials-for-contact-form-7' ) } value={ local.gap } onChange={ ( value ) => setField( 'gap', value ) } min={ 0 } max={ 60 } />
+							<SizeField loading={ loading } label={ __( 'Corner radius', 'defer-forms-for-contact-form-7' ) } value={ local.radius } onChange={ ( value ) => setField( 'radius', value ) } min={ 0 } max={ 40 } />
+							<SizeField loading={ loading } label={ __( 'Field height', 'defer-forms-for-contact-form-7' ) } value={ local.control_height } onChange={ ( value ) => setField( 'control_height', value ) } min={ 28 } max={ 80 } />
+							<SizeField loading={ loading } label={ __( 'Font size', 'defer-forms-for-contact-form-7' ) } value={ local.font_size } onChange={ ( value ) => setField( 'font_size', value ) } min={ 0 } max={ 100 } />
+							<SizeField loading={ loading } label={ __( 'Inner padding — sides', 'defer-forms-for-contact-form-7' ) } value={ local.padding_x } onChange={ ( value ) => setField( 'padding_x', value ) } min={ 4 } max={ 32 } />
+							<SizeField loading={ loading } label={ __( 'Inner padding — top and bottom', 'defer-forms-for-contact-form-7' ) } value={ local.padding_y } onChange={ ( value ) => setField( 'padding_y', value ) } min={ 4 } max={ 24 } />
+							<SizeField loading={ loading } label={ __( 'Space between fields', 'defer-forms-for-contact-form-7' ) } value={ local.gap } onChange={ ( value ) => setField( 'gap', value ) } min={ 0 } max={ 60 } />
 							<SizeField
-								label={ __( 'Focus ring', 'essentials-for-contact-form-7' ) }
-								help={ __( 'Set to 0 to remove it — but a visible focus state helps keyboard users.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Focus ring', 'defer-forms-for-contact-form-7' ) }
+								help={ __( 'Set to 0 to remove it — but a visible focus state helps keyboard users.', 'defer-forms-for-contact-form-7' ) }
 								value={ local.ring }
 								onChange={ ( value ) => setField( 'ring', value ) }
 								min={ 0 }
@@ -343,12 +343,12 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 						</SectionCard>
 					</SectionStack>
 
-					<SectionStack className="xl:cf7e-sticky xl:cf7e-top-8">
+					<SectionStack className="xl:df7-sticky xl:df7-top-8">
 						<SectionCard
-							title={ __( 'Preview', 'essentials-for-contact-form-7' ) }
-							description={ __( 'Updates as you edit — save to apply it to your forms.', 'essentials-for-contact-form-7' ) }
+							title={ __( 'Preview', 'defer-forms-for-contact-form-7' ) }
+							description={ __( 'Updates as you edit — save to apply it to your forms.', 'defer-forms-for-contact-form-7' ) }
 						>
-							<div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-2">
+							<div className="df7-grid df7-grid-cols-2 df7-gap-2">
 								{ PRESETS.map( ( preset ) => (
 									<PresetCard
 										key={ preset.id }
@@ -374,7 +374,7 @@ const App = () => {
 	const [ error, setError ]   = useState( null );
 
 	useEffect( () => {
-		apiFetch( { path: 'cf7e/v1/settings' } )
+		apiFetch( { path: 'df7/v1/settings' } )
 			.then( ( res ) => {
 				setDesign( res.design || {} );
 				setError( null );
@@ -384,7 +384,7 @@ const App = () => {
 
 	const save = async ( values ) => {
 		const updated = await apiFetch( {
-			path:   'cf7e/v1/settings/design',
+			path:   'df7/v1/settings/design',
 			method: 'POST',
 			data:   values,
 		} );
@@ -394,7 +394,7 @@ const App = () => {
 	return (
 		<Page>
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -404,7 +404,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-styling-root' );
+const mount = document.getElementById( 'df7-styling-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall handler for Essentials for Contact Form 7.
+ * Uninstall handler for Defer Forms for Contact Form 7.
  *
  * Removes the plugin's options and submissions table, but only where the site
  * enabled "Delete all data on uninstall" (Settings → General).
@@ -10,7 +10,7 @@
  * happened to run the uninstall left the rest of the network holding entries —
  * and the IP addresses in them — with nothing left to read or delete them.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
@@ -29,29 +29,29 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  * The setting is read per site rather than once: opting in on the site running
  * the uninstall is not consent to wipe a sibling that never turned it on.
  */
-function cf7e_uninstall_site(): void {
+function df7_uninstall_site(): void {
 	global $wpdb;
 
-	$settings = get_option( 'cf7e_settings', array() );
+	$settings = get_option( 'df7_settings', array() );
 
 	if ( empty( $settings['general']['delete_on_uninstall'] ) ) {
 		return;
 	}
 
-	delete_option( 'cf7e_settings' );
-	delete_option( 'cf7e_modules' );
-	delete_option( 'cf7e_db_version' );
-	delete_option( 'cf7e_submission_seq' );
+	delete_option( 'df7_settings' );
+	delete_option( 'df7_modules' );
+	delete_option( 'df7_db_version' );
+	delete_option( 'df7_submission_seq' );
 	// The schema-upgrade lock. An option rather than a transient since it has to
 	// be claimed atomically, which means the transient sweep below no longer
 	// reaches it and it has to be named here.
-	delete_option( 'cf7e_db_upgrading' );
+	delete_option( 'df7_db_upgrading' );
 
 	// Per-form settings we attached to CF7's own posts.
-	delete_post_meta_by_key( '_cf7e_redirect' );
-	delete_post_meta_by_key( '_cf7e_steps' );
-	delete_post_meta_by_key( '_cf7e_revision' );
-	delete_post_meta_by_key( '_cf7e_form_class' );
+	delete_post_meta_by_key( '_df7_redirect' );
+	delete_post_meta_by_key( '_df7_steps' );
+	delete_post_meta_by_key( '_df7_revision' );
+	delete_post_meta_by_key( '_df7_form_class' );
 
 	// Short-lived markers: duplicate-submission keys and the schema-upgrade lock.
 	// They expire by themselves, but a site uninstalling right after a burst of
@@ -63,15 +63,15 @@ function cf7e_uninstall_site(): void {
 	$wpdb->query(
 		$wpdb->prepare(
 			"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
-			$wpdb->esc_like( '_transient_cf7e_' ) . '%',
-			$wpdb->esc_like( '_transient_timeout_cf7e_' ) . '%'
+			$wpdb->esc_like( '_transient_df7_' ) . '%',
+			$wpdb->esc_like( '_transient_timeout_df7_' ) . '%'
 		)
 	);
 
 	// Spelled out rather than read from Schema::TABLE: WordPress runs this file on
 	// its own, with the plugin never loaded and no autoloader. tests/php/uninstall.php
 	// checks the two names still match.
-	$table = $wpdb->prefix . 'cf7e_submissions';
+	$table = $wpdb->prefix . 'df7_submissions';
 	$wpdb->query( "DROP TABLE IF EXISTS {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- a table name built from $wpdb->prefix and a literal; prepare() cannot placeholder an identifier anyway.
 
 	// The files people attached. Dropping the table alone would leave every upload
@@ -79,7 +79,7 @@ function cf7e_uninstall_site(): void {
 	$uploads = wp_upload_dir();
 
 	if ( empty( $uploads['error'] ) && ! empty( $uploads['basedir'] ) ) {
-		$attachments = rtrim( (string) $uploads['basedir'], '/\\' ) . '/cf7e-attachments';
+		$attachments = rtrim( (string) $uploads['basedir'], '/\\' ) . '/df7-attachments';
 
 		// WP_Filesystem's recursive delete, rather than a hand-rolled glob and
 		// rmdir walk. It goes all the way down — the old loop only descended one
@@ -101,7 +101,7 @@ function cf7e_uninstall_site(): void {
 }
 
 if ( ! is_multisite() ) {
-	cf7e_uninstall_site();
+	df7_uninstall_site();
 	return;
 }
 
@@ -111,23 +111,23 @@ if ( ! is_multisite() ) {
 // Prefixed because this file has no function to hold them: at the bottom of
 // uninstall.php these are globals, and a bare $offset belongs to whoever else
 // is in the global scope.
-$cf7e_offset = 0;
+$df7_offset = 0;
 
 do {
-	$cf7e_sites = get_sites(
+	$df7_sites = get_sites(
 		array(
 			'fields' => 'ids',
 			'number' => 100,
-			'offset' => $cf7e_offset,
+			'offset' => $df7_offset,
 		)
 	);
 
-	foreach ( $cf7e_sites as $cf7e_site_id ) {
-		switch_to_blog( (int) $cf7e_site_id );
-		cf7e_uninstall_site();
+	foreach ( $df7_sites as $df7_site_id ) {
+		switch_to_blog( (int) $df7_site_id );
+		df7_uninstall_site();
 		restore_current_blog();
 	}
 
-	$cf7e_offset += 100;
-	$cf7e_batch   = count( $cf7e_sites );
-} while ( 100 === $cf7e_batch );
+	$df7_offset += 100;
+	$df7_batch   = count( $df7_sites );
+} while ( 100 === $df7_batch );

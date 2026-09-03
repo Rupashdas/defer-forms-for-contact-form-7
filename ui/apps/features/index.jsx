@@ -91,19 +91,19 @@ const LiteCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5 cf7e-transition-colors hover:cf7e-border-accent-200">
-			<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-				<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-accent-50 cf7e-text-accent">
-					<Icon className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-accent-200">
+			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
+					<Icon className="df7-h-5 df7-w-5" />
 				</div>
-				<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1 cf7e-rounded-full cf7e-bg-emerald-50 cf7e-px-2 cf7e-py-0.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-emerald-700">
-					<Check className="cf7e-h-3 cf7e-w-3" />
-					{ __( 'Included', 'essentials-for-contact-form-7' ) }
+				<span className="df7-inline-flex df7-items-center df7-gap-1 df7-rounded-full df7-bg-emerald-50 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-emerald-700">
+					<Check className="df7-h-3 df7-w-3" />
+					{ __( 'Included', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="cf7e-m-0 cf7e-text-base cf7e-font-semibold cf7e-text-ink">{ mod.name }</h3>
-			<p className="cf7e-mb-0 cf7e-mt-1.5 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">{ mod.description }</p>
+			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
+			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
 		</div>
 	);
 };
@@ -113,18 +113,18 @@ const PlannedCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-dashed cf7e-border-line cf7e-bg-white cf7e-p-5">
-			<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-				<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-stone-100 cf7e-text-stone-400">
-					<Icon className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-dashed df7-border-line df7-bg-white df7-p-5">
+			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-stone-100 df7-text-stone-400">
+					<Icon className="df7-h-5 df7-w-5" />
 				</div>
-				<span className="cf7e-rounded-full cf7e-bg-stone-100 cf7e-px-2.5 cf7e-py-1 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-stone-500">
-					{ __( 'Coming soon', 'essentials-for-contact-form-7' ) }
+				<span className="df7-rounded-full df7-bg-stone-100 df7-px-2.5 df7-py-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
+					{ __( 'Coming soon', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="cf7e-m-0 cf7e-text-base cf7e-font-semibold cf7e-text-ink">{ mod.name }</h3>
-			<p className="cf7e-mb-0 cf7e-mt-1.5 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">{ mod.description }</p>
+			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
+			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
 		</div>
 	);
 };
@@ -133,23 +133,23 @@ const ProCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5 cf7e-transition-colors hover:cf7e-border-amber-200">
-			<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-				<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-amber-50 cf7e-text-amber-600">
-					<Icon className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-amber-200">
+			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-amber-50 df7-text-amber-600">
+					<Icon className="df7-h-5 df7-w-5" />
 				</div>
-				<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1 cf7e-rounded-full cf7e-bg-amber-100 cf7e-px-2 cf7e-py-0.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-amber-700">
-					<Sparkles className="cf7e-h-3 cf7e-w-3" />
-					{ __( 'Pro', 'essentials-for-contact-form-7' ) }
+				<span className="df7-inline-flex df7-items-center df7-gap-1 df7-rounded-full df7-bg-amber-100 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-amber-700">
+					<Sparkles className="df7-h-3 df7-w-3" />
+					{ __( 'Pro', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="cf7e-m-0 cf7e-text-base cf7e-font-semibold cf7e-text-ink">{ mod.name }</h3>
-			<p className="cf7e-mb-0 cf7e-mt-1.5 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">{ mod.description }</p>
+			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
+			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
 
-			<div className="cf7e-mt-4 cf7e-flex cf7e-items-center cf7e-gap-1.5 cf7e-text-[14px] cf7e-font-semibold cf7e-text-amber-600">
-				<Lock className="cf7e-h-3.5 cf7e-w-3.5" />
-				{ __( 'Coming in Pro', 'essentials-for-contact-form-7' ) }
+			<div className="df7-mt-4 df7-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-semibold df7-text-amber-600">
+				<Lock className="df7-h-3.5 df7-w-3.5" />
+				{ __( 'Coming in Pro', 'defer-forms-for-contact-form-7' ) }
 			</div>
 		</div>
 	);
@@ -164,9 +164,9 @@ const ProCard = ( { mod } ) => {
  * on load instead of filling in.
  */
 const SectionHead = ( { title, note } ) => (
-	<div className="cf7e-mb-4 cf7e-flex cf7e-items-baseline cf7e-gap-2.5">
-		<h2 className="cf7e-m-0 cf7e-text-xl cf7e-font-bold cf7e-text-ink">{ title }</h2>
-		<span className="cf7e-text-sm cf7e-text-stone-400">{ note }</span>
+	<div className="df7-mb-4 df7-flex df7-items-baseline df7-gap-2.5">
+		<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">{ title }</h2>
+		<span className="df7-text-sm df7-text-stone-400">{ note }</span>
 	</div>
 );
 
@@ -175,7 +175,7 @@ const SectionHead = ( { title, note } ) => (
  * this. The catalogue is a fixed list in PHP and nothing about it depends on
  * the site, so the loading state can be the right size rather than a guess.
  */
-const HANDED_OVER = Array.isArray( window.cf7eFeatures?.items ) ? window.cf7eFeatures.items : null;
+const HANDED_OVER = Array.isArray( window.df7Features?.items ) ? window.df7Features.items : null;
 
 /**
  * The Pro section's header, which is a banner rather than a heading line.
@@ -185,20 +185,20 @@ const HANDED_OVER = Array.isArray( window.cf7eFeatures?.items ) ? window.cf7eFea
  * something to reproduce by eye in two places.
  */
 const ProHead = () => (
-	<div className="cf7e-mb-4 cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-justify-between cf7e-gap-3 cf7e-rounded-2xl cf7e-border cf7e-border-amber-200 cf7e-bg-amber-50/60 cf7e-px-5 cf7e-py-4">
-		<div className="cf7e-flex cf7e-flex-col">
-			<h2 className="cf7e-m-0 cf7e-text-xl cf7e-font-bold cf7e-text-ink">
-				{ __( 'In Pro', 'essentials-for-contact-form-7' ) }
+	<div className="df7-mb-4 df7-flex df7-flex-wrap df7-items-center df7-justify-between df7-gap-3 df7-rounded-2xl df7-border df7-border-amber-200 df7-bg-amber-50/60 df7-px-5 df7-py-4">
+		<div className="df7-flex df7-flex-col">
+			<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">
+				{ __( 'In Pro', 'defer-forms-for-contact-form-7' ) }
 			</h2>
-			<p className="cf7e-mb-0 cf7e-mt-0.5 cf7e-text-[14px] cf7e-text-stone-500">
-				{ __( 'Everything above, plus these.', 'essentials-for-contact-form-7' ) }
+			<p className="df7-mb-0 df7-mt-0.5 df7-text-[14px] df7-text-stone-500">
+				{ __( 'Everything above, plus these.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 		</div>
 	</div>
 );
 
 const SectionGrid = ( { children } ) => (
-	<div className="cf7e-grid cf7e-grid-cols-1 cf7e-gap-4 md:cf7e-grid-cols-2 xl:cf7e-grid-cols-3">{ children }</div>
+	<div className="df7-grid df7-grid-cols-1 df7-gap-4 md:df7-grid-cols-2 xl:df7-grid-cols-3">{ children }</div>
 );
 
 /**
@@ -210,17 +210,17 @@ const SectionGrid = ( { children } ) => (
  * replaced, and six cards a row made the whole grid step down as it loaded.
  */
 const SkeletonCard = () => (
-	<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5">
-		<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-			<div className="cf7e-h-11 cf7e-w-11 cf7e-animate-pulse cf7e-rounded-xl cf7e-bg-stone-100" />
-			<div className="cf7e-h-6 cf7e-w-11 cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100" />
+	<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5">
+		<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+			<div className="df7-h-11 df7-w-11 df7-animate-pulse df7-rounded-xl df7-bg-stone-100" />
+			<div className="df7-h-6 df7-w-11 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
 		</div>
 
-		<Shimmer as="h3" w="cf7e-w-1/2" text="cf7e-text-base" />
+		<Shimmer as="h3" w="df7-w-1/2" text="df7-text-base" />
 
-		<p className="cf7e-mb-0 cf7e-mt-1.5 cf7e-text-[14px] cf7e-leading-relaxed">
-			<Shimmer w="cf7e-w-full" />
-			<Shimmer w="cf7e-w-3/4" />
+		<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed">
+			<Shimmer w="df7-w-full" />
+			<Shimmer w="df7-w-3/4" />
 		</p>
 	</div>
 );
@@ -240,7 +240,7 @@ const App = () => {
 		}
 
 		let live = true;
-		apiFetch( { path: 'cf7e/v1/modules' } )
+		apiFetch( { path: 'df7/v1/modules' } )
 			.then( ( res ) => live && setFeatures( res ) )
 			.catch( ( err ) => live && setError( err.message ) )
 			.finally( () => live && setLoading( false ) );
@@ -271,8 +271,8 @@ const App = () => {
 			return (
 				<section>
 					<SectionHead
-						title={ __( 'What you have', 'essentials-for-contact-form-7' ) }
-						note={ <Shimmer w="cf7e-w-32" text="cf7e-text-sm" /> }
+						title={ __( 'What you have', 'defer-forms-for-contact-form-7' ) }
+						note={ <Shimmer w="df7-w-32" text="df7-text-sm" /> }
 					/>
 					<SectionGrid>
 						{ Array.from( { length: 6 } ).map( ( _, i ) => <SkeletonCard key={ i } /> ) }
@@ -283,15 +283,15 @@ const App = () => {
 
 		if ( 0 === lite.length && 0 === planned.length && 0 === pro.length ) {
 			return (
-				<div className="cf7e-flex cf7e-flex-col cf7e-items-center cf7e-justify-center cf7e-py-24 cf7e-text-center">
-					<div className="cf7e-mb-4 cf7e-flex cf7e-h-16 cf7e-w-16 cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-bg-stone-50 cf7e-text-stone-400">
-						<Boxes className="cf7e-h-8 cf7e-w-8" />
+				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-py-24 df7-text-center">
+					<div className="df7-mb-4 df7-flex df7-h-16 df7-w-16 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-stone-50 df7-text-stone-400">
+						<Boxes className="df7-h-8 df7-w-8" />
 					</div>
-					<h3 className="cf7e-m-0 cf7e-text-lg cf7e-font-bold cf7e-text-ink">
-						{ __( 'The feature list could not be loaded', 'essentials-for-contact-form-7' ) }
+					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">
+						{ __( 'The feature list could not be loaded', 'defer-forms-for-contact-form-7' ) }
 					</h3>
-					<p className="cf7e-mt-1 cf7e-text-sm cf7e-text-stone-500">
-						{ __( 'Reload the page to try again.', 'essentials-for-contact-form-7' ) }
+					<p className="df7-mt-1 df7-text-sm df7-text-stone-500">
+						{ __( 'Reload the page to try again.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 				</div>
 			);
@@ -300,12 +300,12 @@ const App = () => {
 		return (
 			<>
 				{ lite.length > 0 && (
-					<section className="cf7e-mb-10">
+					<section className="df7-mb-10">
 						<SectionHead
-							title={ __( 'What you have', 'essentials-for-contact-form-7' ) }
+							title={ __( 'What you have', 'defer-forms-for-contact-form-7' ) }
 							note={ sprintf(
 									/* translators: %d: number of features included. */
-									__( '%d features, all active', 'essentials-for-contact-form-7' ),
+									__( '%d features, all active', 'defer-forms-for-contact-form-7' ),
 									included
 								) }
 						/>
@@ -316,10 +316,10 @@ const App = () => {
 				) }
 
 				{ planned.length > 0 && (
-					<section className="cf7e-mb-10">
+					<section className="df7-mb-10">
 						<SectionHead
-							title={ __( 'On the way', 'essentials-for-contact-form-7' ) }
-							note={ __( 'Planned for a future release.', 'essentials-for-contact-form-7' ) }
+							title={ __( 'On the way', 'defer-forms-for-contact-form-7' ) }
+							note={ __( 'Planned for a future release.', 'defer-forms-for-contact-form-7' ) }
 						/>
 						<SectionGrid>
 							{ planned.map( ( feature ) => <PlannedCard key={ feature.slug } mod={ feature } /> ) }
@@ -342,12 +342,12 @@ const App = () => {
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Features', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'Everything this plugin does. All of it is on — there is nothing to switch.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Features', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'Everything this plugin does. All of it is on — there is nothing to switch.', 'defer-forms-for-contact-form-7' ) }
 			/>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -357,7 +357,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-features-root' );
+const mount = document.getElementById( 'df7-features-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

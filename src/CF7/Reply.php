@@ -5,12 +5,12 @@
  * The plugin stored the message and the address and then sent you to an email
  * client to copy them out. This closes that.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class Reply {
 	 * the order the fields were filled in.
 	 *
 	 * Underscored keys are skipped: they are the plugin's own bookkeeping, and
-	 * _cf7e_files holds filenames rather than answers.
+	 * _df7_files holds filenames rather than answers.
 	 *
 	 * @param array<string, mixed> $data The submitted fields.
 	 */
@@ -66,14 +66,14 @@ final class Reply {
 		$to = self::address_in( $data );
 
 		if ( '' === $to ) {
-			return __( 'This entry has no email address to reply to.', 'essentials-for-contact-form-7' );
+			return __( 'This entry has no email address to reply to.', 'defer-forms-for-contact-form-7' );
 		}
 
 		$subject = trim( wp_strip_all_tags( $subject ) );
 		$message = trim( wp_strip_all_tags( $message ) );
 
 		if ( '' === $subject || '' === $message ) {
-			return __( 'A reply needs a subject and a message.', 'essentials-for-contact-form-7' );
+			return __( 'A reply needs a subject and a message.', 'defer-forms-for-contact-form-7' );
 		}
 
 		/*
@@ -96,6 +96,6 @@ final class Reply {
 
 		$sent = wp_mail( $to, $subject, $message, $headers );
 
-		return $sent ? '' : __( 'WordPress could not send the mail. Check the site&#8217;s email setup.', 'essentials-for-contact-form-7' );
+		return $sent ? '' : __( 'WordPress could not send the mail. Check the site&#8217;s email setup.', 'defer-forms-for-contact-form-7' );
 	}
 }

@@ -27,10 +27,10 @@ import {
 import '@shared/styles/admin.css';
 
 const TABS = [
-	{ id: 'telegram', label: __( 'Telegram', 'essentials-for-contact-form-7' ) },
-	{ id: 'slack', label: __( 'Slack', 'essentials-for-contact-form-7' ) },
-	{ id: 'discord', label: __( 'Discord', 'essentials-for-contact-form-7' ) },
-	{ id: 'webhook', label: __( 'Webhook', 'essentials-for-contact-form-7' ) },
+	{ id: 'telegram', label: __( 'Telegram', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'slack', label: __( 'Slack', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'discord', label: __( 'Discord', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'webhook', label: __( 'Webhook', 'defer-forms-for-contact-form-7' ) },
 ];
 
 const getInitialTab = () => {
@@ -58,7 +58,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 	const sendTest = () => {
 		setTest( { state: 'sending' } );
 
-		apiFetch( { path: `cf7e/v1/settings/${ section }/test`, method: 'POST' } )
+		apiFetch( { path: `df7/v1/settings/${ section }/test`, method: 'POST' } )
 			.then( () => setTest( { state: 'sent' } ) )
 			.catch( ( err ) => setTest( { state: 'failed', message: err.message } ) );
 	};
@@ -81,7 +81,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 				<ToggleField
 					loading={ loading }
 					label={ toggleLabel }
-					help={ __( 'Spam is never sent.', 'essentials-for-contact-form-7' ) }
+					help={ __( 'Spam is never sent.', 'defer-forms-for-contact-form-7' ) }
 					checked={ !! local.enabled }
 					onChange={ ( value ) => setField( 'enabled', value ) }
 				/>
@@ -101,7 +101,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 							loading={ loading }
 							label={ field.label }
 							help={ masked
-								? __( 'Saved, and shown only in part. Paste a new one to replace it, or empty the box to remove it.', 'essentials-for-contact-form-7' )
+								? __( 'Saved, and shown only in part. Paste a new one to replace it, or empty the box to remove it.', 'defer-forms-for-contact-form-7' )
 								: field.help }
 							placeholder={ field.placeholder }
 							value={ local[ field.key ] || '' }
@@ -113,32 +113,32 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 
 			{ configuring && (
 			<SectionCard
-				title={ __( 'Check it works', 'essentials-for-contact-form-7' ) }
-				description={ __( 'Sends one message, using the settings as they are saved.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Check it works', 'defer-forms-for-contact-form-7' ) }
+				description={ __( 'Sends one message, using the settings as they are saved.', 'defer-forms-for-contact-form-7' ) }
 			>
 				{ /* Saved, not typed: the button asks the server, and the server
 				     reads what is stored. Testing what is on screen would pass on
 				     settings that were never kept. */ }
-				<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-3">
+				<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-3">
 					<Button
 						variant="ghost"
 						onClick={ sendTest }
 						disabled={ loading || dirty || 'sending' === test?.state }
 					>
 						{ 'sending' === test?.state
-							? __( 'Sending…', 'essentials-for-contact-form-7' )
-							: __( 'Send a test message', 'essentials-for-contact-form-7' ) }
+							? __( 'Sending…', 'defer-forms-for-contact-form-7' )
+							: __( 'Send a test message', 'defer-forms-for-contact-form-7' ) }
 					</Button>
 
 					{ dirty && (
-						<span className="cf7e-text-sm cf7e-text-stone-500">
-							{ __( 'Save first — the test uses the saved settings.', 'essentials-for-contact-form-7' ) }
+						<span className="df7-text-sm df7-text-stone-500">
+							{ __( 'Save first — the test uses the saved settings.', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
 
 					{ 'sent' === test?.state && (
-						<span className="cf7e-text-sm cf7e-font-medium cf7e-text-emerald-700">
-							{ __( 'Sent. Go and look.', 'essentials-for-contact-form-7' ) }
+						<span className="df7-text-sm df7-font-medium df7-text-emerald-700">
+							{ __( 'Sent. Go and look.', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
 				</div>
@@ -147,7 +147,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 				     "no_service" and "Unknown Webhook" each name which part is
 				     wrong, which is more than any message written here could. */ }
 				{ 'failed' === test?.state && (
-					<div className="cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 						{ test.message }
 					</div>
 				) }
@@ -170,63 +170,63 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
  */
 const NOTIFIERS = {
 	telegram: {
-		title:       __( 'Telegram', 'essentials-for-contact-form-7' ),
-		description: __( 'Send every submission to a Telegram chat as it arrives.', 'essentials-for-contact-form-7' ),
-		toggleLabel: __( 'Send submissions to Telegram', 'essentials-for-contact-form-7' ),
+		title:       __( 'Telegram', 'defer-forms-for-contact-form-7' ),
+		description: __( 'Send every submission to a Telegram chat as it arrives.', 'defer-forms-for-contact-form-7' ),
+		toggleLabel: __( 'Send submissions to Telegram', 'defer-forms-for-contact-form-7' ),
 		fields:      [
 			{
 				key:         'bot_token',
 				secret:      true,
-				label:       __( 'Bot token', 'essentials-for-contact-form-7' ),
-				help:        __( 'Message @BotFather on Telegram, send /newbot, and paste the token it gives you.', 'essentials-for-contact-form-7' ),
+				label:       __( 'Bot token', 'defer-forms-for-contact-form-7' ),
+				help:        __( 'Message @BotFather on Telegram, send /newbot, and paste the token it gives you.', 'defer-forms-for-contact-form-7' ),
 				placeholder: '123456789:AAE...',
 			},
 			{
 				key:         'chat_id',
-				label:       __( 'Chat ID', 'essentials-for-contact-form-7' ),
-				help:        __( 'Send your bot a message first — it cannot write to you until you do. Then open api.telegram.org/bot<token>/getUpdates and read the chat id from it.', 'essentials-for-contact-form-7' ),
+				label:       __( 'Chat ID', 'defer-forms-for-contact-form-7' ),
+				help:        __( 'Send your bot a message first — it cannot write to you until you do. Then open api.telegram.org/bot<token>/getUpdates and read the chat id from it.', 'defer-forms-for-contact-form-7' ),
 				placeholder: '-1001234567890',
 			},
 		],
 	},
 	slack: {
-		title:       __( 'Slack', 'essentials-for-contact-form-7' ),
-		description: __( 'Post every submission into a Slack channel as it arrives.', 'essentials-for-contact-form-7' ),
-		toggleLabel: __( 'Send submissions to Slack', 'essentials-for-contact-form-7' ),
+		title:       __( 'Slack', 'defer-forms-for-contact-form-7' ),
+		description: __( 'Post every submission into a Slack channel as it arrives.', 'defer-forms-for-contact-form-7' ),
+		toggleLabel: __( 'Send submissions to Slack', 'defer-forms-for-contact-form-7' ),
 		fields:      [
 			{
 				key:         'webhook_url',
 				secret:      true,
-				label:       __( 'Webhook URL', 'essentials-for-contact-form-7' ),
-				help:        __( 'At api.slack.com/apps, make an app for your workspace, turn on Incoming Webhooks, and add one for the channel you want.', 'essentials-for-contact-form-7' ),
+				label:       __( 'Webhook URL', 'defer-forms-for-contact-form-7' ),
+				help:        __( 'At api.slack.com/apps, make an app for your workspace, turn on Incoming Webhooks, and add one for the channel you want.', 'defer-forms-for-contact-form-7' ),
 				placeholder: 'https://hooks.slack.com/services/...',
 			},
 		],
 	},
 	discord: {
-		title:       __( 'Discord', 'essentials-for-contact-form-7' ),
-		description: __( 'Post every submission into a Discord channel as it arrives.', 'essentials-for-contact-form-7' ),
-		toggleLabel: __( 'Send submissions to Discord', 'essentials-for-contact-form-7' ),
+		title:       __( 'Discord', 'defer-forms-for-contact-form-7' ),
+		description: __( 'Post every submission into a Discord channel as it arrives.', 'defer-forms-for-contact-form-7' ),
+		toggleLabel: __( 'Send submissions to Discord', 'defer-forms-for-contact-form-7' ),
 		fields:      [
 			{
 				key:         'webhook_url',
 				secret:      true,
-				label:       __( 'Webhook URL', 'essentials-for-contact-form-7' ),
-				help:        __( 'In the channel: Edit Channel → Integrations → Webhooks → New Webhook, then Copy Webhook URL.', 'essentials-for-contact-form-7' ),
+				label:       __( 'Webhook URL', 'defer-forms-for-contact-form-7' ),
+				help:        __( 'In the channel: Edit Channel → Integrations → Webhooks → New Webhook, then Copy Webhook URL.', 'defer-forms-for-contact-form-7' ),
 				placeholder: 'https://discord.com/api/webhooks/...',
 			},
 		],
 	},
 	webhook: {
-		title:       __( 'Webhook', 'essentials-for-contact-form-7' ),
-		description: __( 'Post every submission to an address of your own, as JSON.', 'essentials-for-contact-form-7' ),
-		toggleLabel: __( 'Send submissions to a webhook', 'essentials-for-contact-form-7' ),
+		title:       __( 'Webhook', 'defer-forms-for-contact-form-7' ),
+		description: __( 'Post every submission to an address of your own, as JSON.', 'defer-forms-for-contact-form-7' ),
+		toggleLabel: __( 'Send submissions to a webhook', 'defer-forms-for-contact-form-7' ),
 		fields:      [
 			{
 				key:         'webhook_url',
 				secret:      true,
-				label:       __( 'Endpoint URL', 'essentials-for-contact-form-7' ),
-				help:        __( 'Anything that accepts a JSON POST. Zapier, Make and n8n each hand you one to paste here, and connect onward from there to whatever you actually use.', 'essentials-for-contact-form-7' ),
+				label:       __( 'Endpoint URL', 'defer-forms-for-contact-form-7' ),
+				help:        __( 'Anything that accepts a JSON POST. Zapier, Make and n8n each hand you one to paste here, and connect onward from there to whatever you actually use.', 'defer-forms-for-contact-form-7' ),
 				placeholder: 'https://hooks.zapier.com/hooks/catch/...',
 			},
 		],
@@ -247,7 +247,7 @@ const App = () => {
 	// The whole settings object, because a section is not separately fetchable
 	// and four destinations are four sections of it.
 	useEffect( () => {
-		apiFetch( { path: 'cf7e/v1/settings' } )
+		apiFetch( { path: 'df7/v1/settings' } )
 			.then( ( res ) => {
 				setSettings( res );
 				setError( null );
@@ -262,7 +262,7 @@ const App = () => {
 
 	const saveSection = async ( section, values ) => {
 		const updated = await apiFetch( {
-			path:   `cf7e/v1/settings/${ section }`,
+			path:   `df7/v1/settings/${ section }`,
 			method: 'POST',
 			data:   values,
 		} );
@@ -273,24 +273,24 @@ const App = () => {
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Notifications', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'Send every submission onward the moment it arrives.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Notifications', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'Send every submission onward the moment it arrives.', 'defer-forms-for-contact-form-7' ) }
 			/>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
 
 			<Tabs
-				className="cf7e-mb-6"
+				className="df7-mb-6"
 				active={ active }
 				onChange={ selectTab }
 				tabs={ TABS.map( ( tab ) => ( { id: tab.id, label: tab.label } ) ) }
 			/>
 
-			<div className="cf7e-min-w-0">
+			<div className="df7-min-w-0">
 				{ /*
 				  * Keyed by section, and it has to be.
 				  *
@@ -315,7 +315,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-notifications-root' );
+const mount = document.getElementById( 'df7-notifications-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

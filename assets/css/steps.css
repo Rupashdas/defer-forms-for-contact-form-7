@@ -1,35 +1,35 @@
 /**
- * CF7 Essentials — multi-step forms.
+ * Defer Forms — multi-step forms.
  *
  * Only the active step is shown; the indicator and the Next/Back controls are
- * injected by assets/js/steps.js. Everything here draws from the `--cf7e-*`
+ * injected by assets/js/steps.js. Everything here draws from the `--df7-*`
  * tokens in controls.css, so a form re-skinned in the Design settings brings its
  * steps with it instead of keeping a second, hardcoded palette.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step {
+:is( .wpcf7-form, .df7-preview ) .df7-step {
 	display: none;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step.cf7e-step-active {
+:is( .wpcf7-form, .df7-preview ) .df7-step.df7-step-active {
 	display: block;
 }
 
 /* ---- step heading ---- */
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-heading {
+:is( .wpcf7-form, .df7-preview ) .df7-step-heading {
 	margin-bottom: 1.25em;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-title {
+:is( .wpcf7-form, .df7-preview ) .df7-step-title {
 	margin: 0;
 	font-size: max( 18px, 1.25em );
 	font-weight: 700;
 	line-height: 1.3;
-	color: var( --cf7e-text, #1b1b22 );
+	color: var( --df7-text, #1b1b22 );
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-desc {
+:is( .wpcf7-form, .df7-preview ) .df7-step-desc {
 	margin: 0.35em 0 0;
 	font-size: max( 14px, 0.95em );
 	line-height: 1.5;
-	color: var( --cf7e-muted, #6f665d );
+	color: var( --df7-muted, #6f665d );
 }
 
 /**
@@ -46,20 +46,20 @@
  * the later rule won, the marker list showed on every variant, and "None"
  * rendered exactly what "Titles" did.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-indicator {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-indicator {
 	margin-bottom: 1.75em;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-progress {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-progress {
 	display: none;
 	height: 4px;
-	background: var( --cf7e-border, #d9d3c9 );
+	background: var( --df7-border, #d9d3c9 );
 	border-radius: 999px;
 	overflow: hidden;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-progress-fill {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-progress-fill {
 	height: 100%;
-	background: var( --cf7e-primary, #1b1b22 );
+	background: var( --df7-primary, #1b1b22 );
 	border-radius: 999px;
 	transition: width 0.35s cubic-bezier( 0.4, 0, 0.2, 1 );
 }
@@ -72,11 +72,11 @@
  * When they were set separately the line sat off the circle's centre by
  * whatever the form's base size happened to be.
  *
- * --cf7e-mark is the marker diameter, and the only thing a variant changes to
+ * --df7-mark is the marker diameter, and the only thing a variant changes to
  * turn numbers into dots.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-marks {
-	--cf7e-mark: 2em;
+:is( .wpcf7-form, .df7-preview ) .df7-steps-marks {
+	--df7-mark: 2em;
 
 	display: none;
 	list-style: none;
@@ -103,7 +103,7 @@
  * which left the row inset at both ends and needed a hand-picked gap to keep the
  * line off the circles.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark {
 	position: relative;
 	flex: 1 1 0;
 	min-width: 0;
@@ -111,22 +111,22 @@
 	align-items: flex-start;
 	margin: 0;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark:last-child {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark:last-child {
 	flex: 0 0 auto;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark::before {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark::before {
 	content: "";
 	position: absolute;
-	top: calc( var( --cf7e-mark ) / 2 );
-	left: var( --cf7e-mark );
+	top: calc( var( --df7-mark ) / 2 );
+	left: var( --df7-mark );
 	right: 0;
 	height: 2px;
 	margin-top: -1px;
-	background: var( --cf7e-border, #d9d3c9 );
+	background: var( --df7-border, #d9d3c9 );
 	transition: background 0.25s ease;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark:last-child::before {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark:last-child::before {
 	display: none;
 }
 /*
@@ -134,39 +134,39 @@
  * so it fills once that step is behind you. The segment leaving the step you are
  * on stays empty — you have not walked it yet.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-done::before {
-	background: var( --cf7e-primary, #1b1b22 );
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-done::before {
+	background: var( --df7-primary, #1b1b22 );
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-num {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-num {
 	position: relative;
 	display: flex;
 	flex: 0 0 auto;
 	align-items: center;
 	justify-content: center;
-	width: var( --cf7e-mark );
-	height: var( --cf7e-mark );
+	width: var( --df7-mark );
+	height: var( --df7-mark );
 	box-sizing: border-box;
 	border-radius: 999px;
-	background: var( --cf7e-surface-alt, #faf9f7 );
-	box-shadow: inset 0 0 0 2px var( --cf7e-border, #d9d3c9 );
+	background: var( --df7-surface-alt, #faf9f7 );
+	box-shadow: inset 0 0 0 2px var( --df7-border, #d9d3c9 );
 	font-weight: 700;
 	font-variant-numeric: tabular-nums;
 	line-height: 1;
-	color: var( --cf7e-muted, #6f665d );
+	color: var( --df7-muted, #6f665d );
 	transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-done .cf7e-steps-mark-num,
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-current .cf7e-steps-mark-num {
-	background: var( --cf7e-primary, #1b1b22 );
-	box-shadow: inset 0 0 0 2px var( --cf7e-primary, #1b1b22 );
-	color: var( --cf7e-primary-contrast, #fff );
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-done .df7-steps-mark-num,
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-current .df7-steps-mark-num {
+	background: var( --df7-primary, #1b1b22 );
+	box-shadow: inset 0 0 0 2px var( --df7-primary, #1b1b22 );
+	color: var( --df7-primary-contrast, #fff );
 }
 /* The step you are on is the one to find at a glance. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-current .cf7e-steps-mark-num {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-current .df7-steps-mark-num {
 	box-shadow:
-		inset 0 0 0 2px var( --cf7e-primary, #1b1b22 ),
-		0 0 0 4px var( --cf7e-ring-color, rgba( 27, 27, 34, 0.12 ) );
+		inset 0 0 0 2px var( --df7-primary, #1b1b22 ),
+		0 0 0 4px var( --df7-ring-color, rgba( 27, 27, 34, 0.12 ) );
 }
 
 /*
@@ -175,32 +175,32 @@
  * and the even spacing every other step depends on would collapse. Out of flow
  * the marker is the only thing that sets a step's width.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-label {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-label {
 	position: absolute;
-	top: calc( var( --cf7e-mark ) + 0.55em );
+	top: calc( var( --df7-mark ) + 0.55em );
 	left: 0;
 	width: max-content;
 	max-width: 10em;
 	/* The row is already max( 14px, 0.875em ); 0.9em of that floor is 12.6px. */
 	font-size: max( 14px, 0.9em );
 	line-height: 1.35;
-	color: var( --cf7e-muted, #6f665d );
+	color: var( --df7-muted, #6f665d );
 	overflow-wrap: break-word;
 	hyphens: auto;
 }
 /* The last title would run off the right edge if it started there. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark:last-child .cf7e-steps-mark-label {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark:last-child .df7-steps-mark-label {
 	left: auto;
 	right: 0;
 	text-align: right;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-current .cf7e-steps-mark-label {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-current .df7-steps-mark-label {
 	font-weight: 600;
-	color: var( --cf7e-text, #1b1b22 );
+	color: var( --df7-text, #1b1b22 );
 }
 
 /* Kept for a screen reader when the eye does not need it. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-label-hidden {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-label-hidden {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -215,18 +215,18 @@
  * "not one of the others" so a form whose class never arrived still shows
  * something rather than nothing.
  */
-:is( .wpcf7-form, .cf7e-preview ):not( [class*="cf7e-steps-" ] ) .cf7e-steps-progress,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-bar .cf7e-steps-progress {
+:is( .wpcf7-form, .df7-preview ):not( [class*="df7-steps-" ] ) .df7-steps-progress,
+:is( .wpcf7-form, .df7-preview ).df7-steps-bar .df7-steps-progress {
 	display: block;
 }
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-marks,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-numbers .cf7e-steps-marks,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-steps-marks {
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-marks,
+:is( .wpcf7-form, .df7-preview ).df7-steps-numbers .df7-steps-marks,
+:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-steps-marks {
 	display: flex;
 }
 /* The titles hang below the markers, out of flow, so the row is told to leave
    room for them. Two lines at the label's line-height, plus its own offset. */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-steps-marks {
+:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-steps-marks {
 	padding-bottom: 3.2em;
 }
 
@@ -237,27 +237,27 @@
  * zeroing the font size collapsed it to 0×0 and the dots variant drew nothing
  * at all. The digit still reaches a screen reader either way.
  */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-marks {
-	--cf7e-mark: 0.85em;
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-marks {
+	--df7-mark: 0.85em;
 }
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-mark-num {
-	box-shadow: inset 0 0 0 1px var( --cf7e-border, #d9d3c9 );
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-mark-num {
+	box-shadow: inset 0 0 0 1px var( --df7-border, #d9d3c9 );
 	color: transparent;
 	overflow: hidden;
 }
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-mark-done .cf7e-steps-mark-num,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-mark-current .cf7e-steps-mark-num {
-	box-shadow: inset 0 0 0 1px var( --cf7e-primary, #1b1b22 );
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-mark-done .df7-steps-mark-num,
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-mark-current .df7-steps-mark-num {
+	box-shadow: inset 0 0 0 1px var( --df7-primary, #1b1b22 );
 }
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-mark-current .cf7e-steps-mark-num {
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-mark-current .df7-steps-mark-num {
 	box-shadow:
-		inset 0 0 0 1px var( --cf7e-primary, #1b1b22 ),
-		0 0 0 3px var( --cf7e-ring-color, rgba( 27, 27, 34, 0.12 ) );
+		inset 0 0 0 1px var( --df7-primary, #1b1b22 ),
+		0 0 0 3px var( --df7-ring-color, rgba( 27, 27, 34, 0.12 ) );
 }
 
 /* Only "titles" shows the labels; the others keep them for assistive tech. */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-dots .cf7e-steps-mark-label,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-numbers .cf7e-steps-mark-label {
+:is( .wpcf7-form, .df7-preview ).df7-steps-dots .df7-steps-mark-label,
+:is( .wpcf7-form, .df7-preview ).df7-steps-numbers .df7-steps-mark-label {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -269,7 +269,7 @@
 
 /* "None" hides the whole block, margin included — an empty 28px gap above the
    first field is exactly what a site owner picking None is trying to remove. */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-none .cf7e-steps-indicator {
+:is( .wpcf7-form, .df7-preview ).df7-steps-none .df7-steps-indicator {
 	display: none;
 }
 
@@ -278,8 +278,8 @@
  * the same sentence twice, so it stays for the variants that are purely
  * graphical and goes for the ones that are not — still spoken either way.
  */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-numbers .cf7e-step-status,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-step-status {
+:is( .wpcf7-form, .df7-preview ).df7-steps-numbers .df7-step-status,
+:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-step-status {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -303,7 +303,7 @@
  * to keep the position readable.
  */
 @media ( max-width: 600px ) {
-	:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-steps-mark-label {
+	:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-steps-mark-label {
 		position: absolute;
 		width: 1px;
 		height: 1px;
@@ -312,43 +312,43 @@
 		clip-path: inset( 50% );
 		white-space: nowrap;
 	}
-	:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-step-status {
+	:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-step-status {
 		position: static;
 		width: auto;
 		height: auto;
 		clip-path: none;
 	}
-	:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-steps-nav {
+	:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-steps-nav {
 		justify-content: flex-start;
 	}
 }
 
 /* ---- navigation ---- */
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-nav {
+:is( .wpcf7-form, .df7-preview ) .df7-steps-nav {
 	display: flex;
 	align-items: center;
 	gap: 1em;
 	margin-top: 1.75em;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-status {
+:is( .wpcf7-form, .df7-preview ) .df7-step-status {
 	flex: 1;
 	text-align: center;
 	font-size: max( 14px, 0.9em );
 	font-weight: 600;
-	color: var( --cf7e-muted, #6f665d );
+	color: var( --df7-muted, #6f665d );
 }
 /* The status is what separates Back from Next. Hidden, its flex space goes with
    it, so the spacer takes over and the buttons stay at the two ends. */
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-numbers .cf7e-steps-nav,
-:is( .wpcf7-form, .cf7e-preview ).cf7e-steps-titles .cf7e-steps-nav {
+:is( .wpcf7-form, .df7-preview ).df7-steps-numbers .df7-steps-nav,
+:is( .wpcf7-form, .df7-preview ).df7-steps-titles .df7-steps-nav {
 	justify-content: space-between;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-btn {
+:is( .wpcf7-form, .df7-preview ) .df7-step-btn {
 	cursor: pointer;
 	border: 0;
-	border-radius: var( --cf7e-radius, 8px );
+	border-radius: var( --df7-radius, 8px );
 	padding: 0.7em 1.5em;
 	font-family: inherit;
 	font-size: max( 14px, 0.95em );
@@ -356,31 +356,31 @@
 	line-height: 1.2;
 	transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-btn:focus-visible {
-	outline: 2px solid var( --cf7e-primary, #1b1b22 );
+:is( .wpcf7-form, .df7-preview ) .df7-step-btn:focus-visible {
+	outline: 2px solid var( --df7-primary, #1b1b22 );
 	outline-offset: 2px;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-next {
-	background: var( --cf7e-btn-bg, #1b1b22 );
-	color: var( --cf7e-btn-text, #fff );
+:is( .wpcf7-form, .df7-preview ) .df7-step-next {
+	background: var( --df7-btn-bg, #1b1b22 );
+	color: var( --df7-btn-text, #fff );
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-next:hover {
+:is( .wpcf7-form, .df7-preview ) .df7-step-next:hover {
 	opacity: 0.88;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-prev {
+:is( .wpcf7-form, .df7-preview ) .df7-step-prev {
 	background: transparent;
-	border: 1px solid var( --cf7e-border, #d9d3c9 );
-	color: var( --cf7e-text, #1b1b22 );
+	border: 1px solid var( --df7-border, #d9d3c9 );
+	color: var( --df7-text, #1b1b22 );
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-prev:hover {
-	border-color: var( --cf7e-border-hover, #b9b1a3 );
+:is( .wpcf7-form, .df7-preview ) .df7-step-prev:hover {
+	border-color: var( --df7-border-hover, #b9b1a3 );
 }
 
 @media ( prefers-reduced-motion: reduce ) {
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-progress-fill,
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark::before,
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-steps-mark-num,
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-step-btn {
+	:is( .wpcf7-form, .df7-preview ) .df7-steps-progress-fill,
+	:is( .wpcf7-form, .df7-preview ) .df7-steps-mark::before,
+	:is( .wpcf7-form, .df7-preview ) .df7-steps-mark-num,
+	:is( .wpcf7-form, .df7-preview ) .df7-step-btn {
 		transition: none;
 	}
 }

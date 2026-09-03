@@ -12,12 +12,12 @@
  * The extra `data-*` attributes are what assets/js/file.js reads to enforce the
  * same limits in the browser before anything is sent.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

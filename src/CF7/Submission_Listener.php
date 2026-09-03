@@ -2,15 +2,15 @@
 /**
  * Listens for Contact Form 7 submissions and persists them.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
-use CF7E\DB\Settings_Repository;
-use CF7E\DB\Submissions_Repository;
+use DF7\DB\Settings_Repository;
+use DF7\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -72,7 +72,7 @@ final class Submission_Listener {
 		 * @param \WPCF7_ContactForm $contact_form The form it was posted to.
 		 * @param string             $status       Either 'submitted' or 'spam'.
 		 */
-		if ( ! apply_filters( 'cf7e_store_submission', $store, $contact_form, $status ) ) {
+		if ( ! apply_filters( 'df7_store_submission', $store, $contact_form, $status ) ) {
 			return;
 		}
 
@@ -106,7 +106,7 @@ final class Submission_Listener {
 		 * @param \WPCF7_ContactForm   $contact_form The form it was posted to.
 		 * @param string               $status       Either 'submitted' or 'spam'.
 		 */
-		$data = (array) apply_filters( 'cf7e_submission_data', $data, $contact_form, $status );
+		$data = (array) apply_filters( 'df7_submission_data', $data, $contact_form, $status );
 
 		$id = $this->repository->insert( (int) $contact_form->id(), $data, $ip, $status );
 
@@ -156,7 +156,7 @@ final class Submission_Listener {
 			 *
 			 * @param Notification $entry The entry, already described.
 			 */
-			do_action( 'cf7e_notify', $entry );
+			do_action( 'df7_notify', $entry );
 		}
 
 		/**
@@ -180,14 +180,14 @@ final class Submission_Listener {
 		 * @param string               $status       Either 'submitted' or 'spam'.
 		 */
 		if ( $id > 0 ) {
-			do_action( 'cf7e_submission_stored', $id, $data, $contact_form, $status );
+			do_action( 'df7_submission_stored', $id, $data, $contact_form, $status );
 		}
 	}
 
 	/**
 	 * Fields the plugin puts in the form itself, which are not answers.
 	 *
-	 * `cf7e_ts` is the time-trap's signed token and `cf7e_hp` the honeypot.
+	 * `df7_ts` is the time-trap's signed token and `df7_hp` the honeypot.
 	 * They were being stored and then shown to the admin as though somebody had
 	 * typed them — and a signed token has no business sitting in a table for
 	 * years either. CF7 already drops anything starting with an underscore, which
@@ -198,7 +198,7 @@ final class Submission_Listener {
 	 */
 	private static function without_our_own_fields( array $data ): array {
 		foreach ( array_keys( $data ) as $key ) {
-			if ( 0 === strpos( (string) $key, 'cf7e_' ) ) {
+			if ( 0 === strpos( (string) $key, 'df7_' ) ) {
 				unset( $data[ $key ] );
 			}
 		}

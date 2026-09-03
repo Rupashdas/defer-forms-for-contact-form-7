@@ -1,5 +1,5 @@
 /**
- * CF7 Essentials — phone fields.
+ * Defer Forms — phone fields.
  *
  * Two jobs, both on the real <input type="tel"> rather than a replacement:
  *  - keep everything but digits out of it, letters included;
@@ -15,8 +15,8 @@
 ( function () {
 	'use strict';
 
-	var DIGITS = 'cf7e-tel';
-	var FORMAT = 'cf7e-telfmt-';
+	var DIGITS = 'df7-tel';
+	var FORMAT = 'df7-telfmt-';
 
 	function digitsOnly( value ) {
 		return String( value ).replace( /\D+/g, '' );
@@ -139,5 +139,5 @@
 
 	// ready(), not forms(): isOurs() already limits this to fields carrying our
 	// marker class, so the scan stays document-wide rather than per-form.
-	window.cf7e.ready( init );
+	window.df7.ready( init );
 } )();

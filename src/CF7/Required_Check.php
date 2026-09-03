@@ -7,12 +7,12 @@
  * one is empty" for itself. Five classes had written the same eight lines; this
  * is that code, once.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

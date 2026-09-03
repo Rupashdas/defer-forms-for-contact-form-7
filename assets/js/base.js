@@ -1,5 +1,5 @@
 /**
- * CF7 Essentials — the two things every front-end script here needed.
+ * Defer Forms — the two things every front-end script here needed.
  *
  * Each of them carried its own copy of the same boot block: run now if the
  * document is ready, wait for DOMContentLoaded if it is not, and run again on
@@ -10,13 +10,13 @@
  *
  * `el()` was the other: three identical element helpers in three files.
  *
- * This is a dependency of every other cf7e script, so it is on the page before
+ * This is a dependency of every other df7 script, so it is on the page before
  * any of them run.
  */
 ( function () {
 	'use strict';
 
-	var cf7e = window.cf7e || ( window.cf7e = {} );
+	var df7 = window.df7 || ( window.df7 = {} );
 
 	/**
 	 * Run something once the document is usable, and again whenever Contact Form
@@ -26,7 +26,7 @@
 	 * DOMContentLoaded has already fired, and waiting for an event that is never
 	 * coming means the feature simply never starts.
 	 */
-	cf7e.ready = function ( fn ) {
+	df7.ready = function ( fn ) {
 		if ( 'loading' === document.readyState ) {
 			document.addEventListener( 'DOMContentLoaded', fn );
 		} else {
@@ -43,8 +43,8 @@
 	 * `dataset` flag — `wpcf7init` fires per form, so this deliberately re-scans
 	 * rather than trying to work out what is new.
 	 */
-	cf7e.forms = function ( fn ) {
-		cf7e.ready( function () {
+	df7.forms = function ( fn ) {
+		df7.ready( function () {
 			document.querySelectorAll( '.wpcf7-form' ).forEach( fn );
 		} );
 	};
@@ -63,7 +63,7 @@
 	 * are restored, so a callback running immediately would re-read the values
 	 * being discarded and conclude nothing had changed.
 	 */
-	cf7e.onReset = function ( form, fn ) {
+	df7.onReset = function ( form, fn ) {
 		form.addEventListener( 'reset', function () {
 			window.setTimeout( fn, 0 );
 		} );
@@ -74,7 +74,7 @@
 	 * the callers has markup to place, and one of them is handling a form's own
 	 * settings.
 	 */
-	cf7e.el = function ( tag, className, text ) {
+	df7.el = function ( tag, className, text ) {
 		var node = document.createElement( tag );
 
 		if ( className ) {

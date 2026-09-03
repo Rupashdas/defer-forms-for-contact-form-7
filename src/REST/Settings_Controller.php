@@ -2,18 +2,18 @@
 /**
  * REST: Reading and writing the plugin settings sections.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare(strict_types=1);
 
-namespace CF7E\REST;
+namespace DF7\REST;
 
-use CF7E\CF7\Discord;
-use CF7E\CF7\Slack;
-use CF7E\CF7\Telegram;
-use CF7E\CF7\Webhook;
-use CF7E\DB\Settings_Repository;
+use DF7\CF7\Discord;
+use DF7\CF7\Slack;
+use DF7\CF7\Telegram;
+use DF7\CF7\Webhook;
+use DF7\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -100,7 +100,7 @@ final class Settings_Controller extends Controller {
 		$section = (string) $request->get_param( 'section' );
 
 		if ( ! Settings_Repository::has_section( $section ) ) {
-			return self::error( 'unknown_section', __( 'There is no settings section by that name.', 'essentials-for-contact-form-7' ), 400 );
+			return self::error( 'unknown_section', __( 'There is no settings section by that name.', 'defer-forms-for-contact-form-7' ), 400 );
 		}
 
 		$values = (array) $request->get_json_params();
@@ -223,8 +223,8 @@ final class Settings_Controller extends Controller {
 				return self::error(
 					'not_configured',
 					'telegram' === $section
-						? __( 'Fill in the bot token and the chat ID first.', 'essentials-for-contact-form-7' )
-						: __( 'Fill in the webhook URL first.', 'essentials-for-contact-form-7' ),
+						? __( 'Fill in the bot token and the chat ID first.', 'defer-forms-for-contact-form-7' )
+						: __( 'Fill in the webhook URL first.', 'defer-forms-for-contact-form-7' ),
 					400
 				);
 			}

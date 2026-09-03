@@ -6,14 +6,14 @@
  * menu to find this. Two entry points: a button on the single-form screen, and a
  * row action in the forms list.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\Admin;
+namespace DF7\Admin;
 
-use CF7E\Core\Capability;
+use DF7\Core\Capability;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,12 +21,12 @@ final class Cf7_Integration {
 
 	public function register_hooks(): void {
 		add_action( 'wpcf7_admin_misc_pub_section', array( $this, 'render_builder_button' ) );
-		add_action( 'admin_footer', array( $this, 'inject_row_action' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_row_action' ) );
 	}
 
 	/** Everything up to the form id, which the two callers finish differently. */
 	private static function builder_url_base(): string {
-		return admin_url( 'admin.php?page=cf7-essentials-builder&form=' );
+		return admin_url( 'admin.php?page=df7-builder&form=' );
 	}
 
 	private static function builder_url( int $form_id ): string {
@@ -45,45 +45,38 @@ final class Cf7_Integration {
 		printf(
 			'<a href="%s" class="button button-primary button-large" style="width:100%%;justify-content:center;">%s</a>',
 			esc_url( self::builder_url( (int) $post_id ) ),
-			esc_html__( 'Edit with the visual builder', 'essentials-for-contact-form-7' )
+			esc_html__( 'Edit with the visual builder', 'defer-forms-for-contact-form-7' )
 		);
 		echo '</div>';
 	}
 
 	/**
-	 * CF7's list table applies no row-action filter, so the link is added in the
-	 * browser instead — reading each row's own edit link for the form id rather
-	 * than trying to rebuild the table's markup here.
+	 * The row-action link is drawn by row-action.js; this puts it on the page.
+	 *
+	 * In the footer, like the rest of this plugin's scripts, because it walks the
+	 * list table's rows the moment it runs.
 	 */
-	public function inject_row_action(): void {
+	public function enqueue_row_action(): void {
 		if ( ! Capability::granted() || ! $this->on_forms_list() ) {
 			return;
 		}
 
-		$base  = self::builder_url_base();
-		$label = __( 'Visual Builder', 'essentials-for-contact-form-7' );
-		?>
-		<script>
-		( function () {
-			var base  = <?php echo wp_json_encode( $base ); ?>;
-			var label = <?php echo wp_json_encode( $label ); ?>;
-			document.querySelectorAll( '.wp-list-table .row-actions' ).forEach( function ( actions ) {
-				var link = actions.querySelector( 'a[href*="action=edit"]' );
-				if ( ! link ) { return; }
-				var m = link.href.match( /[?&]post=(\d+)/ );
-				if ( ! m ) { return; }
-				var a = document.createElement( 'a' );
-				a.href = base + m[ 1 ];
-				a.textContent = label;
-				var span = document.createElement( 'span' );
-				span.className = 'cf7e-builder-link';
-				span.appendChild( document.createTextNode( ' | ' ) );
-				span.appendChild( a );
-				actions.appendChild( span );
-			} );
-		} )();
-		</script>
-		<?php
+		wp_enqueue_script(
+			'df7-row-action',
+			DF7_URL . 'assets/js/row-action.js',
+			array(),
+			df7_asset_ver( 'assets/js/row-action.js' ),
+			true
+		);
+
+		wp_localize_script(
+			'df7-row-action',
+			'df7RowAction',
+			array(
+				'base'  => self::builder_url_base(),
+				'label' => __( 'Visual Builder', 'defer-forms-for-contact-form-7' ),
+			)
+		);
 	}
 
 	/** CF7's contact-forms list, and not the single-form editor inside it. */

@@ -3,19 +3,19 @@
  * Live validation.
  *
  * Loads assets/js/validate.js on every form this plugin renders. It runs at priority
- * 8 — ahead of Steps at 9 — because steps.js declares `cf7e-validate` as a
+ * 8 — ahead of Steps at 9 — because steps.js declares `df7-validate` as a
  * dependency, and WordPress silently drops a script whose dependency was never
  * registered.
  *
  * The message itself is styled in assets/css/controls.css, which every form
  * loads.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,25 +26,25 @@ final class Validation {
 	}
 
 	/**
-	 * The shared front-end helpers (`window.cf7e.ready/forms/el`).
+	 * The shared front-end helpers (`window.df7.ready/forms/el`).
 	 *
 	 * Registered here for the same reason validate.js is enqueued here: this
 	 * filter runs at priority 8, ahead of every other one of ours, and WordPress
-	 * silently drops a script whose dependency was never registered. Every cf7e
+	 * silently drops a script whose dependency was never registered. Every df7
 	 * script declares this one, so it has to exist before any of them ask.
 	 */
-	public const BASE = 'cf7e-base';
+	public const BASE = 'df7-base';
 
 	public function enqueue( string $elements ): string {
-		wp_enqueue_script( self::BASE, CF7E_URL . 'assets/js/base.js', array(), cf7e_asset_ver( 'assets/js/base.js' ), true );
-		wp_enqueue_script( 'cf7e-validate', CF7E_URL . 'assets/js/validate.js', array( self::BASE ), cf7e_asset_ver( 'assets/js/validate.js' ), true );
+		wp_enqueue_script( self::BASE, DF7_URL . 'assets/js/base.js', array(), df7_asset_ver( 'assets/js/base.js' ), true );
+		wp_enqueue_script( 'df7-validate', DF7_URL . 'assets/js/validate.js', array( self::BASE ), df7_asset_ver( 'assets/js/validate.js' ), true );
 
 		wp_localize_script(
-			'cf7e-validate',
-			'cf7eValidateL10n',
+			'df7-validate',
+			'df7ValidateL10n',
 			array(
-				'required' => __( 'Please complete this field.', 'essentials-for-contact-form-7' ),
-				'invalid'  => __( 'Please check this entry.', 'essentials-for-contact-form-7' ),
+				'required' => __( 'Please complete this field.', 'defer-forms-for-contact-form-7' ),
+				'invalid'  => __( 'Please check this entry.', 'defer-forms-for-contact-form-7' ),
 			)
 		);
 

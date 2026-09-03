@@ -10,16 +10,16 @@
  * submissions store their fields as JSON — so the set of columns is only known
  * once every row has been looked at. Both passes stream.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\Admin;
+namespace DF7\Admin;
 
-use CF7E\CF7\Entry_Fields;
-use CF7E\Core\Capability;
-use CF7E\DB\Submissions_Repository;
+use DF7\CF7\Entry_Fields;
+use DF7\Core\Capability;
+use DF7\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,15 +32,15 @@ final class Csv_Export {
 	}
 
 	public function register_hooks(): void {
-		add_action( 'admin_post_cf7e_export_csv', array( $this, 'handle' ) );
+		add_action( 'admin_post_df7_export_csv', array( $this, 'handle' ) );
 	}
 
 	public function handle(): void {
 		if ( ! Capability::granted() ) {
-			wp_die( esc_html__( 'Permission denied.', 'essentials-for-contact-form-7' ), 403 );
+			wp_die( esc_html__( 'Permission denied.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
-		check_admin_referer( 'cf7e_export_csv' );
+		check_admin_referer( 'df7_export_csv' );
 
 		$args    = $this->filters();
 		$columns = $this->columns( $args );
@@ -53,12 +53,12 @@ final class Csv_Export {
 		$output = fopen( 'php://output', 'w' );
 
 		if ( false === $output ) {
-			wp_die( esc_html__( 'The export could not be started.', 'essentials-for-contact-form-7' ), 500 );
+			wp_die( esc_html__( 'The export could not be started.', 'defer-forms-for-contact-form-7' ), 500 );
 		}
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename="cf7-essentials-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
+		header( 'Content-Disposition: attachment; filename="df7-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
 
 		// A long export must not be cut short by the default execution limit.
 		// Discouraged in general because most code has no business extending it;
@@ -91,10 +91,10 @@ final class Csv_Export {
 		// exactly as the form spelled them. Nothing re-imports this file, so
 		// there is no machine on the other side to keep the headings stable for.
 		$headings = array(
-			__( 'ID', 'essentials-for-contact-form-7' ),
-			__( 'Form ID', 'essentials-for-contact-form-7' ),
-			__( 'Status', 'essentials-for-contact-form-7' ),
-			__( 'Date', 'essentials-for-contact-form-7' ),
+			__( 'ID', 'defer-forms-for-contact-form-7' ),
+			__( 'Form ID', 'defer-forms-for-contact-form-7' ),
+			__( 'Status', 'defer-forms-for-contact-form-7' ),
+			__( 'Date', 'defer-forms-for-contact-form-7' ),
 		);
 
 		fputcsv( $output, array_map( array( $this, 'defuse' ), array_merge( $headings, $columns ) ) );

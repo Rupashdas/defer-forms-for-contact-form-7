@@ -8,12 +8,12 @@
  * Choice tags (select/checkbox/radio) are skipped on purpose: for those, a
  * form-tag's `values` are the options themselves, not a single value.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

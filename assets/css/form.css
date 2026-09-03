@@ -1,5 +1,5 @@
 /**
- * CF7 Essentials — front-end styles for builder content blocks and the fieldset
+ * Defer Forms — front-end styles for builder content blocks and the fieldset
  * caption used by radio/checkbox/file groups. Sizes use em so they scale with
  * the theme's own form typography.
  *
@@ -11,7 +11,7 @@
 /* Radio/checkbox/file groups wrap their caption in <fieldset> so a <label>
  * doesn't steal the first option's clicks — strip the browser's default
  * fieldset chrome so it reads like a normal field caption. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-fieldset {
+:is( .wpcf7-form, .df7-preview ) .df7-fieldset {
 	min-width: 0;
 	/*
 	 * margin-inline, not the shorthand.
@@ -29,92 +29,92 @@
 	padding: 0;
 	border: 0;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-fieldset > legend {
+:is( .wpcf7-form, .df7-preview ) .df7-fieldset > legend {
 	float: none;
 	width: auto;
 	padding: 0;
 	margin-bottom: 0.35em;
 	font-weight: 600;
-	color: var( --cf7e-text );
+	color: var( --df7-text );
 }
 
 /* Alignment */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-align-left   { text-align: left; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-align-center { text-align: center; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-align-right  { text-align: right; }
+:is( .wpcf7-form, .df7-preview ) .df7-align-left   { text-align: left; }
+:is( .wpcf7-form, .df7-preview ) .df7-align-center { text-align: center; }
+:is( .wpcf7-form, .df7-preview ) .df7-align-right  { text-align: right; }
 
 /* Heading */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-h {
+:is( .wpcf7-form, .df7-preview ) .df7-h {
 	margin: 0.4em 0;
 	font-weight: 700;
 	line-height: 1.25;
 	color: inherit;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-h-h2 { font-size: 1.6em; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-h-h3 { font-size: 1.3em; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-h-h4 { font-size: 1.1em; }
+:is( .wpcf7-form, .df7-preview ) .df7-h-h2 { font-size: 1.6em; }
+:is( .wpcf7-form, .df7-preview ) .df7-h-h3 { font-size: 1.3em; }
+:is( .wpcf7-form, .df7-preview ) .df7-h-h4 { font-size: 1.1em; }
 
 /* Paragraph */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-p    { margin: 0.4em 0; line-height: 1.6; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-p-sm { font-size: max( 14px, 0.9em ); }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-p-md { font-size: 1em; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-p-lg { font-size: 1.15em; }
+:is( .wpcf7-form, .df7-preview ) .df7-p    { margin: 0.4em 0; line-height: 1.6; }
+:is( .wpcf7-form, .df7-preview ) .df7-p-sm { font-size: max( 14px, 0.9em ); }
+:is( .wpcf7-form, .df7-preview ) .df7-p-md { font-size: 1em; }
+:is( .wpcf7-form, .df7-preview ) .df7-p-lg { font-size: 1.15em; }
 
 /* Divider (border-top-width comes from the inline style). Tiers are opacity
  * steps over whatever sits behind them, not palette colours, so they stay
  * literal. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr {
+:is( .wpcf7-form, .df7-preview ) .df7-hr {
 	border: 0;
 	border-top-style: solid;
 	border-top-color: rgba( 0, 0, 0, 0.12 );
 	margin: 1em 0;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr-dashed { border-top-style: dashed; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr-dotted { border-top-style: dotted; }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr-subtle { border-top-color: rgba( 0, 0, 0, 0.1 ); }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr-normal { border-top-color: rgba( 0, 0, 0, 0.22 ); }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-hr-strong { border-top-color: rgba( 0, 0, 0, 0.4 ); }
+:is( .wpcf7-form, .df7-preview ) .df7-hr-dashed { border-top-style: dashed; }
+:is( .wpcf7-form, .df7-preview ) .df7-hr-dotted { border-top-style: dotted; }
+:is( .wpcf7-form, .df7-preview ) .df7-hr-subtle { border-top-color: rgba( 0, 0, 0, 0.1 ); }
+:is( .wpcf7-form, .df7-preview ) .df7-hr-normal { border-top-color: rgba( 0, 0, 0, 0.22 ); }
+:is( .wpcf7-form, .df7-preview ) .df7-hr-strong { border-top-color: rgba( 0, 0, 0, 0.4 ); }
 
 /* Grid rows (built with the layout tool). Single column on small screens,
  * N columns from 600px up — responsive stacking. The gaps follow the same
  * token as the space between fields, so "Space between fields" in the Design
  * settings governs the whole rhythm rather than half of it. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-row {
+:is( .wpcf7-form, .df7-preview ) .df7-row {
 	display: grid;
-	gap: var( --cf7e-gap );
+	gap: var( --df7-gap );
 	grid-template-columns: 1fr;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col {
+:is( .wpcf7-form, .df7-preview ) .df7-col {
 	display: flex;
 	flex-direction: column;
-	gap: var( --cf7e-gap );
+	gap: var( --df7-gap );
 	min-width: 0;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-row > *,
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col > * {
+:is( .wpcf7-form, .df7-preview ) .df7-row > *,
+:is( .wpcf7-form, .df7-preview ) .df7-col > * {
 	margin: 0;
 }
 /* A stray <br> from wpautop would otherwise claim a whole grid cell and shunt
  * the columns out of line. Marker_Cleanup strips them; this is the backstop. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-row > br {
+:is( .wpcf7-form, .df7-preview ) .df7-row > br {
 	display: none;
 }
 /* CF7 sizes text inputs from their `size` attribute (~40 characters) on top of
  * padding, so at content-box they render wider than the column and spill into
  * the gap — making neighbouring columns look glued together. Inside a grid the
  * control follows the column instead. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']),
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col select,
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col textarea {
+:is( .wpcf7-form, .df7-preview ) .df7-col input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']),
+:is( .wpcf7-form, .df7-preview ) .df7-col select,
+:is( .wpcf7-form, .df7-preview ) .df7-col textarea {
 	width: 100%;
 	max-width: 100%;
 	box-sizing: border-box;
 }
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-col .wpcf7-form-control-wrap {
+:is( .wpcf7-form, .df7-preview ) .df7-col .wpcf7-form-control-wrap {
 	display: block;
 }
 @media ( min-width: 600px ) {
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-cols-2 { grid-template-columns: repeat( 2, 1fr ); }
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-cols-3 { grid-template-columns: repeat( 3, 1fr ); }
-	:is( .wpcf7-form, .cf7e-preview ) .cf7e-cols-4 { grid-template-columns: repeat( 4, 1fr ); }
+	:is( .wpcf7-form, .df7-preview ) .df7-cols-2 { grid-template-columns: repeat( 2, 1fr ); }
+	:is( .wpcf7-form, .df7-preview ) .df7-cols-3 { grid-template-columns: repeat( 3, 1fr ); }
+	:is( .wpcf7-form, .df7-preview ) .df7-cols-4 { grid-template-columns: repeat( 4, 1fr ); }
 }

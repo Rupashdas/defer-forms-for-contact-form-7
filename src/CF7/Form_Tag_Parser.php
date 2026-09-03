@@ -18,15 +18,15 @@
  *   - 'field':     a CF7 form-tag (text, email, select, …)
  *   - 'content':   a layout block (heading/paragraph/divider/spacer)
  *   - 'row':       a grid row wrapping child items in columns
- *   - 'pagebreak': a multi-step page break ([cf7e_pagebreak])
+ *   - 'pagebreak': a multi-step page break ([df7_pagebreak])
  *   - 'html':      free-form markup between tags (preserved verbatim)
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -33,7 +33,7 @@ const RECENT = 5;
  * the browser cannot know until the fetch it is waiting on comes back. The
  * server knew it all along, so it says so (see Menu::hand_over).
  */
-const FORM_COUNT = Number( window.cf7eDashboard?.forms ?? 0 );
+const FORM_COUNT = Number( window.df7Dashboard?.forms ?? 0 );
 
 const Trend = ( { of } ) => {
 	if ( ! of ) {
@@ -42,8 +42,8 @@ const Trend = ( { of } ) => {
 
 	if ( 'new' === of.direction ) {
 		return (
-			<span className="cf7e-text-[14px] cf7e-font-medium cf7e-text-stone-400">
-				{ __( 'nothing the week before', 'essentials-for-contact-form-7' ) }
+			<span className="df7-text-[14px] df7-font-medium df7-text-stone-400">
+				{ __( 'nothing the week before', 'defer-forms-for-contact-form-7' ) }
 			</span>
 		);
 	}
@@ -51,13 +51,13 @@ const Trend = ( { of } ) => {
 	const Icon = { up: ArrowUpRight, down: ArrowDownRight, level: Minus }[ of.direction ];
 
 	return (
-		<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1 cf7e-text-[14px] cf7e-font-medium cf7e-text-stone-400">
-			<Icon className="cf7e-h-3.5 cf7e-w-3.5" />
+		<span className="df7-inline-flex df7-items-center df7-gap-1 df7-text-[14px] df7-font-medium df7-text-stone-400">
+			<Icon className="df7-h-3.5 df7-w-3.5" />
 			{ 'level' === of.direction
-				? __( 'same as the week before', 'essentials-for-contact-form-7' )
+				? __( 'same as the week before', 'defer-forms-for-contact-form-7' )
 				: sprintf(
 					/* translators: %1$s: a percentage, without its sign. */
-					__( '%1$s%% on the week before', 'essentials-for-contact-form-7' ),
+					__( '%1$s%% on the week before', 'defer-forms-for-contact-form-7' ),
 					of.percent.toLocaleString()
 				) }
 		</span>
@@ -72,20 +72,20 @@ const Trend = ( { of } ) => {
  * is carrying data.
  */
 const Figure = ( { label, value, loading, children } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-1">
-		<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">
+	<div className="df7-flex df7-flex-col df7-gap-1">
+		<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
 			{ label }
 		</span>
 		{ loading ? (
-			<Shimmer w="cf7e-w-16" text="cf7e-text-3xl cf7e-leading-none" />
+			<Shimmer w="df7-w-16" text="df7-text-3xl df7-leading-none" />
 		) : (
-			<span className="cf7e-text-3xl cf7e-font-bold cf7e-leading-none cf7e-tracking-tight cf7e-text-ink cf7e-tnum">
+			<span className="df7-text-3xl df7-font-bold df7-leading-none df7-tracking-tight df7-text-ink df7-tnum">
 				{ value.toLocaleString() }
 			</span>
 		) }
 		{ /* The comparison line under This week. Reserved while loading, or the
 		     figure is twenty pixels shorter than it is about to be. */ }
-		{ loading ? <Shimmer w="cf7e-w-32" text="cf7e-text-[14px]" /> : children }
+		{ loading ? <Shimmer w="df7-w-32" text="df7-text-[14px]" /> : children }
 	</div>
 );
 
@@ -101,23 +101,23 @@ const Figure = ( { label, value, loading, children } ) => (
  * holding the entries this banner is about plus some it is not.
  */
 const UnreadBanner = ( { count, onMarkRead, marking } ) => (
-	<div className="cf7e-flex cf7e-items-center cf7e-gap-4 cf7e-rounded-2xl cf7e-border cf7e-border-accent-200 cf7e-bg-accent-50 cf7e-p-5">
-		<div className="cf7e-relative cf7e-flex cf7e-h-12 cf7e-w-12 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-ink cf7e-text-white">
-			<Inbox className="cf7e-h-6 cf7e-w-6" />
-			<span className="cf7e-absolute -cf7e-right-1 -cf7e-top-1 cf7e-flex cf7e-h-5 cf7e-min-w-[1.25rem] cf7e-items-center cf7e-justify-center cf7e-rounded-full cf7e-bg-red-600 cf7e-px-1 cf7e-text-[14px] cf7e-font-bold cf7e-leading-none cf7e-text-white cf7e-tnum">
+	<div className="df7-flex df7-items-center df7-gap-4 df7-rounded-2xl df7-border df7-border-accent-200 df7-bg-accent-50 df7-p-5">
+		<div className="df7-relative df7-flex df7-h-12 df7-w-12 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-xl df7-bg-ink df7-text-white">
+			<Inbox className="df7-h-6 df7-w-6" />
+			<span className="df7-absolute -df7-right-1 -df7-top-1 df7-flex df7-h-5 df7-min-w-[1.25rem] df7-items-center df7-justify-center df7-rounded-full df7-bg-red-600 df7-px-1 df7-text-[14px] df7-font-bold df7-leading-none df7-text-white df7-tnum">
 				{ count > 99 ? '99+' : count }
 			</span>
 		</div>
-		<div className="cf7e-flex cf7e-flex-1 cf7e-flex-col cf7e-gap-0.5">
-			<span className="cf7e-text-base cf7e-font-semibold cf7e-text-ink">
+		<div className="df7-flex df7-flex-1 df7-flex-col df7-gap-0.5">
+			<span className="df7-text-base df7-font-semibold df7-text-ink">
 				{ sprintf(
 					/* translators: %s: number of new submissions. */
-					_n( '%s entry you have not read', '%s entries you have not read', count, 'essentials-for-contact-form-7' ),
+					_n( '%s entry you have not read', '%s entries you have not read', count, 'defer-forms-for-contact-form-7' ),
 					count.toLocaleString()
 				) }
 			</span>
-			<span className="cf7e-text-[15px] cf7e-text-stone-500">
-				{ __( 'Opening one marks it read.', 'essentials-for-contact-form-7' ) }
+			<span className="df7-text-[15px] df7-text-stone-500">
+				{ __( 'Opening one marks it read.', 'defer-forms-for-contact-form-7' ) }
 			</span>
 		</div>
 
@@ -134,18 +134,18 @@ const UnreadBanner = ( { count, onMarkRead, marking } ) => (
 			type="button"
 			onClick={ onMarkRead }
 			disabled={ marking }
-			className={ `${ btnGhost } cf7e-shrink-0` }
+			className={ `${ btnGhost } df7-shrink-0` }
 		>
-			<CheckCheck className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
-			{ marking ? __( 'Marking…', 'essentials-for-contact-form-7' ) : __( 'Mark all read', 'essentials-for-contact-form-7' ) }
+			<CheckCheck className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			{ marking ? __( 'Marking…', 'defer-forms-for-contact-form-7' ) : __( 'Mark all read', 'defer-forms-for-contact-form-7' ) }
 		</button>
 
 		<a
-			href="admin.php?page=cf7-essentials-submissions&status=submitted"
-			className="cf7e-group cf7e-inline-flex cf7e-shrink-0 cf7e-items-center cf7e-gap-1.5 cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-no-underline"
+			href="admin.php?page=df7-submissions&status=submitted"
+			className="df7-group df7-inline-flex df7-shrink-0 df7-items-center df7-gap-1.5 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline"
 		>
-			{ __( 'Read them', 'essentials-for-contact-form-7' ) }
-			<ArrowRight className="cf7e-h-4 cf7e-w-4 cf7e-transition-transform group-hover:cf7e-translate-x-0.5" />
+			{ __( 'Read them', 'defer-forms-for-contact-form-7' ) }
+			<ArrowRight className="df7-h-4 df7-w-4 df7-transition-transform group-hover:df7-translate-x-0.5" />
 		</a>
 	</div>
 );
@@ -160,17 +160,17 @@ const UnreadBanner = ( { count, onMarkRead, marking } ) => (
  * anything: it is evidence the trap is working.
  */
 const SpamNote = ( { count, onDismiss } ) => (
-	<div className="cf7e-flex cf7e-items-center cf7e-gap-3 cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-5 cf7e-py-4">
-		<ShieldAlert className="cf7e-h-5 cf7e-w-5 cf7e-shrink-0 cf7e-text-amber-600" />
-		<span className="cf7e-flex-1 cf7e-text-[15px] cf7e-text-stone-500">
+	<div className="df7-flex df7-items-center df7-gap-3 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-px-5 df7-py-4">
+		<ShieldAlert className="df7-h-5 df7-w-5 df7-shrink-0 df7-text-amber-600" />
+		<span className="df7-flex-1 df7-text-[15px] df7-text-stone-500">
 			{ sprintf(
 				/* translators: %s: number of spam submissions. */
-				_n( '%s spam entry was caught and kept out of your inbox.', '%s spam entries were caught and kept out of your inbox.', count, 'essentials-for-contact-form-7' ),
+				_n( '%s spam entry was caught and kept out of your inbox.', '%s spam entries were caught and kept out of your inbox.', count, 'defer-forms-for-contact-form-7' ),
 				count.toLocaleString()
 			) }
 		</span>
-		<a href="admin.php?page=cf7-essentials-submissions&status=spam" className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-no-underline">
-			{ __( 'See them', 'essentials-for-contact-form-7' ) }
+		<a href="admin.php?page=df7-submissions&status=spam" className="df7-text-sm df7-font-semibold df7-text-ink df7-no-underline">
+			{ __( 'See them', 'defer-forms-for-contact-form-7' ) }
 		</a>
 
 		{ /*
@@ -184,11 +184,11 @@ const SpamNote = ( { count, onDismiss } ) => (
 		<button
 			type="button"
 			onClick={ onDismiss }
-			aria-label={ __( 'Dismiss', 'essentials-for-contact-form-7' ) }
-			title={ __( 'Hide this until more arrives', 'essentials-for-contact-form-7' ) }
-			className="cf7e-flex cf7e-h-7 cf7e-w-7 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-transition-colors hover:cf7e-bg-stone-100 hover:cf7e-text-ink"
+			aria-label={ __( 'Dismiss', 'defer-forms-for-contact-form-7' ) }
+			title={ __( 'Hide this until more arrives', 'defer-forms-for-contact-form-7' ) }
+			className="df7-flex df7-h-7 df7-w-7 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-bg-stone-100 hover:df7-text-ink"
 		>
-			<X className="cf7e-h-4 cf7e-w-4" />
+			<X className="df7-h-4 df7-w-4" />
 		</button>
 	</div>
 );
@@ -199,7 +199,7 @@ const SpamNote = ( { count, onDismiss } ) => (
  * Per person and per browser, which is what "I have seen this" means — it is
  * not a site setting and the next admin has not seen it.
  */
-const SEEN_SPAM = 'cf7e-spam-seen';
+const SEEN_SPAM = 'df7-spam-seen';
 
 const spamSeen = () => {
 	const stored = parseInt( window.localStorage?.getItem( SEEN_SPAM ) || '0', 10 );
@@ -217,14 +217,14 @@ const spamSeen = () => {
 const FormSplit = ( { forms, loading = false, rows = 1 } ) => {
 	if ( loading ) {
 		return (
-			<div className="cf7e-mt-6 cf7e-border-t cf7e-border-line cf7e-pt-5">
-				<Shimmer w="cf7e-w-40" text="cf7e-text-[14px]" />
-				<ul className="cf7e-m-0 cf7e-mt-3 cf7e-flex cf7e-list-none cf7e-flex-col cf7e-gap-2.5 cf7e-p-0">
+			<div className="df7-mt-6 df7-border-t df7-border-line df7-pt-5">
+				<Shimmer w="df7-w-40" text="df7-text-[14px]" />
+				<ul className="df7-m-0 df7-mt-3 df7-flex df7-list-none df7-flex-col df7-gap-2.5 df7-p-0">
 					{ Array.from( { length: rows } ).map( ( _, index ) => (
-						<li key={ index } className="cf7e-flex cf7e-items-center cf7e-gap-3">
-							<Shimmer w="cf7e-w-40" text="cf7e-text-[15px]" className="cf7e-shrink-0" />
-							<span className="cf7e-h-2 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100" />
-							<Shimmer w="cf7e-w-10" text="cf7e-text-[15px]" className="cf7e-shrink-0" />
+						<li key={ index } className="df7-flex df7-items-center df7-gap-3">
+							<Shimmer w="df7-w-40" text="df7-text-[15px]" className="df7-shrink-0" />
+							<span className="df7-h-2 df7-flex-1 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
+							<Shimmer w="df7-w-10" text="df7-text-[15px]" className="df7-shrink-0" />
 						</li>
 					) ) }
 				</ul>
@@ -235,27 +235,27 @@ const FormSplit = ( { forms, loading = false, rows = 1 } ) => {
 	const most = Math.max( ...forms.map( ( form ) => form.count ) );
 
 	return (
-		<div className="cf7e-mt-6 cf7e-border-t cf7e-border-line cf7e-pt-5">
-			<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">
-				{ __( 'Where they came from', 'essentials-for-contact-form-7' ) }
+		<div className="df7-mt-6 df7-border-t df7-border-line df7-pt-5">
+			<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
+				{ __( 'Where they came from', 'defer-forms-for-contact-form-7' ) }
 			</span>
-			<ul className="cf7e-m-0 cf7e-mt-3 cf7e-flex cf7e-list-none cf7e-flex-col cf7e-gap-2.5 cf7e-p-0">
+			<ul className="df7-m-0 df7-mt-3 df7-flex df7-list-none df7-flex-col df7-gap-2.5 df7-p-0">
 				{ forms.map( ( form ) => (
-					<li key={ form.form_id } className="cf7e-flex cf7e-items-center cf7e-gap-3">
+					<li key={ form.form_id } className="df7-flex df7-items-center df7-gap-3">
 						<a
-							href={ `admin.php?page=cf7-essentials-submissions&form=${ form.form_id }` }
-							className="cf7e-w-40 cf7e-shrink-0 cf7e-truncate cf7e-text-[15px] cf7e-text-ink cf7e-no-underline hover:cf7e-underline"
+							href={ `admin.php?page=df7-submissions&form=${ form.form_id }` }
+							className="df7-w-40 df7-shrink-0 df7-truncate df7-text-[15px] df7-text-ink df7-no-underline hover:df7-underline"
 							title={ form.title }
 						>
 							{ form.title }
 						</a>
-						<span className="cf7e-h-2 cf7e-flex-1 cf7e-overflow-hidden cf7e-rounded-full cf7e-bg-stone-100">
+						<span className="df7-h-2 df7-flex-1 df7-overflow-hidden df7-rounded-full df7-bg-stone-100">
 							<span
-								className="cf7e-block cf7e-h-full cf7e-rounded-full cf7e-bg-ink"
+								className="df7-block df7-h-full df7-rounded-full df7-bg-ink"
 								style={ { width: `${ Math.max( 4, ( form.count / most ) * 100 ) }%` } }
 							/>
 						</span>
-						<span className="cf7e-w-10 cf7e-shrink-0 cf7e-text-right cf7e-text-[15px] cf7e-font-semibold cf7e-text-ink cf7e-tnum">
+						<span className="df7-w-10 df7-shrink-0 df7-text-right df7-text-[15px] df7-font-semibold df7-text-ink df7-tnum">
 							{ form.count.toLocaleString() }
 						</span>
 					</li>
@@ -273,53 +273,53 @@ const when = ( mysqlUtc ) =>
 
 /** The last few entries, so the newest one is readable without leaving. */
 const Recent = ( { items, titleFor, loading = false } ) => (
-	<section className="cf7e-mt-8">
-		<div className="cf7e-mb-3 cf7e-flex cf7e-items-baseline cf7e-justify-between">
-			<h2 className="cf7e-m-0 cf7e-text-xl cf7e-font-bold cf7e-text-ink">{ __( 'Latest entries', 'essentials-for-contact-form-7' ) }</h2>
+	<section className="df7-mt-8">
+		<div className="df7-mb-3 df7-flex df7-items-baseline df7-justify-between">
+			<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">{ __( 'Latest entries', 'defer-forms-for-contact-form-7' ) }</h2>
 			<a
-				href="admin.php?page=cf7-essentials-submissions"
-				className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-no-underline hover:cf7e-underline"
+				href="admin.php?page=df7-submissions"
+				className="df7-text-sm df7-font-semibold df7-text-ink df7-no-underline hover:df7-underline"
 			>
-				{ __( 'All entries', 'essentials-for-contact-form-7' ) }
+				{ __( 'All entries', 'defer-forms-for-contact-form-7' ) }
 			</a>
 		</div>
-		<ul className="cf7e-m-0 cf7e-list-none cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-0">
+		<ul className="df7-m-0 df7-list-none df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-0">
 			{ loading
 				? Array.from( { length: RECENT } ).map( ( _, index ) => (
-					<li key={ index } className="cf7e-border-b cf7e-border-line last:cf7e-border-0">
-						<div className="cf7e-flex cf7e-items-center cf7e-gap-4 cf7e-px-5 cf7e-py-3.5">
-							<span className="cf7e-h-2 cf7e-w-2 cf7e-shrink-0 cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100" />
-							<Shimmer w="cf7e-w-48" text="cf7e-text-[15px]" className="cf7e-min-w-0 cf7e-flex-1" />
-							<Shimmer w="cf7e-w-28" text="cf7e-text-[14px]" className="cf7e-hidden cf7e-shrink-0 sm:cf7e-block" />
-							<Shimmer w="cf7e-w-36" text="cf7e-text-[14px]" className="cf7e-shrink-0" />
+					<li key={ index } className="df7-border-b df7-border-line last:df7-border-0">
+						<div className="df7-flex df7-items-center df7-gap-4 df7-px-5 df7-py-3.5">
+							<span className="df7-h-2 df7-w-2 df7-shrink-0 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
+							<Shimmer w="df7-w-48" text="df7-text-[15px]" className="df7-min-w-0 df7-flex-1" />
+							<Shimmer w="df7-w-28" text="df7-text-[14px]" className="df7-hidden df7-shrink-0 sm:df7-block" />
+							<Shimmer w="df7-w-36" text="df7-text-[14px]" className="df7-shrink-0" />
 						</div>
 					</li>
 				) )
 				: items.map( ( item ) => (
-				<li key={ item.id } className="cf7e-border-b cf7e-border-line last:cf7e-border-0">
+				<li key={ item.id } className="df7-border-b df7-border-line last:df7-border-0">
 					{ /* Named, so the entry opens rather than the visitor landing on
 					     the same list whichever row they clicked. */ }
 					<a
-						href={ `admin.php?page=cf7-essentials-submissions&entry=${ item.id }` }
-						className="cf7e-flex cf7e-items-center cf7e-gap-4 cf7e-px-5 cf7e-py-3.5 cf7e-no-underline cf7e-transition-colors hover:cf7e-bg-stone-50/70"
+						href={ `admin.php?page=df7-submissions&entry=${ item.id }` }
+						className="df7-flex df7-items-center df7-gap-4 df7-px-5 df7-py-3.5 df7-no-underline df7-transition-colors hover:df7-bg-stone-50/70"
 					>
 						{ ! item.read_at && (
 							<span
-								className="cf7e-h-2 cf7e-w-2 cf7e-shrink-0 cf7e-rounded-full cf7e-bg-ink"
-								title={ __( 'Not read yet', 'essentials-for-contact-form-7' ) }
+								className="df7-h-2 df7-w-2 df7-shrink-0 df7-rounded-full df7-bg-ink"
+								title={ __( 'Not read yet', 'defer-forms-for-contact-form-7' ) }
 							/>
 						) }
 						<span
-							className={ `cf7e-min-w-0 cf7e-flex-1 cf7e-truncate cf7e-text-[15px] cf7e-text-ink ${
-								item.read_at ? 'cf7e-ml-5' : 'cf7e-font-semibold'
+							className={ `df7-min-w-0 df7-flex-1 df7-truncate df7-text-[15px] df7-text-ink ${
+								item.read_at ? 'df7-ml-5' : 'df7-font-semibold'
 							}` }
 						>
-							{ summarise( item.data, __( 'No answers were filled in', 'essentials-for-contact-form-7' ) ) }
+							{ summarise( item.data, __( 'No answers were filled in', 'defer-forms-for-contact-form-7' ) ) }
 						</span>
-						<span className="cf7e-hidden cf7e-shrink-0 cf7e-truncate cf7e-text-[14px] cf7e-text-stone-400 sm:cf7e-block sm:cf7e-max-w-[10rem]">
+						<span className="df7-hidden df7-shrink-0 df7-truncate df7-text-[14px] df7-text-stone-400 sm:df7-block sm:df7-max-w-[10rem]">
 							{ titleFor( item.form_id ) }
 						</span>
-						<span className="cf7e-shrink-0 cf7e-text-[14px] cf7e-text-stone-400">{ when( item.created_at ) }</span>
+						<span className="df7-shrink-0 df7-text-[14px] df7-text-stone-400">{ when( item.created_at ) }</span>
 					</a>
 				</li>
 				) ) }
@@ -335,33 +335,33 @@ const Recent = ( { items, titleFor, loading = false } ) => (
  * in, so that is what it says.
  */
 const NothingYet = () => (
-	<div className="cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-6 cf7e-py-10 cf7e-text-center">
-		<div className="cf7e-mx-auto cf7e-flex cf7e-h-14 cf7e-w-14 cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-bg-accent-50 cf7e-text-accent">
-			<Inbox className="cf7e-h-7 cf7e-w-7" />
+	<div className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-px-6 df7-py-10 df7-text-center">
+		<div className="df7-mx-auto df7-flex df7-h-14 df7-w-14 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-accent-50 df7-text-accent">
+			<Inbox className="df7-h-7 df7-w-7" />
 		</div>
-		<h2 className="cf7e-mb-0 cf7e-mt-4 cf7e-text-xl cf7e-font-bold cf7e-text-ink">
-			{ __( 'No entries yet', 'essentials-for-contact-form-7' ) }
+		<h2 className="df7-mb-0 df7-mt-4 df7-text-xl df7-font-bold df7-text-ink">
+			{ __( 'No entries yet', 'defer-forms-for-contact-form-7' ) }
 		</h2>
-		<p className="cf7e-mx-auto cf7e-mb-0 cf7e-mt-2 cf7e-max-w-md cf7e-text-[15px] cf7e-text-stone-500">
+		<p className="df7-mx-auto df7-mb-0 df7-mt-2 df7-max-w-md df7-text-[15px] df7-text-stone-500">
 			{ __(
 				'Everything sent through your forms is kept here, with its attachments. Put a form on a page and the first one will show up.',
-				'essentials-for-contact-form-7'
+				'defer-forms-for-contact-form-7'
 			) }
 		</p>
-		<div className="cf7e-mt-6 cf7e-flex cf7e-flex-wrap cf7e-justify-center cf7e-gap-3">
+		<div className="df7-mt-6 df7-flex df7-flex-wrap df7-justify-center df7-gap-3">
 			<a
-				href="admin.php?page=cf7-essentials-templates"
-				className="cf7e-inline-flex cf7e-h-10 cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-bg-ink cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-white cf7e-no-underline"
+				href="admin.php?page=df7-templates"
+				className="df7-inline-flex df7-h-10 df7-items-center df7-gap-2 df7-rounded-lg df7-bg-ink df7-px-4 df7-text-sm df7-font-semibold df7-text-white df7-no-underline"
 			>
-				<LayoutTemplate className="cf7e-h-4 cf7e-w-4" />
-				{ __( 'Start from a template', 'essentials-for-contact-form-7' ) }
+				<LayoutTemplate className="df7-h-4 df7-w-4" />
+				{ __( 'Start from a template', 'defer-forms-for-contact-form-7' ) }
 			</a>
 			<a
-				href="admin.php?page=cf7-essentials-forms"
-				className="cf7e-inline-flex cf7e-h-10 cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-no-underline hover:cf7e-bg-stone-50"
+				href="admin.php?page=df7-forms"
+				className="df7-inline-flex df7-h-10 df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline hover:df7-bg-stone-50"
 			>
-				<FilePlus2 className="cf7e-h-4 cf7e-w-4" />
-				{ __( 'Build one from scratch', 'essentials-for-contact-form-7' ) }
+				<FilePlus2 className="df7-h-4 df7-w-4" />
+				{ __( 'Build one from scratch', 'defer-forms-for-contact-form-7' ) }
 			</a>
 		</div>
 	</div>
@@ -370,16 +370,16 @@ const NothingYet = () => (
 const QuickLink = ( { href, icon: Icon, title, desc } ) => (
 	<a
 		href={ href }
-		className="cf7e-group cf7e-flex cf7e-items-center cf7e-gap-4 cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5 cf7e-no-underline cf7e-transition-colors hover:cf7e-border-stroke hover:cf7e-bg-stone-50"
+		className="df7-group df7-flex df7-items-center df7-gap-4 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-no-underline df7-transition-colors hover:df7-border-stroke hover:df7-bg-stone-50"
 	>
-		<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-stone-100 cf7e-text-stone-500 cf7e-transition-colors group-hover:cf7e-bg-accent-50 group-hover:cf7e-text-accent">
-			<Icon className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-h-11 df7-w-11 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-xl df7-bg-stone-100 df7-text-stone-500 df7-transition-colors group-hover:df7-bg-accent-50 group-hover:df7-text-accent">
+			<Icon className="df7-h-5 df7-w-5" />
 		</div>
-		<div className="cf7e-flex cf7e-flex-1 cf7e-flex-col cf7e-gap-0.5">
-			<span className="cf7e-text-base cf7e-font-semibold cf7e-text-ink">{ title }</span>
-			<span className="cf7e-text-[15px] cf7e-text-stone-500">{ desc }</span>
+		<div className="df7-flex df7-flex-1 df7-flex-col df7-gap-0.5">
+			<span className="df7-text-base df7-font-semibold df7-text-ink">{ title }</span>
+			<span className="df7-text-[15px] df7-text-stone-500">{ desc }</span>
 		</div>
-		<ArrowRight className="cf7e-h-5 cf7e-w-5 cf7e-text-stone-400 cf7e-transition-transform group-hover:cf7e-translate-x-0.5 group-hover:cf7e-text-accent" />
+		<ArrowRight className="df7-h-5 df7-w-5 df7-text-stone-400 df7-transition-transform group-hover:df7-translate-x-0.5 group-hover:df7-text-accent" />
 	</a>
 );
 
@@ -406,7 +406,7 @@ const App = () => {
 	const markAllRead = () => {
 		setMarking( true );
 
-		apiFetch( { path: 'cf7e/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
+		apiFetch( { path: 'df7/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
 			.then( ( res ) => setStats( ( prev ) => ( { ...prev, unread: res.unread } ) ) )
 			.catch( () => {} )
 			.finally( () => setMarking( false ) );
@@ -419,12 +419,12 @@ const App = () => {
 		// Together, because the page is one answer: a chart drawn from one moment
 		// over figures from another is a screen that contradicts itself.
 		Promise.all( [
-			apiFetch( { path: 'cf7e/v1/stats' } ),
+			apiFetch( { path: 'df7/v1/stats' } ),
 			// Submitted only. Spam has its own notice above with its own count,
 			// and this list is what came in — a caught bot sitting among the
 			// newest enquiries is the one thing it should not be showing.
-			apiFetch( { path: `cf7e/v1/submissions?per_page=${ RECENT }&status=submitted` } ),
-			apiFetch( { path: 'cf7e/v1/forms' } ),
+			apiFetch( { path: `df7/v1/submissions?per_page=${ RECENT }&status=submitted` } ),
+			apiFetch( { path: 'df7/v1/forms' } ),
 		] )
 			.then( ( [ figures, entries, allForms ] ) => {
 				setStats( figures );
@@ -439,17 +439,17 @@ const App = () => {
 	const days     = stats.daily || [];
 	const received = forms.filter( ( form ) => form.count > 0 );
 	const titleFor = ( id ) =>
-		forms.find( ( form ) => form.form_id === Number( id ) )?.title || __( 'Deleted form', 'essentials-for-contact-form-7' );
+		forms.find( ( form ) => form.form_id === Number( id ) )?.title || __( 'Deleted form', 'defer-forms-for-contact-form-7' );
 
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Dashboard', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'What your forms have been receiving.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Dashboard', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'What your forms have been receiving.', 'defer-forms-for-contact-form-7' ) }
 			/>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -459,7 +459,7 @@ const App = () => {
 			) : (
 				<>
 					{ ( stats.unread > 0 || showSpam ) && (
-						<div className="cf7e-mb-6 cf7e-flex cf7e-flex-col cf7e-gap-3">
+						<div className="df7-mb-6 df7-flex df7-flex-col df7-gap-3">
 							{ stats.unread > 0 && (
 								<UnreadBanner count={ stats.unread } onMarkRead={ markAllRead } marking={ marking } />
 							) }
@@ -467,13 +467,13 @@ const App = () => {
 						</div>
 					) }
 
-					<section className="cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-6">
-						<div className="cf7e-mb-6 cf7e-grid cf7e-grid-cols-3 cf7e-gap-6">
-							<Figure label={ __( 'Today', 'essentials-for-contact-form-7' ) } value={ stats.today } loading={ loading } />
-							<Figure label={ __( 'This week', 'essentials-for-contact-form-7' ) } value={ stats.week } loading={ loading }>
+					<section className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-6">
+						<div className="df7-mb-6 df7-grid df7-grid-cols-3 df7-gap-6">
+							<Figure label={ __( 'Today', 'defer-forms-for-contact-form-7' ) } value={ stats.today } loading={ loading } />
+							<Figure label={ __( 'This week', 'defer-forms-for-contact-form-7' ) } value={ stats.week } loading={ loading }>
 								{ ! loading && <Trend of={ trend( days ) } /> }
 							</Figure>
-							<Figure label={ __( 'All time', 'essentials-for-contact-form-7' ) } value={ stats.total } loading={ loading } />
+							<Figure label={ __( 'All time', 'defer-forms-for-contact-form-7' ) } value={ stats.total } loading={ loading } />
 						</div>
 
 						<ActivityChart days={ days } loading={ loading } />
@@ -489,34 +489,34 @@ const App = () => {
 				</>
 			) }
 
-			<h2 className="cf7e-mb-3 cf7e-mt-8 cf7e-text-xl cf7e-font-bold cf7e-text-ink">
-				{ __( 'Set things up', 'essentials-for-contact-form-7' ) }
+			<h2 className="df7-mb-3 df7-mt-8 df7-text-xl df7-font-bold df7-text-ink">
+				{ __( 'Set things up', 'defer-forms-for-contact-form-7' ) }
 			</h2>
-			<div className="cf7e-grid cf7e-grid-cols-1 cf7e-gap-4 sm:cf7e-grid-cols-3">
+			<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-3">
 				<QuickLink
-					href="admin.php?page=cf7-essentials-forms"
+					href="admin.php?page=df7-forms"
 					icon={ FilePlus2 }
-					title={ __( 'Forms', 'essentials-for-contact-form-7' ) }
-					desc={ __( 'Build and edit them.', 'essentials-for-contact-form-7' ) }
+					title={ __( 'Forms', 'defer-forms-for-contact-form-7' ) }
+					desc={ __( 'Build and edit them.', 'defer-forms-for-contact-form-7' ) }
 				/>
 				<QuickLink
-					href="admin.php?page=cf7-essentials-styling"
+					href="admin.php?page=df7-styling"
 					icon={ Palette }
-					title={ __( 'Styling', 'essentials-for-contact-form-7' ) }
-					desc={ __( 'Colours, shape and spacing.', 'essentials-for-contact-form-7' ) }
+					title={ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
+					desc={ __( 'Colours, shape and spacing.', 'defer-forms-for-contact-form-7' ) }
 				/>
 				<QuickLink
-					href="admin.php?page=cf7-essentials-settings"
+					href="admin.php?page=df7-settings"
 					icon={ SettingsIcon }
-					title={ __( 'Settings', 'essentials-for-contact-form-7' ) }
-					desc={ __( 'Spam, privacy and retention.', 'essentials-for-contact-form-7' ) }
+					title={ __( 'Settings', 'defer-forms-for-contact-form-7' ) }
+					desc={ __( 'Spam, privacy and retention.', 'defer-forms-for-contact-form-7' ) }
 				/>
 			</div>
 		</Page>
 	);
 };
 
-const mount = document.getElementById( 'cf7e-dashboard-root' );
+const mount = document.getElementById( 'df7-dashboard-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

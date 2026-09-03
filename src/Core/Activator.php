@@ -2,14 +2,14 @@
 /**
  * Plugin activation handler.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\Core;
+namespace DF7\Core;
 
-use CF7E\DB\Schema;
+use DF7\DB\Schema;
 
 defined( 'ABSPATH' ) || exit;
 

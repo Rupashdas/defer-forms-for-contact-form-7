@@ -2,12 +2,12 @@
 /**
  * Dependency-injection container.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare(strict_types=1);
 
-namespace CF7E\Core;
+namespace DF7\Core;
 
 defined( 'ABSPATH' ) || exit;
 

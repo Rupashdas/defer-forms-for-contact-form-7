@@ -2,20 +2,20 @@
 /**
  * Settings storage backed by a single WP option.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\DB;
+namespace DF7\DB;
 
-use CF7E\CF7\Design;
+use DF7\CF7\Design;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Settings_Repository {
 
-	private const OPTION_KEY = 'cf7e_settings';
+	private const OPTION_KEY = 'df7_settings';
 
 	/**
 	 * @var array<string, array<string, mixed>>
@@ -68,7 +68,7 @@ final class Settings_Repository {
 			'enabled'     => false,
 			'webhook_url' => '',
 		),
-		// Mirrors the --cf7e-* contract in assets/css/controls.css. Defaults are
+		// Mirrors the --df7-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
 		'design'   => array(
@@ -255,7 +255,7 @@ final class Settings_Repository {
 				return '';
 			}
 
-			return __( 'That is not a full URL. It should begin http:// or https://', 'essentials-for-contact-form-7' );
+			return __( 'That is not a full URL. It should begin http:// or https://', 'defer-forms-for-contact-form-7' );
 		}
 
 		$hosts = array(
@@ -280,8 +280,8 @@ final class Settings_Repository {
 
 		if ( ! in_array( $host, $hosts[ $section ], true ) ) {
 			return 'slack' === $section
-				? __( 'That is not a Slack webhook URL. It should begin https://hooks.slack.com/services/', 'essentials-for-contact-form-7' )
-				: __( 'That is not a Discord webhook URL. It should begin https://discord.com/api/webhooks/', 'essentials-for-contact-form-7' );
+				? __( 'That is not a Slack webhook URL. It should begin https://hooks.slack.com/services/', 'defer-forms-for-contact-form-7' )
+				: __( 'That is not a Discord webhook URL. It should begin https://discord.com/api/webhooks/', 'defer-forms-for-contact-form-7' );
 		}
 
 		return '';

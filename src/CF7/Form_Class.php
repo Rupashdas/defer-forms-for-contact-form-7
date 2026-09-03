@@ -11,18 +11,18 @@
  * somebody expects to write; a wrapper would make it `.my-form .wpcf7-form
  * input` and the extra step would be a surprise every time.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Form_Class {
 
-	private const META = '_cf7e_form_class';
+	private const META = '_df7_form_class';
 
 	public function register_hooks(): void {
 		add_filter( 'wpcf7_form_class_attr', array( $this, 'add' ) );

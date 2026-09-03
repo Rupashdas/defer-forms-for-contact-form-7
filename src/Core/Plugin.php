@@ -2,12 +2,12 @@
 /**
  * Plugin orchestrator.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare(strict_types=1);
 
-namespace CF7E\Core;
+namespace DF7\Core;
 
 /*
  * Above the imports rather than below them.
@@ -23,45 +23,45 @@ namespace CF7E\Core;
  */
 defined( 'ABSPATH' ) || exit;
 
-use CF7E\Admin\Assets;
-use CF7E\Admin\Attachment_Download;
-use CF7E\Admin\Cf7_Integration;
-use CF7E\Admin\Csv_Export;
-use CF7E\Admin\Menu;
-use CF7E\CF7\Attachments;
-use CF7E\CF7\Conditional;
-use CF7E\CF7\Country;
-use CF7E\CF7\Date_Picker;
-use CF7E\CF7\Design;
-use CF7E\CF7\Dynamic_Text;
-use CF7E\CF7\File_Field;
-use CF7E\CF7\Form_Class;
-use CF7E\CF7\Form_Styles;
-use CF7E\CF7\Grid;
-use CF7E\CF7\Honeypot;
-use CF7E\CF7\Marker_Cleanup;
-use CF7E\CF7\Password;
-use CF7E\CF7\Prefill;
-use CF7E\CF7\Product_Field;
-use CF7E\CF7\Rating;
-use CF7E\CF7\Spam_Guard;
-use CF7E\CF7\Redirect;
-use CF7E\CF7\Revisions;
-use CF7E\CF7\Steps;
-use CF7E\CF7\Submission_Id;
-use CF7E\CF7\Submission_Listener;
-use CF7E\CF7\Validation;
-use CF7E\DB\Settings_Repository;
-use CF7E\DB\Submissions_Repository;
-use CF7E\Privacy\Privacy;
-use CF7E\Modules\Registry;
-use CF7E\REST\Forms_Controller;
-use CF7E\REST\Modules_Controller;
-use CF7E\REST\Settings_Controller;
-use CF7E\REST\Submissions_Controller;
-use CF7E\REST\Templates_Controller;
-use CF7E\REST\Transfer_Controller;
-use CF7E\Templates\Registry as Template_Registry;
+use DF7\Admin\Assets;
+use DF7\Admin\Attachment_Download;
+use DF7\Admin\Cf7_Integration;
+use DF7\Admin\Csv_Export;
+use DF7\Admin\Menu;
+use DF7\CF7\Attachments;
+use DF7\CF7\Conditional;
+use DF7\CF7\Country;
+use DF7\CF7\Date_Picker;
+use DF7\CF7\Design;
+use DF7\CF7\Dynamic_Text;
+use DF7\CF7\File_Field;
+use DF7\CF7\Form_Class;
+use DF7\CF7\Form_Styles;
+use DF7\CF7\Grid;
+use DF7\CF7\Honeypot;
+use DF7\CF7\Marker_Cleanup;
+use DF7\CF7\Password;
+use DF7\CF7\Prefill;
+use DF7\CF7\Product_Field;
+use DF7\CF7\Rating;
+use DF7\CF7\Spam_Guard;
+use DF7\CF7\Redirect;
+use DF7\CF7\Revisions;
+use DF7\CF7\Steps;
+use DF7\CF7\Submission_Id;
+use DF7\CF7\Submission_Listener;
+use DF7\CF7\Validation;
+use DF7\DB\Settings_Repository;
+use DF7\DB\Submissions_Repository;
+use DF7\Privacy\Privacy;
+use DF7\Modules\Registry;
+use DF7\REST\Forms_Controller;
+use DF7\REST\Modules_Controller;
+use DF7\REST\Settings_Controller;
+use DF7\REST\Submissions_Controller;
+use DF7\REST\Templates_Controller;
+use DF7\REST\Transfer_Controller;
+use DF7\Templates\Registry as Template_Registry;
 
 final class Plugin {
 
@@ -135,10 +135,10 @@ final class Plugin {
 		}
 
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
-		add_action( 'cf7e_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
+		add_action( 'df7_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
 
-		if ( ! wp_next_scheduled( 'cf7e_daily_cleanup' ) ) {
-			wp_schedule_event( time(), 'daily', 'cf7e_daily_cleanup' );
+		if ( ! wp_next_scheduled( 'df7_daily_cleanup' ) ) {
+			wp_schedule_event( time(), 'daily', 'df7_daily_cleanup' );
 		}
 	}
 

@@ -32,10 +32,10 @@ import '@shared/styles/admin.css';
 const PER_PAGE_OPTIONS = [ 20, 50, 100 ];
 
 const DATE_PRESETS = [
-	{ id: 'all',   label: __( 'All time', 'essentials-for-contact-form-7' ),    days: null },
-	{ id: 'today', label: __( 'Today', 'essentials-for-contact-form-7' ),       days: 0 },
-	{ id: '7d',    label: __( 'Last 7 days', 'essentials-for-contact-form-7' ), days: 7 },
-	{ id: '30d',   label: __( 'Last 30 days', 'essentials-for-contact-form-7' ),days: 30 },
+	{ id: 'all',   label: __( 'All time', 'defer-forms-for-contact-form-7' ),    days: null },
+	{ id: 'today', label: __( 'Today', 'defer-forms-for-contact-form-7' ),       days: 0 },
+	{ id: '7d',    label: __( 'Last 7 days', 'defer-forms-for-contact-form-7' ), days: 7 },
+	{ id: '30d',   label: __( 'Last 30 days', 'defer-forms-for-contact-form-7' ),days: 30 },
 ];
 
 const dateRangeFor = ( presetId ) => {
@@ -57,10 +57,10 @@ const dateRangeFor = ( presetId ) => {
 };
 
 const buildExportUrl = ( filters ) => {
-	const cfg    = window.cf7eSubmissions || {};
+	const cfg    = window.df7Submissions || {};
 	const range  = dateRangeFor( filters.date );
 	const params = new URLSearchParams( {
-		action:    'cf7e_export_csv',
+		action:    'df7_export_csv',
 		_wpnonce:  cfg.exportNonce || '',
 		search:    filters.search || '',
 		status:    filters.status || '',
@@ -148,12 +148,12 @@ const pushEntry = ( id ) => {
  *
  * Contact Form 7 stores a file field's value as a sha256 of the file's contents
  * and then deletes the file, so the row on its own can never show what was sent.
- * A copy is taken at submit time and listed under `_cf7e_files` — a key the
+ * A copy is taken at submit time and listed under `_df7_files` — a key the
  * field list already skips, so it shows up here and nowhere else.
  */
 const attachmentsFor = ( json, field ) => {
 	try {
-		const kept = JSON.parse( json )._cf7e_files;
+		const kept = JSON.parse( json )._df7_files;
 		const files = kept && kept.fields && kept.fields[ field ];
 
 		if ( ! files || ! files.length ) {
@@ -168,9 +168,9 @@ const attachmentsFor = ( json, field ) => {
 };
 
 const attachmentUrl = ( dir, file ) => {
-	const cfg = window.cf7eSubmissions || {};
+	const cfg = window.df7Submissions || {};
 	const params = new URLSearchParams( {
-		action:   'cf7e_attachment',
+		action:   'df7_attachment',
 		_wpnonce: cfg.attachmentNonce || '',
 		dir:      dir || '',
 		file:     file.file,
@@ -182,12 +182,12 @@ const attachmentUrl = ( dir, file ) => {
 const fileSize = ( bytes ) => {
 	const size = Number( bytes ) || 0;
 	if ( size < 1024 ) {
-		return sprintf( /* translators: %d: size in bytes. */ __( '%d B', 'essentials-for-contact-form-7' ), size );
+		return sprintf( /* translators: %d: size in bytes. */ __( '%d B', 'defer-forms-for-contact-form-7' ), size );
 	}
 	if ( size < 1024 * 1024 ) {
-		return sprintf( /* translators: %s: size in kilobytes. */ __( '%s KB', 'essentials-for-contact-form-7' ), ( size / 1024 ).toFixed( 0 ) );
+		return sprintf( /* translators: %s: size in kilobytes. */ __( '%s KB', 'defer-forms-for-contact-form-7' ), ( size / 1024 ).toFixed( 0 ) );
 	}
-	return sprintf( /* translators: %s: size in megabytes. */ __( '%s MB', 'essentials-for-contact-form-7' ), ( size / 1024 / 1024 ).toFixed( 1 ) );
+	return sprintf( /* translators: %s: size in megabytes. */ __( '%s MB', 'defer-forms-for-contact-form-7' ), ( size / 1024 / 1024 ).toFixed( 1 ) );
 };
 
 const fieldPreview = ( json ) => {
@@ -202,8 +202,8 @@ const fieldPreview = ( json ) => {
 };
 
 const STATUS_META = {
-	submitted: { dot: 'cf7e-bg-emerald-500', cls: 'cf7e-bg-emerald-50 cf7e-text-emerald-700', label: __( 'Submitted', 'essentials-for-contact-form-7' ) },
-	spam:      { dot: 'cf7e-bg-red-500',     cls: 'cf7e-bg-red-50 cf7e-text-red-700',         label: __( 'Spam', 'essentials-for-contact-form-7' ) },
+	submitted: { dot: 'df7-bg-emerald-500', cls: 'df7-bg-emerald-50 df7-text-emerald-700', label: __( 'Submitted', 'defer-forms-for-contact-form-7' ) },
+	spam:      { dot: 'df7-bg-red-500',     cls: 'df7-bg-red-50 df7-text-red-700',         label: __( 'Spam', 'defer-forms-for-contact-form-7' ) },
 };
 
 /**
@@ -217,8 +217,8 @@ const STATUS_META = {
  * is a badge that stops being read.
  */
 const STAGE_META = {
-	replied: { cls: 'cf7e-bg-sky-50 cf7e-text-sky-700', label: __( 'Replied', 'essentials-for-contact-form-7' ) },
-	done:    { cls: 'cf7e-bg-stone-100 cf7e-text-stone-600', label: __( 'Done', 'essentials-for-contact-form-7' ) },
+	replied: { cls: 'df7-bg-sky-50 df7-text-sky-700', label: __( 'Replied', 'defer-forms-for-contact-form-7' ) },
+	done:    { cls: 'df7-bg-stone-100 df7-text-stone-600', label: __( 'Done', 'defer-forms-for-contact-form-7' ) },
 };
 
 const StagePill = ( { stage } ) => {
@@ -229,17 +229,17 @@ const StagePill = ( { stage } ) => {
 	}
 
 	return (
-		<span className={ `cf7e-inline-flex cf7e-items-center cf7e-rounded-full cf7e-px-2.5 cf7e-py-1 cf7e-text-sm cf7e-font-semibold ${ meta.cls }` }>
+		<span className={ `df7-inline-flex df7-items-center df7-rounded-full df7-px-2.5 df7-py-1 df7-text-sm df7-font-semibold ${ meta.cls }` }>
 			{ meta.label }
 		</span>
 	);
 };
 
 const StatusPill = ( { status } ) => {
-	const meta = STATUS_META[ status ] || { dot: 'cf7e-bg-stone-400', cls: 'cf7e-bg-stone-100 cf7e-text-stone-600', label: status };
+	const meta = STATUS_META[ status ] || { dot: 'df7-bg-stone-400', cls: 'df7-bg-stone-100 df7-text-stone-600', label: status };
 	return (
-		<span className={ `cf7e-inline-flex cf7e-items-center cf7e-gap-1.5 cf7e-rounded-full cf7e-px-2.5 cf7e-py-1 cf7e-text-sm cf7e-font-semibold ${ meta.cls }` }>
-			<span className={ `cf7e-h-1.5 cf7e-w-1.5 cf7e-rounded-full ${ meta.dot }` } />
+		<span className={ `df7-inline-flex df7-items-center df7-gap-1.5 df7-rounded-full df7-px-2.5 df7-py-1 df7-text-sm df7-font-semibold ${ meta.cls }` }>
+			<span className={ `df7-h-1.5 df7-w-1.5 df7-rounded-full ${ meta.dot }` } />
 			{ meta.label }
 		</span>
 	);
@@ -247,21 +247,21 @@ const StatusPill = ( { status } ) => {
 
 const StatChip = ( { icon: Icon, label, value, tone } ) => {
 	const tones = {
-		accent:  'cf7e-bg-accent-50 cf7e-text-accent',
-		emerald: 'cf7e-bg-emerald-50 cf7e-text-emerald-600',
-		amber:   'cf7e-bg-amber-50 cf7e-text-amber-600',
-		red:     'cf7e-bg-red-50 cf7e-text-red-600',
+		accent:  'df7-bg-accent-50 df7-text-accent',
+		emerald: 'df7-bg-emerald-50 df7-text-emerald-600',
+		amber:   'df7-bg-amber-50 df7-text-amber-600',
+		red:     'df7-bg-red-50 df7-text-red-600',
 	};
 	return (
-		<div className="cf7e-flex cf7e-items-center cf7e-gap-3 cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-4 cf7e-py-3">
-			<div className={ `cf7e-flex cf7e-h-10 cf7e-w-10 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-xl ${ tones[ tone ] }` }>
-				<Icon className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-items-center df7-gap-3 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-px-4 df7-py-3">
+			<div className={ `df7-flex df7-h-10 df7-w-10 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-xl ${ tones[ tone ] }` }>
+				<Icon className="df7-h-5 df7-w-5" />
 			</div>
-			<div className="cf7e-flex cf7e-flex-col cf7e-leading-none">
-				<span className="cf7e-text-2xl cf7e-font-bold cf7e-tracking-tight cf7e-text-ink cf7e-tnum">
+			<div className="df7-flex df7-flex-col df7-leading-none">
+				<span className="df7-text-2xl df7-font-bold df7-tracking-tight df7-text-ink df7-tnum">
 					{ value.toLocaleString() }
 				</span>
-				<span className="cf7e-mt-1.5 cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">
+				<span className="df7-mt-1.5 df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
 					{ label }
 				</span>
 			</div>
@@ -270,11 +270,11 @@ const StatChip = ( { icon: Icon, label, value, tone } ) => {
 };
 
 const StatStrip = ( { stats } ) => (
-	<div className="cf7e-mb-5 cf7e-grid cf7e-grid-cols-2 cf7e-gap-3 sm:cf7e-grid-cols-4">
-		<StatChip icon={ Inbox }        label={ __( 'Total', 'essentials-for-contact-form-7' ) }     value={ stats.total } tone="accent" />
-		<StatChip icon={ CalendarDays } label={ __( 'Today', 'essentials-for-contact-form-7' ) }     value={ stats.today } tone="emerald" />
-		<StatChip icon={ CalendarDays } label={ __( 'This week', 'essentials-for-contact-form-7' ) } value={ stats.week }  tone="amber" />
-		<StatChip icon={ ShieldAlert }  label={ __( 'Spam', 'essentials-for-contact-form-7' ) }      value={ stats.spam }  tone="red" />
+	<div className="df7-mb-5 df7-grid df7-grid-cols-2 df7-gap-3 sm:df7-grid-cols-4">
+		<StatChip icon={ Inbox }        label={ __( 'Total', 'defer-forms-for-contact-form-7' ) }     value={ stats.total } tone="accent" />
+		<StatChip icon={ CalendarDays } label={ __( 'Today', 'defer-forms-for-contact-form-7' ) }     value={ stats.today } tone="emerald" />
+		<StatChip icon={ CalendarDays } label={ __( 'This week', 'defer-forms-for-contact-form-7' ) } value={ stats.week }  tone="amber" />
+		<StatChip icon={ ShieldAlert }  label={ __( 'Spam', 'defer-forms-for-contact-form-7' ) }      value={ stats.spam }  tone="red" />
 	</div>
 );
 
@@ -291,9 +291,9 @@ const StatusTabs = ( { active, onChange, stats } ) => (
 		active={ active }
 		onChange={ onChange }
 		tabs={ [
-			{ id: '',          label: __( 'All', 'essentials-for-contact-form-7' ),       count: stats.total.toLocaleString() },
-			{ id: 'submitted', label: __( 'Submitted', 'essentials-for-contact-form-7' ), count: stats.submitted.toLocaleString() },
-			{ id: 'spam',      label: __( 'Spam', 'essentials-for-contact-form-7' ),      count: stats.spam.toLocaleString() },
+			{ id: '',          label: __( 'All', 'defer-forms-for-contact-form-7' ),       count: stats.total.toLocaleString() },
+			{ id: 'submitted', label: __( 'Submitted', 'defer-forms-for-contact-form-7' ), count: stats.submitted.toLocaleString() },
+			{ id: 'spam',      label: __( 'Spam', 'defer-forms-for-contact-form-7' ),      count: stats.spam.toLocaleString() },
 		] }
 	/>
 );
@@ -302,7 +302,7 @@ const StatusTabs = ( { active, onChange, stats } ) => (
 // room for its icon with `pl-10`, and a `px-3` alongside it would win or lose
 // on stylesheet order rather than on intent.
 const controlBase =
-	`cf7e-h-9 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-sm cf7e-text-ink cf7e-transition-colors ${ focusRing }`;
+	`df7-h-9 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-sm df7-text-ink df7-transition-colors ${ focusRing }`;
 
 const FilterBar = ( {
 	search, onSearchChange,
@@ -314,7 +314,7 @@ const FilterBar = ( {
 	forms,
 } ) => {
 	const formOptions = [
-		{ value: 0, label: __( 'All forms', 'essentials-for-contact-form-7' ) },
+		{ value: 0, label: __( 'All forms', 'defer-forms-for-contact-form-7' ) },
 		...forms.map( ( form ) => ( { value: form.form_id, label: `${ form.title } (${ form.count })` } ) ),
 	];
 	const dateOptions    = DATE_PRESETS.map( ( preset ) => ( { value: preset.id, label: preset.label } ) );
@@ -326,40 +326,40 @@ const FilterBar = ( {
 	 * twenty enquiries in the list, which ones still need me.
 	 */
 	const stageOptions = [
-		{ value: '', label: __( 'Any progress', 'essentials-for-contact-form-7' ) },
-		{ value: 'new', label: __( 'Not handled yet', 'essentials-for-contact-form-7' ) },
-		{ value: 'replied', label: __( 'Replied', 'essentials-for-contact-form-7' ) },
-		{ value: 'done', label: __( 'Done', 'essentials-for-contact-form-7' ) },
+		{ value: '', label: __( 'Any progress', 'defer-forms-for-contact-form-7' ) },
+		{ value: 'new', label: __( 'Not handled yet', 'defer-forms-for-contact-form-7' ) },
+		{ value: 'replied', label: __( 'Replied', 'defer-forms-for-contact-form-7' ) },
+		{ value: 'done', label: __( 'Done', 'defer-forms-for-contact-form-7' ) },
 	];
 	const perPageOptions = PER_PAGE_OPTIONS.map( ( size ) => ( {
 		value: size,
-		label: sprintf( /* translators: %d: rows per page. */ __( '%d / page', 'essentials-for-contact-form-7' ), size ),
+		label: sprintf( /* translators: %d: rows per page. */ __( '%d / page', 'defer-forms-for-contact-form-7' ), size ),
 	} ) );
 
 	return (
-		<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-2">
-			<div className="cf7e-relative cf7e-min-w-[15rem] cf7e-flex-1">
-				<Search className="cf7e-pointer-events-none cf7e-absolute cf7e-left-3 cf7e-top-1/2 cf7e-h-4 cf7e-w-4 -cf7e-translate-y-1/2 cf7e-text-stone-400" />
+		<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-2">
+			<div className="df7-relative df7-min-w-[15rem] df7-flex-1">
+				<Search className="df7-pointer-events-none df7-absolute df7-left-3 df7-top-1/2 df7-h-4 df7-w-4 -df7-translate-y-1/2 df7-text-stone-400" />
 				<input
 					type="search"
 					value={ search }
 					onChange={ ( event ) => onSearchChange( event.target.value ) }
-					placeholder={ __( 'Search submissions…', 'essentials-for-contact-form-7' ) }
-					className={ `${ controlBase } cf7e-w-full cf7e-pl-10 cf7e-pr-3 placeholder:cf7e-text-stone-400` }
+					placeholder={ __( 'Search submissions…', 'defer-forms-for-contact-form-7' ) }
+					className={ `${ controlBase } df7-w-full df7-pl-10 df7-pr-3 placeholder:df7-text-stone-400` }
 				/>
 			</div>
 
-			<Select className="cf7e-w-44" icon={ FileText } value={ formId }  onChange={ onFormChange }    options={ formOptions } />
-			<Select className="cf7e-w-44" icon={ CheckCheck } value={ stage } onChange={ onStageChange }  options={ stageOptions } />
-			<Select className="cf7e-w-40" icon={ Filter }   value={ date }    onChange={ onDateChange }    options={ dateOptions } />
-			<Select className="cf7e-w-32" value={ perPage } onChange={ onPerPageChange } options={ perPageOptions } align="right" />
+			<Select className="df7-w-44" icon={ FileText } value={ formId }  onChange={ onFormChange }    options={ formOptions } />
+			<Select className="df7-w-44" icon={ CheckCheck } value={ stage } onChange={ onStageChange }  options={ stageOptions } />
+			<Select className="df7-w-40" icon={ Filter }   value={ date }    onChange={ onDateChange }    options={ dateOptions } />
+			<Select className="df7-w-32" value={ perPage } onChange={ onPerPageChange } options={ perPageOptions } align="right" />
 
 			<a
 				href={ exportHref }
-				className="cf7e-inline-flex cf7e-h-9 cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border-0 cf7e-bg-ink cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-white cf7e-no-underline cf7e-transition-opacity hover:cf7e-opacity-90 active:cf7e-opacity-100"
+				className="df7-inline-flex df7-h-9 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-ink df7-px-4 df7-text-sm df7-font-semibold df7-text-white df7-no-underline df7-transition-opacity hover:df7-opacity-90 active:df7-opacity-100"
 			>
-				<Download className="cf7e-h-4 cf7e-w-4 cf7e-text-white/70" />
-				{ __( 'Export CSV', 'essentials-for-contact-form-7' ) }
+				<Download className="df7-h-4 df7-w-4 df7-text-white/70" />
+				{ __( 'Export CSV', 'defer-forms-for-contact-form-7' ) }
 			</a>
 		</div>
 	);
@@ -375,30 +375,30 @@ const SortHeader = ( { label, sortKey, currentSort, onSort } ) => {
 		<button
 			type="button"
 			onClick={ () => onSort( next ) }
-			className="cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-1 cf7e-border-0 cf7e-bg-transparent cf7e-p-0 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400 cf7e-transition-colors hover:cf7e-text-ink"
+			className="df7-flex df7-cursor-pointer df7-items-center df7-gap-1 df7-border-0 df7-bg-transparent df7-p-0 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400 df7-transition-colors hover:df7-text-ink"
 		>
 			{ label }
-			<Icon className={ `cf7e-h-3 cf7e-w-3 ${ isActive ? 'cf7e-text-accent' : 'cf7e-text-stone-400' }` } />
+			<Icon className={ `df7-h-3 df7-w-3 ${ isActive ? 'df7-text-accent' : 'df7-text-stone-400' }` } />
 		</button>
 	);
 };
 
-const headCellClass = 'cf7e-px-4 cf7e-py-3 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400';
+const headCellClass = 'df7-px-4 df7-py-3 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400';
 
 const EmptyState = ( { hasFilters } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-items-center cf7e-justify-center cf7e-py-24 cf7e-text-center">
-		<div className="cf7e-mb-4 cf7e-flex cf7e-h-16 cf7e-w-16 cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-bg-stone-50 cf7e-text-stone-400">
-			<Inbox className="cf7e-h-8 cf7e-w-8" />
+	<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-py-24 df7-text-center">
+		<div className="df7-mb-4 df7-flex df7-h-16 df7-w-16 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-stone-50 df7-text-stone-400">
+			<Inbox className="df7-h-8 df7-w-8" />
 		</div>
-		<h3 className="cf7e-m-0 cf7e-text-lg cf7e-font-bold cf7e-text-ink">
+		<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">
 			{ hasFilters
-				? __( 'No matching submissions', 'essentials-for-contact-form-7' )
-				: __( 'No submissions yet', 'essentials-for-contact-form-7' ) }
+				? __( 'No matching submissions', 'defer-forms-for-contact-form-7' )
+				: __( 'No submissions yet', 'defer-forms-for-contact-form-7' ) }
 		</h3>
-		<p className="cf7e-mt-1 cf7e-max-w-xs cf7e-text-sm cf7e-text-stone-500">
+		<p className="df7-mt-1 df7-max-w-xs df7-text-sm df7-text-stone-500">
 			{ hasFilters
-				? __( 'Try clearing your filters or a different search term.', 'essentials-for-contact-form-7' )
-				: __( 'Entries will appear here as soon as a form is submitted.', 'essentials-for-contact-form-7' ) }
+				? __( 'Try clearing your filters or a different search term.', 'defer-forms-for-contact-form-7' )
+				: __( 'Entries will appear here as soon as a form is submitted.', 'defer-forms-for-contact-form-7' ) }
 		</p>
 	</div>
 );
@@ -415,20 +415,20 @@ const EmptyState = ( { hasFilters } ) => (
 const SkeletonRows = ( { perPage } ) => (
 	<>
 		{ Array.from( { length: Math.min( perPage, 8 ) } ).map( ( _, i ) => (
-			<tr key={ i } className="cf7e-border-b cf7e-border-line last:cf7e-border-0">
-				<td className="cf7e-px-4 cf7e-py-3.5"><div className="cf7e-h-4 cf7e-w-4 cf7e-animate-pulse cf7e-rounded cf7e-bg-stone-100" /></td>
-				<td className="cf7e-px-4 cf7e-py-3.5"><Shimmer w="cf7e-w-10" text="cf7e-text-sm" /></td>
-				<td className="cf7e-px-4 cf7e-py-3.5"><Shimmer w="cf7e-w-28" text="cf7e-text-sm" /></td>
-				<td className="cf7e-px-4 cf7e-py-3.5"><Shimmer w="cf7e-w-full" text="cf7e-text-sm" /></td>
+			<tr key={ i } className="df7-border-b df7-border-line last:df7-border-0">
+				<td className="df7-px-4 df7-py-3.5"><div className="df7-h-4 df7-w-4 df7-animate-pulse df7-rounded df7-bg-stone-100" /></td>
+				<td className="df7-px-4 df7-py-3.5"><Shimmer w="df7-w-10" text="df7-text-sm" /></td>
+				<td className="df7-px-4 df7-py-3.5"><Shimmer w="df7-w-28" text="df7-text-sm" /></td>
+				<td className="df7-px-4 df7-py-3.5"><Shimmer w="df7-w-full" text="df7-text-sm" /></td>
 				{ /* The status pill: its own padding, so a plain bar is short. */ }
-				<td className="cf7e-px-4 cf7e-py-3.5">
-					<span className="cf7e-inline-block cf7e-animate-pulse cf7e-rounded-full cf7e-bg-stone-100 cf7e-px-2.5 cf7e-py-1 cf7e-text-sm cf7e-text-transparent">
+				<td className="df7-px-4 df7-py-3.5">
+					<span className="df7-inline-block df7-animate-pulse df7-rounded-full df7-bg-stone-100 df7-px-2.5 df7-py-1 df7-text-sm df7-text-transparent">
 						{ '\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0' }
 					</span>
 				</td>
-				<td className="cf7e-px-4 cf7e-py-3.5"><Shimmer w="cf7e-w-20" text="cf7e-text-[14px]" /></td>
+				<td className="df7-px-4 df7-py-3.5"><Shimmer w="df7-w-20" text="df7-text-[14px]" /></td>
 				{ /* The delete button, and the reason a row is 57px rather than 49. */ }
-				<td className="cf7e-px-4 cf7e-py-3.5"><div className="cf7e-h-7 cf7e-w-7 cf7e-animate-pulse cf7e-rounded-md cf7e-bg-stone-100" /></td>
+				<td className="df7-px-4 df7-py-3.5"><div className="df7-h-7 df7-w-7 df7-animate-pulse df7-rounded-md df7-bg-stone-100" /></td>
 			</tr>
 		) ) }
 	</>
@@ -454,8 +454,8 @@ const ReplyBox = ( { item, onSent } ) => {
 
 	if ( ! item.reply_to ) {
 		return (
-			<div className="cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-4 cf7e-py-3 cf7e-text-[15px] cf7e-text-stone-500">
-				{ __( 'This form did not ask for an email address, so there is nobody to reply to.', 'essentials-for-contact-form-7' ) }
+			<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-4 df7-py-3 df7-text-[15px] df7-text-stone-500">
+				{ __( 'This form did not ask for an email address, so there is nobody to reply to.', 'defer-forms-for-contact-form-7' ) }
 			</div>
 		);
 	}
@@ -464,7 +464,7 @@ const ReplyBox = ( { item, onSent } ) => {
 		setState( { sending: true } );
 
 		apiFetch( {
-			path:   `cf7e/v1/submissions/${ item.id }/reply`,
+			path:   `df7/v1/submissions/${ item.id }/reply`,
 			method: 'POST',
 			data:   { subject, message },
 		} )
@@ -488,28 +488,28 @@ const ReplyBox = ( { item, onSent } ) => {
 	 */
 	if ( ! open ) {
 		return (
-			<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-3">
+			<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-3">
 			<button type="button" onClick={ () => setOpen( true ) } className={ btnGhost }>
-				<Reply className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
+				<Reply className="df7-h-4 df7-w-4 df7-text-stone-400" />
 				{ sprintf(
 					/* translators: %s: the visitor's email address. */
-					__( 'Reply to %s', 'essentials-for-contact-form-7' ),
+					__( 'Reply to %s', 'defer-forms-for-contact-form-7' ),
 					item.reply_to
 				) }
 			</button>
 			{ state?.sent && (
-				<span className="cf7e-text-sm cf7e-font-medium cf7e-text-emerald-700">{ __( 'Sent.', 'essentials-for-contact-form-7' ) }</span>
+				<span className="df7-text-sm df7-font-medium df7-text-emerald-700">{ __( 'Sent.', 'defer-forms-for-contact-form-7' ) }</span>
 			) }
 			</div>
 		);
 	}
 
 	return (
-		<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
-			<label className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink">
+		<div className="df7-flex df7-flex-col df7-gap-2">
+			<label className="df7-text-[14px] df7-font-semibold df7-text-ink">
 				{ sprintf(
 					/* translators: %s: the visitor's email address. */
-					__( 'Reply to %s', 'essentials-for-contact-form-7' ),
+					__( 'Reply to %s', 'defer-forms-for-contact-form-7' ),
 					item.reply_to
 				) }
 			</label>
@@ -518,38 +518,38 @@ const ReplyBox = ( { item, onSent } ) => {
 				type="text"
 				value={ subject }
 				onChange={ ( event ) => setSubject( event.target.value ) }
-				placeholder={ __( 'Subject', 'essentials-for-contact-form-7' ) }
-				className={ `${ controlBase } cf7e-w-full cf7e-px-3 placeholder:cf7e-text-stone-400` }
+				placeholder={ __( 'Subject', 'defer-forms-for-contact-form-7' ) }
+				className={ `${ controlBase } df7-w-full df7-px-3 placeholder:df7-text-stone-400` }
 			/>
 
 			<textarea
 				rows={ 4 }
 				value={ message }
 				onChange={ ( event ) => setMessage( event.target.value ) }
-				placeholder={ __( 'Your reply…', 'essentials-for-contact-form-7' ) }
-				className={ `cf7e-w-full cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-3 cf7e-py-2 cf7e-text-sm cf7e-leading-relaxed cf7e-text-ink cf7e-transition-colors placeholder:cf7e-text-stone-400 ${ focusRing }` }
+				placeholder={ __( 'Your reply…', 'defer-forms-for-contact-form-7' ) }
+				className={ `df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-py-2 df7-text-sm df7-leading-relaxed df7-text-ink df7-transition-colors placeholder:df7-text-stone-400 ${ focusRing }` }
 			/>
 
-			<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-3">
+			<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-3">
 				<button
 					type="button"
 					onClick={ send }
 					disabled={ state?.sending || '' === subject.trim() || '' === message.trim() }
-					className={ `${ btnGhost } disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-50` }
+					className={ `${ btnGhost } disabled:df7-cursor-not-allowed disabled:df7-opacity-50` }
 				>
-					<Reply className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
-					{ state?.sending ? __( 'Sending…', 'essentials-for-contact-form-7' ) : __( 'Send reply', 'essentials-for-contact-form-7' ) }
+					<Reply className="df7-h-4 df7-w-4 df7-text-stone-400" />
+					{ state?.sending ? __( 'Sending…', 'defer-forms-for-contact-form-7' ) : __( 'Send reply', 'defer-forms-for-contact-form-7' ) }
 				</button>
 
 				{ state?.sent && (
-					<span className="cf7e-text-sm cf7e-font-medium cf7e-text-emerald-700">{ __( 'Sent.', 'essentials-for-contact-form-7' ) }</span>
+					<span className="df7-text-sm df7-font-medium df7-text-emerald-700">{ __( 'Sent.', 'defer-forms-for-contact-form-7' ) }</span>
 				) }
 			</div>
 
 			{ /* WordPress's own words when it could not send, which on most sites
 			     means SMTP is not set up — and that is the thing to go and fix. */ }
 			{ state?.error && (
-				<div className="cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-3 cf7e-py-2 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3 df7-py-2 df7-text-sm df7-font-medium df7-text-red-700">
 					{ state.error }
 				</div>
 			) }
@@ -573,75 +573,75 @@ const SubmissionDrawer = ( { item, onClose, onDelete, onStage, onReplied } ) => 
 				<>
 					<Backdrop
 						onClick={ onClose }
-						className="cf7e-fixed cf7e-inset-0 cf7e-z-[99998] cf7e-bg-ink/30 cf7e-backdrop-blur-sm"
+						className="df7-fixed df7-inset-0 df7-z-[99998] df7-bg-ink/30 df7-backdrop-blur-sm"
 					/>
 					<aside
-						className="cf7e-fixed cf7e-right-0 cf7e-top-0 cf7e-z-[99999] cf7e-flex cf7e-h-full cf7e-w-full cf7e-max-w-[38rem] cf7e-flex-col cf7e-bg-white cf7e-shadow-drawer"
+						className="df7-fixed df7-right-0 df7-top-0 df7-z-[99999] df7-flex df7-h-full df7-w-full df7-max-w-[38rem] df7-flex-col df7-bg-white df7-shadow-drawer"
 					>
-						<header className="cf7e-flex cf7e-items-start cf7e-justify-between cf7e-gap-4 cf7e-border-b cf7e-border-line cf7e-bg-accent-50 cf7e-px-6 cf7e-py-5">
-							<div className="cf7e-flex cf7e-min-w-0 cf7e-flex-col">
-								<span className="cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-accent">
-									{ __( 'Submission', 'essentials-for-contact-form-7' ) }
+						<header className="df7-flex df7-items-start df7-justify-between df7-gap-4 df7-border-b df7-border-line df7-bg-accent-50 df7-px-6 df7-py-5">
+							<div className="df7-flex df7-min-w-0 df7-flex-col">
+								<span className="df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-accent">
+									{ __( 'Submission', 'defer-forms-for-contact-form-7' ) }
 								</span>
-								<span className="cf7e-text-2xl cf7e-font-bold cf7e-text-ink cf7e-tnum">#{ item.id }</span>
+								<span className="df7-text-2xl df7-font-bold df7-text-ink df7-tnum">#{ item.id }</span>
 
 							</div>
 							<button
 								type="button"
 								onClick={ onClose }
-								aria-label={ __( 'Close', 'essentials-for-contact-form-7' ) }
-								className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-white/70 cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-bg-white hover:cf7e-text-ink"
+								aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
+								className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-white/70 df7-text-stone-500 df7-transition-colors hover:df7-bg-white hover:df7-text-ink"
 							>
-								<X className="cf7e-h-4 cf7e-w-4" />
+								<X className="df7-h-4 df7-w-4" />
 							</button>
 						</header>
 
-						<div className="cf7e-scroll cf7e-flex-1 cf7e-overflow-y-auto cf7e-px-3.5 cf7e-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
-							<div className="cf7e-mb-6 cf7e-grid cf7e-grid-cols-2 cf7e-gap-4 cf7e-text-sm sm:cf7e-grid-cols-4">
-								<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-									<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ __( 'Status', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-scroll df7-flex-1 df7-overflow-y-auto df7-px-3.5 df7-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
+							<div className="df7-mb-6 df7-grid df7-grid-cols-2 df7-gap-4 df7-text-sm sm:df7-grid-cols-4">
+								<div className="df7-flex df7-flex-col df7-gap-1.5">
+									<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'Status', 'defer-forms-for-contact-form-7' ) }</span>
 									<StatusPill status={ item.status } />
 								</div>
-								<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-									<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ __( 'Form ID', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-font-semibold cf7e-text-ink cf7e-tnum">{ item.form_id }</span>
+								<div className="df7-flex df7-flex-col df7-gap-1.5">
+									<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'Form ID', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-font-semibold df7-text-ink df7-tnum">{ item.form_id }</span>
 								</div>
-								<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-									<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ __( 'Date', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-text-[14px] cf7e-font-medium cf7e-text-ink">{ formatDate( item.created_at ) }</span>
+								<div className="df7-flex df7-flex-col df7-gap-1.5">
+									<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'Date', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-text-[14px] df7-font-medium df7-text-ink">{ formatDate( item.created_at ) }</span>
 								</div>
 								{ item.ip && (
-									<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-										<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ __( 'IP address', 'essentials-for-contact-form-7' ) }</span>
-										<span className="cf7e-text-[14px] cf7e-font-medium cf7e-text-ink">{ item.ip }</span>
+									<div className="df7-flex df7-flex-col df7-gap-1.5">
+										<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'IP address', 'defer-forms-for-contact-form-7' ) }</span>
+										<span className="df7-text-[14px] df7-font-medium df7-text-ink">{ item.ip }</span>
 									</div>
 								) }
 							</div>
 
-							<div className="cf7e-flex cf7e-flex-col cf7e-divide-y cf7e-divide-line cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line">
+							<div className="df7-flex df7-flex-col df7-divide-y df7-divide-line df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line">
 								{ parseFields( item.data ).map( ( [ key, value ] ) => {
 									const files = attachmentsFor( item.data, key );
 
 									return (
-										<div key={ key } className="cf7e-grid cf7e-gap-1 cf7e-px-4 cf7e-py-3.5 hover:cf7e-bg-stone-50/60 sm:cf7e-grid-cols-[minmax(0,9rem)_1fr] sm:cf7e-gap-4">
-											<span className="cf7e-break-words cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ key }</span>
+										<div key={ key } className="df7-grid df7-gap-1 df7-px-4 df7-py-3.5 hover:df7-bg-stone-50/60 sm:df7-grid-cols-[minmax(0,9rem)_1fr] sm:df7-gap-4">
+											<span className="df7-break-words df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">{ key }</span>
 											{ files ? (
-												<div className="cf7e-flex cf7e-min-w-0 cf7e-flex-col cf7e-items-start cf7e-gap-1.5">
+												<div className="df7-flex df7-min-w-0 df7-flex-col df7-items-start df7-gap-1.5">
 													{ files.map( ( file ) => (
 														<a
 															key={ file.file }
 															href={ attachmentUrl( files.dir, file ) }
-															className="cf7e-inline-flex cf7e-w-fit cf7e-max-w-full cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-2.5 cf7e-py-1.5 cf7e-text-sm cf7e-font-medium cf7e-text-ink cf7e-no-underline cf7e-transition-colors hover:cf7e-border-stroke hover:cf7e-bg-stone-50"
+															className="df7-inline-flex df7-w-fit df7-max-w-full df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-px-2.5 df7-py-1.5 df7-text-sm df7-font-medium df7-text-ink df7-no-underline df7-transition-colors hover:df7-border-stroke hover:df7-bg-stone-50"
 														>
-															<Paperclip className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0 cf7e-text-stone-400" />
-															<span className="cf7e-min-w-0 cf7e-truncate">{ file.name }</span>
-															<span className="cf7e-shrink-0 cf7e-text-[14px] cf7e-text-stone-400 cf7e-tnum">{ fileSize( file.size ) }</span>
-															<Download className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0 cf7e-text-stone-400" />
+															<Paperclip className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+															<span className="df7-min-w-0 df7-truncate">{ file.name }</span>
+															<span className="df7-shrink-0 df7-text-[14px] df7-text-stone-400 df7-tnum">{ fileSize( file.size ) }</span>
+															<Download className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
 														</a>
 													) ) }
 												</div>
 											) : (
-												<span className="cf7e-whitespace-pre-wrap cf7e-break-words cf7e-text-sm cf7e-text-ink">
+												<span className="df7-whitespace-pre-wrap df7-break-words df7-text-sm df7-text-ink">
 													{ Array.isArray( value ) ? value.join( ', ' ) : String( value ) }
 												</span>
 											) }
@@ -653,38 +653,38 @@ const SubmissionDrawer = ( { item, onClose, onDelete, onStage, onReplied } ) => 
 
 						{ /* Under the answers, above the actions: you read what they
 						     wrote, then you write back. */ }
-						<div className="cf7e-border-t cf7e-border-line cf7e-px-6 cf7e-py-5">
+						<div className="df7-border-t df7-border-line df7-px-6 df7-py-5">
 							<ReplyBox item={ item } onSent={ onReplied } />
 						</div>
 
 						{ /* Where you got to, and the one thing you cannot undo,
 						     at opposite ends of the same row. */ }
-						<footer className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-justify-between cf7e-gap-3 cf7e-border-t cf7e-border-line cf7e-px-6 cf7e-py-4">
-							<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-2">
+						<footer className="df7-flex df7-flex-wrap df7-items-center df7-justify-between df7-gap-3 df7-border-t df7-border-line df7-px-6 df7-py-4">
+							<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-2">
 								{ [ 'replied', 'done' ].map( ( stage ) => (
 									<button
 										key={ stage }
 										type="button"
 										onClick={ () => onStage( item.id, item.stage === stage ? 'new' : stage ) }
 										aria-pressed={ item.stage === stage }
-										className={ `cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-px-3 cf7e-py-2 cf7e-text-sm cf7e-font-semibold cf7e-transition-colors ${
+										className={ `df7-flex df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-px-3 df7-py-2 df7-text-sm df7-font-semibold df7-transition-colors ${
 											item.stage === stage
-												? 'cf7e-border-ink cf7e-bg-ink cf7e-text-white'
-												: 'cf7e-border-line cf7e-bg-white cf7e-text-stone-500 hover:cf7e-border-stroke hover:cf7e-bg-stone-50 hover:cf7e-text-ink'
+												? 'df7-border-ink df7-bg-ink df7-text-white'
+												: 'df7-border-line df7-bg-white df7-text-stone-500 hover:df7-border-stroke hover:df7-bg-stone-50 hover:df7-text-ink'
 										}` }
 									>
-										{ 'replied' === stage ? <Reply className="cf7e-h-4 cf7e-w-4" /> : <Check className="cf7e-h-4 cf7e-w-4" /> }
-										{ 'replied' === stage ? __( 'Replied', 'essentials-for-contact-form-7' ) : __( 'Done', 'essentials-for-contact-form-7' ) }
+										{ 'replied' === stage ? <Reply className="df7-h-4 df7-w-4" /> : <Check className="df7-h-4 df7-w-4" /> }
+										{ 'replied' === stage ? __( 'Replied', 'defer-forms-for-contact-form-7' ) : __( 'Done', 'defer-forms-for-contact-form-7' ) }
 									</button>
 								) ) }
 							</div>
 							<button
 								type="button"
 								onClick={ () => onDelete( item.id ) }
-								className="cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border-0 cf7e-bg-red-50 cf7e-px-3 cf7e-py-2 cf7e-text-sm cf7e-font-semibold cf7e-text-red-700 cf7e-transition-colors hover:cf7e-bg-red-100"
+								className="df7-flex df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-red-50 df7-px-3 df7-py-2 df7-text-sm df7-font-semibold df7-text-red-700 df7-transition-colors hover:df7-bg-red-100"
 							>
-								<Trash2 className="cf7e-h-4 cf7e-w-4" />
-								{ __( 'Delete submission', 'essentials-for-contact-form-7' ) }
+								<Trash2 className="df7-h-4 df7-w-4" />
+								{ __( 'Delete submission', 'defer-forms-for-contact-form-7' ) }
 							</button>
 						</footer>
 					</aside>
@@ -716,18 +716,18 @@ const pageList = ( current, total ) => {
 
 const Pagination = ( { page, totalPages, onChange } ) => {
 	const navBtn =
-		`cf7e-inline-flex cf7e-h-9 cf7e-w-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-ink cf7e-transition-colors hover:cf7e-bg-stone-50 active:cf7e-bg-stone-100 disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-40`;
+		`df7-inline-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-ink df7-transition-colors hover:df7-bg-stone-50 active:df7-bg-stone-100 disabled:df7-cursor-not-allowed disabled:df7-opacity-40`;
 
 	return (
-		<div className="cf7e-flex cf7e-items-center cf7e-gap-1.5">
+		<div className="df7-flex df7-items-center df7-gap-1.5">
 			<button
 				type="button"
 				disabled={ page <= 1 }
 				onClick={ () => onChange( page - 1 ) }
-				aria-label={ __( 'Previous page', 'essentials-for-contact-form-7' ) }
+				aria-label={ __( 'Previous page', 'defer-forms-for-contact-form-7' ) }
 				className={ navBtn }
 			>
-				<ChevronLeft className="cf7e-h-4 cf7e-w-4" />
+				<ChevronLeft className="df7-h-4 df7-w-4" />
 			</button>
 
 			{ pageList( page, totalPages ).map( ( entry ) =>
@@ -737,16 +737,16 @@ const Pagination = ( { page, totalPages, onChange } ) => {
 						type="button"
 						onClick={ () => onChange( entry ) }
 						aria-current={ entry === page ? 'page' : undefined }
-						className={ `cf7e-inline-flex cf7e-h-9 cf7e-min-w-[2.25rem] cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-px-2 cf7e-text-sm cf7e-font-semibold cf7e-tnum cf7e-transition-colors ${
+						className={ `df7-inline-flex df7-h-9 df7-min-w-[2.25rem] df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-px-2 df7-text-sm df7-font-semibold df7-tnum df7-transition-colors ${
 							entry === page
-								? 'cf7e-border-0 cf7e-bg-ink cf7e-text-white'
-								: 'cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-ink hover:cf7e-bg-stone-50'
+								? 'df7-border-0 df7-bg-ink df7-text-white'
+								: 'df7-border df7-border-stroke df7-bg-white df7-text-ink hover:df7-bg-stone-50'
 						}` }
 					>
 						{ entry }
 					</button>
 				) : (
-					<span key={ entry } className="cf7e-inline-flex cf7e-h-9 cf7e-w-6 cf7e-items-center cf7e-justify-center cf7e-text-sm cf7e-text-stone-400">
+					<span key={ entry } className="df7-inline-flex df7-h-9 df7-w-6 df7-items-center df7-justify-center df7-text-sm df7-text-stone-400">
 						…
 					</span>
 				)
@@ -756,10 +756,10 @@ const Pagination = ( { page, totalPages, onChange } ) => {
 				type="button"
 				disabled={ page >= totalPages }
 				onClick={ () => onChange( page + 1 ) }
-				aria-label={ __( 'Next page', 'essentials-for-contact-form-7' ) }
+				aria-label={ __( 'Next page', 'defer-forms-for-contact-form-7' ) }
 				className={ navBtn }
 			>
-				<ChevronRight className="cf7e-h-4 cf7e-w-4" />
+				<ChevronRight className="df7-h-4 df7-w-4" />
 			</button>
 		</div>
 	);
@@ -791,39 +791,39 @@ const ConfirmDialog = ( { data, onCancel } ) => {
 	return (
 		<>
 			{ open && (
-				<div className="cf7e-fixed cf7e-inset-0 cf7e-z-[100000] cf7e-flex cf7e-items-start cf7e-justify-center cf7e-px-4 cf7e-pb-4 cf7e-pt-[7vh]">
+				<div className="df7-fixed df7-inset-0 df7-z-[100000] df7-flex df7-items-start df7-justify-center df7-px-4 df7-pb-4 df7-pt-[7vh]">
 					<Backdrop
 						onClick={ onCancel }
-						className="cf7e-absolute cf7e-inset-0 cf7e-bg-ink/40 cf7e-backdrop-blur-sm"
+						className="df7-absolute df7-inset-0 df7-bg-ink/40 df7-backdrop-blur-sm"
 					/>
 					<div
 						role="alertdialog"
 						aria-modal="true"
-						className="cf7e-relative cf7e-w-full cf7e-max-w-sm cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-shadow-pop"
+						className="df7-relative df7-w-full df7-max-w-sm df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-shadow-pop"
 					>
-						<div className="cf7e-flex cf7e-gap-4 cf7e-p-5">
-							<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-full cf7e-bg-red-50 cf7e-text-red-600">
-								<AlertTriangle className="cf7e-h-5 cf7e-w-5" />
+						<div className="df7-flex df7-gap-4 df7-p-5">
+							<div className="df7-flex df7-h-11 df7-w-11 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-full df7-bg-red-50 df7-text-red-600">
+								<AlertTriangle className="df7-h-5 df7-w-5" />
 							</div>
-							<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-								<h3 className="cf7e-m-0 cf7e-text-base cf7e-font-bold cf7e-text-ink">{ pending.title }</h3>
-								<p className="cf7e-m-0 cf7e-text-sm cf7e-leading-relaxed cf7e-text-stone-500">{ pending.message }</p>
+							<div className="df7-flex df7-flex-col df7-gap-1.5">
+								<h3 className="df7-m-0 df7-text-base df7-font-bold df7-text-ink">{ pending.title }</h3>
+								<p className="df7-m-0 df7-text-sm df7-leading-relaxed df7-text-stone-500">{ pending.message }</p>
 							</div>
 						</div>
-						<div className="cf7e-flex cf7e-justify-end cf7e-gap-2 cf7e-border-t cf7e-border-line cf7e-bg-stone-50/50 cf7e-px-5 cf7e-py-3.5">
+						<div className="df7-flex df7-justify-end df7-gap-2 df7-border-t df7-border-line df7-bg-stone-50/50 df7-px-5 df7-py-3.5">
 							<button
 								type="button"
 								onClick={ onCancel }
 								className={ btnGhost }
 							>
-								{ __( 'Cancel', 'essentials-for-contact-form-7' ) }
+								{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }
 							</button>
 							<button
 								type="button"
 								onClick={ () => pending.onConfirm && pending.onConfirm() }
 								className={ btnDanger }
 							>
-								<Trash2 className="cf7e-h-4 cf7e-w-4" />
+								<Trash2 className="df7-h-4 df7-w-4" />
 								{ pending.confirmLabel }
 							</button>
 						</div>
@@ -883,7 +883,7 @@ const App = () => {
 			date_to:   range.to,
 			sort,
 		} );
-		apiFetch( { path: `cf7e/v1/submissions?${ params }` } )
+		apiFetch( { path: `df7/v1/submissions?${ params }` } )
 			.then( ( res ) => {
 				setItems( res.items );
 				setTotal( res.total );
@@ -895,8 +895,8 @@ const App = () => {
 
 	// Fetch stats + forms (only on filter-affecting changes).
 	useEffect( () => {
-		apiFetch( { path: 'cf7e/v1/stats' } ).then( setStats ).catch( () => {} );
-		apiFetch( { path: 'cf7e/v1/forms/overview' } ).then( setForms ).catch( () => {} );
+		apiFetch( { path: 'df7/v1/stats' } ).then( setStats ).catch( () => {} );
+		apiFetch( { path: 'df7/v1/forms/overview' } ).then( setForms ).catch( () => {} );
 	}, [ refreshKey ] );
 
 	const totalPages = Math.max( 1, Math.ceil( total / perPage ) );
@@ -929,7 +929,7 @@ const App = () => {
 			return;
 		}
 
-		apiFetch( { path: 'cf7e/v1/submissions/mark-read', method: 'POST', data: { ids: [ item.id ] } } )
+		apiFetch( { path: 'df7/v1/submissions/mark-read', method: 'POST', data: { ids: [ item.id ] } } )
 			.then( ( res ) => {
 				setItems( ( curr ) => curr.map( ( row ) => ( row.id === item.id ? { ...row, read_at: 'read' } : row ) ) );
 				setStats( ( curr ) => ( { ...curr, unread: res.unread } ) );
@@ -1011,7 +1011,7 @@ const App = () => {
 	 * the button you just pressed goes back to looking unpressed.
 	 */
 	const setStage = ( id, stage ) => {
-		apiFetch( { path: 'cf7e/v1/submissions/stage', method: 'POST', data: { ids: [ id ], stage } } )
+		apiFetch( { path: 'df7/v1/submissions/stage', method: 'POST', data: { ids: [ id ], stage } } )
 			.then( () => {
 				const value = 'new' === stage ? '' : stage;
 
@@ -1039,7 +1039,7 @@ const App = () => {
 	};
 
 	const markAllRead = () => {
-		apiFetch( { path: 'cf7e/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
+		apiFetch( { path: 'df7/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
 			.then( ( res ) => {
 				setItems( ( curr ) => curr.map( ( row ) => ( row.read_at ? row : { ...row, read_at: 'read' } ) ) );
 				setStats( ( curr ) => ( { ...curr, unread: res.unread } ) );
@@ -1049,12 +1049,12 @@ const App = () => {
 
 	const deleteOne = ( id ) => {
 		setConfirm( {
-			title:        __( 'Delete submission?', 'essentials-for-contact-form-7' ),
-			message:      __( 'This permanently removes the submission. This action cannot be undone.', 'essentials-for-contact-form-7' ),
-			confirmLabel: __( 'Delete', 'essentials-for-contact-form-7' ),
+			title:        __( 'Delete submission?', 'defer-forms-for-contact-form-7' ),
+			message:      __( 'This permanently removes the submission. This action cannot be undone.', 'defer-forms-for-contact-form-7' ),
+			confirmLabel: __( 'Delete', 'defer-forms-for-contact-form-7' ),
 			onConfirm:    async () => {
 				try {
-					await apiFetch( { path: `cf7e/v1/submissions/${ id }`, method: 'DELETE' } );
+					await apiFetch( { path: `df7/v1/submissions/${ id }`, method: 'DELETE' } );
 					closeEntry();
 					refresh();
 				} catch ( err ) {
@@ -1069,22 +1069,22 @@ const App = () => {
 	const deleteSelected = () => {
 		const count = selectedIds.length;
 		setConfirm( {
-			title:   __( 'Delete selected submissions?', 'essentials-for-contact-form-7' ),
+			title:   __( 'Delete selected submissions?', 'defer-forms-for-contact-form-7' ),
 			message: sprintf(
 				/* translators: %d: number of submissions. */
 				_n(
 					'This permanently removes %d submission. This action cannot be undone.',
 					'This permanently removes %d submissions. This action cannot be undone.',
 					count,
-					'essentials-for-contact-form-7'
+					'defer-forms-for-contact-form-7'
 				),
 				count
 			),
-			confirmLabel: __( 'Delete all', 'essentials-for-contact-form-7' ),
+			confirmLabel: __( 'Delete all', 'defer-forms-for-contact-form-7' ),
 			onConfirm:    async () => {
 				try {
 					await apiFetch( {
-						path:   'cf7e/v1/submissions/bulk-delete',
+						path:   'df7/v1/submissions/bulk-delete',
 						method: 'POST',
 						data:   { ids: selectedIds },
 					} );
@@ -1113,20 +1113,20 @@ const App = () => {
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Submissions', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'Every entry your forms have captured.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Submissions', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'Every entry your forms have captured.', 'defer-forms-for-contact-form-7' ) }
 			/>
 			<StatStrip stats={ stats } />
 
-			<div className="cf7e-mb-4 cf7e-flex cf7e-flex-col cf7e-gap-3">
-				<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-3">
+			<div className="df7-mb-4 df7-flex df7-flex-col df7-gap-3">
+				<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-3">
 					<StatusTabs active={ status } onChange={ resetPage( setStatus ) } stats={ stats } />
 					{ stats.unread > 0 && (
 						<button type="button" onClick={ markAllRead } className={ btnGhost }>
-							<CheckCheck className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
+							<CheckCheck className="df7-h-4 df7-w-4 df7-text-stone-400" />
 							{ sprintf(
 								/* translators: %s: number of unread submissions. */
-								__( 'Mark %s read', 'essentials-for-contact-form-7' ),
+								__( 'Mark %s read', 'defer-forms-for-contact-form-7' ),
 								stats.unread.toLocaleString()
 							) }
 						</button>
@@ -1144,7 +1144,7 @@ const App = () => {
 			</div>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -1153,49 +1153,49 @@ const App = () => {
 				{ selectedIds.length > 0 && (
 					<motion.div
 						initial={ { opacity: 0, y: -8 } } animate={ { opacity: 1, y: 0 } } exit={ { opacity: 0, y: -8 } }
-						className="cf7e-mb-4 cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-xl cf7e-border cf7e-border-accent-200 cf7e-bg-accent-50 cf7e-px-4 cf7e-py-2.5"
+						className="df7-mb-4 df7-flex df7-items-center df7-justify-between df7-rounded-xl df7-border df7-border-accent-200 df7-bg-accent-50 df7-px-4 df7-py-2.5"
 					>
-						<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-accent-700">
+						<span className="df7-text-sm df7-font-semibold df7-text-accent-700">
 							{ sprintf(
 								/* translators: %d: number of selected submissions. */
-								__( '%d selected', 'essentials-for-contact-form-7' ),
+								__( '%d selected', 'defer-forms-for-contact-form-7' ),
 								selectedIds.length
 							) }
 						</span>
 						<button
 							type="button"
 							onClick={ deleteSelected }
-							className="cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border-0 cf7e-bg-red-600 cf7e-px-3 cf7e-py-1.5 cf7e-text-sm cf7e-font-semibold cf7e-text-white cf7e-transition-colors hover:cf7e-bg-red-700"
+							className="df7-flex df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-red-600 df7-px-3 df7-py-1.5 df7-text-sm df7-font-semibold df7-text-white df7-transition-colors hover:df7-bg-red-700"
 						>
-							<Trash2 className="cf7e-h-4 cf7e-w-4" />
-							{ __( 'Delete selected', 'essentials-for-contact-form-7' ) }
+							<Trash2 className="df7-h-4 df7-w-4" />
+							{ __( 'Delete selected', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</motion.div>
 				) }
 			</AnimatePresence>
 
-			<div className="cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white">
-				<table className="cf7e-w-full cf7e-border-collapse cf7e-text-left">
+			<div className="df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white">
+				<table className="df7-w-full df7-border-collapse df7-text-left">
 					<thead>
-						<tr className="cf7e-border-b cf7e-border-line cf7e-bg-stone-50/70">
-							<th className="cf7e-w-10 cf7e-px-4 cf7e-py-3">
+						<tr className="df7-border-b df7-border-line df7-bg-stone-50/70">
+							<th className="df7-w-10 df7-px-4 df7-py-3">
 								<input
 									type="checkbox"
 									checked={ allSelected }
 									onChange={ toggleSelectAll }
-									className="cf7e-h-4 cf7e-w-4 cf7e-cursor-pointer cf7e-accent-accent"
+									className="df7-h-4 df7-w-4 df7-cursor-pointer df7-accent-accent"
 								/>
 							</th>
 							<th className={ headCellClass }>
-								<SortHeader label={ __( 'ID', 'essentials-for-contact-form-7' ) } sortKey="id" currentSort={ sort } onSort={ setSort } />
+								<SortHeader label={ __( 'ID', 'defer-forms-for-contact-form-7' ) } sortKey="id" currentSort={ sort } onSort={ setSort } />
 							</th>
-							<th className={ headCellClass }>{ __( 'Form', 'essentials-for-contact-form-7' ) }</th>
-							<th className={ headCellClass }>{ __( 'Preview', 'essentials-for-contact-form-7' ) }</th>
-							<th className={ headCellClass }>{ __( 'Status', 'essentials-for-contact-form-7' ) }</th>
+							<th className={ headCellClass }>{ __( 'Form', 'defer-forms-for-contact-form-7' ) }</th>
+							<th className={ headCellClass }>{ __( 'Preview', 'defer-forms-for-contact-form-7' ) }</th>
+							<th className={ headCellClass }>{ __( 'Status', 'defer-forms-for-contact-form-7' ) }</th>
 							<th className={ headCellClass }>
-								<SortHeader label={ __( 'Date', 'essentials-for-contact-form-7' ) } sortKey="date" currentSort={ sort } onSort={ setSort } />
+								<SortHeader label={ __( 'Date', 'defer-forms-for-contact-form-7' ) } sortKey="date" currentSort={ sort } onSort={ setSort } />
 							</th>
-							<th className="cf7e-w-10 cf7e-px-4 cf7e-py-3"></th>
+							<th className="df7-w-10 df7-px-4 df7-py-3"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -1216,7 +1216,7 @@ const App = () => {
 								<tr
 									key={ item.id }
 									onClick={ () => openFromClick( item ) }
-									className={ `cf7e-group cf7e-cursor-pointer cf7e-border-b cf7e-border-line cf7e-transition-colors last:cf7e-border-0 ${
+									className={ `df7-group df7-cursor-pointer df7-border-b df7-border-line df7-transition-colors last:df7-border-0 ${
 										// Three resting shades, so the ladder reads at a glance: a
 										// ticked row is the strongest, an unread one carries a light
 										// tint, and a row already read stays plain.
@@ -1225,53 +1225,53 @@ const App = () => {
 										// darker was tried and measured 4.36:1 for the muted preview
 										// text sitting on it — under what small text needs.
 										isSelected
-											? 'cf7e-bg-accent-50'
+											? 'df7-bg-accent-50'
 											: unread
-												? 'cf7e-bg-accent-50/60 hover:cf7e-bg-accent-50'
-												: 'hover:cf7e-bg-stone-50/70'
+												? 'df7-bg-accent-50/60 hover:df7-bg-accent-50'
+												: 'hover:df7-bg-stone-50/70'
 									}` }
 								>
 									{ /* An unread row is marked three ways, because any one of them
 									     alone is easy to miss: a rule down its left edge, a dot
 									     beside the id, and its text at full strength while a read
 									     row is muted. */ }
-									<td className="cf7e-relative cf7e-px-4 cf7e-py-3.5" onClick={ ( event ) => event.stopPropagation() }>
-										{ unread && <span className="cf7e-absolute cf7e-inset-y-0 cf7e-left-0 cf7e-w-[3px] cf7e-bg-accent" aria-hidden="true" /> }
+									<td className="df7-relative df7-px-4 df7-py-3.5" onClick={ ( event ) => event.stopPropagation() }>
+										{ unread && <span className="df7-absolute df7-inset-y-0 df7-left-0 df7-w-[3px] df7-bg-accent" aria-hidden="true" /> }
 										<input
 											type="checkbox"
 											checked={ isSelected }
 											onChange={ () => toggleSelect( item.id ) }
-											className="cf7e-h-4 cf7e-w-4 cf7e-cursor-pointer cf7e-accent-accent"
+											className="df7-h-4 df7-w-4 df7-cursor-pointer df7-accent-accent"
 										/>
 									</td>
-									<td className={ `cf7e-px-4 cf7e-py-3.5 cf7e-text-sm cf7e-tnum ${ unread ? 'cf7e-font-bold cf7e-text-ink' : 'cf7e-font-semibold cf7e-text-stone-500' }` }>
-										<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1.5">
+									<td className={ `df7-px-4 df7-py-3.5 df7-text-sm df7-tnum ${ unread ? 'df7-font-bold df7-text-ink' : 'df7-font-semibold df7-text-stone-500' }` }>
+										<span className="df7-inline-flex df7-items-center df7-gap-1.5">
 											{ unread
-												? <span className="cf7e-h-2 cf7e-w-2 cf7e-shrink-0 cf7e-rounded-full cf7e-bg-accent" aria-hidden="true" />
-												: <span className="cf7e-h-2 cf7e-w-2 cf7e-shrink-0" aria-hidden="true" /> }
+												? <span className="df7-h-2 df7-w-2 df7-shrink-0 df7-rounded-full df7-bg-accent" aria-hidden="true" />
+												: <span className="df7-h-2 df7-w-2 df7-shrink-0" aria-hidden="true" /> }
 											#{ item.id }
-											<span className="cf7e-sr-only">
-												{ unread ? __( 'Unread', 'essentials-for-contact-form-7' ) : __( 'Read', 'essentials-for-contact-form-7' ) }
+											<span className="df7-sr-only">
+												{ unread ? __( 'Unread', 'defer-forms-for-contact-form-7' ) : __( 'Read', 'defer-forms-for-contact-form-7' ) }
 											</span>
 										</span>
 									</td>
-									<td className={ `cf7e-px-4 cf7e-py-3.5 cf7e-text-sm ${ unread ? 'cf7e-font-semibold cf7e-text-ink' : 'cf7e-font-medium cf7e-text-stone-500' }` }>{ formTitle }</td>
-									<td className={ `cf7e-max-w-md cf7e-truncate cf7e-px-4 cf7e-py-3.5 cf7e-text-sm ${ unread ? 'cf7e-text-stone-600' : 'cf7e-text-stone-400' }` }>{ fieldPreview( item.data ) }</td>
-									<td className="cf7e-px-4 cf7e-py-3.5">
-										<div className="cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-1.5">
+									<td className={ `df7-px-4 df7-py-3.5 df7-text-sm ${ unread ? 'df7-font-semibold df7-text-ink' : 'df7-font-medium df7-text-stone-500' }` }>{ formTitle }</td>
+									<td className={ `df7-max-w-md df7-truncate df7-px-4 df7-py-3.5 df7-text-sm ${ unread ? 'df7-text-stone-600' : 'df7-text-stone-400' }` }>{ fieldPreview( item.data ) }</td>
+									<td className="df7-px-4 df7-py-3.5">
+										<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-1.5">
 											<StatusPill status={ item.status } />
 											<StagePill stage={ item.stage } />
 										</div>
 									</td>
-									<td className="cf7e-whitespace-nowrap cf7e-px-4 cf7e-py-3.5 cf7e-text-[14px] cf7e-text-stone-500 cf7e-tnum">{ formatDate( item.created_at ) }</td>
-									<td className="cf7e-px-4 cf7e-py-3.5" onClick={ ( event ) => event.stopPropagation() }>
+									<td className="df7-whitespace-nowrap df7-px-4 df7-py-3.5 df7-text-[14px] df7-text-stone-500 df7-tnum">{ formatDate( item.created_at ) }</td>
+									<td className="df7-px-4 df7-py-3.5" onClick={ ( event ) => event.stopPropagation() }>
 										<button
 											type="button"
 											onClick={ () => deleteOne( item.id ) }
-											aria-label={ __( 'Delete', 'essentials-for-contact-form-7' ) }
-											className="cf7e-flex cf7e-h-7 cf7e-w-7 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-opacity-0 cf7e-transition hover:cf7e-bg-red-50 hover:cf7e-text-red-600 group-hover:cf7e-opacity-100"
+											aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) }
+											className="df7-flex df7-h-7 df7-w-7 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition hover:df7-bg-red-50 hover:df7-text-red-600 group-hover:df7-opacity-100"
 										>
-											<Trash2 className="cf7e-h-4 cf7e-w-4" />
+											<Trash2 className="df7-h-4 df7-w-4" />
 										</button>
 									</td>
 								</tr>
@@ -1286,11 +1286,11 @@ const App = () => {
 			<ConfirmDialog data={ confirm } onCancel={ closeConfirm } />
 
 			{ totalPages > 1 && (
-				<div className="cf7e-mt-5 cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-justify-between cf7e-gap-3">
-					<p className="cf7e-m-0 cf7e-text-sm cf7e-text-stone-500 cf7e-tnum">
+				<div className="df7-mt-5 df7-flex df7-flex-wrap df7-items-center df7-justify-between df7-gap-3">
+					<p className="df7-m-0 df7-text-sm df7-text-stone-500 df7-tnum">
 						{ sprintf(
 							/* translators: 1: total entries, 2: total pages. */
-							__( '%1$s entries · %2$d pages', 'essentials-for-contact-form-7' ),
+							__( '%1$s entries · %2$d pages', 'defer-forms-for-contact-form-7' ),
 							total.toLocaleString(), totalPages
 						) }
 					</p>
@@ -1301,7 +1301,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-submissions-root' );
+const mount = document.getElementById( 'df7-submissions-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

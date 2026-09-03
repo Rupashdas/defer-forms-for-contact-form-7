@@ -286,8 +286,8 @@ const NO_CAPTION = [ 'hidden', 'quiz', 'count' ];
 // Why a locked Required toggle is locked. Kept beside the panel rather than in
 // field-rules.js so the sentences stay translatable.
 const REQUIRED_LOCK_REASON = {
-	radio: () => __( 'Contact Form 7 always requires a radio group.', 'essentials-for-contact-form-7' ),
-	quiz:  () => __( 'A quiz is only passed by answering it correctly.', 'essentials-for-contact-form-7' ),
+	radio: () => __( 'Contact Form 7 always requires a radio group.', 'defer-forms-for-contact-form-7' ),
+	quiz:  () => __( 'A quiz is only passed by answering it correctly.', 'defer-forms-for-contact-form-7' ),
 };
 const CHOICE    = [ 'select', 'checkbox', 'radio' ];
 
@@ -300,33 +300,33 @@ const HAS_VALIDATION = [ 'text', 'email', 'tel', 'url', 'password', 'textarea', 
 const PREFILLABLE = [ 'text', 'email', 'tel', 'url', 'number', 'range', 'date', 'textarea', 'password', 'hidden', 'country' ];
 
 const CONDITION_OPS = [
-	{ id: 'eq',       label: () => __( 'equals', 'essentials-for-contact-form-7' ) },
-	{ id: 'neq',      label: () => __( 'not equals', 'essentials-for-contact-form-7' ) },
-	{ id: 'gt',       label: () => __( 'greater than', 'essentials-for-contact-form-7' ) },
-	{ id: 'lt',       label: () => __( 'less than', 'essentials-for-contact-form-7' ) },
-	{ id: 'gte',      label: () => __( 'greater than or equal', 'essentials-for-contact-form-7' ) },
-	{ id: 'lte',      label: () => __( 'less than or equal', 'essentials-for-contact-form-7' ) },
-	{ id: 'empty',    label: () => __( 'is empty', 'essentials-for-contact-form-7' ) },
-	{ id: 'notempty', label: () => __( 'is not empty', 'essentials-for-contact-form-7' ) },
+	{ id: 'eq',       label: () => __( 'equals', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'neq',      label: () => __( 'not equals', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'gt',       label: () => __( 'greater than', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'lt',       label: () => __( 'less than', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'gte',      label: () => __( 'greater than or equal', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'lte',      label: () => __( 'less than or equal', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'empty',    label: () => __( 'is empty', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'notempty', label: () => __( 'is not empty', 'defer-forms-for-contact-form-7' ) },
 ];
 const VALUELESS_OPS = [ 'empty', 'notempty' ];
 
-const COLS    = 'cf7e-grid-cols-[20px_28px_minmax(0,1.4fr)_minmax(0,1fr)_120px_104px]';
-const inputCls  = `${ control } cf7e-w-full`;
+const COLS    = 'df7-grid-cols-[20px_28px_minmax(0,1.4fr)_minmax(0,1fr)_120px_104px]';
+const inputCls  = `${ control } df7-w-full`;
 // Same look as `control` but without its fixed height: every Tailwind utility
 // here is `!important`, so a height class would beat the inline height the
 // browser writes while you drag the resize grip — and the textarea would refuse
 // to resize. Initial size comes from the `rows` attribute instead.
-const textareaCls = `cf7e-w-full cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-3 cf7e-py-2 cf7e-text-sm cf7e-leading-relaxed cf7e-text-ink cf7e-transition-colors ${ focusRing }`;
+const textareaCls = `df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-py-2 df7-text-sm df7-leading-relaxed df7-text-ink df7-transition-colors ${ focusRing }`;
 const ghostBtn  = btnGhost;
 const accentBtn = btnPrimary;
 
 /* ---------- Settings form ---------- */
 const LField = ( { label, hint, children } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-		<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink">{ label }</span>
+	<div className="df7-flex df7-flex-col df7-gap-1.5">
+		<span className="df7-text-[14px] df7-font-semibold df7-text-ink">{ label }</span>
 		{ children }
-		{ hint && <span className="cf7e-text-[14px] cf7e-text-stone-400">{ hint }</span> }
+		{ hint && <span className="df7-text-[14px] df7-text-stone-400">{ hint }</span> }
 	</div>
 );
 
@@ -362,23 +362,23 @@ const ChoicesEditor = ( { fieldId, choices, onChange } ) => {
 };
 
 const SETTINGS_TABS = [
-	{ id: 'general',    label: () => __( 'General', 'essentials-for-contact-form-7' ) },
-	{ id: 'validation',  label: () => __( 'Validation', 'essentials-for-contact-form-7' ) },
-	{ id: 'conditional', label: () => __( 'Conditional', 'essentials-for-contact-form-7' ) },
-	{ id: 'advanced',    label: () => __( 'Advanced', 'essentials-for-contact-form-7' ) },
+	{ id: 'general',    label: () => __( 'General', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'validation',  label: () => __( 'Validation', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'conditional', label: () => __( 'Conditional', 'defer-forms-for-contact-form-7' ) },
+	{ id: 'advanced',    label: () => __( 'Advanced', 'defer-forms-for-contact-form-7' ) },
 ];
 
-const TwoCol = ( { children } ) => <div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-3">{ children }</div>;
+const TwoCol = ( { children } ) => <div className="df7-grid df7-grid-cols-2 df7-gap-3">{ children }</div>;
 
 // Keyed by pattern so the two lists can be checked against each other; the
 // strings are literal so a translation scanner can pick them up.
 const TEL_FORMAT_LABELS = {
-	'':                 () => __( 'No formatting', 'essentials-for-contact-form-7' ),
-	'#####-######':     () => __( 'Bangladesh — 01712-345678', 'essentials-for-contact-form-7' ),
-	'+## #####-######': () => __( 'Bangladesh with country code', 'essentials-for-contact-form-7' ),
-	'(###) ###-####':   () => __( 'US — (212) 555-1234', 'essentials-for-contact-form-7' ),
-	'##### ######':     () => __( 'India — 98765 43210', 'essentials-for-contact-form-7' ),
-	'+## #### ######':  () => __( 'International', 'essentials-for-contact-form-7' ),
+	'':                 () => __( 'No formatting', 'defer-forms-for-contact-form-7' ),
+	'#####-######':     () => __( 'Bangladesh — 01712-345678', 'defer-forms-for-contact-form-7' ),
+	'+## #####-######': () => __( 'Bangladesh with country code', 'defer-forms-for-contact-form-7' ),
+	'(###) ###-####':   () => __( 'US — (212) 555-1234', 'defer-forms-for-contact-form-7' ),
+	'##### ######':     () => __( 'India — 98765 43210', 'defer-forms-for-contact-form-7' ),
+	'+## #### ######':  () => __( 'International', 'defer-forms-for-contact-form-7' ),
 };
 
 /** Every field on the form, flattened out of rows, for the `[name]` helper list. */
@@ -422,7 +422,7 @@ const RedirectDestination = ( { redirect, items, onChange } ) => {
 
 	return (
 		<>
-			<LField label={ __( 'Redirect after submit', 'essentials-for-contact-form-7' ) }>
+			<LField label={ __( 'Redirect after submit', 'defer-forms-for-contact-form-7' ) }>
 				<Select
 					value={ destinationMode( chosen, redirect ) }
 					onChange={ ( mode ) => {
@@ -434,20 +434,20 @@ const RedirectDestination = ( { redirect, items, onChange } ) => {
 						// First, and the one a form starts on: staying put is what
 						// most forms do, and it was the only choice here with no way
 						// to say it.
-						{ value: NONE_MODE, label: __( 'Nowhere — stay on the page', 'essentials-for-contact-form-7' ) },
-						{ value: URL_MODE, label: __( 'A web address', 'essentials-for-contact-form-7' ) },
-						{ value: PAGE_MODE, label: __( 'A page on this site', 'essentials-for-contact-form-7' ) },
+						{ value: NONE_MODE, label: __( 'Nowhere — stay on the page', 'defer-forms-for-contact-form-7' ) },
+						{ value: URL_MODE, label: __( 'A web address', 'defer-forms-for-contact-form-7' ) },
+						{ value: PAGE_MODE, label: __( 'A page on this site', 'defer-forms-for-contact-form-7' ) },
 					] }
 				/>
 			</LField>
 
 			{ NONE_MODE === showing ? null : usingPage ? (
 				<LField
-					label={ __( 'Page', 'essentials-for-contact-form-7' ) }
-					hint={ __( 'Stored by page, not by address — renaming the page keeps the redirect working.', 'essentials-for-contact-form-7' ) }
+					label={ __( 'Page', 'defer-forms-for-contact-form-7' ) }
+					hint={ __( 'Stored by page, not by address — renaming the page keeps the redirect working.', 'defer-forms-for-contact-form-7' ) }
 				>
 					{ null === pages ? (
-						<div className="cf7e-h-9 cf7e-w-full cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
+						<div className="df7-h-9 df7-w-full df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
 					) : (
 						// No "— Select a page —" entry: nothing chosen is a page id of
 						// 0, which matches no option, and the placeholder says so. An
@@ -456,7 +456,7 @@ const RedirectDestination = ( { redirect, items, onChange } ) => {
 						<Select
 							value={ redirect.page_id || 0 }
 							onChange={ ( value ) => onChange( { page_id: value } ) }
-							placeholder={ __( 'Select a page…', 'essentials-for-contact-form-7' ) }
+							placeholder={ __( 'Select a page…', 'defer-forms-for-contact-form-7' ) }
 							options={ pages.map( ( page ) => ( {
 								value: page.id,
 								label: page.title?.rendered || `#${ page.id }`,
@@ -466,10 +466,10 @@ const RedirectDestination = ( { redirect, items, onChange } ) => {
 				</LField>
 			) : (
 				<LField
-					label={ __( 'Web address', 'essentials-for-contact-form-7' ) }
+					label={ __( 'Web address', 'defer-forms-for-contact-form-7' ) }
 					hint={ sprintf(
 						/* translators: %s: an example field name in square brackets. */
-						__( 'Leave empty to stay on the page. A field name in square brackets is filled in from the submission — for example %s.', 'essentials-for-contact-form-7' ),
+						__( 'Leave empty to stay on the page. A field name in square brackets is filled in from the submission — for example %s.', 'defer-forms-for-contact-form-7' ),
 						`[${ fieldNames( items )[ 0 ] || 'your-name' }]`
 					) }
 				>
@@ -501,47 +501,47 @@ const RedirectParams = ( { redirect, items, onChange } ) => {
 
 	return (
 		<LField
-			label={ __( 'Extra query parameters', 'essentials-for-contact-form-7' ) }
-			hint={ __( 'Added to the address. A value in square brackets is filled in from the submission. These end up in the address bar and browser history, so leave personal details out of them.', 'essentials-for-contact-form-7' ) }
+			label={ __( 'Extra query parameters', 'defer-forms-for-contact-form-7' ) }
+			hint={ __( 'Added to the address. A value in square brackets is filled in from the submission. These end up in the address bar and browser history, so leave personal details out of them.', 'defer-forms-for-contact-form-7' ) }
 		>
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
+			<div className="df7-flex df7-flex-col df7-gap-2">
 				{ rows.map( ( row, i ) => (
-					<div key={ i } className="cf7e-flex cf7e-items-center cf7e-gap-2">
+					<div key={ i } className="df7-flex df7-items-center df7-gap-2">
 						<input
-							className={ `${ inputCls } cf7e-w-40` }
-							placeholder={ __( 'name', 'essentials-for-contact-form-7' ) }
+							className={ `${ inputCls } df7-w-40` }
+							placeholder={ __( 'name', 'defer-forms-for-contact-form-7' ) }
 							value={ row.key || '' }
 							onChange={ ( event ) => set( i, { key: event.target.value } ) }
 						/>
 						<input
 							className={ inputCls }
-							placeholder={ names[ 0 ] ? `[${ names[ 0 ] }]` : __( 'value', 'essentials-for-contact-form-7' ) }
+							placeholder={ names[ 0 ] ? `[${ names[ 0 ] }]` : __( 'value', 'defer-forms-for-contact-form-7' ) }
 							value={ row.value || '' }
 							onChange={ ( event ) => set( i, { value: event.target.value } ) }
 						/>
 						<button
 							type="button"
 							className={ btnGhost }
-							aria-label={ __( 'Remove', 'essentials-for-contact-form-7' ) }
+							aria-label={ __( 'Remove', 'defer-forms-for-contact-form-7' ) }
 							onClick={ () => onChange( { params: rows.filter( ( _, n ) => n !== i ) } ) }
 						>
-							<Trash2 className="cf7e-h-4 cf7e-w-4" />
+							<Trash2 className="df7-h-4 df7-w-4" />
 						</button>
 					</div>
 				) ) }
 
 				<button
 					type="button"
-					className={ `${ btnGhost } cf7e-self-start` }
+					className={ `${ btnGhost } df7-self-start` }
 					onClick={ () => onChange( { params: [ ...rows, { key: '', value: '' } ] } ) }
 				>
-					<Plus className="cf7e-h-4 cf7e-w-4" />
-					{ __( 'Add parameter', 'essentials-for-contact-form-7' ) }
+					<Plus className="df7-h-4 df7-w-4" />
+					{ __( 'Add parameter', 'defer-forms-for-contact-form-7' ) }
 				</button>
 
 				{ !! names.length && (
-					<p className="cf7e-text-[14px] cf7e-text-stone-400">
-						{ __( 'Available fields:', 'essentials-for-contact-form-7' ) }{ ' ' }
+					<p className="df7-text-[14px] df7-text-stone-400">
+						{ __( 'Available fields:', 'defer-forms-for-contact-form-7' ) }{ ' ' }
 						<code>{ names.map( ( name ) => `[${ name }]` ).join( ' ' ) }</code>
 					</p>
 				) }
@@ -563,8 +563,8 @@ const TelFormatField = ( { field, onChange } ) => {
 	return (
 		<>
 			<LField
-				label={ __( 'Number format', 'essentials-for-contact-form-7' ) }
-				hint={ __( 'Typed digits are laid into this pattern. # is a digit; everything else is punctuation the field adds itself. A format always implies numbers only.', 'essentials-for-contact-form-7' ) }
+				label={ __( 'Number format', 'defer-forms-for-contact-form-7' ) }
+				hint={ __( 'Typed digits are laid into this pattern. # is a digit; everything else is punctuation the field adds itself. A format always implies numbers only.', 'defer-forms-for-contact-form-7' ) }
 			>
 				<select
 					className={ inputCls }
@@ -578,11 +578,11 @@ const TelFormatField = ( { field, onChange } ) => {
 					{ TEL_PATTERNS.map( ( preset ) => (
 						<option key={ preset } value={ preset }>{ ( TEL_FORMAT_LABELS[ preset ] || ( () => preset ) )() }</option>
 					) ) }
-					<option value={ TEL_CUSTOM }>{ __( 'Custom…', 'essentials-for-contact-form-7' ) }</option>
+					<option value={ TEL_CUSTOM }>{ __( 'Custom…', 'defer-forms-for-contact-form-7' ) }</option>
 				</select>
 			</LField>
 			{ custom && (
-				<LField label={ __( 'Custom pattern', 'essentials-for-contact-form-7' ) }>
+				<LField label={ __( 'Custom pattern', 'defer-forms-for-contact-form-7' ) }>
 					<input
 						className={ inputCls }
 						value={ pattern }
@@ -600,12 +600,12 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'heading' === kind ) {
 		return (
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
-				<LField label={ __( 'Text', 'essentials-for-contact-form-7' ) }>
+			<div className="df7-flex df7-flex-col df7-gap-5">
+				<LField label={ __( 'Text', 'defer-forms-for-contact-form-7' ) }>
 					<input className={ inputCls } value={ field.text || '' } onChange={ ( event ) => onChange( { text: event.target.value } ) } />
 				</LField>
-				<div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-3">
-					<LField label={ __( 'Level', 'essentials-for-contact-form-7' ) }>
+				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+					<LField label={ __( 'Level', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
 							value={ field.level || 'h2' }
@@ -617,15 +617,15 @@ const ContentSettings = ( { field, onChange } ) => {
 							] }
 						/>
 					</LField>
-					<LField label={ __( 'Align', 'essentials-for-contact-form-7' ) }>
+					<LField label={ __( 'Align', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
 							value={ field.align || 'left' }
 							onChange={ ( value ) => onChange( { align: value } ) }
 							options={ [
-								{ value: 'left', label: __( 'Left', 'essentials-for-contact-form-7' ) },
-								{ value: 'center', label: __( 'Center', 'essentials-for-contact-form-7' ) },
-								{ value: 'right', label: __( 'Right', 'essentials-for-contact-form-7' ) },
+								{ value: 'left', label: __( 'Left', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'center', label: __( 'Center', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'right', label: __( 'Right', 'defer-forms-for-contact-form-7' ) },
 							] }
 						/>
 					</LField>
@@ -636,32 +636,32 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'paragraph' === kind ) {
 		return (
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
-				<LField label={ __( 'Text', 'essentials-for-contact-form-7' ) }>
+			<div className="df7-flex df7-flex-col df7-gap-5">
+				<LField label={ __( 'Text', 'defer-forms-for-contact-form-7' ) }>
 					<textarea className={ textareaCls } rows={ 6 } value={ field.text || '' } onChange={ ( event ) => onChange( { text: event.target.value } ) } />
 				</LField>
-				<div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-3">
-					<LField label={ __( 'Size', 'essentials-for-contact-form-7' ) }>
+				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+					<LField label={ __( 'Size', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
 							value={ field.size || 'md' }
 							onChange={ ( value ) => onChange( { size: value } ) }
 							options={ [
-								{ value: 'sm', label: __( 'Small', 'essentials-for-contact-form-7' ) },
-								{ value: 'md', label: __( 'Medium', 'essentials-for-contact-form-7' ) },
-								{ value: 'lg', label: __( 'Large', 'essentials-for-contact-form-7' ) },
+								{ value: 'sm', label: __( 'Small', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'md', label: __( 'Medium', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'lg', label: __( 'Large', 'defer-forms-for-contact-form-7' ) },
 							] }
 						/>
 					</LField>
-					<LField label={ __( 'Align', 'essentials-for-contact-form-7' ) }>
+					<LField label={ __( 'Align', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
 							value={ field.align || 'left' }
 							onChange={ ( value ) => onChange( { align: value } ) }
 							options={ [
-								{ value: 'left', label: __( 'Left', 'essentials-for-contact-form-7' ) },
-								{ value: 'center', label: __( 'Center', 'essentials-for-contact-form-7' ) },
-								{ value: 'right', label: __( 'Right', 'essentials-for-contact-form-7' ) },
+								{ value: 'left', label: __( 'Left', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'center', label: __( 'Center', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'right', label: __( 'Right', 'defer-forms-for-contact-form-7' ) },
 							] }
 						/>
 					</LField>
@@ -672,33 +672,33 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'divider' === kind ) {
 		return (
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
-				<div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-3">
-					<LField label={ __( 'Style', 'essentials-for-contact-form-7' ) }>
+			<div className="df7-flex df7-flex-col df7-gap-5">
+				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+					<LField label={ __( 'Style', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
 							value={ field.style || 'solid' }
 							onChange={ ( value ) => onChange( { style: value } ) }
 							options={ [
-								{ value: 'solid', label: __( 'Solid', 'essentials-for-contact-form-7' ) },
-								{ value: 'dashed', label: __( 'Dashed', 'essentials-for-contact-form-7' ) },
-								{ value: 'dotted', label: __( 'Dotted', 'essentials-for-contact-form-7' ) },
+								{ value: 'solid', label: __( 'Solid', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'dashed', label: __( 'Dashed', 'defer-forms-for-contact-form-7' ) },
+								{ value: 'dotted', label: __( 'Dotted', 'defer-forms-for-contact-form-7' ) },
 							] }
 						/>
 					</LField>
-					<LField label={ __( 'Thickness (px)', 'essentials-for-contact-form-7' ) }>
+					<LField label={ __( 'Thickness (px)', 'defer-forms-for-contact-form-7' ) }>
 						<input type="number" min="1" max="6" className={ inputCls } value={ field.thickness || 1 } onChange={ ( event ) => onChange( { thickness: Number( event.target.value ) || 1 } ) } />
 					</LField>
 				</div>
-				<LField label={ __( 'Weight', 'essentials-for-contact-form-7' ) }>
+				<LField label={ __( 'Weight', 'defer-forms-for-contact-form-7' ) }>
 					<Select
 						inline
 						value={ field.tier || 'subtle' }
 						onChange={ ( value ) => onChange( { tier: value } ) }
 						options={ [
-							{ value: 'subtle', label: __( 'Subtle', 'essentials-for-contact-form-7' ) },
-							{ value: 'normal', label: __( 'Normal', 'essentials-for-contact-form-7' ) },
-							{ value: 'strong', label: __( 'Strong', 'essentials-for-contact-form-7' ) },
+							{ value: 'subtle', label: __( 'Subtle', 'defer-forms-for-contact-form-7' ) },
+							{ value: 'normal', label: __( 'Normal', 'defer-forms-for-contact-form-7' ) },
+							{ value: 'strong', label: __( 'Strong', 'defer-forms-for-contact-form-7' ) },
 						] }
 					/>
 				</LField>
@@ -708,7 +708,7 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'spacer' === kind ) {
 		return (
-			<LField label={ __( 'Height (px)', 'essentials-for-contact-form-7' ) }>
+			<LField label={ __( 'Height (px)', 'defer-forms-for-contact-form-7' ) }>
 				<input type="number" min="0" max="200" className={ inputCls } value={ field.height || 16 } onChange={ ( event ) => onChange( { height: Number( event.target.value ) || 0 } ) } />
 			</LField>
 		);
@@ -757,7 +757,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 
 	if ( 'submit' === t ) {
 		return (
-			<LField label={ __( 'Button label', 'essentials-for-contact-form-7' ) }>
+			<LField label={ __( 'Button label', 'defer-forms-for-contact-form-7' ) }>
 				<input className={ inputCls } value={ field.label || '' } onChange={ ( event ) => onChange( { label: event.target.value } ) } />
 			</LField>
 		);
@@ -766,7 +766,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 	return (
 		<>
 			<Tabs
-				className="cf7e-mb-5"
+				className="df7-mb-5"
 				active={ tab }
 				onChange={ onTab }
 				tabs={ SETTINGS_TABS
@@ -777,20 +777,20 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			<div key={ tab }>
 
 			{ 'general' === tab && (
-				<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
+				<div className="df7-flex df7-flex-col df7-gap-5">
 					{ /* A field that renders no caption of its own gets no label box. */ }
 					{ ! NO_CAPTION.includes( t ) && (
 						<LField
-							label={ 'acceptance' === t ? __( 'Consent text', 'essentials-for-contact-form-7' ) : __( 'Field label', 'essentials-for-contact-form-7' ) }
-							hint={ 'acceptance' === t ? __( 'Shown next to the consent checkbox.', 'essentials-for-contact-form-7' ) : undefined }
+							label={ 'acceptance' === t ? __( 'Consent text', 'defer-forms-for-contact-form-7' ) : __( 'Field label', 'defer-forms-for-contact-form-7' ) }
+							hint={ 'acceptance' === t ? __( 'Shown next to the consent checkbox.', 'defer-forms-for-contact-form-7' ) : undefined }
 						>
 							<input className={ inputCls } value={ field.label || '' } onChange={ ( event ) => setLabel( event.target.value ) } />
 						</LField>
 					) }
 					{ 'count' === t ? (
 						<LField
-							label={ __( 'Counts', 'essentials-for-contact-form-7' ) }
-							hint={ __( 'The field being typed into. A count carries the name of that field rather than one of its own.', 'essentials-for-contact-form-7' ) }
+							label={ __( 'Counts', 'defer-forms-for-contact-form-7' ) }
+							hint={ __( 'The field being typed into. A count carries the name of that field rather than one of its own.', 'defer-forms-for-contact-form-7' ) }
 						>
 							{ countTargets.length ? (
 								<Select
@@ -800,27 +800,27 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 									options={ countTargets.map( ( other ) => ( { value: other.name, label: other.label || other.name } ) ) }
 								/>
 							) : (
-								<div className="cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-p-3.5 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">
-									{ __( 'Add a text or textarea field first — a count needs something to count.', 'essentials-for-contact-form-7' ) }
+								<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-p-3.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+									{ __( 'Add a text or textarea field first — a count needs something to count.', 'defer-forms-for-contact-form-7' ) }
 								</div>
 							) }
 						</LField>
 					) : (
-						<LField label={ __( 'Field name', 'essentials-for-contact-form-7' ) } hint={ __( 'The name used in the form tag.', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Field name', 'defer-forms-for-contact-form-7' ) } hint={ __( 'The name used in the form tag.', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ field.name || '' } onChange={ ( event ) => onChange( { name: slug( event.target.value ), _nameTouched: true } ) } />
 						</LField>
 					) }
 					{ 'hidden' === t && (
-						<LField label={ __( 'Value', 'essentials-for-contact-form-7' ) } hint={ __( 'Submitted with the form but never shown to the visitor. Leave empty to fill it from Pre-fill instead.', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Value', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Submitted with the form but never shown to the visitor. Leave empty to fill it from Pre-fill instead.', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ field.default || '' } onChange={ ( event ) => onChange( { default: event.target.value } ) } />
 						</LField>
 					) }
 					{ showsRequired( t ) && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Required field', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Required field', 'defer-forms-for-contact-form-7' ) }</span>
 								{ requiredLocked( t ) && !! REQUIRED_LOCK_REASON[ t ] && (
-									<span className="cf7e-text-[14px] cf7e-text-stone-400">{ REQUIRED_LOCK_REASON[ t ]() }</span>
+									<span className="df7-text-[14px] df7-text-stone-400">{ REQUIRED_LOCK_REASON[ t ]() }</span>
 								) }
 							</div>
 							<Toggle
@@ -832,10 +832,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					) }
 					{ 'tel' === t && (
 						<>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<div className="cf7e-flex cf7e-flex-col">
-									<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Numbers only', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Letters cannot be typed or pasted into the field.', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<div className="df7-flex df7-flex-col">
+									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Numbers only', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Letters cannot be typed or pasted into the field.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle
 									checked={ !! field.digitsonly || !! field.telformat }
@@ -847,33 +847,33 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</>
 					) }
 					{ 'date' === t && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Styled date picker', 'essentials-for-contact-form-7' ) }</span>
-								<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Off uses the browser native picker.', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Styled date picker', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Off uses the browser native picker.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ 'native' !== ( field.picker || 'styled' ) } onChange={ ( value ) => onChange( { picker: value ? 'styled' : 'native' } ) } />
 						</div>
 					) }
 					{ 'acceptance' === t && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Pre-checked', 'essentials-for-contact-form-7' ) }</span>
-								<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Tick the box by default.', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Pre-checked', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Tick the box by default.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ 'on' === field.default } onChange={ ( value ) => onChange( { default: value ? 'on' : '' } ) } />
 						</div>
 					) }
 					{ 'submission_id' === t && (
 						<>
-							<div className="cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-p-3.5 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">
-								{ __( 'A sequential number, allocated when the form is sent. It is never shown on the page — printing it would tell visitors how many submissions you have had — so use it in the mail template as [your-field-name].', 'essentials-for-contact-form-7' ) }
+							<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-p-3.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+								{ __( 'A sequential number, allocated when the form is sent. It is never shown on the page — printing it would tell visitors how many submissions you have had — so use it in the mail template as [your-field-name].', 'defer-forms-for-contact-form-7' ) }
 							</div>
 							<TwoCol>
-								<LField label={ __( 'Prefix', 'essentials-for-contact-form-7' ) } hint={ __( 'e.g. INV-', 'essentials-for-contact-form-7' ) }>
-									<input className={ inputCls } value={ opt.prefix || '' } placeholder={ __( 'INV-', 'essentials-for-contact-form-7' ) } onChange={ ( event ) => setOption( 'prefix', event.target.value.replace( /\s/g, '' ) ) } />
+								<LField label={ __( 'Prefix', 'defer-forms-for-contact-form-7' ) } hint={ __( 'e.g. INV-', 'defer-forms-for-contact-form-7' ) }>
+									<input className={ inputCls } value={ opt.prefix || '' } placeholder={ __( 'INV-', 'defer-forms-for-contact-form-7' ) } onChange={ ( event ) => setOption( 'prefix', event.target.value.replace( /\s/g, '' ) ) } />
 								</LField>
-								<LField label={ __( 'Digits', 'essentials-for-contact-form-7' ) } hint={ __( '5 → 00042', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Digits', 'defer-forms-for-contact-form-7' ) } hint={ __( '5 → 00042', 'defer-forms-for-contact-form-7' ) }>
 									<input type="number" min="0" max="12" className={ inputCls } value={ opt.pad || '' } onChange={ ( event ) => setOption( 'pad', event.target.value ) } />
 								</LField>
 							</TwoCol>
@@ -882,66 +882,66 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					{ 'product' === t && (
 						<>
 							<TwoCol>
-								<LField label={ __( 'Category slug', 'essentials-for-contact-form-7' ) } hint={ __( 'Empty lists every category.', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Category slug', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Empty lists every category.', 'defer-forms-for-contact-form-7' ) }>
 									<input className={ inputCls } value={ opt.cat || '' } placeholder="t-shirts" onChange={ ( event ) => setOption( 'cat', event.target.value ) } />
 								</LField>
-								<LField label={ __( 'Maximum products', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Maximum products', 'defer-forms-for-contact-form-7' ) }>
 									<input type="number" min="1" max="200" className={ inputCls } value={ opt.limit || '' } placeholder="50" onChange={ ( event ) => setOption( 'limit', event.target.value ) } />
 								</LField>
 							</TwoCol>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Show the price', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Show the price', 'defer-forms-for-contact-form-7' ) }</span>
 								<Toggle checked={ !! opt.show_price } onChange={ ( value ) => setOption( 'show_price', value || undefined ) } />
 							</div>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'In-stock products only', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'In-stock products only', 'defer-forms-for-contact-form-7' ) }</span>
 								<Toggle checked={ !! opt.in_stock } onChange={ ( value ) => setOption( 'in_stock', value || undefined ) } />
 							</div>
 						</>
 					) }
 					{ 'rating' === t && (
-						<LField label={ __( 'Stars', 'essentials-for-contact-form-7' ) } hint={ __( 'Number of stars (1–10).', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Stars', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Number of stars (1–10).', 'defer-forms-for-contact-form-7' ) }>
 							<input type="number" min="1" max="10" className={ inputCls } value={ opt.max || '5' } onChange={ ( event ) => setOption( 'max', event.target.value ) } />
 						</LField>
 					) }
 					{ 'dynamictext' === t && (
 						<>
 							<LField
-								label={ __( 'Dynamic value source', 'essentials-for-contact-form-7' ) }
-								hint={ __( 'url:ref reads ?ref= from the URL. Also: post:title · post:url · post:id · user:email · user:name · today · now.', 'essentials-for-contact-form-7' ) }
+								label={ __( 'Dynamic value source', 'defer-forms-for-contact-form-7' ) }
+								hint={ __( 'url:ref reads ?ref= from the URL. Also: post:title · post:url · post:id · user:email · user:name · today · now.', 'defer-forms-for-contact-form-7' ) }
 							>
 								<input className={ inputCls } value={ field.default || '' } placeholder="url:ref" onChange={ ( event ) => onChange( { default: event.target.value } ) } />
 							</LField>
-							<LField label={ __( 'Display', 'essentials-for-contact-form-7' ) } hint={ __( 'Hidden posts the value without showing it — best for tracking codes.', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Display', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Hidden posts the value without showing it — best for tracking codes.', 'defer-forms-for-contact-form-7' ) }>
 								<Select
 									inline
 									value={ dynamicMode }
 									onChange={ setDynamicMode }
 									options={ [
-										{ value: 'visible', label: __( 'Visible — visitor can edit', 'essentials-for-contact-form-7' ) },
-										{ value: 'readonly', label: __( 'Read-only — shown, not editable', 'essentials-for-contact-form-7' ) },
-										{ value: 'hidden', label: __( 'Hidden — not shown', 'essentials-for-contact-form-7' ) },
+										{ value: 'visible', label: __( 'Visible — visitor can edit', 'defer-forms-for-contact-form-7' ) },
+										{ value: 'readonly', label: __( 'Read-only — shown, not editable', 'defer-forms-for-contact-form-7' ) },
+										{ value: 'hidden', label: __( 'Hidden — not shown', 'defer-forms-for-contact-form-7' ) },
 									] }
 								/>
 							</LField>
 						</>
 					) }
 					{ TEXT_LIKE.includes( t ) && (
-						<LField label={ __( 'Placeholder', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Placeholder', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ field.placeholder || '' } onChange={ ( event ) => onChange( { placeholder: event.target.value } ) } />
 						</LField>
 					) }
 					{ hasDefaultChoice( t ) && !! ( field.choices || [] ).length && (
 						<LField
-							label={ __( 'Selected by default', 'essentials-for-contact-form-7' ) }
-							hint={ __( 'Which choice starts out picked. Reordering or removing choices clears this.', 'essentials-for-contact-form-7' ) }
+							label={ __( 'Selected by default', 'defer-forms-for-contact-form-7' ) }
+							hint={ __( 'Which choice starts out picked. Reordering or removing choices clears this.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<select
 								className={ inputCls }
 								value={ defaultChoice( opt.default, field.choices ) }
 								onChange={ ( event ) => setOption( 'default', parseInt( event.target.value, 10 ) || undefined ) }
 							>
-								<option value={ 0 }>{ __( 'Nothing', 'essentials-for-contact-form-7' ) }</option>
+								<option value={ 0 }>{ __( 'Nothing', 'defer-forms-for-contact-form-7' ) }</option>
 								{ ( field.choices || [] ).map( ( choice, i ) => (
 									<option key={ i } value={ i + 1 }>{ choice }</option>
 								) ) }
@@ -950,8 +950,8 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					) }
 					{ 'quiz' === t && (
 						<LField
-							label={ __( 'Questions, one per line', 'essentials-for-contact-form-7' ) }
-							hint={ __( 'Written question|answer. One is asked at random each time the form is shown, and the answer is matched ignoring case and spacing.', 'essentials-for-contact-form-7' ) }
+							label={ __( 'Questions, one per line', 'defer-forms-for-contact-form-7' ) }
+							hint={ __( 'Written question|answer. One is asked at random each time the form is shown, and the answer is matched ignoring case and spacing.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<ChoicesEditor
 								fieldId={ field._id }
@@ -961,16 +961,16 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ 'count' === t && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Count down', 'essentials-for-contact-form-7' ) }</span>
-								<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Characters left rather than characters typed. It needs a maximum length on the counted field to count down from.', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Count down', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Characters left rather than characters typed. It needs a maximum length on the counted field to count down from.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! opt.down } onChange={ ( value ) => setOption( 'down', value || undefined ) } />
 						</div>
 					) }
 					{ CHOICE.includes( t ) && (
-						<LField label={ __( 'Choices (one per line)', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Choices (one per line)', 'defer-forms-for-contact-form-7' ) }>
 							<ChoicesEditor
 								fieldId={ field._id }
 								choices={ field.choices }
@@ -979,51 +979,51 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ [ 'select', 'country' ].includes( t ) && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Searchable', 'essentials-for-contact-form-7' ) }</span>
-								<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Adds a filter box inside the dropdown.', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Searchable', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Adds a filter box inside the dropdown.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! field.searchable } onChange={ ( value ) => onChange( { searchable: value } ) } />
 						</div>
 					) }
 					{ 'select' === t && (
 						<>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<div className="cf7e-flex cf7e-flex-col">
-									<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Allow multiple selections', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Renders a multi-select list.', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<div className="df7-flex df7-flex-col">
+									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Allow multiple selections', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Renders a multi-select list.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.multiple } onChange={ ( value ) => setOption( 'multiple', value || undefined ) } />
 							</div>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<div className="cf7e-flex cf7e-flex-col">
-									<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Blank first option', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Starts empty so nothing is preselected.', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<div className="df7-flex df7-flex-col">
+									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Blank first option', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Starts empty so nothing is preselected.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.include_blank } onChange={ ( value ) => setOption( 'include_blank', value || undefined ) } />
 							</div>
 						</>
 					) }
 					{ [ 'checkbox', 'radio' ].includes( t ) && (
-						<LField label={ __( 'Layout', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Layout', 'defer-forms-for-contact-form-7' ) }>
 							<Select
 								inline
 								value={ field.layout || 'list' }
 								onChange={ ( value ) => onChange( { layout: value } ) }
 								options={ [
-									{ value: 'list', label: __( 'List — one per line', 'essentials-for-contact-form-7' ) },
-									{ value: 'inline', label: __( 'Inline — side by side', 'essentials-for-contact-form-7' ) },
-									{ value: 'cards', label: __( 'Cards — clickable boxes', 'essentials-for-contact-form-7' ) },
+									{ value: 'list', label: __( 'List — one per line', 'defer-forms-for-contact-form-7' ) },
+									{ value: 'inline', label: __( 'Inline — side by side', 'defer-forms-for-contact-form-7' ) },
+									{ value: 'cards', label: __( 'Cards — clickable boxes', 'defer-forms-for-contact-form-7' ) },
 								] }
 							/>
 						</LField>
 					) }
 					{ 'checkbox' === t && (
-						<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-							<div className="cf7e-flex cf7e-flex-col">
-								<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Exclusive', 'essentials-for-contact-form-7' ) }</span>
-								<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Only one box can be ticked at a time.', 'essentials-for-contact-form-7' ) }</span>
+						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+							<div className="df7-flex df7-flex-col">
+								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Exclusive', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Only one box can be ticked at a time.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! opt.exclusive } onChange={ ( value ) => setOption( 'exclusive', value || undefined ) } />
 						</div>
@@ -1032,13 +1032,13 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			) }
 
 			{ 'validation' === tab && (
-				<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
+				<div className="df7-flex df7-flex-col df7-gap-5">
 					{ [ 'text', 'email', 'tel', 'url', 'password', 'textarea' ].includes( t ) && (
 						<TwoCol>
-							<LField label={ __( 'Min length', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Min length', 'defer-forms-for-contact-form-7' ) }>
 								<input type="number" min="0" className={ inputCls } value={ opt.minlength || '' } onChange={ ( event ) => setOption( 'minlength', event.target.value ) } />
 							</LField>
-							<LField label={ __( 'Max length', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Max length', 'defer-forms-for-contact-form-7' ) }>
 								<input type="number" min="0" className={ inputCls } value={ opt.maxlength || '' } onChange={ ( event ) => setOption( 'maxlength', event.target.value ) } />
 							</LField>
 						</TwoCol>
@@ -1046,46 +1046,46 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					{ ( 'number' === t || 'range' === t ) && (
 						<>
 							<TwoCol>
-								<LField label={ __( 'Min', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Min', 'defer-forms-for-contact-form-7' ) }>
 									<input type="number" className={ inputCls } value={ opt.min || '' } onChange={ ( event ) => setOption( 'min', event.target.value ) } />
 								</LField>
-								<LField label={ __( 'Max', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Max', 'defer-forms-for-contact-form-7' ) }>
 									<input type="number" className={ inputCls } value={ opt.max || '' } onChange={ ( event ) => setOption( 'max', event.target.value ) } />
 								</LField>
 							</TwoCol>
-							<LField label={ __( 'Step', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Step', 'defer-forms-for-contact-form-7' ) }>
 								<input type="text" className={ inputCls } value={ opt.step || '' } onChange={ ( event ) => setOption( 'step', event.target.value ) } />
 							</LField>
 						</>
 					) }
 					{ 'date' === t && (
 						<TwoCol>
-							<LField label={ __( 'Min date', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Min date', 'defer-forms-for-contact-form-7' ) }>
 								<input type="date" className={ inputCls } value={ opt.min || '' } onChange={ ( event ) => setOption( 'min', event.target.value ) } />
 							</LField>
-							<LField label={ __( 'Max date', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Max date', 'defer-forms-for-contact-form-7' ) }>
 								<input type="date" className={ inputCls } value={ opt.max || '' } onChange={ ( event ) => setOption( 'max', event.target.value ) } />
 							</LField>
 						</TwoCol>
 					) }
 					{ 'file' === t && (
 						<>
-							<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-								<div className="cf7e-flex cf7e-flex-col">
-									<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Allow multiple files', 'essentials-for-contact-form-7' ) }</span>
-									<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Visitors can attach more than one file.', 'essentials-for-contact-form-7' ) }</span>
+							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+								<div className="df7-flex df7-flex-col">
+									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Allow multiple files', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Visitors can attach more than one file.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.multiple } onChange={ ( value ) => setOption( 'multiple', value || undefined ) } />
 							</div>
 							{ !! opt.multiple && (
-								<LField label={ __( 'Maximum number of files', 'essentials-for-contact-form-7' ) } hint={ __( 'Leave empty for no limit.', 'essentials-for-contact-form-7' ) }>
+								<LField label={ __( 'Maximum number of files', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Leave empty for no limit.', 'defer-forms-for-contact-form-7' ) }>
 									<input type="number" min="1" className={ inputCls } value={ opt.maxfiles || '' } placeholder="5" onChange={ ( event ) => setOption( 'maxfiles', event.target.value ) } />
 								</LField>
 							) }
-							<LField label={ __( 'Allowed file types', 'essentials-for-contact-form-7' ) } hint={ __( 'Extensions separated by | — e.g. jpg|jpeg|png|pdf. Empty allows the WordPress defaults.', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Allowed file types', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Extensions separated by | — e.g. jpg|jpeg|png|pdf. Empty allows the WordPress defaults.', 'defer-forms-for-contact-form-7' ) }>
 								<input className={ inputCls } value={ opt.filetypes || '' } placeholder="jpg|jpeg|png|pdf" onChange={ ( event ) => setOption( 'filetypes', event.target.value ) } />
 							</LField>
-							<LField label={ __( 'Maximum file size', 'essentials-for-contact-form-7' ) } hint={ __( 'Per file — e.g. 2mb or 512kb. Cannot exceed the server upload limit.', 'essentials-for-contact-form-7' ) }>
+							<LField label={ __( 'Maximum file size', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Per file — e.g. 2mb or 512kb. Cannot exceed the server upload limit.', 'defer-forms-for-contact-form-7' ) }>
 								<input className={ inputCls } value={ opt.limit || '' } placeholder="2mb" onChange={ ( event ) => setOption( 'limit', event.target.value ) } />
 							</LField>
 						</>
@@ -1094,11 +1094,11 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			) }
 
 			{ 'conditional' === tab && (
-				<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
-					<div className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5">
-						<div className="cf7e-flex cf7e-flex-col">
-							<span className="cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Conditional display', 'essentials-for-contact-form-7' ) }</span>
-							<span className="cf7e-text-[14px] cf7e-text-stone-400">{ __( 'Show or hide this field based on another field.', 'essentials-for-contact-form-7' ) }</span>
+				<div className="df7-flex df7-flex-col df7-gap-5">
+					<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
+						<div className="df7-flex df7-flex-col">
+							<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Conditional display', 'defer-forms-for-contact-form-7' ) }</span>
+							<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Show or hide this field based on another field.', 'defer-forms-for-contact-form-7' ) }</span>
 						</div>
 						<Toggle
 							checked={ !! field.condition }
@@ -1112,29 +1112,29 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 								const groups   = field.condition.groups;
 								const setGroups = ( nextGroups ) => onChange( { condition: { ...field.condition, groups: nextGroups } } );
 								return (
-									<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
-										<div className="cf7e-flex cf7e-items-center cf7e-gap-2 cf7e-text-sm cf7e-text-stone-500">
+									<div className="df7-flex df7-flex-col df7-gap-2">
+										<div className="df7-flex df7-items-center df7-gap-2 df7-text-sm df7-text-stone-500">
 											<Select
-												className="cf7e-w-40"
+												className="df7-w-40"
 												value={ field.condition.action || 'show' }
 												onChange={ ( value ) => onChange( { condition: { ...field.condition, action: value } } ) }
 												options={ [
-													{ value: 'show', label: __( 'Show this field', 'essentials-for-contact-form-7' ) },
-													{ value: 'hide', label: __( 'Hide this field', 'essentials-for-contact-form-7' ) },
+													{ value: 'show', label: __( 'Show this field', 'defer-forms-for-contact-form-7' ) },
+													{ value: 'hide', label: __( 'Hide this field', 'defer-forms-for-contact-form-7' ) },
 												] }
 											/>
-											<span>{ __( 'when', 'essentials-for-contact-form-7' ) }</span>
+											<span>{ __( 'when', 'defer-forms-for-contact-form-7' ) }</span>
 										</div>
 										{ groups.map( ( group, gi ) => (
 											<Fragment key={ gi }>
 												{ gi > 0 && (
-													<div className="cf7e-flex cf7e-items-center cf7e-gap-2 cf7e-py-0.5">
-														<span className="cf7e-h-px cf7e-flex-1 cf7e-bg-line" />
-														<span className="cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-widest cf7e-text-stone-400">{ __( 'or', 'essentials-for-contact-form-7' ) }</span>
-														<span className="cf7e-h-px cf7e-flex-1 cf7e-bg-line" />
+													<div className="df7-flex df7-items-center df7-gap-2 df7-py-0.5">
+														<span className="df7-h-px df7-flex-1 df7-bg-line" />
+														<span className="df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-widest df7-text-stone-400">{ __( 'or', 'defer-forms-for-contact-form-7' ) }</span>
+														<span className="df7-h-px df7-flex-1 df7-bg-line" />
 													</div>
 												) }
-												<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-p-2">
+												<div className="df7-flex df7-flex-col df7-gap-1.5 df7-rounded-lg df7-border df7-border-line df7-p-2">
 													{ group.rules.map( ( rule, ri ) => {
 														const setRule = ( patch ) => setGroups( groups.map( ( each, eachIndex ) => ( eachIndex === gi ? { ...each, rules: each.rules.map( ( eachRule, eachRuleIndex ) => ( eachRuleIndex === ri ? { ...eachRule, ...patch } : eachRule ) ) } : each ) ) );
 														const dropRule = () => {
@@ -1145,31 +1145,31 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 															setGroups( next );
 														};
 														return (
-															<div key={ ri } className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-																{ ri > 0 && <span className="cf7e-pl-0.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ __( 'and', 'essentials-for-contact-form-7' ) }</span> }
-																<div className="cf7e-flex cf7e-items-start cf7e-gap-1.5">
+															<div key={ ri } className="df7-flex df7-flex-col df7-gap-1.5">
+																{ ri > 0 && <span className="df7-pl-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'and', 'defer-forms-for-contact-form-7' ) }</span> }
+																<div className="df7-flex df7-items-start df7-gap-1.5">
 																	<Select
 																		inline
-																		className="cf7e-min-w-0 cf7e-basis-0 cf7e-flex-1"
-																		placeholder={ __( 'Field…', 'essentials-for-contact-form-7' ) }
+																		className="df7-min-w-0 df7-basis-0 df7-flex-1"
+																		placeholder={ __( 'Field…', 'defer-forms-for-contact-form-7' ) }
 																		value={ rule.field }
 																		onChange={ ( value ) => setRule( { field: value } ) }
 																		options={ availableFields.map( ( other ) => ( { value: other.name, label: other.label || other.name } ) ) }
 																	/>
 																	<Select
 																		inline
-																		className="cf7e-w-44 cf7e-shrink-0"
+																		className="df7-w-44 df7-shrink-0"
 																		value={ rule.operator }
 																		onChange={ ( value ) => setRule( { operator: value } ) }
 																		options={ CONDITION_OPS.map( ( op ) => ( { value: op.id, label: op.label() } ) ) }
 																	/>
 																	{ ! VALUELESS_OPS.includes( rule.operator ) && (
-																		<div className="cf7e-min-w-0 cf7e-basis-0 cf7e-flex-1">
-																			<input className={ inputCls } value={ rule.value || '' } placeholder={ __( 'Value', 'essentials-for-contact-form-7' ) } onChange={ ( event ) => setRule( { value: event.target.value } ) } />
+																		<div className="df7-min-w-0 df7-basis-0 df7-flex-1">
+																			<input className={ inputCls } value={ rule.value || '' } placeholder={ __( 'Value', 'defer-forms-for-contact-form-7' ) } onChange={ ( event ) => setRule( { value: event.target.value } ) } />
 																		</div>
 																	) }
-																	<button type="button" className="cf7e-flex cf7e-h-9 cf7e-shrink-0 cf7e-items-center cf7e-text-stone-400 hover:cf7e-text-red-500" onClick={ dropRule } aria-label={ __( 'Remove', 'essentials-for-contact-form-7' ) }>
-																		<X className="cf7e-h-4 cf7e-w-4" />
+																	<button type="button" className="df7-flex df7-h-9 df7-shrink-0 df7-items-center df7-text-stone-400 hover:df7-text-red-500" onClick={ dropRule } aria-label={ __( 'Remove', 'defer-forms-for-contact-form-7' ) }>
+																		<X className="df7-h-4 df7-w-4" />
 																	</button>
 																</div>
 															</div>
@@ -1177,54 +1177,54 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 													} ) }
 													<button
 														type="button"
-														className="cf7e-flex cf7e-items-center cf7e-gap-1 cf7e-self-start cf7e-pl-0.5 cf7e-pt-0.5 cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink/60 hover:cf7e-text-ink"
+														className="df7-flex df7-items-center df7-gap-1 df7-self-start df7-pl-0.5 df7-pt-0.5 df7-text-[14px] df7-font-semibold df7-text-ink/60 hover:df7-text-ink"
 														onClick={ () => setGroups( groups.map( ( each, eachIndex ) => ( eachIndex === gi ? { ...each, rules: [ ...each.rules, { field: '', operator: 'eq', value: '' } ] } : each ) ) ) }
 													>
-														<Plus className="cf7e-h-3.5 cf7e-w-3.5" /> { __( 'AND', 'essentials-for-contact-form-7' ) }
+														<Plus className="df7-h-3.5 df7-w-3.5" /> { __( 'AND', 'defer-forms-for-contact-form-7' ) }
 													</button>
 												</div>
 											</Fragment>
 										) ) }
 										<button
 											type="button"
-											className={ `${ ghostBtn } cf7e-self-start` }
+											className={ `${ ghostBtn } df7-self-start` }
 											onClick={ () => setGroups( [ ...groups, { rules: [ { field: '', operator: 'eq', value: '' } ] } ] ) }
 										>
-											<Plus className="cf7e-h-4 cf7e-w-4" /> { __( 'OR group', 'essentials-for-contact-form-7' ) }
+											<Plus className="df7-h-4 df7-w-4" /> { __( 'OR group', 'defer-forms-for-contact-form-7' ) }
 										</button>
 									</div>
 								);
 							} )()
 						) : (
-							<p className="cf7e-text-sm cf7e-text-stone-400">{ __( 'Add another named field first to build a rule.', 'essentials-for-contact-form-7' ) }</p>
+							<p className="df7-text-sm df7-text-stone-400">{ __( 'Add another named field first to build a rule.', 'defer-forms-for-contact-form-7' ) }</p>
 						)
 					) }
 				</div>
 			) }
 
 			{ 'advanced' === tab && (
-				<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
+				<div className="df7-flex df7-flex-col df7-gap-5">
 					{ ( TEXT_LIKE.includes( t ) || 'range' === t ) && (
-						<LField label={ __( 'Default value', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Default value', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ field.default || '' } onChange={ ( event ) => onChange( { default: event.target.value } ) } />
 						</LField>
 					) }
 					{ PREFILLABLE.includes( t ) && (
 						<LField
-							label={ __( 'Pre-fill from', 'essentials-for-contact-form-7' ) }
-							hint={ __( 'Start the field with a value read at page load: url:ref · cookie:name · user:email · user:name · user:first · user:last · post:title · post:url · referrer · today · now. Overrides the placeholder when it resolves.', 'essentials-for-contact-form-7' ) }
+							label={ __( 'Pre-fill from', 'defer-forms-for-contact-form-7' ) }
+							hint={ __( 'Start the field with a value read at page load: url:ref · cookie:name · user:email · user:name · user:first · user:last · post:title · post:url · referrer · today · now. Overrides the placeholder when it resolves.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<input className={ inputCls } value={ opt.prefill || '' } placeholder="url:ref" onChange={ ( event ) => setOption( 'prefill', event.target.value ) } />
 						</LField>
 					) }
-					<LField label={ __( 'CSS class', 'essentials-for-contact-form-7' ) } hint={ __( 'Space-separated class names.', 'essentials-for-contact-form-7' ) }>
+					<LField label={ __( 'CSS class', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Space-separated class names.', 'defer-forms-for-contact-form-7' ) }>
 						<input className={ inputCls } value={ opt.class || '' } onChange={ ( event ) => setOption( 'class', event.target.value ) } />
 					</LField>
-					<LField label={ __( 'ID attribute', 'essentials-for-contact-form-7' ) }>
+					<LField label={ __( 'ID attribute', 'defer-forms-for-contact-form-7' ) }>
 						<input className={ inputCls } value={ opt.id || '' } onChange={ ( event ) => setOption( 'id', event.target.value ) } />
 					</LField>
 					{ TEXT_LIKE.includes( t ) && (
-						<LField label={ __( 'Autocomplete', 'essentials-for-contact-form-7' ) } hint={ __( 'e.g. name, email, tel, off', 'essentials-for-contact-form-7' ) }>
+						<LField label={ __( 'Autocomplete', 'defer-forms-for-contact-form-7' ) } hint={ __( 'e.g. name, email, tel, off', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ opt.autocomplete || '' } onChange={ ( event ) => setOption( 'autocomplete', event.target.value ) } />
 						</LField>
 					) }
@@ -1247,18 +1247,18 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
  * out the wording for one it does not have.
  */
 const StepSettingsForm = ( { step, nav, onChange } ) => (
-	<div className="cf7e-flex cf7e-flex-col cf7e-gap-4">
-		<LField label={ __( 'Step title', 'essentials-for-contact-form-7' ) } hint={ __( 'Shown above the fields on this step.', 'essentials-for-contact-form-7' ) }>
+	<div className="df7-flex df7-flex-col df7-gap-4">
+		<LField label={ __( 'Step title', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Shown above the fields on this step.', 'defer-forms-for-contact-form-7' ) }>
 			<input
 				className={ inputCls }
 				type="text"
 				value={ step.title || '' }
 				onChange={ ( event ) => onChange( { title: event.target.value } ) }
-				placeholder={ __( 'Your details', 'essentials-for-contact-form-7' ) }
+				placeholder={ __( 'Your details', 'defer-forms-for-contact-form-7' ) }
 			/>
 		</LField>
 
-		<LField label={ __( 'Description', 'essentials-for-contact-form-7' ) } hint={ __( 'A line of guidance under the title.', 'essentials-for-contact-form-7' ) }>
+		<LField label={ __( 'Description', 'defer-forms-for-contact-form-7' ) } hint={ __( 'A line of guidance under the title.', 'defer-forms-for-contact-form-7' ) }>
 			<textarea
 				className={ textareaCls }
 				rows={ 2 }
@@ -1269,22 +1269,22 @@ const StepSettingsForm = ( { step, nav, onChange } ) => (
 
 		<TwoCol>
 			{ nav.next && (
-				<LField label={ __( 'Next button', 'essentials-for-contact-form-7' ) } hint={ __( 'Default: Next', 'essentials-for-contact-form-7' ) }>
+				<LField label={ __( 'Next button', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Default: Next', 'defer-forms-for-contact-form-7' ) }>
 					<input className={ inputCls } type="text" value={ step.next || '' } onChange={ ( event ) => onChange( { next: event.target.value } ) } />
 				</LField>
 			) }
 			{ nav.prev && (
-				<LField label={ __( 'Back button', 'essentials-for-contact-form-7' ) } hint={ __( 'Default: Back', 'essentials-for-contact-form-7' ) }>
+				<LField label={ __( 'Back button', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Default: Back', 'defer-forms-for-contact-form-7' ) }>
 					<input className={ inputCls } type="text" value={ step.prev || '' } onChange={ ( event ) => onChange( { prev: event.target.value } ) } />
 				</LField>
 			) }
 		</TwoCol>
 
 		<TwoCol>
-			<LField label={ __( 'CSS class', 'essentials-for-contact-form-7' ) } hint={ __( 'Added to this step’s wrapper.', 'essentials-for-contact-form-7' ) }>
+			<LField label={ __( 'CSS class', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Added to this step’s wrapper.', 'defer-forms-for-contact-form-7' ) }>
 				<input className={ inputCls } type="text" value={ step.class || '' } onChange={ ( event ) => onChange( { class: event.target.value } ) } />
 			</LField>
-			<LField label={ __( 'CSS id', 'essentials-for-contact-form-7' ) } hint={ __( 'Must be unique on the page.', 'essentials-for-contact-form-7' ) }>
+			<LField label={ __( 'CSS id', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Must be unique on the page.', 'defer-forms-for-contact-form-7' ) }>
 				<input className={ inputCls } type="text" value={ step.id || '' } onChange={ ( event ) => onChange( { id: event.target.value } ) } />
 			</LField>
 		</TwoCol>
@@ -1297,22 +1297,22 @@ const StepSettingsForm = ( { step, nav, onChange } ) => (
 // where it is read.
 const REQUIREMENT = {
 	woocommerce: () => ( {
-		caption: __( 'Needs WooCommerce', 'essentials-for-contact-form-7' ),
-		title:   __( 'Activate WooCommerce to list products in a form.', 'essentials-for-contact-form-7' ),
+		caption: __( 'Needs WooCommerce', 'defer-forms-for-contact-form-7' ),
+		title:   __( 'Activate WooCommerce to list products in a form.', 'defer-forms-for-contact-form-7' ),
 	} ),
 };
 
 const TypePicker = ( { onPick } ) => {
 	// Written by Menu::hand_over() on this screen. Missing while the bundle runs
 	// anywhere else, and an unmet requirement is the safe reading of that.
-	const capabilities = window.cf7eBuilder || {};
+	const capabilities = window.df7Builder || {};
 
 	return (
-		<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
+		<div className="df7-flex df7-flex-col df7-gap-5">
 			{ FIELD_LIBRARY.map( ( group ) => (
 				<div key={ group.id }>
-					<div className="cf7e-mb-2 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">{ group.label }</div>
-					<div className="cf7e-grid cf7e-grid-cols-2 cf7e-gap-2 sm:cf7e-grid-cols-3">
+					<div className="df7-mb-2 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">{ group.label }</div>
+					<div className="df7-grid df7-grid-cols-2 df7-gap-2 sm:df7-grid-cols-3">
 						{ group.fields.map( ( entry ) => {
 							const missing = entry.requires && ! capabilities[ entry.requires ];
 							const reason  = missing ? REQUIREMENT[ entry.requires ]?.() : null;
@@ -1324,16 +1324,16 @@ const TypePicker = ( { onPick } ) => {
 									disabled={ !! missing }
 									title={ reason?.title }
 									onClick={ () => onPick( entry.type ) }
-									className={ `cf7e-flex cf7e-items-center cf7e-gap-2.5 cf7e-rounded-xl cf7e-border cf7e-border-stroke cf7e-px-3 cf7e-py-2.5 cf7e-text-left cf7e-transition-colors ${ missing ? 'cf7e-cursor-not-allowed cf7e-bg-stone-50' : 'cf7e-cursor-pointer cf7e-bg-white hover:cf7e-border-accent hover:cf7e-bg-accent-50' }` }
+									className={ `df7-flex df7-items-center df7-gap-2.5 df7-rounded-xl df7-border df7-border-stroke df7-px-3 df7-py-2.5 df7-text-left df7-transition-colors ${ missing ? 'df7-cursor-not-allowed df7-bg-stone-50' : 'df7-cursor-pointer df7-bg-white hover:df7-border-accent hover:df7-bg-accent-50' }` }
 								>
-									<span className={ `cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-bg-stone-100 ${ missing ? 'cf7e-text-stone-400' : 'cf7e-text-stone-500' }` }>
-										<Ico className="cf7e-h-4 cf7e-w-4" />
+									<span className={ `df7-flex df7-h-8 df7-w-8 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-lg df7-bg-stone-100 ${ missing ? 'df7-text-stone-400' : 'df7-text-stone-500' }` }>
+										<Ico className="df7-h-4 df7-w-4" />
 									</span>
-									<span className="cf7e-flex cf7e-min-w-0 cf7e-flex-col">
-										<span className={ `cf7e-truncate cf7e-text-[14px] cf7e-font-semibold ${ missing ? 'cf7e-text-stone-400' : 'cf7e-text-ink' }` }>{ entry.label }</span>
+									<span className="df7-flex df7-min-w-0 df7-flex-col">
+										<span className={ `df7-truncate df7-text-[14px] df7-font-semibold ${ missing ? 'df7-text-stone-400' : 'df7-text-ink' }` }>{ entry.label }</span>
 										{ reason
-											? <span className="cf7e-truncate cf7e-text-[14px] cf7e-text-stone-400">{ reason.caption }</span>
-											: <span className="cf7e-text-[12px] cf7e-text-stone-400">{ entry.type }</span> }
+											? <span className="df7-truncate df7-text-[14px] df7-text-stone-400">{ reason.caption }</span>
+											: <span className="df7-text-[12px] df7-text-stone-400">{ entry.type }</span> }
 									</span>
 								</button>
 							);
@@ -1367,7 +1367,7 @@ const revisionWhen = ( unix ) => {
 
 	if ( same( at, today ) ) {
 		/* translators: %s: a time, e.g. 14:22. */
-		return sprintf( __( 'Today at %s', 'essentials-for-contact-form-7' ), time );
+		return sprintf( __( 'Today at %s', 'defer-forms-for-contact-form-7' ), time );
 	}
 
 	const yesterday = new Date( today );
@@ -1375,7 +1375,7 @@ const revisionWhen = ( unix ) => {
 
 	if ( same( at, yesterday ) ) {
 		/* translators: %s: a time, e.g. 14:22. */
-		return sprintf( __( 'Yesterday at %s', 'essentials-for-contact-form-7' ), time );
+		return sprintf( __( 'Yesterday at %s', 'defer-forms-for-contact-form-7' ), time );
 	}
 
 	return at.toLocaleString( undefined, { dateStyle: 'medium', timeStyle: 'medium' } );
@@ -1393,41 +1393,41 @@ const revisionWhen = ( unix ) => {
  */
 const RevisionList = ( { state, onPick } ) => {
 	if ( state.error ) {
-		return <div className="cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-3.5 cf7e-py-2.5 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">{ state.error }</div>;
+		return <div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">{ state.error }</div>;
 	}
 
 	if ( state.loading && ! state.list.length ) {
-		return <p className="cf7e-m-0 cf7e-text-center cf7e-text-sm cf7e-text-stone-400">{ __( 'Loading…', 'essentials-for-contact-form-7' ) }</p>;
+		return <p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">{ __( 'Loading…', 'defer-forms-for-contact-form-7' ) }</p>;
 	}
 
 	if ( ! state.list.length ) {
 		return (
-			<p className="cf7e-m-0 cf7e-text-center cf7e-text-sm cf7e-text-stone-400">
-				{ __( 'No earlier versions yet. One is kept each time you save.', 'essentials-for-contact-form-7' ) }
+			<p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">
+				{ __( 'No earlier versions yet. One is kept each time you save.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 		);
 	}
 
 	return (
-		<div className="cf7e-flex cf7e-flex-col cf7e-gap-2">
-			<p className="cf7e-mb-2 cf7e-mt-0 cf7e-text-[14px] cf7e-leading-relaxed cf7e-text-stone-500">
-				{ __( 'Opening a version loads it onto the canvas — nothing is saved until you press Save, and Ctrl+Z puts it back.', 'essentials-for-contact-form-7' ) }
+		<div className="df7-flex df7-flex-col df7-gap-2">
+			<p className="df7-mb-2 df7-mt-0 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+				{ __( 'Opening a version loads it onto the canvas — nothing is saved until you press Save, and Ctrl+Z puts it back.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 
 			{ state.list.map( ( entry, index ) => (
 				<div
 					key={ entry.rev }
-					className="cf7e-flex cf7e-items-center cf7e-gap-3 cf7e-rounded-xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-px-4 cf7e-py-3"
+					className="df7-flex df7-items-center df7-gap-3 df7-rounded-xl df7-border df7-border-line df7-bg-white df7-px-4 df7-py-3"
 				>
-					<span className="cf7e-flex-1 cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ revisionWhen( entry.time ) }</span>
+					<span className="df7-flex-1 df7-text-sm df7-font-semibold df7-text-ink">{ revisionWhen( entry.time ) }</span>
 
 					{ 0 === index && (
-						<span className="cf7e-text-[14px] cf7e-font-medium cf7e-text-stone-400">{ __( 'Latest save', 'essentials-for-contact-form-7' ) }</span>
+						<span className="df7-text-[14px] df7-font-medium df7-text-stone-400">{ __( 'Latest save', 'defer-forms-for-contact-form-7' ) }</span>
 					) }
 
 					<button type="button" disabled={ state.loading } onClick={ () => onPick( entry.rev ) } className={ btnGhost }>
-						<RotateCcw className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Open', 'essentials-for-contact-form-7' ) }
+						<RotateCcw className="df7-h-4 df7-w-4" />
+						{ __( 'Open', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</div>
 			) ) }
@@ -1443,28 +1443,28 @@ const Modal = ( { title, badge, wide, onClose, footer, children } ) => {
 	}, [ onClose ] );
 
 	return (
-		<div className="cf7e-fixed cf7e-inset-0 cf7e-z-[100000] cf7e-flex cf7e-items-start cf7e-justify-center cf7e-px-4 cf7e-pb-4 cf7e-pt-[7vh]">
+		<div className="df7-fixed df7-inset-0 df7-z-[100000] df7-flex df7-items-start df7-justify-center df7-px-4 df7-pb-4 df7-pt-[7vh]">
 			<Backdrop
 				onClick={ onClose }
-				className="cf7e-absolute cf7e-inset-0 cf7e-bg-ink/40 cf7e-backdrop-blur-sm"
+				className="df7-absolute df7-inset-0 df7-bg-ink/40 df7-backdrop-blur-sm"
 			/>
 			<div
-				className={ `cf7e-relative cf7e-flex cf7e-max-h-[85vh] cf7e-w-full ${ wide ? 'cf7e-max-w-2xl' : 'cf7e-max-w-lg' } cf7e-flex-col cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-shadow-pop` }
+				className={ `df7-relative df7-flex df7-max-h-[85vh] df7-w-full ${ wide ? 'df7-max-w-2xl' : 'df7-max-w-lg' } df7-flex-col df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-shadow-pop` }
 			>
-				<header className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-px-6 cf7e-py-4">
-					<div className="cf7e-flex cf7e-min-w-0 cf7e-items-center cf7e-gap-2">
-						<span className="cf7e-truncate cf7e-text-lg cf7e-font-bold cf7e-text-ink">{ title }</span>
+				<header className="df7-flex df7-items-center df7-justify-between df7-gap-3 df7-border-b df7-border-line df7-px-6 df7-py-4">
+					<div className="df7-flex df7-min-w-0 df7-items-center df7-gap-2">
+						<span className="df7-truncate df7-text-lg df7-font-bold df7-text-ink">{ title }</span>
 						{ badge && (
-							<span className="cf7e-rounded-md cf7e-bg-stone-100 cf7e-px-2 cf7e-py-0.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-stone-500">{ badge }</span>
+							<span className="df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">{ badge }</span>
 						) }
 					</div>
 					<button
 						type="button"
 						onClick={ onClose }
-						aria-label={ __( 'Close', 'essentials-for-contact-form-7' ) }
-						className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-stone-50 cf7e-text-stone-500 hover:cf7e-bg-stone-100 hover:cf7e-text-ink"
+						aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
+						className="df7-flex df7-h-9 df7-w-9 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-stone-50 df7-text-stone-500 hover:df7-bg-stone-100 hover:df7-text-ink"
 					>
-						<X className="cf7e-h-4 cf7e-w-4" />
+						<X className="df7-h-4 df7-w-4" />
 					</button>
 				</header>
 
@@ -1472,12 +1472,12 @@ const Modal = ( { title, badge, wide, onClose, footer, children } ) => {
 				     the right only and every field box stops short on that side. Padding
 				     is then 14px so padding + gutter lines the fields up with the 24px
 				     header and footer. */ }
-				<div className="cf7e-scroll cf7e-flex-1 cf7e-overflow-y-auto cf7e-px-3.5 cf7e-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
+				<div className="df7-scroll df7-flex-1 df7-overflow-y-auto df7-px-3.5 df7-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
 					{ children }
 				</div>
 
 				{ footer && (
-					<footer className="cf7e-flex cf7e-items-center cf7e-gap-2 cf7e-border-t cf7e-border-line cf7e-px-6 cf7e-py-4">{ footer }</footer>
+					<footer className="df7-flex df7-items-center df7-gap-2 df7-border-t df7-border-line df7-px-6 df7-py-4">{ footer }</footer>
 				) }
 			</div>
 		</div>
@@ -1497,7 +1497,7 @@ const Modal = ( { title, badge, wide, onClose, footer, children } ) => {
 const rowCaption = ( field ) =>
 	NO_CAPTION.includes( field.type )
 		? labelForType( field.type )
-		: __( 'Untitled field', 'essentials-for-contact-form-7' );
+		: __( 'Untitled field', 'defer-forms-for-contact-form-7' );
 
 const FieldRow = ( { field, index, onEdit, onDelete, onDuplicate } ) => {
 	const Ico = iconFor( field.type );
@@ -1506,8 +1506,8 @@ const FieldRow = ( { field, index, onEdit, onDelete, onDuplicate } ) => {
 
 	if ( isDragging ) {
 		return (
-			<div ref={ setNodeRef } style={ style } className="cf7e-border-b cf7e-border-line cf7e-px-4 cf7e-py-2 last:cf7e-border-b-0">
-				<div className="cf7e-h-9 cf7e-rounded-lg cf7e-border cf7e-border-dashed cf7e-border-accent-300 cf7e-bg-accent-50/60" />
+			<div ref={ setNodeRef } style={ style } className="df7-border-b df7-border-line df7-px-4 df7-py-2 last:df7-border-b-0">
+				<div className="df7-h-9 df7-rounded-lg df7-border df7-border-dashed df7-border-accent-300 df7-bg-accent-50/60" />
 			</div>
 		);
 	}
@@ -1518,34 +1518,34 @@ const FieldRow = ( { field, index, onEdit, onDelete, onDuplicate } ) => {
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `cf7e-grid ${ COLS } cf7e-items-center cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-bg-white cf7e-px-4 cf7e-py-3 cf7e-transition-colors last:cf7e-border-b-0 hover:cf7e-bg-stone-50/60` }
+			className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-white df7-px-4 df7-py-3 df7-transition-colors last:df7-border-b-0 hover:df7-bg-stone-50/60` }
 		>
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-cursor-grab cf7e-items-center cf7e-justify-center cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-text-stone-500 active:cf7e-cursor-grabbing">
-				<GripVertical className="cf7e-h-4 cf7e-w-4" />
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
+				<GripVertical className="df7-h-4 df7-w-4" />
 			</button>
-			<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-stone-400 cf7e-tnum">{ String( index + 1 ).padStart( 2, '0' ) }</span>
-			<button type="button" onClick={ onEdit } className="cf7e-flex cf7e-min-w-0 cf7e-cursor-pointer cf7e-items-center cf7e-gap-1 cf7e-border-0 cf7e-bg-transparent cf7e-text-left">
-				<span className="cf7e-truncate cf7e-text-sm cf7e-font-semibold cf7e-text-ink">
-					{ isContent ? contentLabel( field.type ) : ( field.label || <span className="cf7e-font-normal cf7e-text-stone-400">{ rowCaption( field ) }</span> ) }
+			<span className="df7-text-[14px] df7-font-semibold df7-text-stone-400 df7-tnum">{ String( index + 1 ).padStart( 2, '0' ) }</span>
+			<button type="button" onClick={ onEdit } className="df7-flex df7-min-w-0 df7-cursor-pointer df7-items-center df7-gap-1 df7-border-0 df7-bg-transparent df7-text-left">
+				<span className="df7-truncate df7-text-sm df7-font-semibold df7-text-ink">
+					{ isContent ? contentLabel( field.type ) : ( field.label || <span className="df7-font-normal df7-text-stone-400">{ rowCaption( field ) }</span> ) }
 				</span>
-				{ ! isContent && field.required && <span className="cf7e-text-red-500">*</span> }
+				{ ! isContent && field.required && <span className="df7-text-red-500">*</span> }
 			</button>
-			<span className="cf7e-truncate cf7e-text-[14px] cf7e-text-stone-500">
+			<span className="df7-truncate df7-text-[14px] df7-text-stone-500">
 				{ isContent ? ( field.text ? String( field.text ).slice( 0, 60 ) : '—' ) : ( field.name || '—' ) }
 			</span>
-			<span className="cf7e-inline-flex cf7e-w-fit cf7e-items-center cf7e-gap-1.5 cf7e-rounded-md cf7e-bg-stone-100 cf7e-px-2 cf7e-py-1 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-stone-500">
-				<Ico className="cf7e-h-3 cf7e-w-3" />
+			<span className="df7-inline-flex df7-w-fit df7-items-center df7-gap-1.5 df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
+				<Ico className="df7-h-3 df7-w-3" />
 				{ field.type }
 			</span>
-			<div className="cf7e-flex cf7e-items-center cf7e-justify-end cf7e-gap-0.5">
-				<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-stone-100 hover:cf7e-text-ink">
-					<Pencil className="cf7e-h-3.5 cf7e-w-3.5" />
+			<div className="df7-flex df7-items-center df7-justify-end df7-gap-0.5">
+				<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
+					<Pencil className="df7-h-3.5 df7-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-stone-100 hover:cf7e-text-ink">
-					<Copy className="cf7e-h-3.5 cf7e-w-3.5" />
+				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
+					<Copy className="df7-h-3.5 df7-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-red-50 hover:cf7e-text-red-600">
-					<Trash2 className="cf7e-h-3.5 cf7e-w-3.5" />
+				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
+					<Trash2 className="df7-h-3.5 df7-w-3.5" />
 				</button>
 			</div>
 		</div>
@@ -1572,26 +1572,26 @@ const RowChip = ( { child, onEdit, onDuplicate, onDelete } ) => {
 	const style = { transform: CSS.Transform.toString( transform ), transition };
 
 	if ( isDragging ) {
-		return <div ref={ setNodeRef } style={ style } className="cf7e-h-[2.375rem] cf7e-rounded-lg cf7e-border cf7e-border-dashed cf7e-border-accent-300 cf7e-bg-accent-50/60" />;
+		return <div ref={ setNodeRef } style={ style } className="df7-h-[2.375rem] df7-rounded-lg df7-border df7-border-dashed df7-border-accent-300 df7-bg-accent-50/60" />;
 	}
 
 	return (
-		<div ref={ setNodeRef } style={ style } className="cf7e-group cf7e-flex cf7e-min-w-0 cf7e-items-center cf7e-gap-1.5 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-py-1.5 cf7e-pl-1 cf7e-pr-2">
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag to reorder', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-6 cf7e-w-4 cf7e-shrink-0 cf7e-cursor-grab cf7e-items-center cf7e-justify-center cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-transition-colors hover:cf7e-text-stone-500 active:cf7e-cursor-grabbing">
-				<GripVertical className="cf7e-h-4 cf7e-w-4" />
+		<div ref={ setNodeRef } style={ style } className="df7-group df7-flex df7-min-w-0 df7-items-center df7-gap-1.5 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-py-1.5 df7-pl-1 df7-pr-2">
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag to reorder', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-4 df7-shrink-0 df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-text-stone-500 active:df7-cursor-grabbing">
+				<GripVertical className="df7-h-4 df7-w-4" />
 			</button>
-			<span className="cf7e-flex cf7e-h-6 cf7e-w-6 cf7e-shrink-0 cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-bg-stone-100 cf7e-text-stone-500">
-				<Ico className="cf7e-h-3 cf7e-w-3" />
+			<span className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-md df7-bg-stone-100 df7-text-stone-500">
+				<Ico className="df7-h-3 df7-w-3" />
 			</span>
-			<button type="button" onClick={ onEdit } className="cf7e-min-w-0 cf7e-flex-1 cf7e-cursor-pointer cf7e-truncate cf7e-border-0 cf7e-bg-transparent cf7e-text-left cf7e-text-[14px] cf7e-font-medium cf7e-text-ink">{ label }</button>
-			<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-6 cf7e-w-6 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-opacity-0 cf7e-transition-opacity hover:cf7e-bg-stone-100 hover:cf7e-text-ink group-hover:cf7e-opacity-100">
-				<Pencil className="cf7e-h-3 cf7e-w-3" />
+			<button type="button" onClick={ onEdit } className="df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-truncate df7-border-0 df7-bg-transparent df7-text-left df7-text-[14px] df7-font-medium df7-text-ink">{ label }</button>
+			<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-stone-100 hover:df7-text-ink group-hover:df7-opacity-100">
+				<Pencil className="df7-h-3 df7-w-3" />
 			</button>
-			<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-6 cf7e-w-6 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-opacity-0 cf7e-transition-opacity hover:cf7e-bg-stone-100 hover:cf7e-text-ink group-hover:cf7e-opacity-100">
-				<Copy className="cf7e-h-3 cf7e-w-3" />
+			<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-stone-100 hover:df7-text-ink group-hover:df7-opacity-100">
+				<Copy className="df7-h-3 df7-w-3" />
 			</button>
-			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-6 cf7e-w-6 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-opacity-0 cf7e-transition-opacity hover:cf7e-bg-red-50 hover:cf7e-text-red-600 group-hover:cf7e-opacity-100">
-				<Trash2 className="cf7e-h-3 cf7e-w-3" />
+			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-red-50 hover:df7-text-red-600 group-hover:df7-opacity-100">
+				<Trash2 className="df7-h-3 df7-w-3" />
 			</button>
 		</div>
 	);
@@ -1603,10 +1603,10 @@ const Column = ( { rowId, ci, items, total, onAddField, onEditChild, onDuplicate
 	return (
 		<div
 			ref={ setNodeRef }
-			className={ `cf7e-flex cf7e-min-h-[5.5rem] cf7e-flex-col cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-dashed cf7e-p-2 cf7e-transition-all ${ isOver ? 'cf7e-border-accent cf7e-bg-accent-50 cf7e-ring-2 cf7e-ring-accent-200' : 'cf7e-border-stroke cf7e-bg-white' }` }
+			className={ `df7-flex df7-min-h-[5.5rem] df7-flex-col df7-gap-2 df7-rounded-lg df7-border df7-border-dashed df7-p-2 df7-transition-all ${ isOver ? 'df7-border-accent df7-bg-accent-50 df7-ring-2 df7-ring-accent-200' : 'df7-border-stroke df7-bg-white' }` }
 		>
-			<span className="cf7e-px-1 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400">
-				{ sprintf( /* translators: 1: column number, 2: total columns. */ __( 'Column %1$d / %2$d', 'essentials-for-contact-form-7' ), ci + 1, total ) }
+			<span className="df7-px-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">
+				{ sprintf( /* translators: 1: column number, 2: total columns. */ __( 'Column %1$d / %2$d', 'defer-forms-for-contact-form-7' ), ci + 1, total ) }
 			</span>
 			<SortableContext items={ items.map( ( item ) => item._id ) } strategy={ verticalListSortingStrategy }>
 				{ items.length
@@ -1620,13 +1620,13 @@ const Column = ( { rowId, ci, items, total, onAddField, onEditChild, onDuplicate
 						/>
 					) )
 					: (
-						<span className={ `cf7e-flex cf7e-flex-1 cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-border cf7e-border-dashed cf7e-py-3 cf7e-text-center cf7e-text-[14px] cf7e-transition-colors ${ isOver ? 'cf7e-border-accent cf7e-text-accent' : 'cf7e-border-transparent cf7e-text-stone-400' }` }>
-							{ __( 'Drop a field here', 'essentials-for-contact-form-7' ) }
+						<span className={ `df7-flex df7-flex-1 df7-items-center df7-justify-center df7-rounded-md df7-border df7-border-dashed df7-py-3 df7-text-center df7-text-[14px] df7-transition-colors ${ isOver ? 'df7-border-accent df7-text-accent' : 'df7-border-transparent df7-text-stone-400' }` }>
+							{ __( 'Drop a field here', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
 			</SortableContext>
-			<button type="button" onClick={ onAddField } className="cf7e-flex cf7e-w-full cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-1 cf7e-rounded-md cf7e-border cf7e-border-dashed cf7e-border-stroke cf7e-bg-stone-50/60 cf7e-py-1.5 cf7e-text-[14px] cf7e-font-semibold cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-border-accent hover:cf7e-text-accent">
-				<Plus className="cf7e-h-3 cf7e-w-3" /> { __( 'Add field', 'essentials-for-contact-form-7' ) }
+			<button type="button" onClick={ onAddField } className="df7-flex df7-w-full df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1 df7-rounded-md df7-border df7-border-dashed df7-border-stroke df7-bg-stone-50/60 df7-py-1.5 df7-text-[14px] df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent">
+				<Plus className="df7-h-3 df7-w-3" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 			</button>
 		</div>
 	);
@@ -1642,34 +1642,34 @@ const RowBlock = ( { row, onCols, onDuplicate, onDelete, onAddField, onEditChild
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `cf7e-border-b cf7e-border-line cf7e-bg-stone-50/40 last:cf7e-border-b-0 ${ isDragging ? 'cf7e-relative cf7e-z-10 cf7e-shadow-card' : '' }` }
+			className={ `df7-border-b df7-border-line df7-bg-stone-50/40 last:df7-border-b-0 ${ isDragging ? 'df7-relative df7-z-10 df7-shadow-card' : '' }` }
 		>
-			<div className="cf7e-flex cf7e-items-center cf7e-gap-3 cf7e-px-4 cf7e-py-2.5">
-				<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-cursor-grab cf7e-items-center cf7e-justify-center cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-text-stone-500 active:cf7e-cursor-grabbing">
-					<GripVertical className="cf7e-h-4 cf7e-w-4" />
+			<div className="df7-flex df7-items-center df7-gap-3 df7-px-4 df7-py-2.5">
+				<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
+					<GripVertical className="df7-h-4 df7-w-4" />
 				</button>
-				<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-stone-500">
-					<LayoutGrid className="cf7e-h-3.5 cf7e-w-3.5" />
-					{ __( 'Grid row', 'essentials-for-contact-form-7' ) }
+				<span className="df7-inline-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
+					<LayoutGrid className="df7-h-3.5 df7-w-3.5" />
+					{ __( 'Grid row', 'defer-forms-for-contact-form-7' ) }
 				</span>
 				<Select
-					className="cf7e-w-32"
+					className="df7-w-32"
 					value={ cols }
 					onChange={ ( value ) => onCols( Number( value ) ) }
 					options={ [ 1, 2, 3, 4 ].map( ( count ) => ( {
 						value: count,
-						label: sprintf( /* translators: %d: number of columns. */ __( '%d columns', 'essentials-for-contact-form-7' ), count ),
+						label: sprintf( /* translators: %d: number of columns. */ __( '%d columns', 'defer-forms-for-contact-form-7' ), count ),
 					} ) ) }
 				/>
-				<span className="cf7e-flex-1" />
-				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate row', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-stone-100 hover:cf7e-text-ink">
-					<Copy className="cf7e-h-3.5 cf7e-w-3.5" />
+				<span className="df7-flex-1" />
+				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate row', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
+					<Copy className="df7-h-3.5 df7-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-red-50 hover:cf7e-text-red-600">
-					<Trash2 className="cf7e-h-3.5 cf7e-w-3.5" />
+				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
+					<Trash2 className="df7-h-3.5 df7-w-3.5" />
 				</button>
 			</div>
-			<div className="cf7e-px-4 cf7e-pb-3" style={ { display: 'grid', gridTemplateColumns: `repeat(${ cols }, minmax(0, 1fr))`, gap: '0.5rem' } }>
+			<div className="df7-px-4 df7-pb-3" style={ { display: 'grid', gridTemplateColumns: `repeat(${ cols }, minmax(0, 1fr))`, gap: '0.5rem' } }>
 				{ columns.map( ( col, ci ) => (
 					<Column
 						key={ ci }
@@ -1696,24 +1696,24 @@ const PageBreakBar = ( { item, step, onEdit, onDelete } ) => {
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `cf7e-flex cf7e-items-center cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-bg-stone-100/70 cf7e-px-4 cf7e-py-2.5 last:cf7e-border-b-0 ${ isDragging ? 'cf7e-relative cf7e-z-10 cf7e-shadow-card' : '' }` }
+			className={ `df7-flex df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-100/70 df7-px-4 df7-py-2.5 last:df7-border-b-0 ${ isDragging ? 'df7-relative df7-z-10 df7-shadow-card' : '' }` }
 		>
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-cursor-grab cf7e-items-center cf7e-justify-center cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-text-stone-500 active:cf7e-cursor-grabbing">
-				<GripVertical className="cf7e-h-4 cf7e-w-4" />
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
+				<GripVertical className="df7-h-4 df7-w-4" />
 			</button>
-			<span className="cf7e-inline-flex cf7e-items-center cf7e-gap-1.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wide cf7e-text-stone-500">
-				<Scissors className="cf7e-h-3.5 cf7e-w-3.5" />
-				{ sprintf( /* translators: %d: step number. */ __( 'Step %d', 'essentials-for-contact-form-7' ), step ) }
+			<span className="df7-inline-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
+				<Scissors className="df7-h-3.5 df7-w-3.5" />
+				{ sprintf( /* translators: %d: step number. */ __( 'Step %d', 'defer-forms-for-contact-form-7' ), step ) }
 			</span>
 			{ item.title && (
-				<span className="cf7e-truncate cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink">{ item.title }</span>
+				<span className="df7-truncate df7-text-[14px] df7-font-semibold df7-text-ink">{ item.title }</span>
 			) }
-			<span className="cf7e-h-px cf7e-flex-1 cf7e-bg-stroke" />
-			<button type="button" onClick={ onEdit } aria-label={ __( 'Step settings', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-stone-100 hover:cf7e-text-ink">
-				<Pencil className="cf7e-h-3.5 cf7e-w-3.5" />
+			<span className="df7-h-px df7-flex-1 df7-bg-stroke" />
+			<button type="button" onClick={ onEdit } aria-label={ __( 'Step settings', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
+				<Pencil className="df7-h-3.5 df7-w-3.5" />
 			</button>
-			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-8 cf7e-w-8 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 hover:cf7e-bg-red-50 hover:cf7e-text-red-600">
-				<Trash2 className="cf7e-h-3.5 cf7e-w-3.5" />
+			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
+				<Trash2 className="df7-h-3.5 df7-w-3.5" />
 			</button>
 		</div>
 	);
@@ -1725,18 +1725,18 @@ const DragPreview = ( { item } ) => {
 	}
 	if ( 'row' === item.kind ) {
 		return (
-			<div className="cf7e-flex cf7e-rotate-2 cf7e-cursor-grabbing cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-accent-200 cf7e-bg-white cf7e-px-3 cf7e-py-2 cf7e-shadow-2xl cf7e-ring-2 cf7e-ring-accent-100">
-				<LayoutGrid className="cf7e-h-4 cf7e-w-4 cf7e-text-accent" />
-				<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink">{ __( 'Grid row', 'essentials-for-contact-form-7' ) }</span>
+			<div className="df7-flex df7-rotate-2 df7-cursor-grabbing df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-accent-200 df7-bg-white df7-px-3 df7-py-2 df7-shadow-2xl df7-ring-2 df7-ring-accent-100">
+				<LayoutGrid className="df7-h-4 df7-w-4 df7-text-accent" />
+				<span className="df7-text-[14px] df7-font-semibold df7-text-ink">{ __( 'Grid row', 'defer-forms-for-contact-form-7' ) }</span>
 			</div>
 		);
 	}
 	const Ico   = iconFor( item.type );
 	const label = 'content' === item.kind ? contentLabel( item.type ) : ( item.label || item.name || item.type );
 	return (
-		<div className="cf7e-flex cf7e-rotate-2 cf7e-cursor-grabbing cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-accent-200 cf7e-bg-white cf7e-px-2.5 cf7e-py-1.5 cf7e-shadow-2xl cf7e-ring-2 cf7e-ring-accent-100">
-			<span className="cf7e-flex cf7e-h-6 cf7e-w-6 cf7e-items-center cf7e-justify-center cf7e-rounded-md cf7e-bg-accent-50 cf7e-text-accent"><Ico className="cf7e-h-3 cf7e-w-3" /></span>
-			<span className="cf7e-text-[14px] cf7e-font-medium cf7e-text-ink">{ label }</span>
+		<div className="df7-flex df7-rotate-2 df7-cursor-grabbing df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-accent-200 df7-bg-white df7-px-2.5 df7-py-1.5 df7-shadow-2xl df7-ring-2 df7-ring-accent-100">
+			<span className="df7-flex df7-h-6 df7-w-6 df7-items-center df7-justify-center df7-rounded-md df7-bg-accent-50 df7-text-accent"><Ico className="df7-h-3 df7-w-3" /></span>
+			<span className="df7-text-[14px] df7-font-medium df7-text-ink">{ label }</span>
 		</div>
 	);
 };
@@ -1745,10 +1745,10 @@ const DragPreview = ( { item } ) => {
  *
  * The preview renders what the front end renders: the same wrappers, the same
  * class names. assets/css/{controls,form,steps,range,rating}.css are imported
- * into the admin bundle and scoped to `:is( .wpcf7-form, .cf7e-preview )`, so
+ * into the admin bundle and scoped to `:is( .wpcf7-form, .df7-preview )`, so
  * they skin this the way they skin the real form rather than us imitating them.
  *
- * Nothing below carries an cf7e- Tailwind utility. Utilities are `!important` in
+ * Nothing below carries an df7- Tailwind utility. Utilities are `!important` in
  * this bundle, so one would beat the shared rule and put the preview back out
  * of step — which is how it drifted the first time. Anything still drawn by
  * hand here is a place the two can drift again.
@@ -1766,7 +1766,7 @@ const isInvisible = ( field ) =>
 	'submission_id' === field.type ||
 	( 'dynamictext' === field.type && field.options?.hidden );
 
-const RequiredStar = () => <span className="cf7e-required" aria-hidden="true">*</span>;
+const RequiredStar = () => <span className="df7-required" aria-hidden="true">*</span>;
 
 const clamp = ( value, min, max, fallback ) => {
 	const number = parseInt( value, 10 );
@@ -1774,29 +1774,29 @@ const clamp = ( value, min, max, fallback ) => {
 };
 
 const PreviewContent = ( { item } ) => {
-	const align = `cf7e-align-${ [ 'left', 'center', 'right' ].includes( item.align ) ? item.align : 'left' }`;
+	const align = `df7-align-${ [ 'left', 'center', 'right' ].includes( item.align ) ? item.align : 'left' }`;
 
 	if ( 'heading' === item.type ) {
 		const level   = [ 'h2', 'h3', 'h4' ].includes( item.level ) ? item.level : 'h2';
 		const Heading = level;
-		return <Heading className={ `cf7e-h cf7e-h-${ level } ${ align }` }>{ item.text }</Heading>;
+		return <Heading className={ `df7-h df7-h-${ level } ${ align }` }>{ item.text }</Heading>;
 	}
 	if ( 'paragraph' === item.type ) {
 		const size = [ 'sm', 'md', 'lg' ].includes( item.size ) ? item.size : 'md';
-		return <p className={ `cf7e-p cf7e-p-${ size } ${ align }` }>{ item.text }</p>;
+		return <p className={ `df7-p df7-p-${ size } ${ align }` }>{ item.text }</p>;
 	}
 	if ( 'divider' === item.type ) {
 		const style = [ 'solid', 'dashed', 'dotted' ].includes( item.style ) ? item.style : 'solid';
 		const tier  = [ 'subtle', 'normal', 'strong' ].includes( item.tier ) ? item.tier : 'subtle';
 		return (
 			<hr
-				className={ `cf7e-hr cf7e-hr-${ style } cf7e-hr-${ tier }` }
+				className={ `df7-hr df7-hr-${ style } df7-hr-${ tier }` }
 				style={ { borderTopWidth: `${ clamp( item.thickness, 1, 6, 1 ) }px` } }
 			/>
 		);
 	}
 	if ( 'spacer' === item.type ) {
-		return <div className="cf7e-spacer" aria-hidden="true" style={ { height: `${ clamp( item.height, 0, 200, 16 ) }px` } } />;
+		return <div className="df7-spacer" aria-hidden="true" style={ { height: `${ clamp( item.height, 0, 200, 16 ) }px` } } />;
 	}
 	return null;
 };
@@ -1807,7 +1807,7 @@ const PreviewField = ( { field } ) => {
 	if ( 'submit' === kind ) {
 		return (
 			<button type="submit" disabled onClick={ ( event ) => event.preventDefault() }>
-				{ field.label || __( 'Send', 'essentials-for-contact-form-7' ) }
+				{ field.label || __( 'Send', 'defer-forms-for-contact-form-7' ) }
 			</button>
 		);
 	}
@@ -1821,7 +1821,7 @@ const PreviewField = ( { field } ) => {
 						<label>
 							<input type="checkbox" defaultChecked={ 'on' === field.default } disabled />
 							<span className="wpcf7-list-item-label">
-								{ field.label || __( 'I agree', 'essentials-for-contact-form-7' ) }{ field.required && <RequiredStar /> }
+								{ field.label || __( 'I agree', 'defer-forms-for-contact-form-7' ) }{ field.required && <RequiredStar /> }
 							</span>
 						</label>
 					</span>
@@ -1849,19 +1849,19 @@ const PreviewField = ( { field } ) => {
 		const multi  = !! field.options?.multiple;
 		const chosen = ( field.choices || [] ).slice( 0, multi ? 2 : 1 );
 		widget = (
-			<div className={ `cf7e-select${ multi ? ' cf7e-select--multiple' : '' }` }>
-				<span className="cf7e-select-trigger">
-					<span className="cf7e-select-value">
+			<div className={ `df7-select${ multi ? ' df7-select--multiple' : '' }` }>
+				<span className="df7-select-trigger">
+					<span className="df7-select-value">
 						{ multi
-							? chosen.map( ( choice, index ) => <span key={ index } className="cf7e-select-chip">{ choice }<span className="cf7e-select-chip-remove">×</span></span> )
-							: ( chosen[ 0 ] || <span className="cf7e-select-placeholder">{ __( 'Select…', 'essentials-for-contact-form-7' ) }</span> ) }
+							? chosen.map( ( choice, index ) => <span key={ index } className="df7-select-chip">{ choice }<span className="df7-select-chip-remove">×</span></span> )
+							: ( chosen[ 0 ] || <span className="df7-select-placeholder">{ __( 'Select…', 'defer-forms-for-contact-form-7' ) }</span> ) }
 					</span>
-					<span className="cf7e-select-arrow" />
+					<span className="df7-select-arrow" />
 				</span>
 			</div>
 		);
 	} else if ( 'checkbox' === kind || 'radio' === kind ) {
-		const layout = [ 'inline', 'cards' ].includes( field.layout ) ? ` cf7e-${ field.layout }` : '';
+		const layout = [ 'inline', 'cards' ].includes( field.layout ) ? ` df7-${ field.layout }` : '';
 		widget = (
 			<span className={ `wpcf7-form-control wpcf7-${ kind }${ layout }` }>
 				{ ( field.choices || [] ).map( ( choice, index ) => (
@@ -1880,15 +1880,15 @@ const PreviewField = ( { field } ) => {
 			field.options?.limit,
 		].filter( Boolean );
 		widget = (
-			<div className="cf7e-file">
-				<div className="cf7e-file-zone">
-					<span className="cf7e-file-icon" />
-					<span className="cf7e-file-text">
+			<div className="df7-file">
+				<div className="df7-file-zone">
+					<span className="df7-file-icon" />
+					<span className="df7-file-text">
 						{ field.options?.multiple
-							? __( 'Drag files here or click to browse', 'essentials-for-contact-form-7' )
-							: __( 'Drag a file here or click to browse', 'essentials-for-contact-form-7' ) }
+							? __( 'Drag files here or click to browse', 'defer-forms-for-contact-form-7' )
+							: __( 'Drag a file here or click to browse', 'defer-forms-for-contact-form-7' ) }
 					</span>
-					{ !! hints.length && <span className="cf7e-file-hint">{ hints.join( ' · ' ) }</span> }
+					{ !! hints.length && <span className="df7-file-hint">{ hints.join( ' · ' ) }</span> }
 				</div>
 			</div>
 		);
@@ -1899,18 +1899,18 @@ const PreviewField = ( { field } ) => {
 		const pct  = rMax > rMin ? ( ( rVal - rMin ) / ( rMax - rMin ) ) * 100 : 0;
 		// The wrapper and badge range.js builds around the native control.
 		widget = (
-			<div className="cf7e-range">
+			<div className="df7-range">
 				<input
 					type="range"
 					className="wpcf7-range"
-					style={ { '--cf7e-range-p': `${ pct }%` } }
+					style={ { '--df7-range-p': `${ pct }%` } }
 					min={ rMin }
 					max={ rMax }
 					step={ field.options?.step ?? 1 }
 					value={ rVal }
 					readOnly
 				/>
-				<span className="cf7e-range-value">{ rVal }</span>
+				<span className="df7-range-value">{ rVal }</span>
 			</div>
 		);
 	} else if ( 'rating' === kind ) {
@@ -1918,7 +1918,7 @@ const PreviewField = ( { field } ) => {
 		// Counted down like Rating.php, because rating.css reverses the row — the
 		// order in the markup is what makes the CSS-only fill work.
 		widget = (
-			<span className="cf7e-rating">
+			<span className="df7-rating">
 				{ Array.from( { length: max } ).flatMap( ( _, i ) => {
 					const score = max - i;
 					// `for`/`id` the same way Rating.php pairs them: the star is the
@@ -1933,16 +1933,16 @@ const PreviewField = ( { field } ) => {
 		);
 	} else if ( 'country' === kind || 'product' === kind ) {
 		widget = (
-			<div className="cf7e-select">
-				<span className="cf7e-select-trigger">
-					<span className="cf7e-select-value">
-						<span className="cf7e-select-placeholder">
+			<div className="df7-select">
+				<span className="df7-select-trigger">
+					<span className="df7-select-value">
+						<span className="df7-select-placeholder">
 							{ 'product' === kind
-								? __( 'Select a product…', 'essentials-for-contact-form-7' )
-								: __( 'Select a country…', 'essentials-for-contact-form-7' ) }
+								? __( 'Select a product…', 'defer-forms-for-contact-form-7' )
+								: __( 'Select a country…', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					</span>
-					<span className="cf7e-select-arrow" />
+					<span className="df7-select-arrow" />
 				</span>
 			</div>
 		);
@@ -1958,7 +1958,7 @@ const PreviewField = ( { field } ) => {
 			</label>
 		);
 	} else if ( 'dynamictext' === kind ) {
-		widget = <input type="text" readOnly placeholder={ field.default ? `⟨ ${ field.default } ⟩` : __( 'Dynamic value', 'essentials-for-contact-form-7' ) } />;
+		widget = <input type="text" readOnly placeholder={ field.default ? `⟨ ${ field.default } ⟩` : __( 'Dynamic value', 'defer-forms-for-contact-form-7' ) } />;
 	} else {
 		const native = [ 'email', 'tel', 'url', 'number', 'date', 'password' ].includes( kind ) ? kind : 'text';
 		widget = <input type={ native } placeholder={ field.placeholder || '' } defaultValue={ field.default || '' } readOnly />;
@@ -1976,7 +1976,7 @@ const PreviewField = ( { field } ) => {
 
 	if ( GROUP_CAPTION.includes( kind ) ) {
 		return (
-			<fieldset className="cf7e-fieldset">
+			<fieldset className="df7-fieldset">
 				<legend>{ caption }</legend>
 				{ wrapped }
 			</fieldset>
@@ -2012,9 +2012,9 @@ const previewItems = ( list ) => list.map( ( item ) => {
 const PreviewRow = ( { row } ) => {
 	const columns = row.columns || [];
 	return (
-		<div className={ `cf7e-row cf7e-cols-${ columns.length || 1 }` }>
+		<div className={ `df7-row df7-cols-${ columns.length || 1 }` }>
 			{ columns.map( ( col, ci ) => (
-				<div key={ ci } className="cf7e-col">{ previewItems( col ) }</div>
+				<div key={ ci } className="df7-col">{ previewItems( col ) }</div>
 			) ) }
 		</div>
 	);
@@ -2024,24 +2024,24 @@ const PreviewRow = ( { row } ) => {
  * The indicator, built exactly as steps.js builds it.
  *
  * Both the bar and the marker row are always rendered; steps.css decides which
- * one is shown from the `cf7e-steps-*` class on the wrapper, and hides the
+ * one is shown from the `df7-steps-*` class on the wrapper, and hides the
  * whole block for "none". That is how it works on the real form, so the
  * variants cannot disagree here.
  */
 const PreviewIndicator = ( { pages, current } ) => (
-	<div className="cf7e-steps-indicator">
-		<div className="cf7e-steps-progress">
-			<div className="cf7e-steps-progress-fill" style={ { width: `${ ( ( current + 1 ) / pages.length ) * 100 }%` } } />
+	<div className="df7-steps-indicator">
+		<div className="df7-steps-progress">
+			<div className="df7-steps-progress-fill" style={ { width: `${ ( ( current + 1 ) / pages.length ) * 100 }%` } } />
 		</div>
-		<ol className="cf7e-steps-marks">
+		<ol className="df7-steps-marks">
 			{ pages.map( ( page, i ) => (
 				<li
 					key={ i }
-					className={ `cf7e-steps-mark${ i < current ? ' cf7e-steps-mark-done' : '' }${ i === current ? ' cf7e-steps-mark-current' : '' }` }
+					className={ `df7-steps-mark${ i < current ? ' df7-steps-mark-done' : '' }${ i === current ? ' df7-steps-mark-current' : '' }` }
 				>
-					<span className="cf7e-steps-mark-num">{ i + 1 }</span>
-					<span className="cf7e-steps-mark-label">
-						{ page.settings.title || sprintf( /* translators: %d: step number. */ __( 'Step %d', 'essentials-for-contact-form-7' ), i + 1 ) }
+					<span className="df7-steps-mark-num">{ i + 1 }</span>
+					<span className="df7-steps-mark-label">
+						{ page.settings.title || sprintf( /* translators: %d: step number. */ __( 'Step %d', 'defer-forms-for-contact-form-7' ), i + 1 ) }
 					</span>
 				</li>
 			) ) }
@@ -2070,21 +2070,21 @@ const Preview = ( { items, title, indicator } ) => {
 	// The variant class belongs on the host element, as it does on the <form>:
 	// steps.css keys every variant rule off it. Left off entirely when there is
 	// no choice yet, so the "not one of the others" fallback shows the bar.
-	const variant = multi && indicator ? ` cf7e-steps-${ indicator }` : '';
+	const variant = multi && indicator ? ` df7-steps-${ indicator }` : '';
 
 	return (
-		<div className={ `cf7e-preview${ variant } cf7e-mx-auto cf7e-max-w-2xl cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-8 cf7e-shadow-card` }>
-			{ title && <h2 className="cf7e-mb-6 cf7e-mt-0 cf7e-text-2xl cf7e-font-bold cf7e-text-ink">{ title }</h2> }
+		<div className={ `df7-preview${ variant } df7-mx-auto df7-max-w-2xl df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-8 df7-shadow-card` }>
+			{ title && <h2 className="df7-mb-6 df7-mt-0 df7-text-2xl df7-font-bold df7-text-ink">{ title }</h2> }
 			{ 0 === items.length ? (
-				<p className="cf7e-m-0 cf7e-text-center cf7e-text-sm cf7e-text-stone-400">{ __( 'Nothing to preview yet.', 'essentials-for-contact-form-7' ) }</p>
+				<p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">{ __( 'Nothing to preview yet.', 'defer-forms-for-contact-form-7' ) }</p>
 			) : multi ? (
 				<>
 					<PreviewIndicator pages={ pages } current={ current } />
-					<div className="cf7e-step cf7e-step-active">
+					<div className="df7-step df7-step-active">
 						{ ( now.settings.title || now.settings.desc ) && (
-							<div className="cf7e-step-heading">
-								{ now.settings.title && <h3 className="cf7e-step-title">{ now.settings.title }</h3> }
-								{ now.settings.desc && <p className="cf7e-step-desc">{ now.settings.desc }</p> }
+							<div className="df7-step-heading">
+								{ now.settings.title && <h3 className="df7-step-title">{ now.settings.title }</h3> }
+								{ now.settings.desc && <p className="df7-step-desc">{ now.settings.desc }</p> }
 							</div>
 						) }
 						{ previewItems( now.fields ) }
@@ -2092,25 +2092,25 @@ const Preview = ( { items, title, indicator } ) => {
 					{ /* steps.js takes the buttons out of flow rather than hiding
 					     them in place, which is what lets the status line slide
 					     across on the first and last step. */ }
-					<div className="cf7e-steps-nav">
+					<div className="df7-steps-nav">
 						<button
 							type="button"
-							className="cf7e-step-btn cf7e-step-prev"
+							className="df7-step-btn df7-step-prev"
 							style={ 0 === current ? { display: 'none' } : undefined }
 							onClick={ () => setStep( current - 1 ) }
 						>
-							{ now.settings.prev || __( 'Back', 'essentials-for-contact-form-7' ) }
+							{ now.settings.prev || __( 'Back', 'defer-forms-for-contact-form-7' ) }
 						</button>
-						<span className="cf7e-step-status">
-							{ sprintf( /* translators: 1: current step, 2: total steps. */ __( 'Step %1$d of %2$d', 'essentials-for-contact-form-7' ), current + 1, pages.length ) }
+						<span className="df7-step-status">
+							{ sprintf( /* translators: 1: current step, 2: total steps. */ __( 'Step %1$d of %2$d', 'defer-forms-for-contact-form-7' ), current + 1, pages.length ) }
 						</span>
 						<button
 							type="button"
-							className="cf7e-step-btn cf7e-step-next"
+							className="df7-step-btn df7-step-next"
 							style={ current === pages.length - 1 ? { display: 'none' } : undefined }
 							onClick={ () => setStep( current + 1 ) }
 						>
-							{ now.settings.next || __( 'Next', 'essentials-for-contact-form-7' ) }
+							{ now.settings.next || __( 'Next', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</div>
 				</>
@@ -2155,7 +2155,7 @@ const App = ( { formId } ) => {
 			setLoading( false );
 			return;
 		}
-		apiFetch( { path: `cf7e/v1/forms/${ formId }/builder` } )
+		apiFetch( { path: `df7/v1/forms/${ formId }/builder` } )
 			.then( ( res ) => {
 				setItems( ensureIds( res.fields || [] ) );
 				setTitle( res.title || '' );
@@ -2208,7 +2208,7 @@ const App = ( { formId } ) => {
 		setSaving( 'saving' );
 		try {
 			const res = await apiFetch( {
-				path:   `cf7e/v1/forms/${ formId }/builder`,
+				path:   `df7/v1/forms/${ formId }/builder`,
 				method: 'PUT',
 				data:   { fields: stripIds( items ), redirect, steps, css_class: cssClass },
 			} );
@@ -2242,7 +2242,7 @@ const App = ( { formId } ) => {
 	const openHistory = () => {
 		setHistory( { loading: true, list: [], error: null } );
 
-		apiFetch( { path: `cf7e/v1/forms/${ formId }/revisions` } )
+		apiFetch( { path: `df7/v1/forms/${ formId }/revisions` } )
 			.then( ( list ) => setHistory( { loading: false, list, error: null } ) )
 			.catch( ( err ) => setHistory( { loading: false, list: [], error: err.message } ) );
 	};
@@ -2255,7 +2255,7 @@ const App = ( { formId } ) => {
 	const loadRevision = ( rev ) => {
 		setHistory( ( state ) => ( { ...state, loading: true } ) );
 
-		apiFetch( { path: `cf7e/v1/forms/${ formId }/revisions/${ rev }` } )
+		apiFetch( { path: `df7/v1/forms/${ formId }/revisions/${ rev }` } )
 			.then( ( res ) => {
 				beginChange();
 				setItems( ensureIds( res.fields || [] ) );
@@ -2328,7 +2328,7 @@ const App = ( { formId } ) => {
 		// Without a name the field can't be posted, stored or referenced in a
 		// condition — so it has no meaning in the form.
 		if ( 'field' === draft.kind && 'submit' !== draft.type && ! ( draft.name || '' ).trim() ) {
-			setDraftError( __( 'Give this field a name — it identifies the field in submissions, email and conditions.', 'essentials-for-contact-form-7' ) );
+			setDraftError( __( 'Give this field a name — it identifies the field in submissions, email and conditions.', 'defer-forms-for-contact-form-7' ) );
 			setFieldTab( 'general' );
 			return;
 		}
@@ -2497,10 +2497,10 @@ const App = ( { formId } ) => {
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Form Builder', 'essentials-for-contact-form-7' ) }
-				subtitle={ title || ( formId ? sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'essentials-for-contact-form-7' ), formId ) : __( 'No form selected.', 'essentials-for-contact-form-7' ) ) }
+				title={ __( 'Form Builder', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ title || ( formId ? sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), formId ) : __( 'No form selected.', 'defer-forms-for-contact-form-7' ) ) }
 				actions={
-					<div className="cf7e-flex cf7e-items-center cf7e-gap-2">
+					<div className="df7-flex df7-items-center df7-gap-2">
 						{ /* Beside the tools rather than above the tabs.
 						     
 						     It is a thing you reach for while working, like undo
@@ -2508,100 +2508,100 @@ const App = ( { formId } ) => {
 						     stands at button height and cannot push the row wide:
 						     a shortcode is long and this one truncates. */ }
 						{ !! formId && <ShortcodeBox code={ shortcode } loading={ loading } compact /> }
-						<div className="cf7e-flex cf7e-items-center cf7e-gap-1">
-							<button type="button" onClick={ undo } disabled={ ! past.length } aria-label={ __( 'Undo', 'essentials-for-contact-form-7' ) } title={ __( 'Undo (Ctrl+Z)', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-bg-stone-50 hover:cf7e-text-ink disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-40">
-								<Undo2 className="cf7e-h-4 cf7e-w-4" />
+						<div className="df7-flex df7-items-center df7-gap-1">
+							<button type="button" onClick={ undo } disabled={ ! past.length } aria-label={ __( 'Undo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Undo (Ctrl+Z)', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
+								<Undo2 className="df7-h-4 df7-w-4" />
 							</button>
-							<button type="button" onClick={ redo } disabled={ ! future.length } aria-label={ __( 'Redo', 'essentials-for-contact-form-7' ) } title={ __( 'Redo (Ctrl+Shift+Z)', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-bg-stone-50 hover:cf7e-text-ink disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-40">
-								<Redo2 className="cf7e-h-4 cf7e-w-4" />
+							<button type="button" onClick={ redo } disabled={ ! future.length } aria-label={ __( 'Redo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Redo (Ctrl+Shift+Z)', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
+								<Redo2 className="df7-h-4 df7-w-4" />
 							</button>
 							{ /* Beside undo/redo because it is the same idea at a
 							     longer timescale — this sitting, and the ten saves
 							     before it. */ }
-							<button type="button" onClick={ openHistory } disabled={ ! formId || loading } aria-label={ __( 'History', 'essentials-for-contact-form-7' ) } title={ __( 'Earlier saved versions of this form', 'essentials-for-contact-form-7' ) } className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-bg-stone-50 hover:cf7e-text-ink disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-40">
-								<History className="cf7e-h-4 cf7e-w-4" />
+							<button type="button" onClick={ openHistory } disabled={ ! formId || loading } aria-label={ __( 'History', 'defer-forms-for-contact-form-7' ) } title={ __( 'Earlier saved versions of this form', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
+								<History className="df7-h-4 df7-w-4" />
 							</button>
 						</div>
 						{ /* Styling is global, not this form's — but this is where
 						     someone stands when they decide the form looks wrong,
 						     and a link they can find beats a setting they cannot. */ }
 						<a
-							href="admin.php?page=cf7-essentials-styling"
+							href="admin.php?page=df7-styling"
 							className={ btnGhost }
-							title={ __( 'Colours, shape and spacing for every form', 'essentials-for-contact-form-7' ) }
+							title={ __( 'Colours, shape and spacing for every form', 'defer-forms-for-contact-form-7' ) }
 						>
-							<Palette className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
-							{ __( 'Styling', 'essentials-for-contact-form-7' ) }
+							<Palette className="df7-h-4 df7-w-4 df7-text-stone-400" />
+							{ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
 						</a>
 						<button
 							type="button"
 							disabled={ loading || 'saving' === saving }
 							onClick={ save }
-							className={ `${ btnPrimary } cf7e-px-5` }
+							className={ `${ btnPrimary } df7-px-5` }
 						>
-							{ 'saving' === saving ? <Loader2 className="cf7e-h-4 cf7e-w-4 cf7e-animate-spin" /> : 'saved' === saving ? <Check className="cf7e-h-4 cf7e-w-4" /> : <Save className="cf7e-h-4 cf7e-w-4" /> }
-							{ 'saved' === saving ? __( 'Saved', 'essentials-for-contact-form-7' ) : __( 'Save', 'essentials-for-contact-form-7' ) }
+							{ 'saving' === saving ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : 'saved' === saving ? <Check className="df7-h-4 df7-w-4" /> : <Save className="df7-h-4 df7-w-4" /> }
+							{ 'saved' === saving ? __( 'Saved', 'defer-forms-for-contact-form-7' ) : __( 'Save', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</div>
 				}
 			/>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">{ error }</div>
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">{ error }</div>
 			) }
 
 			{ null !== loaded && (
-				<div className="cf7e-mb-4 cf7e-flex cf7e-flex-wrap cf7e-items-center cf7e-gap-x-2 cf7e-gap-y-1 cf7e-rounded-lg cf7e-border cf7e-border-amber-200 cf7e-bg-amber-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-text-amber-800">
-					<strong className="cf7e-font-semibold">
+				<div className="df7-mb-4 df7-flex df7-flex-wrap df7-items-center df7-gap-x-2 df7-gap-y-1 df7-rounded-lg df7-border df7-border-amber-200 df7-bg-amber-50 df7-px-4 df7-py-3 df7-text-sm df7-text-amber-800">
+					<strong className="df7-font-semibold">
 						{ sprintf(
 							/* translators: %s: when the version was saved, e.g. "Today at 1:49:07 PM". */
-							__( 'Showing the version from %s.', 'essentials-for-contact-form-7' ),
+							__( 'Showing the version from %s.', 'defer-forms-for-contact-form-7' ),
 							revisionWhen( loaded )
 						) }
 					</strong>
-					<span>{ __( 'Nothing has changed on your site yet — press Save to keep it, or Ctrl+Z to go back.', 'essentials-for-contact-form-7' ) }</span>
+					<span>{ __( 'Nothing has changed on your site yet — press Save to keep it, or Ctrl+Z to go back.', 'defer-forms-for-contact-form-7' ) }</span>
 				</div>
 			) }
 
 			<Tabs
-				className="cf7e-mb-4"
+				className="df7-mb-4"
 				active={ mode }
 				onChange={ setMode }
 				tabs={ [
-					{ id: 'build', label: __( 'Build', 'essentials-for-contact-form-7' ) },
-					{ id: 'preview', label: __( 'Preview', 'essentials-for-contact-form-7' ) },
-					{ id: 'settings', label: __( 'Settings', 'essentials-for-contact-form-7' ) },
+					{ id: 'build', label: __( 'Build', 'defer-forms-for-contact-form-7' ) },
+					{ id: 'preview', label: __( 'Preview', 'defer-forms-for-contact-form-7' ) },
+					{ id: 'settings', label: __( 'Settings', 'defer-forms-for-contact-form-7' ) },
 				] }
 			/>
 
 			{ loading ? (
-				<div className="cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white">
-					<div className={ `cf7e-grid ${ COLS } cf7e-items-center cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-4 cf7e-py-2.5` }>
+				<div className="df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white">
+					<div className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-50/60 df7-px-4 df7-py-2.5` }>
 						<span /><span /><span /><span /><span /><span />
 					</div>
 					{ /* py-3 and a 32px action button, both taken from FieldRow above:
 					     the padding was py-3.5 here and the last cell a 16px bar,
 					     which is a row 8px shorter than the one replacing it. */ }
 					{ Array.from( { length: 4 } ).map( ( _, i ) => (
-						<div key={ i } className={ `cf7e-grid ${ COLS } cf7e-items-center cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-px-4 cf7e-py-3 last:cf7e-border-0` }>
-							<div className="cf7e-h-4 cf7e-w-4 cf7e-animate-pulse cf7e-rounded cf7e-bg-stone-100" />
-							<Shimmer w="cf7e-w-5" text="cf7e-text-[14px]" />
-							<Shimmer w="cf7e-w-32" text="cf7e-text-sm" />
-							<Shimmer w="cf7e-w-24" text="cf7e-text-[14px]" />
-							<span className="cf7e-inline-block cf7e-w-fit cf7e-animate-pulse cf7e-rounded-md cf7e-bg-stone-100 cf7e-px-2 cf7e-py-1 cf7e-text-[14px] cf7e-text-transparent">
+						<div key={ i } className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-px-4 df7-py-3 last:df7-border-0` }>
+							<div className="df7-h-4 df7-w-4 df7-animate-pulse df7-rounded df7-bg-stone-100" />
+							<Shimmer w="df7-w-5" text="df7-text-[14px]" />
+							<Shimmer w="df7-w-32" text="df7-text-sm" />
+							<Shimmer w="df7-w-24" text="df7-text-[14px]" />
+							<span className="df7-inline-block df7-w-fit df7-animate-pulse df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-1 df7-text-[14px] df7-text-transparent">
 								{ '\u00a0\u00a0\u00a0\u00a0\u00a0' }
 							</span>
-							<div className="cf7e-h-8 cf7e-w-8 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
+							<div className="df7-h-8 df7-w-8 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
 						</div>
 					) ) }
 				</div>
 			) : 'settings' === mode ? (
-				<div className="cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-6">
+				<div className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-6">
 					{ /* Full width. A max-width here left every field hugging the
 					     left edge of a card that ran the width of the screen,
 					     which reads as a layout that has gone wrong rather than
 					     as a measured column. */ }
-					<div className="cf7e-flex cf7e-flex-col cf7e-gap-5">
+					<div className="df7-flex df7-flex-col df7-gap-5">
 						{ /*
 						  * A hook for the one form that has to look different.
 						  *
@@ -2612,8 +2612,8 @@ const App = ( { formId } ) => {
 						  * and surprise them every time.
 						  */ }
 						<LField
-							label={ __( 'CSS class', 'essentials-for-contact-form-7' ) }
-							hint={ __( 'Added to this form only, so your theme can style it on its own. Letters, numbers, hyphens and underscores; separate several with spaces.', 'essentials-for-contact-form-7' ) }
+							label={ __( 'CSS class', 'defer-forms-for-contact-form-7' ) }
+							hint={ __( 'Added to this form only, so your theme can style it on its own. Letters, numbers, hyphens and underscores; separate several with spaces.', 'defer-forms-for-contact-form-7' ) }
 						>
 							<input
 								className={ inputCls }
@@ -2623,27 +2623,27 @@ const App = ( { formId } ) => {
 								onChange={ ( event ) => setCssClass( event.target.value ) }
 							/>
 						</LField>
-						<hr className="cf7e-m-0 cf7e-border-0 cf7e-border-t cf7e-border-line" />
+						<hr className="df7-m-0 df7-border-0 df7-border-t df7-border-line" />
 
 						{ items.some( ( it ) => 'pagebreak' === it.kind ) && (
 							<>
 								<LField
-									label={ __( 'Step indicator', 'essentials-for-contact-form-7' ) }
-									hint={ __( 'How progress through the steps is shown above the fields.', 'essentials-for-contact-form-7' ) }
+									label={ __( 'Step indicator', 'defer-forms-for-contact-form-7' ) }
+									hint={ __( 'How progress through the steps is shown above the fields.', 'defer-forms-for-contact-form-7' ) }
 								>
 									<Select
 										value={ steps.indicator || 'bar' }
 										onChange={ ( value ) => setSteps( { ...steps, indicator: value } ) }
 										options={ [
-											{ value: 'bar', label: __( 'Progress bar', 'essentials-for-contact-form-7' ) },
-											{ value: 'dots', label: __( 'Dots', 'essentials-for-contact-form-7' ) },
-											{ value: 'numbers', label: __( 'Numbers', 'essentials-for-contact-form-7' ) },
-											{ value: 'titles', label: __( 'Numbers with step titles', 'essentials-for-contact-form-7' ) },
-											{ value: 'none', label: __( 'None', 'essentials-for-contact-form-7' ) },
+											{ value: 'bar', label: __( 'Progress bar', 'defer-forms-for-contact-form-7' ) },
+											{ value: 'dots', label: __( 'Dots', 'defer-forms-for-contact-form-7' ) },
+											{ value: 'numbers', label: __( 'Numbers', 'defer-forms-for-contact-form-7' ) },
+											{ value: 'titles', label: __( 'Numbers with step titles', 'defer-forms-for-contact-form-7' ) },
+											{ value: 'none', label: __( 'None', 'defer-forms-for-contact-form-7' ) },
 										] }
 									/>
 								</LField>
-								<hr className="cf7e-m-0 cf7e-border-0 cf7e-border-t cf7e-border-line" />
+								<hr className="df7-m-0 df7-border-0 df7-border-t df7-border-line" />
 							</>
 						) }
 
@@ -2656,11 +2656,11 @@ const App = ( { formId } ) => {
 						{ !! hasDestination( redirect ) && (
 							<>
 								<LField
-									label={ __( 'Wait before redirecting', 'essentials-for-contact-form-7' ) }
-									hint={ __( 'Seconds to leave the success message on screen. 0 redirects straight away.', 'essentials-for-contact-form-7' ) }
+									label={ __( 'Wait before redirecting', 'defer-forms-for-contact-form-7' ) }
+									hint={ __( 'Seconds to leave the success message on screen. 0 redirects straight away.', 'defer-forms-for-contact-form-7' ) }
 								>
 									<input
-										className={ `${ inputCls } cf7e-w-28` }
+										className={ `${ inputCls } df7-w-28` }
 										type="number"
 										min="0"
 										max="60"
@@ -2677,32 +2677,32 @@ const App = ( { formId } ) => {
 								  * So the warning is on the long waits, not on the setting.
 								  */ }
 								<LField
-									label={ __( 'Open in', 'essentials-for-contact-form-7' ) }
+									label={ __( 'Open in', 'defer-forms-for-contact-form-7' ) }
 									hint={ 'blank' === ( redirect.target || 'same' ) && ( redirect.delay ?? 0 ) > 3
-										? __( 'Browsers only allow a new tab for a few seconds after the click, so a wait this long is usually refused and the page opens in this tab instead. Around 2 seconds is reliable.', 'essentials-for-contact-form-7' )
+										? __( 'Browsers only allow a new tab for a few seconds after the click, so a wait this long is usually refused and the page opens in this tab instead. Around 2 seconds is reliable.', 'defer-forms-for-contact-form-7' )
 										: undefined }
 								>
 									<Select
 										value={ redirect.target || 'same' }
 										onChange={ ( value ) => setRedirect( { ...redirect, target: value } ) }
 										options={ [
-											{ value: 'same', label: __( 'The same tab', 'essentials-for-contact-form-7' ) },
-											{ value: 'blank', label: __( 'A new tab — the form stays open', 'essentials-for-contact-form-7' ) },
+											{ value: 'same', label: __( 'The same tab', 'defer-forms-for-contact-form-7' ) },
+											{ value: 'blank', label: __( 'A new tab — the form stays open', 'defer-forms-for-contact-form-7' ) },
 										] }
 									/>
 								</LField>
 
 								{ 'blank' !== ( redirect.target || 'same' ) && (
 									<LField
-										label={ __( 'Browser history', 'essentials-for-contact-form-7' ) }
-										hint={ __( 'Replacing the entry stops the Back button returning to the submitted form.', 'essentials-for-contact-form-7' ) }
+										label={ __( 'Browser history', 'defer-forms-for-contact-form-7' ) }
+										hint={ __( 'Replacing the entry stops the Back button returning to the submitted form.', 'defer-forms-for-contact-form-7' ) }
 									>
 										<Select
 											value={ redirect.method || 'assign' }
 											onChange={ ( value ) => setRedirect( { ...redirect, method: value } ) }
 											options={ [
-												{ value: 'assign', label: __( 'Keep this page in history', 'essentials-for-contact-form-7' ) },
-												{ value: 'replace', label: __( 'Replace this page in history', 'essentials-for-contact-form-7' ) },
+												{ value: 'assign', label: __( 'Keep this page in history', 'defer-forms-for-contact-form-7' ) },
+												{ value: 'replace', label: __( 'Replace this page in history', 'defer-forms-for-contact-form-7' ) },
 											] }
 										/>
 									</LField>
@@ -2720,29 +2720,29 @@ const App = ( { formId } ) => {
 			) : 'preview' === mode ? (
 				<Preview items={ items } title={ title } indicator={ steps.indicator } />
 			) : 0 === items.length ? (
-				<div className="cf7e-flex cf7e-flex-col cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-border cf7e-border-dashed cf7e-border-stroke cf7e-bg-white cf7e-py-16 cf7e-text-center">
-					<div className="cf7e-mb-4 cf7e-flex cf7e-h-14 cf7e-w-14 cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-bg-accent-50 cf7e-text-accent">
-						<Wand2 className="cf7e-h-7 cf7e-w-7" />
+				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-rounded-2xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-16 df7-text-center">
+					<div className="df7-mb-4 df7-flex df7-h-14 df7-w-14 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-accent-50 df7-text-accent">
+						<Wand2 className="df7-h-7 df7-w-7" />
 					</div>
-					<h3 className="cf7e-m-0 cf7e-text-lg cf7e-font-bold cf7e-text-ink">{ __( 'Build your form', 'essentials-for-contact-form-7' ) }</h3>
-					<p className="cf7e-mb-5 cf7e-mt-1 cf7e-text-sm cf7e-text-stone-500">{ __( 'Add your first field to get started.', 'essentials-for-contact-form-7' ) }</p>
-					<div className="cf7e-flex cf7e-items-center cf7e-gap-2">
-						<button type="button" onClick={ openAdd } className={ accentBtn + ' cf7e-h-10 cf7e-px-5 cf7e-text-sm' }>
-							<Plus className="cf7e-h-4 cf7e-w-4" /> { __( 'Add field', 'essentials-for-contact-form-7' ) }
+					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">{ __( 'Build your form', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="df7-mb-5 df7-mt-1 df7-text-sm df7-text-stone-500">{ __( 'Add your first field to get started.', 'defer-forms-for-contact-form-7' ) }</p>
+					<div className="df7-flex df7-items-center df7-gap-2">
+						<button type="button" onClick={ openAdd } className={ accentBtn + ' df7-h-10 df7-px-5 df7-text-sm' }>
+							<Plus className="df7-h-4 df7-w-4" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 						</button>
-						<button type="button" onClick={ addRow } className={ ghostBtn + ' cf7e-h-10 cf7e-px-5 cf7e-text-sm' }>
-							<LayoutGrid className="cf7e-h-4 cf7e-w-4" /> { __( 'Add row', 'essentials-for-contact-form-7' ) }
+						<button type="button" onClick={ addRow } className={ ghostBtn + ' df7-h-10 df7-px-5 df7-text-sm' }>
+							<LayoutGrid className="df7-h-4 df7-w-4" /> { __( 'Add row', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</div>
 				</div>
 			) : (
-				<div className="cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white">
-					<div className={ `cf7e-grid ${ COLS } cf7e-items-center cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-4 cf7e-py-2.5 cf7e-text-[14px] cf7e-font-bold cf7e-uppercase cf7e-tracking-wider cf7e-text-stone-400` }>
+				<div className="df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white">
+					<div className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-50/60 df7-px-4 df7-py-2.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400` }>
 						<span />
 						<span>#</span>
-						<span>{ __( 'Label', 'essentials-for-contact-form-7' ) }</span>
-						<span>{ __( 'Name', 'essentials-for-contact-form-7' ) }</span>
-						<span>{ __( 'Type', 'essentials-for-contact-form-7' ) }</span>
+						<span>{ __( 'Label', 'defer-forms-for-contact-form-7' ) }</span>
+						<span>{ __( 'Name', 'defer-forms-for-contact-form-7' ) }</span>
+						<span>{ __( 'Type', 'defer-forms-for-contact-form-7' ) }</span>
 						<span />
 					</div>
 					<DndContext sensors={ sensors } collisionDetection={ collisionDetection } measuring={ { droppable: { strategy: MeasuringStrategy.Always } } } onDragStart={ onDragStart } onDragOver={ onDragOver } onDragEnd={ onDragEnd } onDragCancel={ onDragCancel }>
@@ -2788,54 +2788,54 @@ const App = ( { formId } ) => {
 			) }
 
 			{ ! loading && 'build' === mode && items.length > 0 && (
-				<div className="cf7e-mt-3 cf7e-flex cf7e-gap-2">
+				<div className="df7-mt-3 df7-flex df7-gap-2">
 					<button
 						type="button"
 						onClick={ openAdd }
-						className="cf7e-flex cf7e-flex-1 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-2 cf7e-rounded-xl cf7e-border cf7e-border-dashed cf7e-border-stroke cf7e-bg-white cf7e-py-3 cf7e-text-sm cf7e-font-semibold cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-border-accent hover:cf7e-text-accent"
+						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
 					>
-						<Plus className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Add field', 'essentials-for-contact-form-7' ) }
+						<Plus className="df7-h-4 df7-w-4" />
+						{ __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button
 						type="button"
 						onClick={ addRow }
-						className="cf7e-flex cf7e-flex-1 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-2 cf7e-rounded-xl cf7e-border cf7e-border-dashed cf7e-border-stroke cf7e-bg-white cf7e-py-3 cf7e-text-sm cf7e-font-semibold cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-border-accent hover:cf7e-text-accent"
+						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
 					>
-						<LayoutGrid className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Add row', 'essentials-for-contact-form-7' ) }
+						<LayoutGrid className="df7-h-4 df7-w-4" />
+						{ __( 'Add row', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button
 						type="button"
 						onClick={ addPageBreak }
-						className="cf7e-flex cf7e-flex-1 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-2 cf7e-rounded-xl cf7e-border cf7e-border-dashed cf7e-border-stroke cf7e-bg-white cf7e-py-3 cf7e-text-sm cf7e-font-semibold cf7e-text-stone-500 cf7e-transition-colors hover:cf7e-border-accent hover:cf7e-text-accent"
+						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
 					>
-						<Scissors className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Add page break', 'essentials-for-contact-form-7' ) }
+						<Scissors className="df7-h-4 df7-w-4" />
+						{ __( 'Add page break', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</div>
 			) }
 
 			{ modal && (
 				<Modal
-					title={ showPicker ? __( 'Add a field', 'essentials-for-contact-form-7' ) : isStepDraft ? ( draft.title || sprintf( /* translators: %d: step number. */ __( 'Step %d', 'essentials-for-contact-form-7' ), stepNumbers( items )[ draft._id ] || 1 ) ) : ( draft?.label || __( 'Field settings', 'essentials-for-contact-form-7' ) ) }
+					title={ showPicker ? __( 'Add a field', 'defer-forms-for-contact-form-7' ) : isStepDraft ? ( draft.title || sprintf( /* translators: %d: step number. */ __( 'Step %d', 'defer-forms-for-contact-form-7' ), stepNumbers( items )[ draft._id ] || 1 ) ) : ( draft?.label || __( 'Field settings', 'defer-forms-for-contact-form-7' ) ) }
 					badge={ showPicker || isStepDraft ? null : draft?.type }
 					wide={ showPicker }
 					onClose={ closeModal }
 					footer={
 						showPicker ? (
 							<>
-								<span className="cf7e-flex-1" />
-								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'essentials-for-contact-form-7' ) }</button>
+								<span className="df7-flex-1" />
+								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }</button>
 							</>
 						) : (
 							<>
 								{ 'add' === modal.mode && (
-									<button type="button" className={ ghostBtn } onClick={ () => setDraft( null ) }>{ __( '← Back', 'essentials-for-contact-form-7' ) }</button>
+									<button type="button" className={ ghostBtn } onClick={ () => setDraft( null ) }>{ __( '← Back', 'defer-forms-for-contact-form-7' ) }</button>
 								) }
-								<span className="cf7e-flex-1" />
-								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'essentials-for-contact-form-7' ) }</button>
-								<button type="button" className={ accentBtn } onClick={ commitDraft }>{ __( 'Done', 'essentials-for-contact-form-7' ) }</button>
+								<span className="df7-flex-1" />
+								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }</button>
+								<button type="button" className={ accentBtn } onClick={ commitDraft }>{ __( 'Done', 'defer-forms-for-contact-form-7' ) }</button>
 							</>
 						)
 					}
@@ -2845,7 +2845,7 @@ const App = ( { formId } ) => {
 					) : (
 						<>
 							{ draftError && (
-								<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-3.5 cf7e-py-2.5 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">{ draftError }</div>
+								<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">{ draftError }</div>
 							) }
 							<FieldSettingsForm field={ draft } onChange={ patchDraft } availableFields={ collectFields( items ).filter( ( other ) => other._id !== draft?._id ) } tab={ fieldTab } onTab={ setFieldTab } />
 						</>
@@ -2855,13 +2855,13 @@ const App = ( { formId } ) => {
 
 			{ history && (
 				<Modal
-					title={ __( 'Earlier versions', 'essentials-for-contact-form-7' ) }
+					title={ __( 'Earlier versions', 'defer-forms-for-contact-form-7' ) }
 					onClose={ () => setHistory( null ) }
 					footer={
 						<>
-							<span className="cf7e-flex-1" />
+							<span className="df7-flex-1" />
 							<button type="button" onClick={ () => setHistory( null ) } className={ btnGhost }>
-								{ __( 'Close', 'essentials-for-contact-form-7' ) }
+								{ __( 'Close', 'defer-forms-for-contact-form-7' ) }
 							</button>
 						</>
 					}
@@ -2873,7 +2873,7 @@ const App = ( { formId } ) => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-builder-root' );
+const mount = document.getElementById( 'df7-builder-root' );
 if ( mount ) {
 	const formId = parseInt( mount.dataset.formId || '0', 10 );
 	createRoot( mount ).render( <App formId={ formId } /> );

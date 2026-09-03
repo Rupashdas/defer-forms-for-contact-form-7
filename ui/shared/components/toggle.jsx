@@ -8,13 +8,13 @@ export const Toggle = ( { checked, onChange, disabled } ) => (
 		aria-checked={ checked }
 		disabled={ disabled }
 		onClick={ () => onChange( ! checked ) }
-		className={ `cf7e-relative cf7e-inline-flex cf7e-h-6 cf7e-w-11 cf7e-shrink-0 cf7e-cursor-pointer cf7e-rounded-full cf7e-border-0 cf7e-p-0 cf7e-transition-colors cf7e-duration-200 disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-50 ${
-			checked ? 'cf7e-bg-accent' : 'cf7e-bg-stone-300'
+		className={ `df7-relative df7-inline-flex df7-h-6 df7-w-11 df7-shrink-0 df7-cursor-pointer df7-rounded-full df7-border-0 df7-p-0 df7-transition-colors df7-duration-200 disabled:df7-cursor-not-allowed disabled:df7-opacity-50 ${
+			checked ? 'df7-bg-accent' : 'df7-bg-stone-300'
 		}` }
 	>
 		<span
-			className={ `cf7e-pointer-events-none cf7e-absolute cf7e-left-0.5 cf7e-top-0.5 cf7e-h-5 cf7e-w-5 cf7e-rounded-full cf7e-bg-white cf7e-shadow-md cf7e-transition-transform cf7e-duration-200 cf7e-ease-in-out ${
-				checked ? 'cf7e-translate-x-5' : 'cf7e-translate-x-0'
+			className={ `df7-pointer-events-none df7-absolute df7-left-0.5 df7-top-0.5 df7-h-5 df7-w-5 df7-rounded-full df7-bg-white df7-shadow-md df7-transition-transform df7-duration-200 df7-ease-in-out ${
+				checked ? 'df7-translate-x-5' : 'df7-translate-x-0'
 			}` }
 		/>
 	</button>

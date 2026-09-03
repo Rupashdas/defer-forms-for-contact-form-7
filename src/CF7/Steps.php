@@ -2,17 +2,17 @@
 /**
  * Multi-step forms.
  *
- * `[cf7e_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
+ * `[df7_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
  * text and this filter turns it into a divider. Whatever settings the break was
  * given ride along as data attributes for assets/js/steps.js, which does the
  * actual splitting in the browser.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ final class Steps {
 		'id'    => 'id',
 	);
 
-	private const META = '_cf7e_steps';
+	private const META = '_df7_steps';
 
 	/** How the progress through a multi-step form is drawn. */
 	public const INDICATORS = array( 'bar', 'dots', 'numbers', 'titles', 'none' );
@@ -88,11 +88,11 @@ final class Steps {
 	 */
 	public function indicator_class( string $class ): string {
 		$form = self::current_form();
-		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[cf7e_pagebreak' ) ) {
+		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[df7_pagebreak' ) ) {
 			return $class;
 		}
 
-		return $class . ' cf7e-steps-' . self::config( $form->id() )['indicator'];
+		return $class . ' df7-steps-' . self::config( $form->id() )['indicator'];
 	}
 
 	private static function current_form(): ?object {
@@ -106,36 +106,36 @@ final class Steps {
 	}
 
 	public function maybe_render( string $elements ): string {
-		if ( false === strpos( $elements, '[cf7e_pagebreak' ) ) {
+		if ( false === strpos( $elements, '[df7_pagebreak' ) ) {
 			return $elements;
 		}
 
-		wp_enqueue_style( 'cf7e-steps', CF7E_URL . 'assets/css/steps.css', array(), cf7e_asset_ver( 'assets/css/steps.css' ) );
+		wp_enqueue_style( 'df7-steps', DF7_URL . 'assets/css/steps.css', array(), df7_asset_ver( 'assets/css/steps.css' ) );
 		// Declared as a dependency, not just loaded alongside: steps.js hands its
-		// Next-button gate to window.cf7eValidate, which validate.js defines.
-		wp_enqueue_script( 'cf7e-steps', CF7E_URL . 'assets/js/steps.js', array( 'cf7e-validate' ), cf7e_asset_ver( 'assets/js/steps.js' ), true );
+		// Next-button gate to window.df7Validate, which validate.js defines.
+		wp_enqueue_script( 'df7-steps', DF7_URL . 'assets/js/steps.js', array( 'df7-validate' ), df7_asset_ver( 'assets/js/steps.js' ), true );
 
 		// The navigation is drawn in the browser, so its wording has to travel to
 		// it — the same way file.js and select.js get theirs. Without this the
 		// buttons stay English on every site, in every language.
 		wp_localize_script(
-			'cf7e-steps',
-			'cf7eStepsL10n',
+			'df7-steps',
+			'df7StepsL10n',
 			array(
-				'prev'   => __( 'Back', 'essentials-for-contact-form-7' ),
-				'next'   => __( 'Next', 'essentials-for-contact-form-7' ),
+				'prev'   => __( 'Back', 'defer-forms-for-contact-form-7' ),
+				'next'   => __( 'Next', 'defer-forms-for-contact-form-7' ),
 				// Worded exactly as the builder preview words it: gettext merges the
 				// two by their text, and a translator shown two different notes for
 				// one string has to guess which one applies.
 				/* translators: 1: current step, 2: total steps. */
-				'status' => __( 'Step %1$d of %2$d', 'essentials-for-contact-form-7' ),
+				'status' => __( 'Step %1$d of %2$d', 'defer-forms-for-contact-form-7' ),
 				/* translators: %d: step number. */
-				'step'   => __( 'Step %d', 'essentials-for-contact-form-7' ),
+				'step'   => __( 'Step %d', 'defer-forms-for-contact-form-7' ),
 			)
 		);
 
 		return (string) preg_replace_callback(
-			'/\[cf7e_pagebreak(?:\s+([^\]]*))?\]/',
+			'/\[df7_pagebreak(?:\s+([^\]]*))?\]/',
 			static function ( array $match ): string {
 				$args = $match[1] ?? '';
 				$atts = '';
@@ -146,7 +146,7 @@ final class Steps {
 					}
 				}
 
-				return '<div class="cf7e-pagebreak" aria-hidden="true"' . $atts . '></div>';
+				return '<div class="df7-pagebreak" aria-hidden="true"' . $atts . '></div>';
 			},
 			$elements
 		);

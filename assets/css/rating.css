@@ -7,14 +7,14 @@
  * these declarations cannot reach anything else once the admin bundle imports
  * this file.
  */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating {
+:is( .wpcf7-form, .df7-preview ) .df7-rating {
 	display: inline-flex;
 	flex-direction: row-reverse;
 	justify-content: flex-end;
 	gap: 2px;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating input {
+:is( .wpcf7-form, .df7-preview ) .df7-rating input {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -22,28 +22,28 @@
 	pointer-events: none;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating label {
+:is( .wpcf7-form, .df7-preview ) .df7-rating label {
 	margin: 0;
 	font-size: 1.75rem;
 	line-height: 1;
-	color: var( --cf7e-border );
+	color: var( --df7-border );
 	cursor: pointer;
 	transition: color 0.12s ease, transform 0.12s ease;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating label:hover {
+:is( .wpcf7-form, .df7-preview ) .df7-rating label:hover {
 	transform: scale(1.1);
 }
 
 /* A star is gold whatever the palette, so this one stays literal. */
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating input:checked ~ label,
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating label:hover,
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating label:hover ~ label {
+:is( .wpcf7-form, .df7-preview ) .df7-rating input:checked ~ label,
+:is( .wpcf7-form, .df7-preview ) .df7-rating label:hover,
+:is( .wpcf7-form, .df7-preview ) .df7-rating label:hover ~ label {
 	color: #f5b301;
 }
 
-:is( .wpcf7-form, .cf7e-preview ) .cf7e-rating input:focus-visible + label {
-	outline: 2px solid var( --cf7e-primary );
+:is( .wpcf7-form, .df7-preview ) .df7-rating input:focus-visible + label {
+	outline: 2px solid var( --df7-primary );
 	outline-offset: 2px;
-	border-radius: var( --cf7e-radius );
+	border-radius: var( --df7-radius );
 }

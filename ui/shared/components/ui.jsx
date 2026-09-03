@@ -28,18 +28,18 @@ export const Backdrop = ( { onClick, className } ) => (
 		type="button"
 		tabIndex={ -1 }
 		onClick={ onClick }
-		aria-label={ __( 'Close', 'essentials-for-contact-form-7' ) }
-		className={ `cf7e-cursor-default cf7e-appearance-none cf7e-border-0 cf7e-p-0 ${ className }` }
+		aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
+		className={ `df7-cursor-default df7-appearance-none df7-border-0 df7-p-0 ${ className }` }
 	/>
 );
 
 const BTN_BASE =
-	'cf7e-inline-flex cf7e-h-9 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-2 cf7e-rounded-lg cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-no-underline cf7e-transition disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-50';
+	'df7-inline-flex df7-h-9 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-lg df7-px-4 df7-text-sm df7-font-semibold df7-no-underline df7-transition disabled:df7-cursor-not-allowed disabled:df7-opacity-50';
 
 const BTN_VARIANTS = {
-	primary: 'cf7e-border-0 cf7e-bg-ink cf7e-text-white hover:cf7e-opacity-90 active:cf7e-opacity-100',
-	ghost:   'cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-ink hover:cf7e-bg-stone-50',
-	danger:  'cf7e-border-0 cf7e-bg-red-600 cf7e-text-white hover:cf7e-bg-red-700',
+	primary: 'df7-border-0 df7-bg-ink df7-text-white hover:df7-opacity-90 active:df7-opacity-100',
+	ghost:   'df7-border df7-border-stroke df7-bg-white df7-text-ink hover:df7-bg-stone-50',
+	danger:  'df7-border-0 df7-bg-red-600 df7-text-white hover:df7-bg-red-700',
 };
 
 export const Button = ( { variant = 'primary', className = '', children, ...props } ) => (
@@ -57,9 +57,9 @@ export const btnDanger  = `${ BTN_BASE } ${ BTN_VARIANTS.danger }`;
 // tabs via a shared-layout marker (framer-motion layoutId).
 let tabsSeq = 0;
 export const Tabs = ( { tabs, active, onChange, className = '' } ) => {
-	const groupId = useRef( `cf7e-tabs-${ ++tabsSeq }` ).current;
+	const groupId = useRef( `df7-tabs-${ ++tabsSeq }` ).current;
 	return (
-		<div className={ `cf7e-inline-flex cf7e-flex-wrap cf7e-gap-1 cf7e-rounded-xl cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-p-1 ${ className }` }>
+		<div className={ `df7-inline-flex df7-flex-wrap df7-gap-1 df7-rounded-xl df7-border df7-border-stroke df7-bg-white df7-p-1 ${ className }` }>
 			{ tabs.map( ( tab ) => {
 				const isActive = active === tab.id;
 				return (
@@ -67,21 +67,21 @@ export const Tabs = ( { tabs, active, onChange, className = '' } ) => {
 						key={ tab.id || 'default' }
 						type="button"
 						onClick={ () => onChange( tab.id ) }
-						className={ `cf7e-relative cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-px-3 cf7e-py-1.5 cf7e-text-sm cf7e-font-semibold cf7e-transition-colors ${
-							isActive ? 'cf7e-text-white' : 'cf7e-text-stone-500 hover:cf7e-text-ink'
+						className={ `df7-relative df7-flex df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-transparent df7-px-3 df7-py-1.5 df7-text-sm df7-font-semibold df7-transition-colors ${
+							isActive ? 'df7-text-white' : 'df7-text-stone-500 hover:df7-text-ink'
 						}` }
 					>
 						{ isActive && (
 							<motion.span
 								layoutId={ `${ groupId }-marker` }
-								className="cf7e-absolute cf7e-inset-0 cf7e-rounded-lg cf7e-bg-ink"
+								className="df7-absolute df7-inset-0 df7-rounded-lg df7-bg-ink"
 								transition={ { type: 'spring', stiffness: 480, damping: 38 } }
 							/>
 						) }
-						<span className="cf7e-relative cf7e-z-10">{ tab.label }</span>
+						<span className="df7-relative df7-z-10">{ tab.label }</span>
 						{ null != tab.count && (
-							<span className={ `cf7e-relative cf7e-z-10 cf7e-rounded-full cf7e-px-1.5 cf7e-py-0.5 cf7e-text-[14px] cf7e-font-bold cf7e-tnum ${
-								isActive ? 'cf7e-bg-white/20 cf7e-text-white' : 'cf7e-bg-stone-100 cf7e-text-stone-500'
+							<span className={ `df7-relative df7-z-10 df7-rounded-full df7-px-1.5 df7-py-0.5 df7-text-[14px] df7-font-bold df7-tnum ${
+								isActive ? 'df7-bg-white/20 df7-text-white' : 'df7-bg-stone-100 df7-text-stone-500'
 							}` }>
 								{ tab.count }
 							</span>
@@ -117,11 +117,11 @@ export const Tabs = ( { tabs, active, onChange, className = '' } ) => {
  * was the complaint that started this. Putting this token on one of them is
  * how the two behaviours got mixed in the first place, so it is not on any.
  */
-export const focusRing = 'focus:cf7e-border-accent focus:cf7e-outline-none focus:cf7e-ring-[3px] focus:cf7e-ring-ink/10';
+export const focusRing = 'focus:df7-border-accent focus:df7-outline-none focus:df7-ring-[3px] focus:df7-ring-ink/10';
 
 // Shared class tokens for inputs/selects and surface cards.
-export const control = `cf7e-h-9 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-3 cf7e-text-sm cf7e-text-ink cf7e-transition-colors ${ focusRing }`;
-export const card    = 'cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white';
+export const control = `df7-h-9 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-text-sm df7-text-ink df7-transition-colors ${ focusRing }`;
+export const card    = 'df7-rounded-2xl df7-border df7-border-line df7-bg-white';
 
 /**
  * A grey bar standing in for a line of text while it loads.
@@ -148,16 +148,16 @@ export const card    = 'cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-wh
  * Fixed-size things — an icon tile, a button — are not this. They have a real
  * height of their own, and a skeleton should simply repeat it.
  */
-export const Shimmer = ( { as: Tag = 'span', w = 'cf7e-w-full', text = '', className = '' } ) => (
+export const Shimmer = ( { as: Tag = 'span', w = 'df7-w-full', text = '', className = '' } ) => (
 	<Tag
 		aria-hidden="true"
-		className={ `cf7e-m-0 cf7e-block cf7e-animate-pulse cf7e-rounded cf7e-bg-stone-100 cf7e-text-transparent ${ text } ${ w } ${ className }` }
+		className={ `df7-m-0 df7-block df7-animate-pulse df7-rounded df7-bg-stone-100 df7-text-transparent ${ text } ${ w } ${ className }` }
 	>
 		{ '\u00a0' }
 	</Tag>
 );
 
-const SELECT_TRIGGER = `cf7e-flex cf7e-h-9 cf7e-w-full cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-pl-3 cf7e-pr-2.5 cf7e-text-sm cf7e-text-ink cf7e-transition-colors hover:cf7e-border-stone-300 ${ focusRing }`;
+const SELECT_TRIGGER = `df7-flex df7-h-9 df7-w-full df7-shrink-0 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-pl-3 df7-pr-2.5 df7-text-sm df7-text-ink df7-transition-colors hover:df7-border-stone-300 ${ focusRing }`;
 
 /**
  * A filter box earns its place once the list is long enough that reading it is
@@ -213,11 +213,11 @@ export const Select = ( { value, onChange, options, icon: Icon, align = 'left', 
 		: options;
 
 	return (
-		<div ref={ ref } className={ `cf7e-relative ${ className }` }>
+		<div ref={ ref } className={ `df7-relative ${ className }` }>
 			<button type="button" onClick={ () => setOpen( ( isOpen ) => ! isOpen ) } className={ SELECT_TRIGGER }>
-				{ Icon && <Icon className="cf7e-h-4 cf7e-w-4 cf7e-shrink-0 cf7e-text-stone-400" /> }
-				<span className={ `cf7e-flex-1 cf7e-truncate cf7e-text-left ${ selected ? '' : 'cf7e-text-stone-400' }` }>{ selected ? selected.label : placeholder }</span>
-				<ChevronDown className={ `cf7e-h-4 cf7e-w-4 cf7e-shrink-0 cf7e-text-stone-400 cf7e-transition-transform ${ open ? 'cf7e-rotate-180' : '' }` } />
+				{ Icon && <Icon className="df7-h-4 df7-w-4 df7-shrink-0 df7-text-stone-400" /> }
+				<span className={ `df7-flex-1 df7-truncate df7-text-left ${ selected ? '' : 'df7-text-stone-400' }` }>{ selected ? selected.label : placeholder }</span>
+				<ChevronDown className={ `df7-h-4 df7-w-4 df7-shrink-0 df7-text-stone-400 df7-transition-transform ${ open ? 'df7-rotate-180' : '' }` } />
 			</button>
 
 			<AnimatePresence>
@@ -229,8 +229,8 @@ export const Select = ( { value, onChange, options, icon: Icon, align = 'left', 
 						transition={ { duration: 0.12 } }
 						className={ `${
 							inline
-								? 'cf7e-mt-1.5 cf7e-flex cf7e-w-full cf7e-flex-col cf7e-gap-1 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-1'
-								: `cf7e-absolute cf7e-z-30 cf7e-mt-1.5 cf7e-flex cf7e-min-w-full cf7e-flex-col cf7e-gap-1 cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-1 cf7e-shadow-pop ${ 'right' === align ? 'cf7e-right-0' : 'cf7e-left-0' }`
+								? 'df7-mt-1.5 df7-flex df7-w-full df7-flex-col df7-gap-1 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-p-1'
+								: `df7-absolute df7-z-30 df7-mt-1.5 df7-flex df7-min-w-full df7-flex-col df7-gap-1 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-p-1 df7-shadow-pop ${ 'right' === align ? 'df7-right-0' : 'df7-left-0' }`
 						} ${ menuClassName }` }
 					>
 						{ searchable && (
@@ -239,15 +239,15 @@ export const Select = ( { value, onChange, options, icon: Icon, align = 'left', 
 								type="text"
 								value={ query }
 								onChange={ ( event ) => setQuery( event.target.value ) }
-								placeholder={ __( 'Search…', 'essentials-for-contact-form-7' ) }
-								aria-label={ __( 'Search…', 'essentials-for-contact-form-7' ) }
-								className={ `cf7e-h-8 cf7e-w-full cf7e-shrink-0 cf7e-rounded cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-2.5 cf7e-text-sm cf7e-text-ink ${ focusRing }` }
+								placeholder={ __( 'Search…', 'defer-forms-for-contact-form-7' ) }
+								aria-label={ __( 'Search…', 'defer-forms-for-contact-form-7' ) }
+								className={ `df7-h-8 df7-w-full df7-shrink-0 df7-rounded df7-border df7-border-stroke df7-bg-white df7-px-2.5 df7-text-sm df7-text-ink ${ focusRing }` }
 							/>
 						) }
 
 						{ /* The scroll lives here rather than on the panel, or the
 						     search box would scroll away with the list it filters. */ }
-						<div className={ inline ? 'cf7e-flex cf7e-flex-col cf7e-gap-0.5' : 'cf7e-scroll cf7e-flex cf7e-max-h-72 cf7e-flex-col cf7e-gap-0.5 cf7e-overflow-auto' }>
+						<div className={ inline ? 'df7-flex df7-flex-col df7-gap-0.5' : 'df7-scroll df7-flex df7-max-h-72 df7-flex-col df7-gap-0.5 df7-overflow-auto' }>
 							{ shown.map( ( option ) => {
 								const isSelected = option.value === value;
 								return (
@@ -258,21 +258,21 @@ export const Select = ( { value, onChange, options, icon: Icon, align = 'left', 
 											onChange( option.value );
 											setOpen( false );
 										} }
-										className={ `cf7e-flex cf7e-w-full cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded cf7e-border-0 cf7e-px-2.5 cf7e-py-2 cf7e-text-left cf7e-text-sm cf7e-transition-colors ${
+										className={ `df7-flex df7-w-full df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded df7-border-0 df7-px-2.5 df7-py-2 df7-text-left df7-text-sm df7-transition-colors ${
 											isSelected
-												? 'cf7e-bg-accent-50 cf7e-font-semibold cf7e-text-accent-700'
-												: 'cf7e-bg-transparent cf7e-text-ink hover:cf7e-bg-stone-50'
+												? 'df7-bg-accent-50 df7-font-semibold df7-text-accent-700'
+												: 'df7-bg-transparent df7-text-ink hover:df7-bg-stone-50'
 										}` }
 									>
-										<span className="cf7e-flex-1 cf7e-truncate">{ option.label }</span>
-										{ isSelected && <Check className="cf7e-h-4 cf7e-w-4 cf7e-shrink-0 cf7e-text-accent" /> }
+										<span className="df7-flex-1 df7-truncate">{ option.label }</span>
+										{ isSelected && <Check className="df7-h-4 df7-w-4 df7-shrink-0 df7-text-accent" /> }
 									</button>
 								);
 							} ) }
 
 							{ ! shown.length && (
-								<p className="cf7e-m-0 cf7e-px-2.5 cf7e-py-2 cf7e-text-sm cf7e-text-stone-400">
-									{ __( 'No matches', 'essentials-for-contact-form-7' ) }
+								<p className="df7-m-0 df7-px-2.5 df7-py-2 df7-text-sm df7-text-stone-400">
+									{ __( 'No matches', 'defer-forms-for-contact-form-7' ) }
 								</p>
 							) }
 						</div>
@@ -316,13 +316,13 @@ export const Modal = ( { title, wide, busy = false, onClose, footer, children } 
 	// Focus moves into the dialog so Tab stays here and Escape reaches the
 	// handler above without the page behind having to be clicked first.
 	//
-	// Matched on `data-cf7e-close`, not on the close button's aria-label. The
+	// Matched on `data-df7-close`, not on the close button's aria-label. The
 	// label is translated, so `button:not([aria-label="Close"])` only excluded
 	// the right button in English — on any other locale the first thing focused
 	// when a dialog opened was the ✕, not the field the user came to fill in.
 	useEffect( () => {
 		const first = panel.current && panel.current.querySelector(
-			'input, select, textarea, button:not([data-cf7e-close])'
+			'input, select, textarea, button:not([data-df7-close])'
 		);
 		if ( first ) {
 			first.focus();
@@ -330,29 +330,29 @@ export const Modal = ( { title, wide, busy = false, onClose, footer, children } 
 	}, [] );
 
 	return (
-		<div className="cf7e-fixed cf7e-inset-0 cf7e-z-[100000] cf7e-flex cf7e-items-start cf7e-justify-center cf7e-px-4 cf7e-pb-4 cf7e-pt-[7vh]">
+		<div className="df7-fixed df7-inset-0 df7-z-[100000] df7-flex df7-items-start df7-justify-center df7-px-4 df7-pb-4 df7-pt-[7vh]">
 			<Backdrop
 				onClick={ () => ! busy && onClose() }
-				className="cf7e-absolute cf7e-inset-0 cf7e-bg-ink/40 cf7e-backdrop-blur-sm"
+				className="df7-absolute df7-inset-0 df7-bg-ink/40 df7-backdrop-blur-sm"
 			/>
 			<div
 				ref={ panel }
 				role="dialog"
 				aria-modal="true"
 				aria-label={ title }
-				className={ `cf7e-relative cf7e-flex cf7e-max-h-[85vh] cf7e-w-full ${ wide ? 'cf7e-max-w-2xl' : 'cf7e-max-w-lg' } cf7e-flex-col cf7e-overflow-hidden cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-shadow-pop` }
+				className={ `df7-relative df7-flex df7-max-h-[85vh] df7-w-full ${ wide ? 'df7-max-w-2xl' : 'df7-max-w-lg' } df7-flex-col df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-shadow-pop` }
 			>
-				<header className="cf7e-flex cf7e-items-center cf7e-justify-between cf7e-gap-3 cf7e-border-b cf7e-border-line cf7e-px-6 cf7e-py-4">
-					<span className="cf7e-truncate cf7e-text-lg cf7e-font-bold cf7e-text-ink">{ title }</span>
+				<header className="df7-flex df7-items-center df7-justify-between df7-gap-3 df7-border-b df7-border-line df7-px-6 df7-py-4">
+					<span className="df7-truncate df7-text-lg df7-font-bold df7-text-ink">{ title }</span>
 					<button
 						type="button"
 						onClick={ onClose }
 						disabled={ busy }
-						data-cf7e-close=""
-						aria-label={ __( 'Close', 'essentials-for-contact-form-7' ) }
-						className="cf7e-flex cf7e-h-9 cf7e-w-9 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-stone-50 cf7e-text-stone-500 hover:cf7e-bg-stone-100 hover:cf7e-text-ink disabled:cf7e-cursor-not-allowed disabled:cf7e-opacity-50"
+						data-df7-close=""
+						aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
+						className="df7-flex df7-h-9 df7-w-9 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-stone-50 df7-text-stone-500 hover:df7-bg-stone-100 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-50"
 					>
-						<X className="cf7e-h-4 cf7e-w-4" />
+						<X className="df7-h-4 df7-w-4" />
 					</button>
 				</header>
 
@@ -360,12 +360,12 @@ export const Modal = ( { title, wide, busy = false, onClose, footer, children } 
 				     the right only and leave every field short on that side. 14px of
 				     padding plus that gutter lines the fields up with the 24px header
 				     and footer. */ }
-				<div className="cf7e-scroll cf7e-flex-1 cf7e-overflow-y-auto cf7e-px-3.5 cf7e-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
+				<div className="df7-scroll df7-flex-1 df7-overflow-y-auto df7-px-3.5 df7-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
 					{ children }
 				</div>
 
 				{ footer && (
-					<footer className="cf7e-flex cf7e-items-center cf7e-gap-2 cf7e-border-t cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-6 cf7e-py-4">
+					<footer className="df7-flex df7-items-center df7-gap-2 df7-border-t df7-border-line df7-bg-stone-50/60 df7-px-6 df7-py-4">
 						{ footer }
 					</footer>
 				) }

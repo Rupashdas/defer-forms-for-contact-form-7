@@ -52,53 +52,53 @@ import {
 export const FIELD_LIBRARY = [
 	{
 		id:     'inputs',
-		label:  __( 'Inputs', 'essentials-for-contact-form-7' ),
+		label:  __( 'Inputs', 'defer-forms-for-contact-form-7' ),
 		fields: [
-			{ type: 'text',     label: __( 'Text', 'essentials-for-contact-form-7' ),     icon: Type },
-			{ type: 'email',    label: __( 'Email', 'essentials-for-contact-form-7' ),    icon: AtSign },
-			{ type: 'tel',      label: __( 'Phone', 'essentials-for-contact-form-7' ),    icon: Phone },
-			{ type: 'url',      label: __( 'URL', 'essentials-for-contact-form-7' ),      icon: Link },
-			{ type: 'number',   label: __( 'Number', 'essentials-for-contact-form-7' ),   icon: Hash },
-			{ type: 'range',    label: __( 'Range', 'essentials-for-contact-form-7' ),    icon: SlidersHorizontal },
-			{ type: 'date',     label: __( 'Date', 'essentials-for-contact-form-7' ),     icon: Calendar },
-			{ type: 'password', label: __( 'Password', 'essentials-for-contact-form-7' ), icon: Lock },
-			{ type: 'textarea', label: __( 'Textarea', 'essentials-for-contact-form-7' ), icon: AlignLeft },
+			{ type: 'text',     label: __( 'Text', 'defer-forms-for-contact-form-7' ),     icon: Type },
+			{ type: 'email',    label: __( 'Email', 'defer-forms-for-contact-form-7' ),    icon: AtSign },
+			{ type: 'tel',      label: __( 'Phone', 'defer-forms-for-contact-form-7' ),    icon: Phone },
+			{ type: 'url',      label: __( 'URL', 'defer-forms-for-contact-form-7' ),      icon: Link },
+			{ type: 'number',   label: __( 'Number', 'defer-forms-for-contact-form-7' ),   icon: Hash },
+			{ type: 'range',    label: __( 'Range', 'defer-forms-for-contact-form-7' ),    icon: SlidersHorizontal },
+			{ type: 'date',     label: __( 'Date', 'defer-forms-for-contact-form-7' ),     icon: Calendar },
+			{ type: 'password', label: __( 'Password', 'defer-forms-for-contact-form-7' ), icon: Lock },
+			{ type: 'textarea', label: __( 'Textarea', 'defer-forms-for-contact-form-7' ), icon: AlignLeft },
 		],
 	},
 	{
 		id:     'choice',
-		label:  __( 'Choice', 'essentials-for-contact-form-7' ),
+		label:  __( 'Choice', 'defer-forms-for-contact-form-7' ),
 		fields: [
-			{ type: 'select',     label: __( 'Select', 'essentials-for-contact-form-7' ),     icon: ChevronDown },
-			{ type: 'checkbox',   label: __( 'Checkbox', 'essentials-for-contact-form-7' ),   icon: CheckSquare },
-			{ type: 'radio',      label: __( 'Radio', 'essentials-for-contact-form-7' ),      icon: CircleDot },
-			{ type: 'acceptance', label: __( 'Acceptance', 'essentials-for-contact-form-7' ), icon: ShieldCheck },
-			{ type: 'rating',     label: __( 'Rating', 'essentials-for-contact-form-7' ),     icon: Star },
-			{ type: 'country',    label: __( 'Country', 'essentials-for-contact-form-7' ),    icon: Globe },
+			{ type: 'select',     label: __( 'Select', 'defer-forms-for-contact-form-7' ),     icon: ChevronDown },
+			{ type: 'checkbox',   label: __( 'Checkbox', 'defer-forms-for-contact-form-7' ),   icon: CheckSquare },
+			{ type: 'radio',      label: __( 'Radio', 'defer-forms-for-contact-form-7' ),      icon: CircleDot },
+			{ type: 'acceptance', label: __( 'Acceptance', 'defer-forms-for-contact-form-7' ), icon: ShieldCheck },
+			{ type: 'rating',     label: __( 'Rating', 'defer-forms-for-contact-form-7' ),     icon: Star },
+			{ type: 'country',    label: __( 'Country', 'defer-forms-for-contact-form-7' ),    icon: Globe },
 		],
 	},
 	{
 		id:     'advanced',
-		label:  __( 'Advanced', 'essentials-for-contact-form-7' ),
+		label:  __( 'Advanced', 'defer-forms-for-contact-form-7' ),
 		fields: [
-			{ type: 'dynamictext',   label: __( 'Dynamic', 'essentials-for-contact-form-7' ),       icon: Braces },
-			{ type: 'quiz',          label: __( 'Quiz', 'essentials-for-contact-form-7' ),          icon: HelpCircle },
-			{ type: 'count',         label: __( 'Count', 'essentials-for-contact-form-7' ),         icon: Sigma },
-			{ type: 'submission_id', label: __( 'Submission ID', 'essentials-for-contact-form-7' ), icon: HashIcon },
-			{ type: 'product',       label: __( 'Product', 'essentials-for-contact-form-7' ),       icon: ShoppingCart, requires: 'woocommerce' },
-			{ type: 'file',          label: __( 'File', 'essentials-for-contact-form-7' ),          icon: Upload },
-			{ type: 'hidden',        label: __( 'Hidden', 'essentials-for-contact-form-7' ),        icon: EyeOff },
-			{ type: 'submit',        label: __( 'Submit', 'essentials-for-contact-form-7' ),        icon: Send },
+			{ type: 'dynamictext',   label: __( 'Dynamic', 'defer-forms-for-contact-form-7' ),       icon: Braces },
+			{ type: 'quiz',          label: __( 'Quiz', 'defer-forms-for-contact-form-7' ),          icon: HelpCircle },
+			{ type: 'count',         label: __( 'Count', 'defer-forms-for-contact-form-7' ),         icon: Sigma },
+			{ type: 'submission_id', label: __( 'Submission ID', 'defer-forms-for-contact-form-7' ), icon: HashIcon },
+			{ type: 'product',       label: __( 'Product', 'defer-forms-for-contact-form-7' ),       icon: ShoppingCart, requires: 'woocommerce' },
+			{ type: 'file',          label: __( 'File', 'defer-forms-for-contact-form-7' ),          icon: Upload },
+			{ type: 'hidden',        label: __( 'Hidden', 'defer-forms-for-contact-form-7' ),        icon: EyeOff },
+			{ type: 'submit',        label: __( 'Submit', 'defer-forms-for-contact-form-7' ),        icon: Send },
 		],
 	},
 	{
 		id:     'layout',
-		label:  __( 'Layout', 'essentials-for-contact-form-7' ),
+		label:  __( 'Layout', 'defer-forms-for-contact-form-7' ),
 		fields: [
-			{ type: 'heading',   kind: 'content', label: __( 'Heading', 'essentials-for-contact-form-7' ),   icon: Heading },
-			{ type: 'paragraph', kind: 'content', label: __( 'Paragraph', 'essentials-for-contact-form-7' ), icon: Pilcrow },
-			{ type: 'divider',   kind: 'content', label: __( 'Divider', 'essentials-for-contact-form-7' ),   icon: Minus },
-			{ type: 'spacer',    kind: 'content', label: __( 'Spacer', 'essentials-for-contact-form-7' ),    icon: MoveVertical },
+			{ type: 'heading',   kind: 'content', label: __( 'Heading', 'defer-forms-for-contact-form-7' ),   icon: Heading },
+			{ type: 'paragraph', kind: 'content', label: __( 'Paragraph', 'defer-forms-for-contact-form-7' ), icon: Pilcrow },
+			{ type: 'divider',   kind: 'content', label: __( 'Divider', 'defer-forms-for-contact-form-7' ),   icon: Minus },
+			{ type: 'spacer',    kind: 'content', label: __( 'Spacer', 'defer-forms-for-contact-form-7' ),    icon: MoveVertical },
 		],
 	},
 ];
@@ -113,8 +113,8 @@ export const labelForType = ( type ) =>
 // rather than handing an admin working in Bengali an English placeholder to
 // delete. It is saved into the CF7 template as typed, like anything else here.
 const CONTENT_DEFAULTS = {
-	heading:   { level: 'h2', text: __( 'Heading', 'essentials-for-contact-form-7' ), align: 'left' },
-	paragraph: { size: 'md', text: __( 'Paragraph text.', 'essentials-for-contact-form-7' ), align: 'left' },
+	heading:   { level: 'h2', text: __( 'Heading', 'defer-forms-for-contact-form-7' ), align: 'left' },
+	paragraph: { size: 'md', text: __( 'Paragraph text.', 'defer-forms-for-contact-form-7' ), align: 'left' },
 	divider:   { style: 'solid', thickness: 1, tier: 'subtle' },
 	spacer:    { height: 16 },
 };
@@ -149,9 +149,9 @@ export function makeField( type ) {
 	if ( [ 'select', 'checkbox', 'radio' ].includes( type ) ) {
 		base.choices = [
 			/* translators: placeholder text for the first choice of a new select, checkbox or radio field. */
-			__( 'Option 1', 'essentials-for-contact-form-7' ),
+			__( 'Option 1', 'defer-forms-for-contact-form-7' ),
 			/* translators: placeholder text for the second choice of a new select, checkbox or radio field. */
-			__( 'Option 2', 'essentials-for-contact-form-7' ),
+			__( 'Option 2', 'defer-forms-for-contact-form-7' ),
 		];
 	}
 

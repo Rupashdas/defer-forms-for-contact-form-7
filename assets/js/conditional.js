@@ -1,5 +1,5 @@
 /**
- * Conditional fields. Each `.cf7e-if` block carries a `data-action` (show|hide)
+ * Conditional fields. Each `.df7-if` block carries a `data-action` (show|hide)
  * and a base64-encoded JSON rule set in `data-groups`. Groups are OR'd; the rules
  * inside a group are AND'd — so the model expresses (A and B) or (C and D).
  * Hidden fields are disabled so they don't submit or block validation.
@@ -133,22 +133,22 @@
 	}
 
 	function hiddenInputFor( form ) {
-		var input = form.querySelector( 'input[name="_cf7e_hidden"]' );
+		var input = form.querySelector( 'input[name="_df7_hidden"]' );
 		if ( ! input ) {
 			input = document.createElement( 'input' );
 			input.type = 'hidden';
-			input.name = '_cf7e_hidden';
+			input.name = '_df7_hidden';
 			form.appendChild( input );
 		}
 		return input;
 	}
 
 	function init( form ) {
-		var blocks = form.querySelectorAll( '.cf7e-if' );
-		if ( ! blocks.length || form.dataset.cf7eConditional ) {
+		var blocks = form.querySelectorAll( '.df7-if' );
+		if ( ! blocks.length || form.dataset.df7Conditional ) {
 			return;
 		}
-		form.dataset.cf7eConditional = '1';
+		form.dataset.df7Conditional = '1';
 
 		var carrier = hiddenInputFor( form );
 		var run = function () {
@@ -171,9 +171,9 @@
 		// A reset dispatches neither of those, so a region stayed open on a rule
 		// that no longer held — and the field inside it stayed enabled and
 		// required, with the server still told it was hidden.
-		window.cf7e.onReset( form, run );
+		window.df7.onReset( form, run );
 		run();
 	}
 
-	window.cf7e.forms( init );
+	window.df7.forms( init );
 } )();

@@ -5,12 +5,12 @@
  * post, logged-in user, date) — handy for prefilling referral codes, the page
  * title, or the visitor's email. The quoted tag value holds the source token.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -57,7 +57,7 @@ final class Dynamic_Text {
 		);
 
 		if ( ! $hidden ) {
-			$atts['class'] = trim( wpcf7_form_controls_class( $tag->type ) . ' cf7e-dynamic' );
+			$atts['class'] = trim( wpcf7_form_controls_class( $tag->type ) . ' df7-dynamic' );
 			$atts['id']    = $tag->get_id_option();
 
 			$placeholder = (string) $tag->get_option( 'placeholder', '', true );

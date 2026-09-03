@@ -4,12 +4,12 @@
  * form using one would print the tag as literal text. We register it here and
  * render a masked text input that honours the same options as CF7's text field.
  *
- * @package CF7_Essentials
+ * @package DF7
  */
 
 declare( strict_types=1 );
 
-namespace CF7E\CF7;
+namespace DF7\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -8,7 +8,7 @@ import { Modal, btnPrimary, btnGhost, btnDanger, control, focusRing, Shimmer } f
 import { ShortcodeBox } from '@shared/components/shortcode';
 import '@shared/styles/admin.css';
 
-const builderUrl = ( id ) => `admin.php?page=cf7-essentials-builder&form=${ id }`;
+const builderUrl = ( id ) => `admin.php?page=df7-builder&form=${ id }`;
 const previewUrl = ( id ) => `${ builderUrl( id ) }&tab=preview`;
 const editUrl    = ( id ) => `admin.php?page=wpcf7&post=${ id }&action=edit`;
 
@@ -24,25 +24,25 @@ const editUrl    = ( id ) => `admin.php?page=wpcf7&post=${ id }&action=edit`;
  */
 const createError = ( err ) => {
 	const known = {
-		cf7_missing:    __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ),
-		forbidden:      __( 'You do not have permission to create forms.', 'essentials-for-contact-form-7' ),
-		title_required: __( 'Give the form a name.', 'essentials-for-contact-form-7' ),
-		title_too_long: __( 'That name is too long.', 'essentials-for-contact-form-7' ),
-		save_failed:    __( 'The form could not be saved. Please try again.', 'essentials-for-contact-form-7' ),
+		cf7_missing:    __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ),
+		forbidden:      __( 'You do not have permission to create forms.', 'defer-forms-for-contact-form-7' ),
+		title_required: __( 'Give the form a name.', 'defer-forms-for-contact-form-7' ),
+		title_too_long: __( 'That name is too long.', 'defer-forms-for-contact-form-7' ),
+		save_failed:    __( 'The form could not be saved. Please try again.', 'defer-forms-for-contact-form-7' ),
 	};
 
-	return known[ err && err.code ] || ( err && err.message ) || __( 'Something went wrong.', 'essentials-for-contact-form-7' );
+	return known[ err && err.code ] || ( err && err.message ) || __( 'Something went wrong.', 'defer-forms-for-contact-form-7' );
 };
 
 const deleteError = ( err ) => {
 	const known = {
-		cf7_missing:   __( 'Contact Form 7 is not active.', 'essentials-for-contact-form-7' ),
-		forbidden:     __( 'You do not have permission to delete this form.', 'essentials-for-contact-form-7' ),
-		not_found:     __( 'That form no longer exists.', 'essentials-for-contact-form-7' ),
-		delete_failed: __( 'The form could not be deleted. Please try again.', 'essentials-for-contact-form-7' ),
+		cf7_missing:   __( 'Contact Form 7 is not active.', 'defer-forms-for-contact-form-7' ),
+		forbidden:     __( 'You do not have permission to delete this form.', 'defer-forms-for-contact-form-7' ),
+		not_found:     __( 'That form no longer exists.', 'defer-forms-for-contact-form-7' ),
+		delete_failed: __( 'The form could not be deleted. Please try again.', 'defer-forms-for-contact-form-7' ),
 	};
 
-	return known[ err && err.code ] || ( err && err.message ) || __( 'Something went wrong.', 'essentials-for-contact-form-7' );
+	return known[ err && err.code ] || ( err && err.message ) || __( 'Something went wrong.', 'defer-forms-for-contact-form-7' );
 };
 
 /**
@@ -67,7 +67,7 @@ const NewFormDialog = ( { onClose } ) => {
 		setBusy( true );
 		setError( null );
 
-		apiFetch( { path: 'cf7e/v1/forms', method: 'POST', data: { title: trimmed } } )
+		apiFetch( { path: 'df7/v1/forms', method: 'POST', data: { title: trimmed } } )
 			.then( ( res ) => {
 				// A full reload, not a router push: the builder is its own admin
 				// page, and this is the same navigation the card's Builder link makes.
@@ -81,43 +81,43 @@ const NewFormDialog = ( { onClose } ) => {
 
 	return (
 		<Modal
-			title={ __( 'New form', 'essentials-for-contact-form-7' ) }
+			title={ __( 'New form', 'defer-forms-for-contact-form-7' ) }
 			busy={ busy }
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="cf7e-flex-1" />
+					<span className="df7-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
-						{ __( 'Cancel', 'essentials-for-contact-form-7' ) }
+						{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button type="button" className={ btnPrimary } onClick={ create } disabled={ busy || ! trimmed }>
-						{ busy && <Loader2 className="cf7e-h-4 cf7e-w-4 cf7e-animate-spin" /> }
-						{ busy ? __( 'Creating…', 'essentials-for-contact-form-7' ) : __( 'Create and open builder', 'essentials-for-contact-form-7' ) }
+						{ busy && <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> }
+						{ busy ? __( 'Creating…', 'defer-forms-for-contact-form-7' ) : __( 'Create and open builder', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-1.5">
-				<label htmlFor="cf7e-new-form-name" className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink">
-					{ __( 'Form name', 'essentials-for-contact-form-7' ) }
+			<div className="df7-flex df7-flex-col df7-gap-1.5">
+				<label htmlFor="df7-new-form-name" className="df7-text-[14px] df7-font-semibold df7-text-ink">
+					{ __( 'Form name', 'defer-forms-for-contact-form-7' ) }
 				</label>
 				<input
-					id="cf7e-new-form-name"
+					id="df7-new-form-name"
 					type="text"
 					value={ name }
 					disabled={ busy }
 					maxLength={ 200 }
 					onChange={ ( event ) => setName( event.target.value ) }
 					onKeyDown={ ( event ) => 'Enter' === event.key && create() }
-					placeholder={ __( 'Contact us', 'essentials-for-contact-form-7' ) }
-					className={ `${ control } cf7e-w-full` }
+					placeholder={ __( 'Contact us', 'defer-forms-for-contact-form-7' ) }
+					className={ `${ control } df7-w-full` }
 				/>
-				<span className="cf7e-text-[14px] cf7e-text-stone-400">
-					{ __( 'You can rename it later. The form opens in the visual builder once created.', 'essentials-for-contact-form-7' ) }
+				<span className="df7-text-[14px] df7-text-stone-400">
+					{ __( 'You can rename it later. The form opens in the visual builder once created.', 'defer-forms-for-contact-form-7' ) }
 				</span>
 
 				{ error && (
-					<div className="cf7e-mt-2 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-3.5 cf7e-py-2.5 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+					<div className="df7-mt-2 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">
 						{ error }
 					</div>
 				) }
@@ -156,7 +156,7 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 		setError( null );
 		setReport( null );
 
-		apiFetch( { path: 'cf7e/v1/forms/export', method: 'POST', data: { ids: picked } } )
+		apiFetch( { path: 'df7/v1/forms/export', method: 'POST', data: { ids: picked } } )
 			.then( ( bundle ) => {
 				// The browser saves it; nothing is written on the server. An object
 				// URL rather than a data: one, because a bundle of twenty forms is
@@ -164,13 +164,13 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 				const url  = URL.createObjectURL( new Blob( [ JSON.stringify( bundle, null, '\t' ) ], { type: 'application/json' } ) );
 				const link = document.createElement( 'a' );
 				link.href     = url;
-				link.download = `cf7-essentials-forms-${ new Date().toISOString().slice( 0, 10 ) }.json`;
+				link.download = `df7-forms-${ new Date().toISOString().slice( 0, 10 ) }.json`;
 				document.body.appendChild( link );
 				link.click();
 				link.remove();
 				URL.revokeObjectURL( url );
 			} )
-			.catch( ( err ) => setError( err.message || __( 'The export failed.', 'essentials-for-contact-form-7' ) ) )
+			.catch( ( err ) => setError( err.message || __( 'The export failed.', 'defer-forms-for-contact-form-7' ) ) )
 			.finally( () => setBusy( false ) );
 	};
 
@@ -191,88 +191,88 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 				try {
 					bundle = JSON.parse( text );
 				} catch ( e ) {
-					throw new Error( __( 'That file is not JSON.', 'essentials-for-contact-form-7' ) );
+					throw new Error( __( 'That file is not JSON.', 'defer-forms-for-contact-form-7' ) );
 				}
-				return apiFetch( { path: 'cf7e/v1/forms/import', method: 'POST', data: { bundle } } );
+				return apiFetch( { path: 'df7/v1/forms/import', method: 'POST', data: { bundle } } );
 			} )
 			.then( ( res ) => {
 				setReport( res );
 				onImported();
 			} )
-			.catch( ( err ) => setError( err.message || __( 'The import failed.', 'essentials-for-contact-form-7' ) ) )
+			.catch( ( err ) => setError( err.message || __( 'The import failed.', 'defer-forms-for-contact-form-7' ) ) )
 			.finally( () => setBusy( false ) );
 	};
 
 	return (
 		<Modal
-			title={ __( 'Import / Export', 'essentials-for-contact-form-7' ) }
+			title={ __( 'Import / Export', 'defer-forms-for-contact-form-7' ) }
 			busy={ busy }
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="cf7e-flex-1" />
+					<span className="df7-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
-						{ __( 'Close', 'essentials-for-contact-form-7' ) }
+						{ __( 'Close', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-6">
+			<div className="df7-flex df7-flex-col df7-gap-6">
 				{ error && (
-					<div className="cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 						{ error }
 					</div>
 				) }
 
-				<section className="cf7e-flex cf7e-flex-col cf7e-gap-3">
-					<h3 className="cf7e-m-0 cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Export', 'essentials-for-contact-form-7' ) }</h3>
-					<p className="cf7e-m-0 cf7e-text-[14px] cf7e-text-stone-500">
-						{ __( 'Downloads the chosen forms as one JSON file — the template, the mail, the messages and the settings this plugin adds. Entries are not included.', 'essentials-for-contact-form-7' ) }
+				<section className="df7-flex df7-flex-col df7-gap-3">
+					<h3 className="df7-m-0 df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Export', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">
+						{ __( 'Downloads the chosen forms as one JSON file — the template, the mail, the messages and the settings this plugin adds. Entries are not included.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 
 					{ forms.length ? (
-						<div className="cf7e-max-h-48 cf7e-overflow-y-auto cf7e-rounded-lg cf7e-border cf7e-border-line">
+						<div className="df7-max-h-48 df7-overflow-y-auto df7-rounded-lg df7-border df7-border-line">
 							{ forms.map( ( form ) => (
 								<label
 									key={ form.form_id }
-									className="cf7e-flex cf7e-cursor-pointer cf7e-items-center cf7e-gap-2.5 cf7e-border-b cf7e-border-line cf7e-px-3.5 cf7e-py-2 cf7e-text-sm cf7e-text-ink last:cf7e-border-b-0 hover:cf7e-bg-stone-50/60"
+									className="df7-flex df7-cursor-pointer df7-items-center df7-gap-2.5 df7-border-b df7-border-line df7-px-3.5 df7-py-2 df7-text-sm df7-text-ink last:df7-border-b-0 hover:df7-bg-stone-50/60"
 								>
 									<input
 										type="checkbox"
 										checked={ picked.includes( form.form_id ) }
 										onChange={ () => toggle( form.form_id ) }
 									/>
-									<span className="cf7e-truncate">
-										{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'essentials-for-contact-form-7' ), form.form_id ) }
+									<span className="df7-truncate">
+										{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), form.form_id ) }
 									</span>
 								</label>
 							) ) }
 						</div>
 					) : (
-						<p className="cf7e-m-0 cf7e-text-[14px] cf7e-text-stone-500">{ __( 'There is nothing to export yet.', 'essentials-for-contact-form-7' ) }</p>
+						<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">{ __( 'There is nothing to export yet.', 'defer-forms-for-contact-form-7' ) }</p>
 					) }
 
 					<div>
 						<button type="button" className={ btnPrimary } onClick={ download } disabled={ busy || ! picked.length }>
-							{ busy ? <Loader2 className="cf7e-h-4 cf7e-w-4 cf7e-animate-spin" /> : <Download className="cf7e-h-4 cf7e-w-4" /> }
-							{ sprintf( /* translators: %d: number of forms. */ _n( 'Download %d form', 'Download %d forms', picked.length, 'essentials-for-contact-form-7' ), picked.length ) }
+							{ busy ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : <Download className="df7-h-4 df7-w-4" /> }
+							{ sprintf( /* translators: %d: number of forms. */ _n( 'Download %d form', 'Download %d forms', picked.length, 'defer-forms-for-contact-form-7' ), picked.length ) }
 						</button>
 					</div>
 				</section>
 
-				<section className="cf7e-flex cf7e-flex-col cf7e-gap-3 cf7e-border-t cf7e-border-line cf7e-pt-6">
-					<h3 className="cf7e-m-0 cf7e-text-sm cf7e-font-semibold cf7e-text-ink">{ __( 'Import', 'essentials-for-contact-form-7' ) }</h3>
-					<p className="cf7e-m-0 cf7e-text-[14px] cf7e-text-stone-500">
-						{ __( 'Every form in the file is created as a new form. Nothing already here is overwritten, so importing the same file twice gives you two copies.', 'essentials-for-contact-form-7' ) }
+				<section className="df7-flex df7-flex-col df7-gap-3 df7-border-t df7-border-line df7-pt-6">
+					<h3 className="df7-m-0 df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Import', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">
+						{ __( 'Every form in the file is created as a new form. Nothing already here is overwritten, so importing the same file twice gives you two copies.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 
-					<label className={ `${ btnGhost } cf7e-w-fit` }>
-						<Upload className="cf7e-h-4 cf7e-w-4" />
-						{ __( 'Choose a JSON file', 'essentials-for-contact-form-7' ) }
+					<label className={ `${ btnGhost } df7-w-fit` }>
+						<Upload className="df7-h-4 df7-w-4" />
+						{ __( 'Choose a JSON file', 'defer-forms-for-contact-form-7' ) }
 						<input
 							type="file"
 							accept="application/json,.json"
-							className="cf7e-hidden"
+							className="df7-hidden"
 							disabled={ busy }
 							onChange={ ( event ) => {
 								upload( event.target.files?.[ 0 ] );
@@ -283,15 +283,15 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 					</label>
 
 					{ report && (
-						<div className="cf7e-rounded-lg cf7e-border cf7e-border-line cf7e-bg-stone-50/60 cf7e-px-3.5 cf7e-py-2.5 cf7e-text-[14px] cf7e-text-stone-600">
+						<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5 df7-text-[14px] df7-text-stone-600">
 							{ sprintf(
 								/* translators: %d: number of forms created. */
-								_n( '%d form imported.', '%d forms imported.', report.created.length, 'essentials-for-contact-form-7' ),
+								_n( '%d form imported.', '%d forms imported.', report.created.length, 'defer-forms-for-contact-form-7' ),
 								report.created.length
 							) }
 							{ report.failed > 0 && ' ' + sprintf(
 								/* translators: %d: number of forms that could not be created. */
-								_n( '%d could not be created.', '%d could not be created.', report.failed, 'essentials-for-contact-form-7' ),
+								_n( '%d could not be created.', '%d could not be created.', report.failed, 'defer-forms-for-contact-form-7' ),
 								report.failed
 							) }
 						</div>
@@ -313,7 +313,7 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 		setBusy( true );
 		setError( null );
 
-		apiFetch( { path: `cf7e/v1/forms/${ form.form_id }`, method: 'DELETE' } )
+		apiFetch( { path: `df7/v1/forms/${ form.form_id }`, method: 'DELETE' } )
 			.then( () => onDeleted( form.form_id ) )
 			.catch( ( err ) => {
 				setError( deleteError( err ) );
@@ -321,32 +321,32 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 			} );
 	};
 
-	const name = form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'essentials-for-contact-form-7' ), form.form_id );
+	const name = form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), form.form_id );
 
 	return (
 		<Modal
-			title={ __( 'Delete form', 'essentials-for-contact-form-7' ) }
+			title={ __( 'Delete form', 'defer-forms-for-contact-form-7' ) }
 			busy={ busy }
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="cf7e-flex-1" />
+					<span className="df7-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
-						{ __( 'Cancel', 'essentials-for-contact-form-7' ) }
+						{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button type="button" className={ btnDanger } onClick={ remove } disabled={ busy }>
-						{ busy ? <Loader2 className="cf7e-h-4 cf7e-w-4 cf7e-animate-spin" /> : <Trash2 className="cf7e-h-4 cf7e-w-4" /> }
-						{ busy ? __( 'Deleting…', 'essentials-for-contact-form-7' ) : __( 'Delete form', 'essentials-for-contact-form-7' ) }
+						{ busy ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : <Trash2 className="df7-h-4 df7-w-4" /> }
+						{ busy ? __( 'Deleting…', 'defer-forms-for-contact-form-7' ) : __( 'Delete form', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="cf7e-flex cf7e-flex-col cf7e-gap-3">
-				<p className="cf7e-m-0 cf7e-text-sm cf7e-text-ink">
-					{ sprintf( /* translators: %s: form name. */ __( '“%s” will be deleted. Any page still using its shortcode will stop showing a form.', 'essentials-for-contact-form-7' ), name ) }
+			<div className="df7-flex df7-flex-col df7-gap-3">
+				<p className="df7-m-0 df7-text-sm df7-text-ink">
+					{ sprintf( /* translators: %s: form name. */ __( '“%s” will be deleted. Any page still using its shortcode will stop showing a form.', 'defer-forms-for-contact-form-7' ), name ) }
 				</p>
 
-				<p className="cf7e-m-0 cf7e-text-sm cf7e-text-stone-500">
+				<p className="df7-m-0 df7-text-sm df7-text-stone-500">
 					{ form.count > 0
 						? sprintf(
 							/* translators: %s: number of entries. */
@@ -354,19 +354,19 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 								'Its %s entry is kept and stays exportable from Submissions.',
 								'Its %s entries are kept and stay exportable from Submissions.',
 								form.count,
-								'essentials-for-contact-form-7'
+								'defer-forms-for-contact-form-7'
 							),
 							form.count.toLocaleString()
 						)
-						: __( 'It has no entries.', 'essentials-for-contact-form-7' ) }
+						: __( 'It has no entries.', 'defer-forms-for-contact-form-7' ) }
 				</p>
 
-				<p className="cf7e-m-0 cf7e-text-sm cf7e-font-semibold cf7e-text-red-700">
-					{ __( 'This cannot be undone.', 'essentials-for-contact-form-7' ) }
+				<p className="df7-m-0 df7-text-sm df7-font-semibold df7-text-red-700">
+					{ __( 'This cannot be undone.', 'defer-forms-for-contact-form-7' ) }
 				</p>
 
 				{ error && (
-					<div className="cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-3.5 cf7e-py-2.5 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">
 						{ error }
 					</div>
 				) }
@@ -390,7 +390,7 @@ const fieldSummary = ( form ) => {
 
 	const fields = sprintf(
 		/* translators: %s: number of fields. */
-		_n( '%s field', '%s fields', form.fields, 'essentials-for-contact-form-7' ),
+		_n( '%s field', '%s fields', form.fields, 'defer-forms-for-contact-form-7' ),
 		form.fields.toLocaleString()
 	);
 
@@ -400,7 +400,7 @@ const fieldSummary = ( form ) => {
 
 	return sprintf(
 		/* translators: 1: field count, already phrased, e.g. "8 fields". 2: number of required fields. */
-		__( '%1$s · %2$s required', 'essentials-for-contact-form-7' ),
+		__( '%1$s · %2$s required', 'defer-forms-for-contact-form-7' ),
 		fields,
 		form.required.toLocaleString()
 	);
@@ -434,12 +434,12 @@ const lastActivity = ( mysqlUtc ) => {
 // with nothing to breathe into. `min-w-0` + `truncate` keep a long label inside
 // its own button rather than spilling over the background.
 const actionBtn =
-	`cf7e-inline-flex cf7e-h-9 cf7e-min-w-0 cf7e-flex-1 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-1.5 cf7e-truncate cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-3 cf7e-text-[14px] cf7e-font-semibold cf7e-text-ink cf7e-no-underline cf7e-transition-colors hover:cf7e-bg-stone-50`;
+	`df7-inline-flex df7-h-9 df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-truncate df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-text-[14px] df7-font-semibold df7-text-ink df7-no-underline df7-transition-colors hover:df7-bg-stone-50`;
 
 // The card's primary action. Same box as `actionBtn` down to the padding, so
 // the two sit level when they share a row; only the fill differs.
 const primaryBtn =
-	`cf7e-inline-flex cf7e-h-9 cf7e-min-w-0 cf7e-flex-1 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-gap-1.5 cf7e-truncate cf7e-rounded-lg cf7e-border-0 cf7e-bg-ink cf7e-px-3 cf7e-text-[14px] cf7e-font-semibold cf7e-text-white cf7e-no-underline cf7e-transition hover:cf7e-opacity-90`;
+	`df7-inline-flex df7-h-9 df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-truncate df7-rounded-lg df7-border-0 df7-bg-ink df7-px-3 df7-text-[14px] df7-font-semibold df7-text-white df7-no-underline df7-transition hover:df7-opacity-90`;
 
 // One click copies the whole shortcode. The Clipboard API needs a secure
 // context, which a plain-http local site is not, so fall back to a scratch
@@ -456,48 +456,48 @@ const FormCard = ( { form, onDelete } ) => {
 	const fields = fieldSummary( form );
 
 	return (
-		<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5 cf7e-transition-colors hover:cf7e-border-stroke">
-			<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-				<div className="cf7e-flex cf7e-h-11 cf7e-w-11 cf7e-items-center cf7e-justify-center cf7e-rounded-xl cf7e-bg-accent-50 cf7e-text-accent">
-					<FileText className="cf7e-h-5 cf7e-w-5" />
+		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-stroke">
+			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
+					<FileText className="df7-h-5 df7-w-5" />
 				</div>
 				{ /* Delete sits up here rather than in the action row below: that row
 				     is already two buttons and an icon inside a 240px card, and a
 				     fourth would squeeze "Entries" past its own text width. */ }
-				<div className="cf7e-flex cf7e-items-center cf7e-gap-1">
-					<span className="cf7e-text-[14px] cf7e-font-semibold cf7e-text-stone-400 cf7e-tnum">#{ form.form_id }</span>
+				<div className="df7-flex df7-items-center df7-gap-1">
+					<span className="df7-text-[14px] df7-font-semibold df7-text-stone-400 df7-tnum">#{ form.form_id }</span>
 					<button
 						type="button"
 						onClick={ onDelete }
-						aria-label={ sprintf( /* translators: %s: form title. */ __( 'Delete %s', 'essentials-for-contact-form-7' ), form.title || `#${ form.form_id }` ) }
-						title={ __( 'Delete form', 'essentials-for-contact-form-7' ) }
-						className={ `cf7e-flex cf7e-h-7 cf7e-w-7 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border-0 cf7e-bg-transparent cf7e-text-stone-400 cf7e-transition-colors hover:cf7e-bg-red-50 hover:cf7e-text-red-600` }
+						aria-label={ sprintf( /* translators: %s: form title. */ __( 'Delete %s', 'defer-forms-for-contact-form-7' ), form.title || `#${ form.form_id }` ) }
+						title={ __( 'Delete form', 'defer-forms-for-contact-form-7' ) }
+						className={ `df7-flex df7-h-7 df7-w-7 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-bg-red-50 hover:df7-text-red-600` }
 					>
-						<Trash2 className="cf7e-h-3.5 cf7e-w-3.5" />
+						<Trash2 className="df7-h-3.5 df7-w-3.5" />
 					</button>
 				</div>
 			</div>
 
-			<h3 className="cf7e-m-0 cf7e-truncate cf7e-text-base cf7e-font-semibold cf7e-text-ink" title={ form.title }>
-				{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'essentials-for-contact-form-7' ), form.form_id ) }
+			<h3 className="df7-m-0 df7-truncate df7-text-base df7-font-semibold df7-text-ink" title={ form.title }>
+				{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), form.form_id ) }
 			</h3>
 
 			{ fields && (
-				<p className="cf7e-mb-0 cf7e-mt-1 cf7e-truncate cf7e-text-[14px] cf7e-text-stone-400">{ fields }</p>
+				<p className="df7-mb-0 df7-mt-1 df7-truncate df7-text-[14px] df7-text-stone-400">{ fields }</p>
 			) }
 
-			<div className="cf7e-mt-2 cf7e-flex cf7e-items-baseline cf7e-gap-2">
-				<span className="cf7e-text-2xl cf7e-font-bold cf7e-text-ink cf7e-tnum">
+			<div className="df7-mt-2 df7-flex df7-items-baseline df7-gap-2">
+				<span className="df7-text-2xl df7-font-bold df7-text-ink df7-tnum">
 					{ form.count.toLocaleString() }
 				</span>
-				<span className="cf7e-text-sm cf7e-text-stone-500">
-					{ _n( 'entry', 'entries', form.count, 'essentials-for-contact-form-7' ) }
+				<span className="df7-text-sm df7-text-stone-500">
+					{ _n( 'entry', 'entries', form.count, 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
-			<p className="cf7e-mb-0 cf7e-mt-1 cf7e-text-[14px] cf7e-text-stone-400">
+			<p className="df7-mb-0 df7-mt-1 df7-text-[14px] df7-text-stone-400">
 				{ last
-					? sprintf( /* translators: %s: relative time. */ __( 'Last entry %s', 'essentials-for-contact-form-7' ), last )
-					: __( 'No entries yet', 'essentials-for-contact-form-7' ) }
+					? sprintf( /* translators: %s: relative time. */ __( 'Last entry %s', 'defer-forms-for-contact-form-7' ), last )
+					: __( 'No entries yet', 'defer-forms-for-contact-form-7' ) }
 			</p>
 
 			<ShortcodeBox code={ form.shortcode } />
@@ -507,38 +507,38 @@ const FormCard = ( { form, onDelete } ) => {
 			     padding. Measured at 240px: the primary action now has the line to
 			     itself, and Edit / Entries get 94px each against 67 and 84 of
 			     content. */ }
-			<div className="cf7e-mt-4 cf7e-flex cf7e-flex-col cf7e-gap-2 cf7e-border-t cf7e-border-line cf7e-pt-4">
+			<div className="df7-mt-4 df7-flex df7-flex-col df7-gap-2 df7-border-t df7-border-line df7-pt-4">
 				{ /* Builder gives up half its line to Preview rather than the row
 				     below taking a fourth button: at 240px that row is already
 				     "Edit", "Entries" and a 36px icon, and there is nothing left
 				     to give. Two words at ~96px each fit here with room over. */ }
-				<div className="cf7e-flex cf7e-gap-2">
+				<div className="df7-flex df7-gap-2">
 					<a href={ builderUrl( form.form_id ) } className={ primaryBtn }>
-						<PencilRuler className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0" />
-						{ __( 'Builder', 'essentials-for-contact-form-7' ) }
+						<PencilRuler className="df7-h-3.5 df7-w-3.5 df7-shrink-0" />
+						{ __( 'Builder', 'defer-forms-for-contact-form-7' ) }
 					</a>
 					<a href={ previewUrl( form.form_id ) } className={ actionBtn }>
-						<Eye className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0 cf7e-text-stone-400" />
-						{ __( 'Preview', 'essentials-for-contact-form-7' ) }
+						<Eye className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+						{ __( 'Preview', 'defer-forms-for-contact-form-7' ) }
 					</a>
 				</div>
 
-				<div className="cf7e-flex cf7e-gap-2">
+				<div className="df7-flex df7-gap-2">
 					<a href={ editUrl( form.form_id ) } className={ actionBtn }>
-						<Pencil className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0 cf7e-text-stone-400" />
-						{ __( 'Edit', 'essentials-for-contact-form-7' ) }
+						<Pencil className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+						{ __( 'Edit', 'defer-forms-for-contact-form-7' ) }
 					</a>
-					<a href={ `admin.php?page=cf7-essentials-submissions&form=${ form.form_id }` } className={ actionBtn }>
-						<Inbox className="cf7e-h-3.5 cf7e-w-3.5 cf7e-shrink-0 cf7e-text-stone-400" />
-						{ __( 'Entries', 'essentials-for-contact-form-7' ) }
+					<a href={ `admin.php?page=df7-submissions&form=${ form.form_id }` } className={ actionBtn }>
+						<Inbox className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+						{ __( 'Entries', 'defer-forms-for-contact-form-7' ) }
 					</a>
 					<a
-						href={ `admin.php?page=cf7-essentials-builder&form=${ form.form_id }&tab=settings` }
-						aria-label={ __( 'Form settings', 'essentials-for-contact-form-7' ) }
-						title={ __( 'Form settings', 'essentials-for-contact-form-7' ) }
-						className="cf7e-inline-flex cf7e-h-9 cf7e-w-9 cf7e-shrink-0 cf7e-cursor-pointer cf7e-items-center cf7e-justify-center cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-text-stone-400 cf7e-no-underline cf7e-transition-colors hover:cf7e-bg-stone-50 hover:cf7e-text-ink"
+						href={ `admin.php?page=df7-builder&form=${ form.form_id }&tab=settings` }
+						aria-label={ __( 'Form settings', 'defer-forms-for-contact-form-7' ) }
+						title={ __( 'Form settings', 'defer-forms-for-contact-form-7' ) }
+						className="df7-inline-flex df7-h-9 df7-w-9 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-400 df7-no-underline df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink"
 					>
-						<Settings className="cf7e-h-4 cf7e-w-4" />
+						<Settings className="df7-h-4 df7-w-4" />
 					</a>
 				</div>
 			</div>
@@ -558,36 +558,36 @@ const FormCard = ( { form, onDelete } ) => {
  * moment the fetch returned, and the whole grid below them moved with it.
  */
 const SkeletonCard = () => (
-	<div className="cf7e-flex cf7e-h-full cf7e-flex-col cf7e-rounded-2xl cf7e-border cf7e-border-line cf7e-bg-white cf7e-p-5">
-		<div className="cf7e-mb-3 cf7e-flex cf7e-items-start cf7e-justify-between">
-			<div className="cf7e-h-11 cf7e-w-11 cf7e-animate-pulse cf7e-rounded-xl cf7e-bg-stone-100" />
+	<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5">
+		<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
+			<div className="df7-h-11 df7-w-11 df7-animate-pulse df7-rounded-xl df7-bg-stone-100" />
 			{ /* The id, beside a 28px delete button that sets this row's height. */ }
-			<div className="cf7e-flex cf7e-h-7 cf7e-items-center">
-				<Shimmer w="cf7e-w-8" text="cf7e-text-[14px]" />
+			<div className="df7-flex df7-h-7 df7-items-center">
+				<Shimmer w="df7-w-8" text="df7-text-[14px]" />
 			</div>
 		</div>
 
-		<Shimmer as="h3" w="cf7e-w-3/4" text="cf7e-text-base" />
-		<Shimmer as="p" w="cf7e-w-1/2" text="cf7e-text-[14px]" className="cf7e-mt-1" />
+		<Shimmer as="h3" w="df7-w-3/4" text="df7-text-base" />
+		<Shimmer as="p" w="df7-w-1/2" text="df7-text-[14px]" className="df7-mt-1" />
 
-		<div className="cf7e-mt-2 cf7e-flex cf7e-items-baseline cf7e-gap-2">
-			<Shimmer w="cf7e-w-16" text="cf7e-text-2xl" />
-			<Shimmer w="cf7e-w-12" text="cf7e-text-sm" />
+		<div className="df7-mt-2 df7-flex df7-items-baseline df7-gap-2">
+			<Shimmer w="df7-w-16" text="df7-text-2xl" />
+			<Shimmer w="df7-w-12" text="df7-text-sm" />
 		</div>
 
-		<Shimmer as="p" w="cf7e-w-1/2" text="cf7e-text-[14px]" className="cf7e-mt-1" />
+		<Shimmer as="p" w="df7-w-1/2" text="df7-text-[14px]" className="df7-mt-1" />
 
 		<ShortcodeBox code="" loading />
 
-		<div className="cf7e-mt-4 cf7e-flex cf7e-flex-col cf7e-gap-2 cf7e-border-t cf7e-border-line cf7e-pt-4">
-			<div className="cf7e-flex cf7e-gap-2">
-				<div className="cf7e-h-9 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
-				<div className="cf7e-h-9 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
+		<div className="df7-mt-4 df7-flex df7-flex-col df7-gap-2 df7-border-t df7-border-line df7-pt-4">
+			<div className="df7-flex df7-gap-2">
+				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
 			</div>
-			<div className="cf7e-flex cf7e-gap-2">
-				<div className="cf7e-h-9 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
-				<div className="cf7e-h-9 cf7e-flex-1 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
-				<div className="cf7e-h-9 cf7e-w-9 cf7e-shrink-0 cf7e-animate-pulse cf7e-rounded-lg cf7e-bg-stone-100" />
+			<div className="df7-flex df7-gap-2">
+				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+				<div className="df7-h-9 df7-w-9 df7-shrink-0 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
 			</div>
 		</div>
 	</div>
@@ -605,7 +605,7 @@ const App = () => {
 	// Named, because an import adds forms this list has never seen and the only
 	// honest way to show them is to ask again.
 	const load = () =>
-		apiFetch( { path: 'cf7e/v1/forms/overview' } )
+		apiFetch( { path: 'df7/v1/forms/overview' } )
 			.then( ( res ) => {
 				setForms( res );
 				setError( null );
@@ -629,10 +629,10 @@ const App = () => {
 		<button
 			type="button"
 			onClick={ () => setCreating( true ) }
-			className="cf7e-inline-flex cf7e-h-10 cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border-0 cf7e-bg-ink cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-white cf7e-transition-opacity hover:cf7e-opacity-90"
+			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-ink df7-px-4 df7-text-sm df7-font-semibold df7-text-white df7-transition-opacity hover:df7-opacity-90"
 		>
-			<Plus className="cf7e-h-4 cf7e-w-4" />
-			{ __( 'New form', 'essentials-for-contact-form-7' ) }
+			<Plus className="df7-h-4 df7-w-4" />
+			{ __( 'New form', 'defer-forms-for-contact-form-7' ) }
 		</button>
 	);
 
@@ -640,10 +640,10 @@ const App = () => {
 		<button
 			type="button"
 			onClick={ () => setTransfer( true ) }
-			className="cf7e-inline-flex cf7e-h-10 cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-transition-colors hover:cf7e-bg-stone-50"
+			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-transition-colors hover:df7-bg-stone-50"
 		>
-			<ArrowDownUp className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
-			{ __( 'Import / Export', 'essentials-for-contact-form-7' ) }
+			<ArrowDownUp className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			{ __( 'Import / Export', 'defer-forms-for-contact-form-7' ) }
 		</button>
 	);
 
@@ -651,18 +651,18 @@ const App = () => {
 	// form, and a Styling button on each card would promise otherwise.
 	const stylingLink = (
 		<a
-			href="admin.php?page=cf7-essentials-styling"
-			className="cf7e-inline-flex cf7e-h-10 cf7e-cursor-pointer cf7e-items-center cf7e-gap-2 cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-px-4 cf7e-text-sm cf7e-font-semibold cf7e-text-ink cf7e-no-underline cf7e-transition-colors hover:cf7e-bg-stone-50"
+			href="admin.php?page=df7-styling"
+			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline df7-transition-colors hover:df7-bg-stone-50"
 		>
-			<Palette className="cf7e-h-4 cf7e-w-4 cf7e-text-stone-400" />
-			{ __( 'Styling', 'essentials-for-contact-form-7' ) }
+			<Palette className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			{ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
 		</a>
 	);
 
 	const renderBody = () => {
 		if ( loading ) {
 			return (
-				<div className="cf7e-grid cf7e-grid-cols-1 cf7e-gap-4 sm:cf7e-grid-cols-2 lg:cf7e-grid-cols-3 xl:cf7e-grid-cols-4">
+				<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
 					{ Array.from( { length: 8 } ).map( ( _, i ) => <SkeletonCard key={ i } /> ) }
 				</div>
 			);
@@ -670,15 +670,15 @@ const App = () => {
 
 		if ( 0 === forms.length ) {
 			return (
-				<div className="cf7e-flex cf7e-flex-col cf7e-items-center cf7e-justify-center cf7e-py-24 cf7e-text-center">
-					<div className="cf7e-mb-4 cf7e-flex cf7e-h-16 cf7e-w-16 cf7e-items-center cf7e-justify-center cf7e-rounded-2xl cf7e-bg-stone-50 cf7e-text-stone-400">
-						<FileText className="cf7e-h-8 cf7e-w-8" />
+				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-py-24 df7-text-center">
+					<div className="df7-mb-4 df7-flex df7-h-16 df7-w-16 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-stone-50 df7-text-stone-400">
+						<FileText className="df7-h-8 df7-w-8" />
 					</div>
-					<h3 className="cf7e-m-0 cf7e-text-lg cf7e-font-bold cf7e-text-ink">
-						{ __( 'No forms yet', 'essentials-for-contact-form-7' ) }
+					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">
+						{ __( 'No forms yet', 'defer-forms-for-contact-form-7' ) }
 					</h3>
-					<p className="cf7e-mb-4 cf7e-mt-1 cf7e-text-sm cf7e-text-stone-500">
-						{ __( 'Create your first Contact Form 7 form to get started.', 'essentials-for-contact-form-7' ) }
+					<p className="df7-mb-4 df7-mt-1 df7-text-sm df7-text-stone-500">
+						{ __( 'Create your first Contact Form 7 form to get started.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 					{ newFormButton }
 				</div>
@@ -687,14 +687,14 @@ const App = () => {
 
 		if ( 0 === filtered.length ) {
 			return (
-				<div className="cf7e-py-20 cf7e-text-center cf7e-text-sm cf7e-text-stone-500">
-					{ __( 'No forms match your search.', 'essentials-for-contact-form-7' ) }
+				<div className="df7-py-20 df7-text-center df7-text-sm df7-text-stone-500">
+					{ __( 'No forms match your search.', 'defer-forms-for-contact-form-7' ) }
 				</div>
 			);
 		}
 
 		return (
-			<div className="cf7e-grid cf7e-grid-cols-1 cf7e-gap-4 sm:cf7e-grid-cols-2 lg:cf7e-grid-cols-3 xl:cf7e-grid-cols-4">
+			<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
 				{ filtered.map( ( form ) => <FormCard key={ form.form_id } form={ form } onDelete={ () => setDeleting( form ) } /> ) }
 			</div>
 		);
@@ -703,25 +703,25 @@ const App = () => {
 	return (
 		<Page>
 			<PageHeader
-				title={ __( 'Forms', 'essentials-for-contact-form-7' ) }
-				subtitle={ __( 'Your Contact Form 7 forms at a glance.', 'essentials-for-contact-form-7' ) }
+				title={ __( 'Forms', 'defer-forms-for-contact-form-7' ) }
+				subtitle={ __( 'Your Contact Form 7 forms at a glance.', 'defer-forms-for-contact-form-7' ) }
 				actions={ <>{ transferButton }{ stylingLink }{ newFormButton }</> }
 			/>
 
 			{ error && (
-				<div className="cf7e-mb-4 cf7e-rounded-lg cf7e-border cf7e-border-red-200 cf7e-bg-red-50 cf7e-px-4 cf7e-py-3 cf7e-text-sm cf7e-font-medium cf7e-text-red-700">
+				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
 					{ error }
 				</div>
 			) }
 
-			<div className="cf7e-mb-6 cf7e-relative cf7e-w-full sm:cf7e-w-80">
-				<Search className="cf7e-pointer-events-none cf7e-absolute cf7e-left-3 cf7e-top-1/2 cf7e-h-4 cf7e-w-4 -cf7e-translate-y-1/2 cf7e-text-stone-400" />
+			<div className="df7-mb-6 df7-relative df7-w-full sm:df7-w-80">
+				<Search className="df7-pointer-events-none df7-absolute df7-left-3 df7-top-1/2 df7-h-4 df7-w-4 -df7-translate-y-1/2 df7-text-stone-400" />
 				<input
 					type="search"
 					value={ search }
 					onChange={ ( event ) => setSearch( event.target.value ) }
-					placeholder={ __( 'Search forms…', 'essentials-for-contact-form-7' ) }
-					className={ `cf7e-h-9 cf7e-w-full cf7e-rounded-lg cf7e-border cf7e-border-stroke cf7e-bg-white cf7e-pl-10 cf7e-pr-3 cf7e-text-sm cf7e-text-ink cf7e-transition-colors placeholder:cf7e-text-stone-400 ${ focusRing }` }
+					placeholder={ __( 'Search forms…', 'defer-forms-for-contact-form-7' ) }
+					className={ `df7-h-9 df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-pl-10 df7-pr-3 df7-text-sm df7-text-ink df7-transition-colors placeholder:df7-text-stone-400 ${ focusRing }` }
 				/>
 			</div>
 
@@ -751,7 +751,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'cf7e-forms-root' );
+const mount = document.getElementById( 'df7-forms-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }
