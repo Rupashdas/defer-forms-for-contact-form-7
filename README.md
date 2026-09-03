@@ -1,4 +1,8 @@
+![Defer Forms for Contact Form 7](.github/banner.svg)
+
 # Defer Forms for Contact Form 7
+
+![Version](https://img.shields.io/badge/version-2.6.7-C2410C) ![WordPress](https://img.shields.io/badge/WordPress-6.5%2B-black) ![PHP](https://img.shields.io/badge/PHP-8.0%2B-black) ![License: GPL v2 or later](https://img.shields.io/badge/license-GPL--2.0--or--later-black)
 
 A modern layer on top of [Contact Form 7](https://wordpress.org/plugins/contact-form-7/): a
 drag-and-drop builder, multi-step forms, conditional logic, and a submissions database — without
