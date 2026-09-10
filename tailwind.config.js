@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	prefix: 'df7-',
+	prefix: 'deferforms-',
 	important: true,
 	content: [ './ui/**/*.{js,jsx}' ],
 	corePlugins: {

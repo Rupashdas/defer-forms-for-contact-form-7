@@ -10,7 +10,7 @@
  * happened to run the uninstall left the rest of the network holding entries —
  * and the IP addresses in them — with nothing left to read or delete them.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
@@ -29,29 +29,29 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  * The setting is read per site rather than once: opting in on the site running
  * the uninstall is not consent to wipe a sibling that never turned it on.
  */
-function df7_uninstall_site(): void {
+function deferforms_uninstall_site(): void {
 	global $wpdb;
 
-	$settings = get_option( 'df7_settings', array() );
+	$settings = get_option( 'deferforms_settings', array() );
 
 	if ( empty( $settings['general']['delete_on_uninstall'] ) ) {
 		return;
 	}
 
-	delete_option( 'df7_settings' );
-	delete_option( 'df7_modules' );
-	delete_option( 'df7_db_version' );
-	delete_option( 'df7_submission_seq' );
+	delete_option( 'deferforms_settings' );
+	delete_option( 'deferforms_modules' );
+	delete_option( 'deferforms_db_version' );
+	delete_option( 'deferforms_submission_seq' );
 	// The schema-upgrade lock. An option rather than a transient since it has to
 	// be claimed atomically, which means the transient sweep below no longer
 	// reaches it and it has to be named here.
-	delete_option( 'df7_db_upgrading' );
+	delete_option( 'deferforms_db_upgrading' );
 
 	// Per-form settings we attached to CF7's own posts.
-	delete_post_meta_by_key( '_df7_redirect' );
-	delete_post_meta_by_key( '_df7_steps' );
-	delete_post_meta_by_key( '_df7_revision' );
-	delete_post_meta_by_key( '_df7_form_class' );
+	delete_post_meta_by_key( '_deferforms_redirect' );
+	delete_post_meta_by_key( '_deferforms_steps' );
+	delete_post_meta_by_key( '_deferforms_revision' );
+	delete_post_meta_by_key( '_deferforms_form_class' );
 
 	// Short-lived markers: duplicate-submission keys and the schema-upgrade lock.
 	// They expire by themselves, but a site uninstalling right after a burst of
@@ -63,15 +63,15 @@ function df7_uninstall_site(): void {
 	$wpdb->query(
 		$wpdb->prepare(
 			"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
-			$wpdb->esc_like( '_transient_df7_' ) . '%',
-			$wpdb->esc_like( '_transient_timeout_df7_' ) . '%'
+			$wpdb->esc_like( '_transient_deferforms_' ) . '%',
+			$wpdb->esc_like( '_transient_timeout_deferforms_' ) . '%'
 		)
 	);
 
 	// Spelled out rather than read from Schema::TABLE: WordPress runs this file on
 	// its own, with the plugin never loaded and no autoloader. tests/php/uninstall.php
 	// checks the two names still match.
-	$table = $wpdb->prefix . 'df7_submissions';
+	$table = $wpdb->prefix . 'deferforms_submissions';
 	$wpdb->query( "DROP TABLE IF EXISTS {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- a table name built from $wpdb->prefix and a literal; prepare() cannot placeholder an identifier anyway.
 
 	// The files people attached. Dropping the table alone would leave every upload
@@ -79,7 +79,7 @@ function df7_uninstall_site(): void {
 	$uploads = wp_upload_dir();
 
 	if ( empty( $uploads['error'] ) && ! empty( $uploads['basedir'] ) ) {
-		$attachments = rtrim( (string) $uploads['basedir'], '/\\' ) . '/df7-attachments';
+		$attachments = rtrim( (string) $uploads['basedir'], '/\\' ) . '/deferforms-attachments';
 
 		// WP_Filesystem's recursive delete, rather than a hand-rolled glob and
 		// rmdir walk. It goes all the way down — the old loop only descended one
@@ -101,7 +101,7 @@ function df7_uninstall_site(): void {
 }
 
 if ( ! is_multisite() ) {
-	df7_uninstall_site();
+	deferforms_uninstall_site();
 	return;
 }
 
@@ -111,23 +111,23 @@ if ( ! is_multisite() ) {
 // Prefixed because this file has no function to hold them: at the bottom of
 // uninstall.php these are globals, and a bare $offset belongs to whoever else
 // is in the global scope.
-$df7_offset = 0;
+$deferforms_offset = 0;
 
 do {
-	$df7_sites = get_sites(
+	$deferforms_sites = get_sites(
 		array(
 			'fields' => 'ids',
 			'number' => 100,
-			'offset' => $df7_offset,
+			'offset' => $deferforms_offset,
 		)
 	);
 
-	foreach ( $df7_sites as $df7_site_id ) {
-		switch_to_blog( (int) $df7_site_id );
-		df7_uninstall_site();
+	foreach ( $deferforms_sites as $deferforms_site_id ) {
+		switch_to_blog( (int) $deferforms_site_id );
+		deferforms_uninstall_site();
 		restore_current_blog();
 	}
 
-	$df7_offset += 100;
-	$df7_batch   = count( $df7_sites );
-} while ( 100 === $df7_batch );
+	$deferforms_offset += 100;
+	$deferforms_batch   = count( $deferforms_sites );
+} while ( 100 === $deferforms_batch );

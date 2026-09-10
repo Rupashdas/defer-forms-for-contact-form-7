@@ -33,7 +33,7 @@ const RECENT = 5;
  * the browser cannot know until the fetch it is waiting on comes back. The
  * server knew it all along, so it says so (see Menu::hand_over).
  */
-const FORM_COUNT = Number( window.df7Dashboard?.forms ?? 0 );
+const FORM_COUNT = Number( window.deferformsDashboard?.forms ?? 0 );
 
 const Trend = ( { of } ) => {
 	if ( ! of ) {
@@ -42,7 +42,7 @@ const Trend = ( { of } ) => {
 
 	if ( 'new' === of.direction ) {
 		return (
-			<span className="df7-text-[14px] df7-font-medium df7-text-stone-400">
+			<span className="deferforms-text-[14px] deferforms-font-medium deferforms-text-stone-400">
 				{ __( 'nothing the week before', 'defer-forms-for-contact-form-7' ) }
 			</span>
 		);
@@ -51,8 +51,8 @@ const Trend = ( { of } ) => {
 	const Icon = { up: ArrowUpRight, down: ArrowDownRight, level: Minus }[ of.direction ];
 
 	return (
-		<span className="df7-inline-flex df7-items-center df7-gap-1 df7-text-[14px] df7-font-medium df7-text-stone-400">
-			<Icon className="df7-h-3.5 df7-w-3.5" />
+		<span className="deferforms-inline-flex deferforms-items-center deferforms-gap-1 deferforms-text-[14px] deferforms-font-medium deferforms-text-stone-400">
+			<Icon className="deferforms-h-3.5 deferforms-w-3.5" />
 			{ 'level' === of.direction
 				? __( 'same as the week before', 'defer-forms-for-contact-form-7' )
 				: sprintf(
@@ -72,20 +72,20 @@ const Trend = ( { of } ) => {
  * is carrying data.
  */
 const Figure = ( { label, value, loading, children } ) => (
-	<div className="df7-flex df7-flex-col df7-gap-1">
-		<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
+	<div className="deferforms-flex deferforms-flex-col deferforms-gap-1">
+		<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">
 			{ label }
 		</span>
 		{ loading ? (
-			<Shimmer w="df7-w-16" text="df7-text-3xl df7-leading-none" />
+			<Shimmer w="deferforms-w-16" text="deferforms-text-3xl deferforms-leading-none" />
 		) : (
-			<span className="df7-text-3xl df7-font-bold df7-leading-none df7-tracking-tight df7-text-ink df7-tnum">
+			<span className="deferforms-text-3xl deferforms-font-bold deferforms-leading-none deferforms-tracking-tight deferforms-text-ink deferforms-tnum">
 				{ value.toLocaleString() }
 			</span>
 		) }
 		{ /* The comparison line under This week. Reserved while loading, or the
 		     figure is twenty pixels shorter than it is about to be. */ }
-		{ loading ? <Shimmer w="df7-w-32" text="df7-text-[14px]" /> : children }
+		{ loading ? <Shimmer w="deferforms-w-32" text="deferforms-text-[14px]" /> : children }
 	</div>
 );
 
@@ -101,22 +101,22 @@ const Figure = ( { label, value, loading, children } ) => (
  * holding the entries this banner is about plus some it is not.
  */
 const UnreadBanner = ( { count, onMarkRead, marking } ) => (
-	<div className="df7-flex df7-items-center df7-gap-4 df7-rounded-2xl df7-border df7-border-accent-200 df7-bg-accent-50 df7-p-5">
-		<div className="df7-relative df7-flex df7-h-12 df7-w-12 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-xl df7-bg-ink df7-text-white">
-			<Inbox className="df7-h-6 df7-w-6" />
-			<span className="df7-absolute -df7-right-1 -df7-top-1 df7-flex df7-h-5 df7-min-w-[1.25rem] df7-items-center df7-justify-center df7-rounded-full df7-bg-red-600 df7-px-1 df7-text-[14px] df7-font-bold df7-leading-none df7-text-white df7-tnum">
+	<div className="deferforms-flex deferforms-items-center deferforms-gap-4 deferforms-rounded-2xl deferforms-border deferforms-border-accent-200 deferforms-bg-accent-50 deferforms-p-5">
+		<div className="deferforms-relative deferforms-flex deferforms-h-12 deferforms-w-12 deferforms-shrink-0 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-ink deferforms-text-white">
+			<Inbox className="deferforms-h-6 deferforms-w-6" />
+			<span className="deferforms-absolute -deferforms-right-1 -deferforms-top-1 deferforms-flex deferforms-h-5 deferforms-min-w-[1.25rem] deferforms-items-center deferforms-justify-center deferforms-rounded-full deferforms-bg-red-600 deferforms-px-1 deferforms-text-[14px] deferforms-font-bold deferforms-leading-none deferforms-text-white deferforms-tnum">
 				{ count > 99 ? '99+' : count }
 			</span>
 		</div>
-		<div className="df7-flex df7-flex-1 df7-flex-col df7-gap-0.5">
-			<span className="df7-text-base df7-font-semibold df7-text-ink">
+		<div className="deferforms-flex deferforms-flex-1 deferforms-flex-col deferforms-gap-0.5">
+			<span className="deferforms-text-base deferforms-font-semibold deferforms-text-ink">
 				{ sprintf(
 					/* translators: %s: number of new submissions. */
 					_n( '%s entry you have not read', '%s entries you have not read', count, 'defer-forms-for-contact-form-7' ),
 					count.toLocaleString()
 				) }
 			</span>
-			<span className="df7-text-[15px] df7-text-stone-500">
+			<span className="deferforms-text-[15px] deferforms-text-stone-500">
 				{ __( 'Opening one marks it read.', 'defer-forms-for-contact-form-7' ) }
 			</span>
 		</div>
@@ -134,18 +134,18 @@ const UnreadBanner = ( { count, onMarkRead, marking } ) => (
 			type="button"
 			onClick={ onMarkRead }
 			disabled={ marking }
-			className={ `${ btnGhost } df7-shrink-0` }
+			className={ `${ btnGhost } deferforms-shrink-0` }
 		>
-			<CheckCheck className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			<CheckCheck className="deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 			{ marking ? __( 'Marking…', 'defer-forms-for-contact-form-7' ) : __( 'Mark all read', 'defer-forms-for-contact-form-7' ) }
 		</button>
 
 		<a
-			href="admin.php?page=df7-submissions&status=submitted"
-			className="df7-group df7-inline-flex df7-shrink-0 df7-items-center df7-gap-1.5 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline"
+			href="admin.php?page=deferforms-submissions&status=submitted"
+			className="deferforms-group deferforms-inline-flex deferforms-shrink-0 deferforms-items-center deferforms-gap-1.5 deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-no-underline"
 		>
 			{ __( 'Read them', 'defer-forms-for-contact-form-7' ) }
-			<ArrowRight className="df7-h-4 df7-w-4 df7-transition-transform group-hover:df7-translate-x-0.5" />
+			<ArrowRight className="deferforms-h-4 deferforms-w-4 deferforms-transition-transform group-hover:deferforms-translate-x-0.5" />
 		</a>
 	</div>
 );
@@ -160,16 +160,16 @@ const UnreadBanner = ( { count, onMarkRead, marking } ) => (
  * anything: it is evidence the trap is working.
  */
 const SpamNote = ( { count, onDismiss } ) => (
-	<div className="df7-flex df7-items-center df7-gap-3 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-px-5 df7-py-4">
-		<ShieldAlert className="df7-h-5 df7-w-5 df7-shrink-0 df7-text-amber-600" />
-		<span className="df7-flex-1 df7-text-[15px] df7-text-stone-500">
+	<div className="deferforms-flex deferforms-items-center deferforms-gap-3 deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-px-5 deferforms-py-4">
+		<ShieldAlert className="deferforms-h-5 deferforms-w-5 deferforms-shrink-0 deferforms-text-amber-600" />
+		<span className="deferforms-flex-1 deferforms-text-[15px] deferforms-text-stone-500">
 			{ sprintf(
 				/* translators: %s: number of spam submissions. */
 				_n( '%s spam entry was caught and kept out of your inbox.', '%s spam entries were caught and kept out of your inbox.', count, 'defer-forms-for-contact-form-7' ),
 				count.toLocaleString()
 			) }
 		</span>
-		<a href="admin.php?page=df7-submissions&status=spam" className="df7-text-sm df7-font-semibold df7-text-ink df7-no-underline">
+		<a href="admin.php?page=deferforms-submissions&status=spam" className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-no-underline">
 			{ __( 'See them', 'defer-forms-for-contact-form-7' ) }
 		</a>
 
@@ -186,9 +186,9 @@ const SpamNote = ( { count, onDismiss } ) => (
 			onClick={ onDismiss }
 			aria-label={ __( 'Dismiss', 'defer-forms-for-contact-form-7' ) }
 			title={ __( 'Hide this until more arrives', 'defer-forms-for-contact-form-7' ) }
-			className="df7-flex df7-h-7 df7-w-7 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-bg-stone-100 hover:df7-text-ink"
+			className="deferforms-flex deferforms-h-7 deferforms-w-7 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-transition-colors hover:deferforms-bg-stone-100 hover:deferforms-text-ink"
 		>
-			<X className="df7-h-4 df7-w-4" />
+			<X className="deferforms-h-4 deferforms-w-4" />
 		</button>
 	</div>
 );
@@ -199,7 +199,7 @@ const SpamNote = ( { count, onDismiss } ) => (
  * Per person and per browser, which is what "I have seen this" means — it is
  * not a site setting and the next admin has not seen it.
  */
-const SEEN_SPAM = 'df7-spam-seen';
+const SEEN_SPAM = 'deferforms-spam-seen';
 
 const spamSeen = () => {
 	const stored = parseInt( window.localStorage?.getItem( SEEN_SPAM ) || '0', 10 );
@@ -217,14 +217,14 @@ const spamSeen = () => {
 const FormSplit = ( { forms, loading = false, rows = 1 } ) => {
 	if ( loading ) {
 		return (
-			<div className="df7-mt-6 df7-border-t df7-border-line df7-pt-5">
-				<Shimmer w="df7-w-40" text="df7-text-[14px]" />
-				<ul className="df7-m-0 df7-mt-3 df7-flex df7-list-none df7-flex-col df7-gap-2.5 df7-p-0">
+			<div className="deferforms-mt-6 deferforms-border-t deferforms-border-line deferforms-pt-5">
+				<Shimmer w="deferforms-w-40" text="deferforms-text-[14px]" />
+				<ul className="deferforms-m-0 deferforms-mt-3 deferforms-flex deferforms-list-none deferforms-flex-col deferforms-gap-2.5 deferforms-p-0">
 					{ Array.from( { length: rows } ).map( ( _, index ) => (
-						<li key={ index } className="df7-flex df7-items-center df7-gap-3">
-							<Shimmer w="df7-w-40" text="df7-text-[15px]" className="df7-shrink-0" />
-							<span className="df7-h-2 df7-flex-1 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
-							<Shimmer w="df7-w-10" text="df7-text-[15px]" className="df7-shrink-0" />
+						<li key={ index } className="deferforms-flex deferforms-items-center deferforms-gap-3">
+							<Shimmer w="deferforms-w-40" text="deferforms-text-[15px]" className="deferforms-shrink-0" />
+							<span className="deferforms-h-2 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-full deferforms-bg-stone-100" />
+							<Shimmer w="deferforms-w-10" text="deferforms-text-[15px]" className="deferforms-shrink-0" />
 						</li>
 					) ) }
 				</ul>
@@ -235,27 +235,27 @@ const FormSplit = ( { forms, loading = false, rows = 1 } ) => {
 	const most = Math.max( ...forms.map( ( form ) => form.count ) );
 
 	return (
-		<div className="df7-mt-6 df7-border-t df7-border-line df7-pt-5">
-			<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
+		<div className="deferforms-mt-6 deferforms-border-t deferforms-border-line deferforms-pt-5">
+			<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">
 				{ __( 'Where they came from', 'defer-forms-for-contact-form-7' ) }
 			</span>
-			<ul className="df7-m-0 df7-mt-3 df7-flex df7-list-none df7-flex-col df7-gap-2.5 df7-p-0">
+			<ul className="deferforms-m-0 deferforms-mt-3 deferforms-flex deferforms-list-none deferforms-flex-col deferforms-gap-2.5 deferforms-p-0">
 				{ forms.map( ( form ) => (
-					<li key={ form.form_id } className="df7-flex df7-items-center df7-gap-3">
+					<li key={ form.form_id } className="deferforms-flex deferforms-items-center deferforms-gap-3">
 						<a
-							href={ `admin.php?page=df7-submissions&form=${ form.form_id }` }
-							className="df7-w-40 df7-shrink-0 df7-truncate df7-text-[15px] df7-text-ink df7-no-underline hover:df7-underline"
+							href={ `admin.php?page=deferforms-submissions&form=${ form.form_id }` }
+							className="deferforms-w-40 deferforms-shrink-0 deferforms-truncate deferforms-text-[15px] deferforms-text-ink deferforms-no-underline hover:deferforms-underline"
 							title={ form.title }
 						>
 							{ form.title }
 						</a>
-						<span className="df7-h-2 df7-flex-1 df7-overflow-hidden df7-rounded-full df7-bg-stone-100">
+						<span className="deferforms-h-2 deferforms-flex-1 deferforms-overflow-hidden deferforms-rounded-full deferforms-bg-stone-100">
 							<span
-								className="df7-block df7-h-full df7-rounded-full df7-bg-ink"
+								className="deferforms-block deferforms-h-full deferforms-rounded-full deferforms-bg-ink"
 								style={ { width: `${ Math.max( 4, ( form.count / most ) * 100 ) }%` } }
 							/>
 						</span>
-						<span className="df7-w-10 df7-shrink-0 df7-text-right df7-text-[15px] df7-font-semibold df7-text-ink df7-tnum">
+						<span className="deferforms-w-10 deferforms-shrink-0 deferforms-text-right deferforms-text-[15px] deferforms-font-semibold deferforms-text-ink deferforms-tnum">
 							{ form.count.toLocaleString() }
 						</span>
 					</li>
@@ -273,53 +273,53 @@ const when = ( mysqlUtc ) =>
 
 /** The last few entries, so the newest one is readable without leaving. */
 const Recent = ( { items, titleFor, loading = false } ) => (
-	<section className="df7-mt-8">
-		<div className="df7-mb-3 df7-flex df7-items-baseline df7-justify-between">
-			<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">{ __( 'Latest entries', 'defer-forms-for-contact-form-7' ) }</h2>
+	<section className="deferforms-mt-8">
+		<div className="deferforms-mb-3 deferforms-flex deferforms-items-baseline deferforms-justify-between">
+			<h2 className="deferforms-m-0 deferforms-text-xl deferforms-font-bold deferforms-text-ink">{ __( 'Latest entries', 'defer-forms-for-contact-form-7' ) }</h2>
 			<a
-				href="admin.php?page=df7-submissions"
-				className="df7-text-sm df7-font-semibold df7-text-ink df7-no-underline hover:df7-underline"
+				href="admin.php?page=deferforms-submissions"
+				className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-no-underline hover:deferforms-underline"
 			>
 				{ __( 'All entries', 'defer-forms-for-contact-form-7' ) }
 			</a>
 		</div>
-		<ul className="df7-m-0 df7-list-none df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-0">
+		<ul className="deferforms-m-0 deferforms-list-none deferforms-overflow-hidden deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-0">
 			{ loading
 				? Array.from( { length: RECENT } ).map( ( _, index ) => (
-					<li key={ index } className="df7-border-b df7-border-line last:df7-border-0">
-						<div className="df7-flex df7-items-center df7-gap-4 df7-px-5 df7-py-3.5">
-							<span className="df7-h-2 df7-w-2 df7-shrink-0 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
-							<Shimmer w="df7-w-48" text="df7-text-[15px]" className="df7-min-w-0 df7-flex-1" />
-							<Shimmer w="df7-w-28" text="df7-text-[14px]" className="df7-hidden df7-shrink-0 sm:df7-block" />
-							<Shimmer w="df7-w-36" text="df7-text-[14px]" className="df7-shrink-0" />
+					<li key={ index } className="deferforms-border-b deferforms-border-line last:deferforms-border-0">
+						<div className="deferforms-flex deferforms-items-center deferforms-gap-4 deferforms-px-5 deferforms-py-3.5">
+							<span className="deferforms-h-2 deferforms-w-2 deferforms-shrink-0 deferforms-animate-pulse deferforms-rounded-full deferforms-bg-stone-100" />
+							<Shimmer w="deferforms-w-48" text="deferforms-text-[15px]" className="deferforms-min-w-0 deferforms-flex-1" />
+							<Shimmer w="deferforms-w-28" text="deferforms-text-[14px]" className="deferforms-hidden deferforms-shrink-0 sm:deferforms-block" />
+							<Shimmer w="deferforms-w-36" text="deferforms-text-[14px]" className="deferforms-shrink-0" />
 						</div>
 					</li>
 				) )
 				: items.map( ( item ) => (
-				<li key={ item.id } className="df7-border-b df7-border-line last:df7-border-0">
+				<li key={ item.id } className="deferforms-border-b deferforms-border-line last:deferforms-border-0">
 					{ /* Named, so the entry opens rather than the visitor landing on
 					     the same list whichever row they clicked. */ }
 					<a
-						href={ `admin.php?page=df7-submissions&entry=${ item.id }` }
-						className="df7-flex df7-items-center df7-gap-4 df7-px-5 df7-py-3.5 df7-no-underline df7-transition-colors hover:df7-bg-stone-50/70"
+						href={ `admin.php?page=deferforms-submissions&entry=${ item.id }` }
+						className="deferforms-flex deferforms-items-center deferforms-gap-4 deferforms-px-5 deferforms-py-3.5 deferforms-no-underline deferforms-transition-colors hover:deferforms-bg-stone-50/70"
 					>
 						{ ! item.read_at && (
 							<span
-								className="df7-h-2 df7-w-2 df7-shrink-0 df7-rounded-full df7-bg-ink"
+								className="deferforms-h-2 deferforms-w-2 deferforms-shrink-0 deferforms-rounded-full deferforms-bg-ink"
 								title={ __( 'Not read yet', 'defer-forms-for-contact-form-7' ) }
 							/>
 						) }
 						<span
-							className={ `df7-min-w-0 df7-flex-1 df7-truncate df7-text-[15px] df7-text-ink ${
-								item.read_at ? 'df7-ml-5' : 'df7-font-semibold'
+							className={ `deferforms-min-w-0 deferforms-flex-1 deferforms-truncate deferforms-text-[15px] deferforms-text-ink ${
+								item.read_at ? 'deferforms-ml-5' : 'deferforms-font-semibold'
 							}` }
 						>
 							{ summarise( item.data, __( 'No answers were filled in', 'defer-forms-for-contact-form-7' ) ) }
 						</span>
-						<span className="df7-hidden df7-shrink-0 df7-truncate df7-text-[14px] df7-text-stone-400 sm:df7-block sm:df7-max-w-[10rem]">
+						<span className="deferforms-hidden deferforms-shrink-0 deferforms-truncate deferforms-text-[14px] deferforms-text-stone-400 sm:deferforms-block sm:deferforms-max-w-[10rem]">
 							{ titleFor( item.form_id ) }
 						</span>
-						<span className="df7-shrink-0 df7-text-[14px] df7-text-stone-400">{ when( item.created_at ) }</span>
+						<span className="deferforms-shrink-0 deferforms-text-[14px] deferforms-text-stone-400">{ when( item.created_at ) }</span>
 					</a>
 				</li>
 				) ) }
@@ -335,32 +335,32 @@ const Recent = ( { items, titleFor, loading = false } ) => (
  * in, so that is what it says.
  */
 const NothingYet = () => (
-	<div className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-px-6 df7-py-10 df7-text-center">
-		<div className="df7-mx-auto df7-flex df7-h-14 df7-w-14 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-accent-50 df7-text-accent">
-			<Inbox className="df7-h-7 df7-w-7" />
+	<div className="deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-px-6 deferforms-py-10 deferforms-text-center">
+		<div className="deferforms-mx-auto deferforms-flex deferforms-h-14 deferforms-w-14 deferforms-items-center deferforms-justify-center deferforms-rounded-2xl deferforms-bg-accent-50 deferforms-text-accent">
+			<Inbox className="deferforms-h-7 deferforms-w-7" />
 		</div>
-		<h2 className="df7-mb-0 df7-mt-4 df7-text-xl df7-font-bold df7-text-ink">
+		<h2 className="deferforms-mb-0 deferforms-mt-4 deferforms-text-xl deferforms-font-bold deferforms-text-ink">
 			{ __( 'No entries yet', 'defer-forms-for-contact-form-7' ) }
 		</h2>
-		<p className="df7-mx-auto df7-mb-0 df7-mt-2 df7-max-w-md df7-text-[15px] df7-text-stone-500">
+		<p className="deferforms-mx-auto deferforms-mb-0 deferforms-mt-2 deferforms-max-w-md deferforms-text-[15px] deferforms-text-stone-500">
 			{ __(
 				'Everything sent through your forms is kept here, with its attachments. Put a form on a page and the first one will show up.',
 				'defer-forms-for-contact-form-7'
 			) }
 		</p>
-		<div className="df7-mt-6 df7-flex df7-flex-wrap df7-justify-center df7-gap-3">
+		<div className="deferforms-mt-6 deferforms-flex deferforms-flex-wrap deferforms-justify-center deferforms-gap-3">
 			<a
-				href="admin.php?page=df7-templates"
-				className="df7-inline-flex df7-h-10 df7-items-center df7-gap-2 df7-rounded-lg df7-bg-ink df7-px-4 df7-text-sm df7-font-semibold df7-text-white df7-no-underline"
+				href="admin.php?page=deferforms-templates"
+				className="deferforms-inline-flex deferforms-h-10 deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-bg-ink deferforms-px-4 deferforms-text-sm deferforms-font-semibold deferforms-text-white deferforms-no-underline"
 			>
-				<LayoutTemplate className="df7-h-4 df7-w-4" />
+				<LayoutTemplate className="deferforms-h-4 deferforms-w-4" />
 				{ __( 'Start from a template', 'defer-forms-for-contact-form-7' ) }
 			</a>
 			<a
-				href="admin.php?page=df7-forms"
-				className="df7-inline-flex df7-h-10 df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline hover:df7-bg-stone-50"
+				href="admin.php?page=deferforms-forms"
+				className="deferforms-inline-flex deferforms-h-10 deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-px-4 deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-no-underline hover:deferforms-bg-stone-50"
 			>
-				<FilePlus2 className="df7-h-4 df7-w-4" />
+				<FilePlus2 className="deferforms-h-4 deferforms-w-4" />
 				{ __( 'Build one from scratch', 'defer-forms-for-contact-form-7' ) }
 			</a>
 		</div>
@@ -370,16 +370,16 @@ const NothingYet = () => (
 const QuickLink = ( { href, icon: Icon, title, desc } ) => (
 	<a
 		href={ href }
-		className="df7-group df7-flex df7-items-center df7-gap-4 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-no-underline df7-transition-colors hover:df7-border-stroke hover:df7-bg-stone-50"
+		className="deferforms-group deferforms-flex deferforms-items-center deferforms-gap-4 deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5 deferforms-no-underline deferforms-transition-colors hover:deferforms-border-stroke hover:deferforms-bg-stone-50"
 	>
-		<div className="df7-flex df7-h-11 df7-w-11 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-xl df7-bg-stone-100 df7-text-stone-500 df7-transition-colors group-hover:df7-bg-accent-50 group-hover:df7-text-accent">
-			<Icon className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-shrink-0 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-stone-100 deferforms-text-stone-500 deferforms-transition-colors group-hover:deferforms-bg-accent-50 group-hover:deferforms-text-accent">
+			<Icon className="deferforms-h-5 deferforms-w-5" />
 		</div>
-		<div className="df7-flex df7-flex-1 df7-flex-col df7-gap-0.5">
-			<span className="df7-text-base df7-font-semibold df7-text-ink">{ title }</span>
-			<span className="df7-text-[15px] df7-text-stone-500">{ desc }</span>
+		<div className="deferforms-flex deferforms-flex-1 deferforms-flex-col deferforms-gap-0.5">
+			<span className="deferforms-text-base deferforms-font-semibold deferforms-text-ink">{ title }</span>
+			<span className="deferforms-text-[15px] deferforms-text-stone-500">{ desc }</span>
 		</div>
-		<ArrowRight className="df7-h-5 df7-w-5 df7-text-stone-400 df7-transition-transform group-hover:df7-translate-x-0.5 group-hover:df7-text-accent" />
+		<ArrowRight className="deferforms-h-5 deferforms-w-5 deferforms-text-stone-400 deferforms-transition-transform group-hover:deferforms-translate-x-0.5 group-hover:deferforms-text-accent" />
 	</a>
 );
 
@@ -406,7 +406,7 @@ const App = () => {
 	const markAllRead = () => {
 		setMarking( true );
 
-		apiFetch( { path: 'df7/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
+		apiFetch( { path: 'deferforms/v1/submissions/mark-read', method: 'POST', data: { all: true } } )
 			.then( ( res ) => setStats( ( prev ) => ( { ...prev, unread: res.unread } ) ) )
 			.catch( () => {} )
 			.finally( () => setMarking( false ) );
@@ -419,12 +419,12 @@ const App = () => {
 		// Together, because the page is one answer: a chart drawn from one moment
 		// over figures from another is a screen that contradicts itself.
 		Promise.all( [
-			apiFetch( { path: 'df7/v1/stats' } ),
+			apiFetch( { path: 'deferforms/v1/stats' } ),
 			// Submitted only. Spam has its own notice above with its own count,
 			// and this list is what came in — a caught bot sitting among the
 			// newest enquiries is the one thing it should not be showing.
-			apiFetch( { path: `df7/v1/submissions?per_page=${ RECENT }&status=submitted` } ),
-			apiFetch( { path: 'df7/v1/forms' } ),
+			apiFetch( { path: `deferforms/v1/submissions?per_page=${ RECENT }&status=submitted` } ),
+			apiFetch( { path: 'deferforms/v1/forms' } ),
 		] )
 			.then( ( [ figures, entries, allForms ] ) => {
 				setStats( figures );
@@ -449,7 +449,7 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -459,7 +459,7 @@ const App = () => {
 			) : (
 				<>
 					{ ( stats.unread > 0 || showSpam ) && (
-						<div className="df7-mb-6 df7-flex df7-flex-col df7-gap-3">
+						<div className="deferforms-mb-6 deferforms-flex deferforms-flex-col deferforms-gap-3">
 							{ stats.unread > 0 && (
 								<UnreadBanner count={ stats.unread } onMarkRead={ markAllRead } marking={ marking } />
 							) }
@@ -467,8 +467,8 @@ const App = () => {
 						</div>
 					) }
 
-					<section className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-6">
-						<div className="df7-mb-6 df7-grid df7-grid-cols-3 df7-gap-6">
+					<section className="deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-6">
+						<div className="deferforms-mb-6 deferforms-grid deferforms-grid-cols-3 deferforms-gap-6">
 							<Figure label={ __( 'Today', 'defer-forms-for-contact-form-7' ) } value={ stats.today } loading={ loading } />
 							<Figure label={ __( 'This week', 'defer-forms-for-contact-form-7' ) } value={ stats.week } loading={ loading }>
 								{ ! loading && <Trend of={ trend( days ) } /> }
@@ -489,24 +489,24 @@ const App = () => {
 				</>
 			) }
 
-			<h2 className="df7-mb-3 df7-mt-8 df7-text-xl df7-font-bold df7-text-ink">
+			<h2 className="deferforms-mb-3 deferforms-mt-8 deferforms-text-xl deferforms-font-bold deferforms-text-ink">
 				{ __( 'Set things up', 'defer-forms-for-contact-form-7' ) }
 			</h2>
-			<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-3">
+			<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 sm:deferforms-grid-cols-3">
 				<QuickLink
-					href="admin.php?page=df7-forms"
+					href="admin.php?page=deferforms-forms"
 					icon={ FilePlus2 }
 					title={ __( 'Forms', 'defer-forms-for-contact-form-7' ) }
 					desc={ __( 'Build and edit them.', 'defer-forms-for-contact-form-7' ) }
 				/>
 				<QuickLink
-					href="admin.php?page=df7-styling"
+					href="admin.php?page=deferforms-styling"
 					icon={ Palette }
 					title={ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
 					desc={ __( 'Colours, shape and spacing.', 'defer-forms-for-contact-form-7' ) }
 				/>
 				<QuickLink
-					href="admin.php?page=df7-settings"
+					href="admin.php?page=deferforms-settings"
 					icon={ SettingsIcon }
 					title={ __( 'Settings', 'defer-forms-for-contact-form-7' ) }
 					desc={ __( 'Spam, privacy and retention.', 'defer-forms-for-contact-form-7' ) }
@@ -516,7 +516,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-dashboard-root' );
+const mount = document.getElementById( 'deferforms-dashboard-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

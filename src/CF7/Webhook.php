@@ -7,12 +7,12 @@
  * data and lets whatever is listening decide what the entry means. So there is
  * no composing and no escaping here — JSON encoding is the escaping.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

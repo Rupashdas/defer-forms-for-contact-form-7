@@ -2,17 +2,17 @@
 /**
  * Multi-step forms.
  *
- * `[df7_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
+ * `[deferforms_pagebreak]` is not registered with CF7, so CF7 leaves it as literal
  * text and this filter turns it into a divider. Whatever settings the break was
  * given ride along as data attributes for assets/js/steps.js, which does the
  * actual splitting in the browser.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ final class Steps {
 		'id'    => 'id',
 	);
 
-	private const META = '_df7_steps';
+	private const META = '_deferforms_steps';
 
 	/** How the progress through a multi-step form is drawn. */
 	public const INDICATORS = array( 'bar', 'dots', 'numbers', 'titles', 'none' );
@@ -88,11 +88,11 @@ final class Steps {
 	 */
 	public function indicator_class( string $class ): string {
 		$form = self::current_form();
-		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[df7_pagebreak' ) ) {
+		if ( ! $form || false === strpos( (string) $form->prop( 'form' ), '[deferforms_pagebreak' ) ) {
 			return $class;
 		}
 
-		return $class . ' df7-steps-' . self::config( $form->id() )['indicator'];
+		return $class . ' deferforms-steps-' . self::config( $form->id() )['indicator'];
 	}
 
 	private static function current_form(): ?object {
@@ -106,21 +106,21 @@ final class Steps {
 	}
 
 	public function maybe_render( string $elements ): string {
-		if ( false === strpos( $elements, '[df7_pagebreak' ) ) {
+		if ( false === strpos( $elements, '[deferforms_pagebreak' ) ) {
 			return $elements;
 		}
 
-		wp_enqueue_style( 'df7-steps', DF7_URL . 'assets/css/steps.css', array(), df7_asset_ver( 'assets/css/steps.css' ) );
+		wp_enqueue_style( 'deferforms-steps', DEFERFORMS_URL . 'assets/css/steps.css', array(), deferforms_asset_ver( 'assets/css/steps.css' ) );
 		// Declared as a dependency, not just loaded alongside: steps.js hands its
-		// Next-button gate to window.df7Validate, which validate.js defines.
-		wp_enqueue_script( 'df7-steps', DF7_URL . 'assets/js/steps.js', array( 'df7-validate' ), df7_asset_ver( 'assets/js/steps.js' ), true );
+		// Next-button gate to window.deferformsValidate, which validate.js defines.
+		wp_enqueue_script( 'deferforms-steps', DEFERFORMS_URL . 'assets/js/steps.js', array( 'deferforms-validate' ), deferforms_asset_ver( 'assets/js/steps.js' ), true );
 
 		// The navigation is drawn in the browser, so its wording has to travel to
 		// it — the same way file.js and select.js get theirs. Without this the
 		// buttons stay English on every site, in every language.
 		wp_localize_script(
-			'df7-steps',
-			'df7StepsL10n',
+			'deferforms-steps',
+			'deferformsStepsL10n',
 			array(
 				'prev'   => __( 'Back', 'defer-forms-for-contact-form-7' ),
 				'next'   => __( 'Next', 'defer-forms-for-contact-form-7' ),
@@ -135,7 +135,7 @@ final class Steps {
 		);
 
 		return (string) preg_replace_callback(
-			'/\[df7_pagebreak(?:\s+([^\]]*))?\]/',
+			'/\[deferforms_pagebreak(?:\s+([^\]]*))?\]/',
 			static function ( array $match ): string {
 				$args = $match[1] ?? '';
 				$atts = '';
@@ -146,7 +146,7 @@ final class Steps {
 					}
 				}
 
-				return '<div class="df7-pagebreak" aria-hidden="true"' . $atts . '></div>';
+				return '<div class="deferforms-pagebreak" aria-hidden="true"' . $atts . '></div>';
 			},
 			$elements
 		);

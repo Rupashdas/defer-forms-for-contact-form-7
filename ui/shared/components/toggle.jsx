@@ -8,13 +8,13 @@ export const Toggle = ( { checked, onChange, disabled } ) => (
 		aria-checked={ checked }
 		disabled={ disabled }
 		onClick={ () => onChange( ! checked ) }
-		className={ `df7-relative df7-inline-flex df7-h-6 df7-w-11 df7-shrink-0 df7-cursor-pointer df7-rounded-full df7-border-0 df7-p-0 df7-transition-colors df7-duration-200 disabled:df7-cursor-not-allowed disabled:df7-opacity-50 ${
-			checked ? 'df7-bg-accent' : 'df7-bg-stone-300'
+		className={ `deferforms-relative deferforms-inline-flex deferforms-h-6 deferforms-w-11 deferforms-shrink-0 deferforms-cursor-pointer deferforms-rounded-full deferforms-border-0 deferforms-p-0 deferforms-transition-colors deferforms-duration-200 disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-50 ${
+			checked ? 'deferforms-bg-accent' : 'deferforms-bg-stone-300'
 		}` }
 	>
 		<span
-			className={ `df7-pointer-events-none df7-absolute df7-left-0.5 df7-top-0.5 df7-h-5 df7-w-5 df7-rounded-full df7-bg-white df7-shadow-md df7-transition-transform df7-duration-200 df7-ease-in-out ${
-				checked ? 'df7-translate-x-5' : 'df7-translate-x-0'
+			className={ `deferforms-pointer-events-none deferforms-absolute deferforms-left-0.5 deferforms-top-0.5 deferforms-h-5 deferforms-w-5 deferforms-rounded-full deferforms-bg-white deferforms-shadow-md deferforms-transition-transform deferforms-duration-200 deferforms-ease-in-out ${
+				checked ? 'deferforms-translate-x-5' : 'deferforms-translate-x-0'
 			}` }
 		/>
 	</button>

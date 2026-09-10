@@ -28,21 +28,21 @@
  *    time by esc_attr() in Steps.php and read back with textContent in
  *    steps.js. Escaping them here as well would double-encode them.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Form_Markup {
 
 	/** Phone field markers. The format is base64url so it survives being a class. */
-	public const TEL_DIGITS = 'df7-tel';
+	public const TEL_DIGITS = 'deferforms-tel';
 
-	public const TEL_FORMAT = 'df7-telfmt-';
+	public const TEL_FORMAT = 'deferforms-telfmt-';
 
 	/** Settings a page break carries, and the order they are written back in. */
 	public const STEP_ATTRS = array( 'title', 'desc', 'prev', 'next', 'class', 'id' );

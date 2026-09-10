@@ -22,14 +22,14 @@
  * The first two are belt and braces — Nginx ignores .htaccess — but the third
  * holds on any server.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
-use DF7\Core\Filesystem;
+use DEFERFORMS\Core\Filesystem;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,17 +38,17 @@ final class Attachments {
 	public function register_hooks(): void {
 		// The repository says which rows are going; deciding that files went with
 		// them is this class's business, not a data-access class's.
-		add_action( 'df7_submissions_deleted', array( __CLASS__, 'remove_for' ) );
+		add_action( 'deferforms_submissions_deleted', array( __CLASS__, 'remove_for' ) );
 	}
 
 	/** Folder under wp-content/uploads. */
-	private const FOLDER = 'df7-attachments';
+	private const FOLDER = 'deferforms-attachments';
 
 	/** Key the file list travels under, out of the way of the visitor's answers. */
-	public const DATA_KEY = '_df7_files';
+	public const DATA_KEY = '_deferforms_files';
 
 	/** Running total of the bytes under FOLDER, so the ceiling costs no disk read. */
-	private const BYTES_KEY = 'df7_attachment_bytes';
+	private const BYTES_KEY = 'deferforms_attachment_bytes';
 
 	/** How much of the disk this may take before it stops taking any more. */
 	private const DEFAULT_LIMIT = 1024 * MB_IN_BYTES;
@@ -66,10 +66,10 @@ final class Attachments {
 	 * A gigabyte is a guess at "more than any honest site needs and less than any
 	 * host gives you", which is why it is filterable:
 	 *
-	 *     add_filter( 'df7_attachment_limit', fn() => 5 * GB_IN_BYTES );
+	 *     add_filter( 'deferforms_attachment_limit', fn() => 5 * GB_IN_BYTES );
 	 */
 	public static function limit(): int {
-		return (int) apply_filters( 'df7_attachment_limit', self::DEFAULT_LIMIT );
+		return (int) apply_filters( 'deferforms_attachment_limit', self::DEFAULT_LIMIT );
 	}
 
 	/**
@@ -139,7 +139,7 @@ final class Attachments {
 	}
 
 	/** Whether uploads are currently being turned away, for the admin notice. */
-	public const FULL_KEY = 'df7_attachments_full';
+	public const FULL_KEY = 'deferforms_attachments_full';
 
 	/**
 	 * Say that a file was turned away.

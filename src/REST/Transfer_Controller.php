@@ -11,17 +11,17 @@
  * that has nothing to do with the other, and overwriting one of them on the
  * strength of its name is a way to lose a form nobody backed up.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\CF7\Form_Bundle;
-use DF7\CF7\Form_Html;
-use DF7\CF7\Redirect;
-use DF7\CF7\Steps;
+use DEFERFORMS\CF7\Form_Bundle;
+use DEFERFORMS\CF7\Form_Html;
+use DEFERFORMS\CF7\Redirect;
+use DEFERFORMS\CF7\Steps;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -175,7 +175,7 @@ final class Transfer_Controller extends Controller {
 			$created[] = array(
 				'form_id'     => $id,
 				'title'       => $saved->title(),
-				'builder_url' => admin_url( 'admin.php?page=df7-builder&form=' . $id ),
+				'builder_url' => admin_url( 'admin.php?page=deferforms-builder&form=' . $id ),
 			);
 		}
 

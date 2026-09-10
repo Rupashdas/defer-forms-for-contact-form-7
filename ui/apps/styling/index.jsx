@@ -98,12 +98,12 @@ const PresetCard = ( { preset, active, onApply } ) => (
 		type="button"
 		onClick={ onApply }
 		aria-pressed={ active }
-		className={ `df7-flex df7-cursor-pointer df7-items-center df7-gap-3 df7-rounded-xl df7-border df7-bg-white df7-p-2.5 df7-text-left df7-transition-colors ${
-			active ? 'df7-border-ink' : 'df7-border-stroke hover:df7-bg-stone-50'
+		className={ `deferforms-flex deferforms-cursor-pointer deferforms-items-center deferforms-gap-3 deferforms-rounded-xl deferforms-border deferforms-bg-white deferforms-p-2.5 deferforms-text-left deferforms-transition-colors ${
+			active ? 'deferforms-border-ink' : 'deferforms-border-stroke hover:deferforms-bg-stone-50'
 		}` }
 	>
 		<span
-			className="df7-flex df7-h-8 df7-w-8 df7-shrink-0 df7-items-center df7-justify-center df7-border"
+			className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-shrink-0 deferforms-items-center deferforms-justify-center deferforms-border"
 			style={ {
 				background:   preset.values.surface_alt,
 				borderColor:  preset.values.border,
@@ -111,12 +111,12 @@ const PresetCard = ( { preset, active, onApply } ) => (
 			} }
 		>
 			<span
-				className="df7-h-3.5 df7-w-3.5"
+				className="deferforms-h-3.5 deferforms-w-3.5"
 				style={ { background: preset.values.primary, borderRadius: `${ Math.min( preset.values.radius, 7 ) }px` } }
 			/>
 		</span>
-		<span className="df7-flex-1 df7-text-sm df7-font-semibold df7-text-ink">{ preset.label }</span>
-		{ active && <Check className="df7-h-4 df7-w-4 df7-shrink-0 df7-text-ink" /> }
+		<span className="deferforms-flex-1 deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ preset.label }</span>
+		{ active && <Check className="deferforms-h-4 deferforms-w-4 deferforms-shrink-0 deferforms-text-ink" /> }
 	</button>
 );
 
@@ -127,53 +127,53 @@ const PresetCard = ( { preset, active, onApply } ) => (
  *
  * A null means they have not arrived yet, and then it sets no tokens at all.
  * That is not a blank preview: the page already carries the saved ones as an
- * inline rule for .df7-preview, printed by the server that rendered it, so
+ * inline rule for .deferforms-preview, printed by the server that rendered it, so
  * with nothing overriding them the preview loads at the size it will keep.
  * Standing DEFAULTS in here instead drew a preview of somebody else's settings,
  * and left the card eight pixels short until the fetch corrected it.
  */
 const DesignPreview = ( { values } ) => {
 	const style = ! values ? undefined : {
-		'--df7-primary': values.primary,
-		'--df7-primary-contrast': values.primary_contrast,
-		'--df7-text': values.text,
-		'--df7-muted': values.muted,
-		'--df7-border': values.border,
-		'--df7-bg': values.bg,
-		'--df7-surface-alt': values.surface_alt,
-		'--df7-error': values.error,
-		'--df7-radius': `${ values.radius }px`,
-		'--df7-control-height': `${ values.control_height }px`,
-		'--df7-font-size': `${ values.font_size }px`,
-		'--df7-padding-x': `${ values.padding_x }px`,
-		'--df7-padding-y': `${ values.padding_y }px`,
-		'--df7-gap': `${ values.gap }px`,
-		'--df7-ring': `${ values.ring }px`,
-		'--df7-ring-color': `${ values.primary }24`,
+		'--deferforms-primary': values.primary,
+		'--deferforms-primary-contrast': values.primary_contrast,
+		'--deferforms-text': values.text,
+		'--deferforms-muted': values.muted,
+		'--deferforms-border': values.border,
+		'--deferforms-bg': values.bg,
+		'--deferforms-surface-alt': values.surface_alt,
+		'--deferforms-error': values.error,
+		'--deferforms-radius': `${ values.radius }px`,
+		'--deferforms-control-height': `${ values.control_height }px`,
+		'--deferforms-font-size': `${ values.font_size }px`,
+		'--deferforms-padding-x': `${ values.padding_x }px`,
+		'--deferforms-padding-y': `${ values.padding_y }px`,
+		'--deferforms-gap': `${ values.gap }px`,
+		'--deferforms-ring': `${ values.ring }px`,
+		'--deferforms-ring-color': `${ values.primary }24`,
 	};
 
 	if ( style && values.button_custom ) {
-		style[ '--df7-btn-bg' ] = values.button_bg;
-		style[ '--df7-btn-text' ] = values.button_text;
+		style[ '--deferforms-btn-bg' ] = values.button_bg;
+		style[ '--deferforms-btn-text' ] = values.button_text;
 	}
 
 	return (
-		<div className="df7-preview df7-rounded-xl df7-border df7-border-line df7-bg-white df7-p-5" style={ style }>
+		<div className="deferforms-preview deferforms-rounded-xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5" style={ style }>
 			<p>
 				<label>
 					{ __( 'Your email', 'defer-forms-for-contact-form-7' ) }
 					<span className="wpcf7-form-control-wrap"><input type="email" placeholder="you@example.com" readOnly /></span>
 				</label>
 			</p>
-			<fieldset className="df7-fieldset">
+			<fieldset className="deferforms-fieldset">
 				<legend>{ __( 'Plan', 'defer-forms-for-contact-form-7' ) }</legend>
 				<span className="wpcf7-form-control-wrap">
 					<span className="wpcf7-form-control wpcf7-radio">
 						<span className="wpcf7-list-item">
-							<label><input type="radio" name="df7-demo" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Standard', 'defer-forms-for-contact-form-7' ) }</span></label>
+							<label><input type="radio" name="deferforms-demo" defaultChecked readOnly /><span className="wpcf7-list-item-label">{ __( 'Standard', 'defer-forms-for-contact-form-7' ) }</span></label>
 						</span>
 						<span className="wpcf7-list-item">
-							<label><input type="radio" name="df7-demo" readOnly /><span className="wpcf7-list-item-label">{ __( 'Premium', 'defer-forms-for-contact-form-7' ) }</span></label>
+							<label><input type="radio" name="deferforms-demo" readOnly /><span className="wpcf7-list-item-label">{ __( 'Premium', 'defer-forms-for-contact-form-7' ) }</span></label>
 						</span>
 					</span>
 				</span>
@@ -185,7 +185,7 @@ const DesignPreview = ( { values } ) => {
 					</span>
 				</span>
 			</p>
-			<p className="df7-mb-0">
+			<p className="deferforms-mb-0">
 				<button type="submit" onClick={ ( event ) => event.preventDefault() }>{ __( 'Send', 'defer-forms-for-contact-form-7' ) }</button>
 			</p>
 		</div>
@@ -220,7 +220,7 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 						onClick={ () => apply( DEFAULTS ) }
 						className={ btnGhost }
 					>
-						<RotateCcw className="df7-h-4 df7-w-4" />
+						<RotateCcw className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Reset to defaults', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				}
@@ -244,7 +244,7 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 			  * is there to keep true.
 			  */ }
 			<SectionStack>
-				<div className="df7-grid df7-items-start df7-gap-5 xl:df7-grid-cols-[minmax(0,1fr)_360px]">
+				<div className="deferforms-grid deferforms-items-start deferforms-gap-5 xl:deferforms-grid-cols-[minmax(0,1fr)_360px]">
 					<SectionStack>
 						<SectionCard
 							title={ __( 'Colours', 'defer-forms-for-contact-form-7' ) }
@@ -343,12 +343,12 @@ const StylingPanel = ( { values, onSave, loading = false } ) => {
 						</SectionCard>
 					</SectionStack>
 
-					<SectionStack className="xl:df7-sticky xl:df7-top-8">
+					<SectionStack className="xl:deferforms-sticky xl:deferforms-top-8">
 						<SectionCard
 							title={ __( 'Preview', 'defer-forms-for-contact-form-7' ) }
 							description={ __( 'Updates as you edit — save to apply it to your forms.', 'defer-forms-for-contact-form-7' ) }
 						>
-							<div className="df7-grid df7-grid-cols-2 df7-gap-2">
+							<div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-2">
 								{ PRESETS.map( ( preset ) => (
 									<PresetCard
 										key={ preset.id }
@@ -374,7 +374,7 @@ const App = () => {
 	const [ error, setError ]   = useState( null );
 
 	useEffect( () => {
-		apiFetch( { path: 'df7/v1/settings' } )
+		apiFetch( { path: 'deferforms/v1/settings' } )
 			.then( ( res ) => {
 				setDesign( res.design || {} );
 				setError( null );
@@ -384,7 +384,7 @@ const App = () => {
 
 	const save = async ( values ) => {
 		const updated = await apiFetch( {
-			path:   'df7/v1/settings/design',
+			path:   'deferforms/v1/settings/design',
 			method: 'POST',
 			data:   values,
 		} );
@@ -394,7 +394,7 @@ const App = () => {
 	return (
 		<Page>
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -404,7 +404,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-styling-root' );
+const mount = document.getElementById( 'deferforms-styling-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

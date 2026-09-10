@@ -3,14 +3,14 @@
  * Honeypot spam protection: injects a hidden field and rejects submissions
  * that fill it (only bots do).
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
-use DF7\DB\Settings_Repository;
+use DEFERFORMS\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,11 +19,11 @@ final class Honeypot {
 	/**
 	 * The trap's name, per site.
 	 *
-	 * It used to be the constant `df7_hp`, which any bot that had met this
+	 * It used to be the constant `deferforms_hp`, which any bot that had met this
 	 * plugin once could skip by name. Hashing it per site means a list of field
 	 * names learned from one install says nothing about the next.
 	 *
-	 * The `df7_` prefix stays: it is what Submission_Listener strips before
+	 * The `deferforms_` prefix stays: it is what Submission_Listener strips before
 	 * writing a row, and what the dedup key ignores, so a name without it would
 	 * quietly start being stored and shown as though somebody had typed it.
 	 */
@@ -31,7 +31,7 @@ final class Honeypot {
 		static $name = null;
 
 		if ( null === $name ) {
-			$name = 'df7_hp_' . substr( wp_hash( 'df7_honeypot_field' ), 0, 10 );
+			$name = 'deferforms_hp_' . substr( wp_hash( 'deferforms_honeypot_field' ), 0, 10 );
 		}
 
 		return $name;
@@ -54,7 +54,7 @@ final class Honeypot {
 		}
 
 		$field = sprintf(
-			'<span class="df7-hp" aria-hidden="true" style="position:absolute !important;left:-9999px !important;top:-9999px !important;">'
+			'<span class="deferforms-hp" aria-hidden="true" style="position:absolute !important;left:-9999px !important;top:-9999px !important;">'
 				. '<label>%s<input type="text" name="%s" value="" tabindex="-1" autocomplete="off"></label></span>',
 			esc_html__( 'Leave this field empty', 'defer-forms-for-contact-form-7' ),
 			esc_attr( self::field() )

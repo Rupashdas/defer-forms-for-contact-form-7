@@ -1,10 +1,10 @@
 /*
  * The builder preview wears the same skin as the real form. Imported from the
- * front-end stylesheets so the two can never drift; `.df7-preview` on the
+ * front-end stylesheets so the two can never drift; `.deferforms-preview` on the
  * preview wrapper is what the shared selectors hook onto. Must stay above every
  * rule — CSS ignores a late @import.
  *
- * Every rule in these five files is scoped to `:is( .wpcf7-form, .df7-preview )`,
+ * Every rule in these five files is scoped to `:is( .wpcf7-form, .deferforms-preview )`,
  * and neither class exists anywhere else in the admin, so nothing here can
  * reach the rest of the page.
  */
@@ -25,15 +25,15 @@
  * @tailwind utilities so a utility that overrides one variable wins on source
  * order.
  */
-[id^='df7-'],
-[id^='df7-'] *,
-[id^='df7-'] ::before,
-[id^='df7-'] ::after {
+[id^='deferforms-'],
+[id^='deferforms-'] *,
+[id^='deferforms-'] ::before,
+[id^='deferforms-'] ::after {
 	/*
 	 * Minimal preflight essentials the utilities assume but that our disabled
 	 * base layer no longer provides: border-box sizing (so h-9 is exact on
 	 * inputs and buttons alike) and a flat 1px-ready border (border-width 0 +
-	 * solid style, so `df7-border` renders uniform instead of the UA 3D outset).
+	 * solid style, so `deferforms-border` renders uniform instead of the UA 3D outset).
 	 */
 	box-sizing: border-box;
 	border-width: 0;
@@ -93,8 +93,8 @@
  * Controls need no help either: wp-admin/css/forms.css already declares
  * `font-family: inherit` on input, select, textarea and button.
  */
-[id^='df7-'] {
-	--df7-accent: #1b1b22;
+[id^='deferforms-'] {
+	--deferforms-accent: #1b1b22;
 	color: #1b1b22;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -108,16 +108,16 @@
  * uniform on all four sides. Checkboxes / radios are excluded so they keep
  * their native control and accent color.
  */
-[id^='df7-'] button,
-[id^='df7-'] input,
-[id^='df7-'] select,
-[id^='df7-'] textarea {
+[id^='deferforms-'] button,
+[id^='deferforms-'] input,
+[id^='deferforms-'] select,
+[id^='deferforms-'] textarea {
 	box-shadow: none;
 }
-[id^='df7-'] button,
-[id^='df7-'] select,
-[id^='df7-'] textarea,
-[id^='df7-'] input:not([type='checkbox']):not([type='radio']) {
+[id^='deferforms-'] button,
+[id^='deferforms-'] select,
+[id^='deferforms-'] textarea,
+[id^='deferforms-'] input:not([type='checkbox']):not([type='radio']) {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -141,36 +141,36 @@
  * Textareas keep theirs: 40px is a floor there, not a size, and `rows` sets
  * what they actually are.
  */
-[id^='df7-'] input:not([type='checkbox']):not([type='radio']),
-[id^='df7-'] select {
+[id^='deferforms-'] input:not([type='checkbox']):not([type='radio']),
+[id^='deferforms-'] select {
 	min-height: 0;
 }
 
 /* Numbers and data columns line up cleanly. */
-[id^='df7-'] .df7-tnum {
+[id^='deferforms-'] .deferforms-tnum {
 	font-variant-numeric: tabular-nums;
 	font-feature-settings: 'tnum';
 }
 
 /* Quiet, branded scrollbar for the detail drawer. */
-[id^='df7-'] .df7-scroll {
+[id^='deferforms-'] .deferforms-scroll {
 	scrollbar-width: thin;
 	scrollbar-color: #ddd7ce transparent;
 }
-[id^='df7-'] .df7-scroll::-webkit-scrollbar {
+[id^='deferforms-'] .deferforms-scroll::-webkit-scrollbar {
 	width: 11px;
 }
-[id^='df7-'] .df7-scroll::-webkit-scrollbar-thumb {
+[id^='deferforms-'] .deferforms-scroll::-webkit-scrollbar-thumb {
 	background: #e3ded7;
 	border: 3px solid #fff;
 	border-radius: 999px;
 }
-[id^='df7-'] .df7-scroll::-webkit-scrollbar-thumb:hover {
+[id^='deferforms-'] .deferforms-scroll::-webkit-scrollbar-thumb:hover {
 	background: #d0c9bf;
 }
 
 /* Branded text selection. */
-[id^='df7-'] ::selection {
+[id^='deferforms-'] ::selection {
 	background: #e4e1fb;
 }
 
@@ -179,10 +179,10 @@
  * anything: a form's range field is drawn by assets/css/range.css, which the
  * import block above brings in. This is the WP admin's native track replaced
  * with something that matches the rest of our chrome, in the admin palette,
- * and it reads its fill position from --df7-range-p like the front-end one does.
+ * and it reads its fill position from --deferforms-range-p like the front-end one does.
  */
-[id^='df7-'] input[type='range'].df7-range {
-	--df7-range-p: 50%;
+[id^='deferforms-'] input[type='range'].deferforms-range {
+	--deferforms-range-p: 50%;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -194,26 +194,26 @@
 	box-shadow: none;
 	cursor: pointer;
 }
-[id^='df7-'] input[type='range'].df7-range::-webkit-slider-runnable-track {
+[id^='deferforms-'] input[type='range'].deferforms-range::-webkit-slider-runnable-track {
 	height: 6px;
 	border-radius: 999px;
 	background: linear-gradient(
 		to right,
-		#1b1b22 0 var(--df7-range-p),
-		#ebe7e1 var(--df7-range-p) 100%
+		#1b1b22 0 var(--deferforms-range-p),
+		#ebe7e1 var(--deferforms-range-p) 100%
 	);
 }
-[id^='df7-'] input[type='range'].df7-range::-moz-range-track {
+[id^='deferforms-'] input[type='range'].deferforms-range::-moz-range-track {
 	height: 6px;
 	border-radius: 999px;
 	background: #ebe7e1;
 }
-[id^='df7-'] input[type='range'].df7-range::-moz-range-progress {
+[id^='deferforms-'] input[type='range'].deferforms-range::-moz-range-progress {
 	height: 6px;
 	border-radius: 999px;
 	background: #1b1b22;
 }
-[id^='df7-'] input[type='range'].df7-range::-webkit-slider-thumb {
+[id^='deferforms-'] input[type='range'].deferforms-range::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 18px;
@@ -224,7 +224,7 @@
 	background: #fff;
 	box-shadow: 0 1px 3px rgba( 27, 27, 34, 0.25 );
 }
-[id^='df7-'] input[type='range'].df7-range::-moz-range-thumb {
+[id^='deferforms-'] input[type='range'].deferforms-range::-moz-range-thumb {
 	width: 18px;
 	height: 18px;
 	border: 2px solid #1b1b22;
@@ -240,9 +240,9 @@
  * form on a page rather than on a phone. Stated here so it is true by design
  * and not by whatever the admin layout happens to be.
  */
-.df7-preview .df7-cols-2 { grid-template-columns: repeat( 2, 1fr ); }
-.df7-preview .df7-cols-3 { grid-template-columns: repeat( 3, 1fr ); }
-.df7-preview .df7-cols-4 { grid-template-columns: repeat( 4, 1fr ); }
+.deferforms-preview .deferforms-cols-2 { grid-template-columns: repeat( 2, 1fr ); }
+.deferforms-preview .deferforms-cols-3 { grid-template-columns: repeat( 3, 1fr ); }
+.deferforms-preview .deferforms-cols-4 { grid-template-columns: repeat( 4, 1fr ); }
 
 
 /*
@@ -266,12 +266,12 @@
  * The `:focus` half is not decoration: WordPress paints its own blue ring
  * there, and turning ours on without turning theirs off leaves both.
  */
-[id^='df7-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus {
+[id^='deferforms-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus {
 	outline: none;
 	box-shadow: none;
 }
 
-[id^='df7-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus-visible {
+[id^='deferforms-'] :is( a, button, summary, [role='button'], [role='switch'], [role='tab'], [tabindex]:not([tabindex='-1']) ):focus-visible {
 	outline: none;
 	/* The same ring the inputs draw: 3px of ink at a tenth. */
 	box-shadow: 0 0 0 3px rgb( 27 27 34 / 0.1 );
@@ -282,7 +282,7 @@
  * clipped by the cells. The row is given the ring through its cells' shared
  * background instead, which is what a row can actually draw.
  */
-[id^='df7-'] tr:focus-visible {
+[id^='deferforms-'] tr:focus-visible {
 	outline: 2px solid rgb( 27 27 34 / 0.35 );
 	outline-offset: -2px;
 	box-shadow: none;

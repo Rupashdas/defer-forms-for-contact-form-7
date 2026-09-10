@@ -204,7 +204,7 @@ function namedReExports( pkg ) {
  */
 function silence() {
 	return {
-		name: 'df7-silence',
+		name: 'deferforms-silence',
 		closeBundle() {
 			fs.writeFileSync(
 				path.resolve( __dirname, 'build/index.php' ),
@@ -235,8 +235,8 @@ export default defineConfig( {
 		// Off for a release, on when you ask for it. The maps were 1.5 MB of a
 		// 2.1 MB build — 71% of what ships, for files no end user opens. They
 		// are worth having while debugging a built bundle, which is what the
-		// flag is for: `DF7_SOURCEMAP=1 npm run build`.
-		sourcemap: '1' === process.env.DF7_SOURCEMAP,
+		// flag is for: `DEFERFORMS_SOURCEMAP=1 npm run build`.
+		sourcemap: '1' === process.env.DEFERFORMS_SOURCEMAP,
 		target: 'es2019',
 
 		rollupOptions: {

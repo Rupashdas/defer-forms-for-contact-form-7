@@ -12,12 +12,12 @@
  * The extra `data-*` attributes are what assets/js/file.js reads to enforce the
  * same limits in the browser before anything is sent.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

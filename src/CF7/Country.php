@@ -4,12 +4,12 @@
  * <select> populated from a built-in country list — so the saved form markup
  * stays clean (`[country* name]`) instead of baking ~250 options into it.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -105,8 +105,8 @@ final class Country {
 		}
 
 		// get_class_option carries the user's classes plus our marker classes
-		// (df7-search), which the select widget reads.
-		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' df7-country';
+		// (deferforms-search), which the select widget reads.
+		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' deferforms-country';
 
 		return sprintf(
 			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><select name="%1$s" class="%2$s"%3$s>%4$s</select>%5$s</span>',

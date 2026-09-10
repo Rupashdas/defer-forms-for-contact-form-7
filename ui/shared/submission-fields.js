@@ -2,7 +2,7 @@
  * What a visitor actually answered, out of what was stored with the entry.
  *
  * A row carries more than the form asked. `_` prefixes are Contact Form 7's own
- * bookkeeping and our `_df7_files`; `df7_` is the honeypot and the
+ * bookkeeping and our `_deferforms_files`; `deferforms_` is the honeypot and the
  * time-trap's signed token. The listener strips the second group before writing,
  * but rows stored by an earlier version still carry it, and showing an admin a
  * signed token under a heading that reads like a question they asked is worse
@@ -16,7 +16,7 @@
 export const parseFields = ( json ) => {
 	try {
 		return Object.entries( JSON.parse( json ) ).filter(
-			( [ key ] ) => ! key.startsWith( '_' ) && ! key.startsWith( 'df7_' )
+			( [ key ] ) => ! key.startsWith( '_' ) && ! key.startsWith( 'deferforms_' )
 		);
 	} catch {
 		return [];

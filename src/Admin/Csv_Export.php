@@ -10,16 +10,16 @@
  * submissions store their fields as JSON — so the set of columns is only known
  * once every row has been looked at. Both passes stream.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Admin;
+namespace DEFERFORMS\Admin;
 
-use DF7\CF7\Entry_Fields;
-use DF7\Core\Capability;
-use DF7\DB\Submissions_Repository;
+use DEFERFORMS\CF7\Entry_Fields;
+use DEFERFORMS\Core\Capability;
+use DEFERFORMS\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,7 +32,7 @@ final class Csv_Export {
 	}
 
 	public function register_hooks(): void {
-		add_action( 'admin_post_df7_export_csv', array( $this, 'handle' ) );
+		add_action( 'admin_post_deferforms_export_csv', array( $this, 'handle' ) );
 	}
 
 	public function handle(): void {
@@ -40,7 +40,7 @@ final class Csv_Export {
 			wp_die( esc_html__( 'Permission denied.', 'defer-forms-for-contact-form-7' ), 403 );
 		}
 
-		check_admin_referer( 'df7_export_csv' );
+		check_admin_referer( 'deferforms_export_csv' );
 
 		$args    = $this->filters();
 		$columns = $this->columns( $args );
@@ -58,7 +58,7 @@ final class Csv_Export {
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename="df7-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
+		header( 'Content-Disposition: attachment; filename="deferforms-submissions-' . gmdate( 'Y-m-d' ) . '.csv"' );
 
 		// A long export must not be cut short by the default execution limit.
 		// Discouraged in general because most code has no business extending it;

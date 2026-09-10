@@ -62,34 +62,34 @@ const ICONS = {
 
 // --- Field preview: a non-interactive mock of each CF7 field ---
 
-const mockInput = 'df7-flex df7-h-10 df7-w-full df7-items-center df7-rounded-lg df7-border df7-border-stroke df7-bg-stone-50 df7-px-3 df7-text-sm df7-text-stone-400';
+const mockInput = 'deferforms-flex deferforms-h-10 deferforms-w-full deferforms-items-center deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-stone-50 deferforms-px-3 deferforms-text-sm deferforms-text-stone-400';
 
 const FieldPreview = ( { field } ) => {
 	const label = (
-		<span className="df7-mb-1.5 df7-block df7-text-[14px] df7-font-semibold df7-text-ink">
+		<span className="deferforms-mb-1.5 deferforms-block deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink">
 			{ field.label }
-			{ field.required && <span className="df7-text-red-500"> *</span> }
+			{ field.required && <span className="deferforms-text-red-500"> *</span> }
 		</span>
 	);
 
 	if ( 'acceptance' === field.type ) {
 		return (
-			<label className="df7-flex df7-items-center df7-gap-2 df7-text-sm df7-text-stone-600">
-				<span className="df7-h-4 df7-w-4 df7-shrink-0 df7-rounded df7-border df7-border-stroke df7-bg-stone-50" />
+			<label className="deferforms-flex deferforms-items-center deferforms-gap-2 deferforms-text-sm deferforms-text-stone-600">
+				<span className="deferforms-h-4 deferforms-w-4 deferforms-shrink-0 deferforms-rounded deferforms-border deferforms-border-stroke deferforms-bg-stone-50" />
 				{ field.label }
 			</label>
 		);
 	}
 
 	if ( 'radio' === field.type || 'checkbox' === field.type ) {
-		const shape = 'radio' === field.type ? 'df7-rounded-full' : 'df7-rounded';
+		const shape = 'radio' === field.type ? 'deferforms-rounded-full' : 'deferforms-rounded';
 		return (
 			<div>
 				{ label }
-				<div className="df7-flex df7-flex-col df7-gap-2">
+				<div className="deferforms-flex deferforms-flex-col deferforms-gap-2">
 					{ ( field.options || [] ).map( ( opt ) => (
-						<label key={ opt } className="df7-flex df7-items-center df7-gap-2 df7-text-sm df7-text-stone-600">
-							<span className={ `df7-h-4 df7-w-4 df7-shrink-0 df7-border df7-border-stroke df7-bg-white ${ shape }` } />
+						<label key={ opt } className="deferforms-flex deferforms-items-center deferforms-gap-2 deferforms-text-sm deferforms-text-stone-600">
+							<span className={ `deferforms-h-4 deferforms-w-4 deferforms-shrink-0 deferforms-border deferforms-border-stroke deferforms-bg-white ${ shape }` } />
 							{ opt }
 						</label>
 					) ) }
@@ -102,9 +102,9 @@ const FieldPreview = ( { field } ) => {
 		return (
 			<div>
 				{ label }
-				<div className={ `${ mockInput } df7-justify-between` }>
+				<div className={ `${ mockInput } deferforms-justify-between` }>
 					<span>{ ( field.options || [] )[ 0 ] || __( 'Select…', 'defer-forms-for-contact-form-7' ) }</span>
-					<ChevronDown className="df7-h-4 df7-w-4 df7-text-stone-400" />
+					<ChevronDown className="deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 				</div>
 			</div>
 		);
@@ -114,7 +114,7 @@ const FieldPreview = ( { field } ) => {
 		return (
 			<div>
 				{ label }
-				<div className="df7-h-20 df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-stone-50" />
+				<div className="deferforms-h-20 deferforms-w-full deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-stone-50" />
 			</div>
 		);
 	}
@@ -124,7 +124,7 @@ const FieldPreview = ( { field } ) => {
 			<div>
 				{ label }
 				<div className={ mockInput }>
-					<Upload className="df7-mr-2 df7-h-4 df7-w-4 df7-text-stone-400" />
+					<Upload className="deferforms-mr-2 deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 					{ __( 'Choose file…', 'defer-forms-for-contact-form-7' ) }
 				</div>
 			</div>
@@ -162,22 +162,22 @@ const PreviewModal = ( { tpl, busy, onClose, onUse } ) => {
 	return (
 		<>
 			{ tpl && (
-				<div className="df7-fixed df7-inset-0 df7-z-[100000] df7-flex df7-items-start df7-justify-center df7-px-4 df7-pb-4 df7-pt-[7vh]">
+				<div className="deferforms-fixed deferforms-inset-0 deferforms-z-[100000] deferforms-flex deferforms-items-start deferforms-justify-center deferforms-px-4 deferforms-pb-4 deferforms-pt-[7vh]">
 					<Backdrop
 						onClick={ onClose }
-						className="df7-absolute df7-inset-0 df7-bg-ink/40 df7-backdrop-blur-sm"
+						className="deferforms-absolute deferforms-inset-0 deferforms-bg-ink/40 deferforms-backdrop-blur-sm"
 					/>
 					<div
-						className="df7-relative df7-flex df7-max-h-[85vh] df7-w-full df7-max-w-lg df7-flex-col df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-shadow-pop"
+						className="deferforms-relative deferforms-flex deferforms-max-h-[85vh] deferforms-w-full deferforms-max-w-lg deferforms-flex-col deferforms-overflow-hidden deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-shadow-pop"
 					>
-						<header className="df7-flex df7-items-center df7-justify-between df7-gap-3 df7-border-b df7-border-line df7-px-6 df7-py-4">
-							<div className="df7-flex df7-items-center df7-gap-3">
-								<div className="df7-flex df7-h-10 df7-w-10 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
-									<Icon className="df7-h-5 df7-w-5" />
+						<header className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-px-6 deferforms-py-4">
+							<div className="deferforms-flex deferforms-items-center deferforms-gap-3">
+								<div className="deferforms-flex deferforms-h-10 deferforms-w-10 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-accent-50 deferforms-text-accent">
+									<Icon className="deferforms-h-5 deferforms-w-5" />
 								</div>
-								<div className="df7-flex df7-flex-col">
-									<span className="df7-text-lg df7-font-bold df7-text-ink">{ tpl.name }</span>
-									<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
+								<div className="deferforms-flex deferforms-flex-col">
+									<span className="deferforms-text-lg deferforms-font-bold deferforms-text-ink">{ tpl.name }</span>
+									<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">
 										{ tpl.category }
 									</span>
 								</div>
@@ -186,32 +186,32 @@ const PreviewModal = ( { tpl, busy, onClose, onUse } ) => {
 								type="button"
 								onClick={ onClose }
 								aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
-								className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-stone-50 df7-text-stone-500 hover:df7-bg-stone-100 hover:df7-text-ink"
+								className="deferforms-flex deferforms-h-9 deferforms-w-9 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-stone-50 deferforms-text-stone-500 hover:deferforms-bg-stone-100 hover:deferforms-text-ink"
 							>
-								<X className="df7-h-4 df7-w-4" />
+								<X className="deferforms-h-4 deferforms-w-4" />
 							</button>
 						</header>
 
-						<div className="df7-scroll df7-flex-1 df7-overflow-y-auto df7-bg-stone-50/40 df7-px-3.5 df7-py-6" style={ { scrollbarGutter: 'stable both-edges' } }>
-							<div className="df7-mx-auto df7-flex df7-max-w-sm df7-flex-col df7-gap-5 df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-6">
+						<div className="deferforms-scroll deferforms-flex-1 deferforms-overflow-y-auto deferforms-bg-stone-50/40 deferforms-px-3.5 deferforms-py-6" style={ { scrollbarGutter: 'stable both-edges' } }>
+							<div className="deferforms-mx-auto deferforms-flex deferforms-max-w-sm deferforms-flex-col deferforms-gap-5 deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-6">
 								{ tpl.fields.map( ( field ) => (
 									<FieldPreview key={ field.name } field={ field } />
 								) ) }
-								<div className="df7-mt-1 df7-h-10 df7-w-32 df7-rounded-lg df7-bg-ink" />
+								<div className="deferforms-mt-1 deferforms-h-10 deferforms-w-32 deferforms-rounded-lg deferforms-bg-ink" />
 							</div>
 						</div>
 
-						<footer className="df7-flex df7-items-center df7-justify-between df7-gap-3 df7-border-t df7-border-line df7-px-6 df7-py-4">
-							<span className="df7-text-[14px] df7-text-stone-500">
+						<footer className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-gap-3 deferforms-border-t deferforms-border-line deferforms-px-6 deferforms-py-4">
+							<span className="deferforms-text-[14px] deferforms-text-stone-500">
 								{ tpl.fields.length } { __( 'fields', 'defer-forms-for-contact-form-7' ) }
 							</span>
 							<button
 								type="button"
 								disabled={ busy }
 								onClick={ () => onUse( tpl ) }
-								className="df7-inline-flex df7-h-9 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-ink df7-px-5 df7-text-sm df7-font-semibold df7-text-white df7-transition hover:df7-opacity-90 disabled:df7-cursor-not-allowed disabled:df7-opacity-60"
+								className="deferforms-inline-flex deferforms-h-9 deferforms-cursor-pointer deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border-0 deferforms-bg-ink deferforms-px-5 deferforms-text-sm deferforms-font-semibold deferforms-text-white deferforms-transition hover:deferforms-opacity-90 disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-60"
 							>
-								{ busy ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : <Plus className="df7-h-4 df7-w-4" /> }
+								{ busy ? <Loader2 className="deferforms-h-4 deferforms-w-4 deferforms-animate-spin" /> : <Plus className="deferforms-h-4 deferforms-w-4" /> }
 								{ busy ? __( 'Creating…', 'defer-forms-for-contact-form-7' ) : __( 'Use this template', 'defer-forms-for-contact-form-7' ) }
 							</button>
 						</footer>
@@ -226,35 +226,35 @@ const TemplateCard = ( { tpl, busy, onPreview, onUse } ) => {
 	const Icon = ICONS[ tpl.icon ] || FileText;
 
 	return (
-		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-stroke">
-			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
-					<Icon className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5 deferforms-transition-colors hover:deferforms-border-stroke">
+			<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+				<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-accent-50 deferforms-text-accent">
+					<Icon className="deferforms-h-5 deferforms-w-5" />
 				</div>
-				<span className="df7-text-[14px] df7-font-semibold df7-uppercase df7-tracking-wider df7-text-stone-400">
+				<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">
 					{ tpl.category }
 				</span>
 			</div>
 
-			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ tpl.name }</h3>
-			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ tpl.description }</p>
+			<h3 className="deferforms-m-0 deferforms-text-base deferforms-font-semibold deferforms-text-ink">{ tpl.name }</h3>
+			<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">{ tpl.description }</p>
 
-			<div className="df7-mt-auto df7-flex df7-gap-2 df7-pt-5">
+			<div className="deferforms-mt-auto deferforms-flex deferforms-gap-2 deferforms-pt-5">
 				<button
 					type="button"
 					onClick={ () => onPreview( tpl ) }
-					className="df7-inline-flex df7-h-9 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-[14px] df7-font-semibold df7-text-ink df7-transition-colors hover:df7-bg-stone-50"
+					className="deferforms-inline-flex deferforms-h-9 deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-1.5 deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink deferforms-transition-colors hover:deferforms-bg-stone-50"
 				>
-					<Eye className="df7-h-3.5 df7-w-3.5 df7-text-stone-400" />
+					<Eye className="deferforms-h-3.5 deferforms-w-3.5 deferforms-text-stone-400" />
 					{ __( 'Preview', 'defer-forms-for-contact-form-7' ) }
 				</button>
 				<button
 					type="button"
 					disabled={ busy }
 					onClick={ () => onUse( tpl ) }
-					className="df7-inline-flex df7-h-9 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-rounded-lg df7-border-0 df7-bg-ink df7-text-[14px] df7-font-semibold df7-text-white df7-transition hover:df7-opacity-90 disabled:df7-cursor-not-allowed disabled:df7-opacity-60"
+					className="deferforms-inline-flex deferforms-h-9 deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-1.5 deferforms-rounded-lg deferforms-border-0 deferforms-bg-ink deferforms-text-[14px] deferforms-font-semibold deferforms-text-white deferforms-transition hover:deferforms-opacity-90 disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-60"
 				>
-					{ busy ? <Loader2 className="df7-h-3.5 df7-w-3.5 df7-animate-spin" /> : <Plus className="df7-h-3.5 df7-w-3.5" /> }
+					{ busy ? <Loader2 className="deferforms-h-3.5 deferforms-w-3.5 deferforms-animate-spin" /> : <Plus className="deferforms-h-3.5 deferforms-w-3.5" /> }
 					{ __( 'Use', 'defer-forms-for-contact-form-7' ) }
 				</button>
 			</div>
@@ -272,22 +272,22 @@ const TemplateCard = ( { tpl, busy, onPreview, onUse } ) => {
  * one grows the real card past this, which a grid of stretched cards absorbs.
  */
 const SkeletonCard = () => (
-	<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5">
-		<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-			<div className="df7-h-11 df7-w-11 df7-animate-pulse df7-rounded-xl df7-bg-stone-100" />
-			<Shimmer w="df7-w-16" text="df7-text-[14px]" />
+	<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5">
+		<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+			<div className="deferforms-h-11 deferforms-w-11 deferforms-animate-pulse deferforms-rounded-xl deferforms-bg-stone-100" />
+			<Shimmer w="deferforms-w-16" text="deferforms-text-[14px]" />
 		</div>
 
-		<Shimmer as="h3" w="df7-w-2/3" text="df7-text-base" />
+		<Shimmer as="h3" w="deferforms-w-2/3" text="deferforms-text-base" />
 
-		<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed">
-			<Shimmer w="df7-w-full" />
-			<Shimmer w="df7-w-4/5" />
+		<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed">
+			<Shimmer w="deferforms-w-full" />
+			<Shimmer w="deferforms-w-4/5" />
 		</p>
 
-		<div className="df7-mt-auto df7-flex df7-gap-2 df7-pt-5">
-			<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
-			<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+		<div className="deferforms-mt-auto deferforms-flex deferforms-gap-2 deferforms-pt-5">
+			<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
+			<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
 		</div>
 	</div>
 );
@@ -301,7 +301,7 @@ const App = () => {
 	const [ preview, setPreview ]     = useState( null );
 
 	useEffect( () => {
-		apiFetch( { path: 'df7/v1/templates' } )
+		apiFetch( { path: 'deferforms/v1/templates' } )
 			.then( ( res ) => {
 				setTemplates( res );
 				setError( null );
@@ -314,7 +314,7 @@ const App = () => {
 		setCreating( tpl.slug );
 		setError( null );
 		try {
-			const res = await apiFetch( { path: `df7/v1/templates/${ tpl.slug }/create`, method: 'POST' } );
+			const res = await apiFetch( { path: `deferforms/v1/templates/${ tpl.slug }/create`, method: 'POST' } );
 			window.location.href = res.builder_url;
 		} catch ( err ) {
 			setError( err.message );
@@ -334,7 +334,7 @@ const App = () => {
 	const renderBody = () => {
 		if ( loading ) {
 			return (
-				<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
+				<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 sm:deferforms-grid-cols-2 lg:deferforms-grid-cols-3 xl:deferforms-grid-cols-4">
 					{ Array.from( { length: 8 } ).map( ( _, i ) => <SkeletonCard key={ i } /> ) }
 				</div>
 			);
@@ -342,14 +342,14 @@ const App = () => {
 
 		if ( 0 === filtered.length ) {
 			return (
-				<div className="df7-py-20 df7-text-center df7-text-sm df7-text-stone-500">
+				<div className="deferforms-py-20 deferforms-text-center deferforms-text-sm deferforms-text-stone-500">
 					{ __( 'No templates match your search.', 'defer-forms-for-contact-form-7' ) }
 				</div>
 			);
 		}
 
 		return (
-			<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
+			<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 sm:deferforms-grid-cols-2 lg:deferforms-grid-cols-3 xl:deferforms-grid-cols-4">
 				{ filtered.map( ( tpl ) => (
 					<TemplateCard
 						key={ tpl.slug }
@@ -371,19 +371,19 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
 
-			<div className="df7-mb-6 df7-relative df7-w-full sm:df7-w-80">
-				<Search className="df7-pointer-events-none df7-absolute df7-left-3 df7-top-1/2 df7-h-4 df7-w-4 -df7-translate-y-1/2 df7-text-stone-400" />
+			<div className="deferforms-mb-6 deferforms-relative deferforms-w-full sm:deferforms-w-80">
+				<Search className="deferforms-pointer-events-none deferforms-absolute deferforms-left-3 deferforms-top-1/2 deferforms-h-4 deferforms-w-4 -deferforms-translate-y-1/2 deferforms-text-stone-400" />
 				<input
 					type="search"
 					value={ search }
 					onChange={ ( event ) => setSearch( event.target.value ) }
 					placeholder={ __( 'Search templates…', 'defer-forms-for-contact-form-7' ) }
-					className={ `df7-h-9 df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-pl-10 df7-pr-3 df7-text-sm df7-text-ink df7-transition-colors placeholder:df7-text-stone-400 ${ focusRing }` }
+					className={ `deferforms-h-9 deferforms-w-full deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-pl-10 deferforms-pr-3 deferforms-text-sm deferforms-text-ink deferforms-transition-colors placeholder:deferforms-text-stone-400 ${ focusRing }` }
 				/>
 			</div>
 
@@ -399,7 +399,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-templates-root' );
+const mount = document.getElementById( 'deferforms-templates-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

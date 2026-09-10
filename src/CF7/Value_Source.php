@@ -7,12 +7,12 @@
  * `user:email|name|login|id|first|last`, `referrer`, `today`, `now`.
  * Anything else is returned as a literal.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

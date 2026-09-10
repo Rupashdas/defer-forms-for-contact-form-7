@@ -6,12 +6,12 @@
  * WooCommerce is optional: without it the field says so rather than rendering a
  * broken control, and validation still passes so the rest of the form works.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -52,7 +52,7 @@ final class Product_Field {
 		}
 
 		if ( ! self::is_available() ) {
-			return '<span class="df7-product-missing">'
+			return '<span class="deferforms-product-missing">'
 				. esc_html__( 'WooCommerce is not active, so there are no products to list.', 'defer-forms-for-contact-form-7' )
 				. '</span>';
 		}
@@ -71,7 +71,7 @@ final class Product_Field {
 			);
 		}
 
-		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' df7-product';
+		$class = $tag->get_class_option( wpcf7_form_controls_class( $tag->type ) ) . ' deferforms-product';
 
 		return sprintf(
 			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><select name="%1$s" class="%2$s"%3$s>%4$s</select>%5$s</span>',

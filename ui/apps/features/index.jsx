@@ -91,19 +91,19 @@ const LiteCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-accent-200">
-			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
-					<Icon className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5 deferforms-transition-colors hover:deferforms-border-accent-200">
+			<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+				<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-accent-50 deferforms-text-accent">
+					<Icon className="deferforms-h-5 deferforms-w-5" />
 				</div>
-				<span className="df7-inline-flex df7-items-center df7-gap-1 df7-rounded-full df7-bg-emerald-50 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-emerald-700">
-					<Check className="df7-h-3 df7-w-3" />
+				<span className="deferforms-inline-flex deferforms-items-center deferforms-gap-1 deferforms-rounded-full deferforms-bg-emerald-50 deferforms-px-2 deferforms-py-0.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-emerald-700">
+					<Check className="deferforms-h-3 deferforms-w-3" />
 					{ __( 'Included', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
-			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
+			<h3 className="deferforms-m-0 deferforms-text-base deferforms-font-semibold deferforms-text-ink">{ mod.name }</h3>
+			<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">{ mod.description }</p>
 		</div>
 	);
 };
@@ -113,18 +113,18 @@ const PlannedCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-dashed df7-border-line df7-bg-white df7-p-5">
-			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-stone-100 df7-text-stone-400">
-					<Icon className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-dashed deferforms-border-line deferforms-bg-white deferforms-p-5">
+			<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+				<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-stone-100 deferforms-text-stone-400">
+					<Icon className="deferforms-h-5 deferforms-w-5" />
 				</div>
-				<span className="df7-rounded-full df7-bg-stone-100 df7-px-2.5 df7-py-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
+				<span className="deferforms-rounded-full deferforms-bg-stone-100 deferforms-px-2.5 deferforms-py-1 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-stone-500">
 					{ __( 'Coming soon', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
-			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
+			<h3 className="deferforms-m-0 deferforms-text-base deferforms-font-semibold deferforms-text-ink">{ mod.name }</h3>
+			<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">{ mod.description }</p>
 		</div>
 	);
 };
@@ -133,22 +133,22 @@ const ProCard = ( { mod } ) => {
 	const Icon = ICONS[ mod.icon ] || Layout;
 
 	return (
-		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-amber-200">
-			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-amber-50 df7-text-amber-600">
-					<Icon className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5 deferforms-transition-colors hover:deferforms-border-amber-200">
+			<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+				<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-amber-50 deferforms-text-amber-600">
+					<Icon className="deferforms-h-5 deferforms-w-5" />
 				</div>
-				<span className="df7-inline-flex df7-items-center df7-gap-1 df7-rounded-full df7-bg-amber-100 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-amber-700">
-					<Sparkles className="df7-h-3 df7-w-3" />
+				<span className="deferforms-inline-flex deferforms-items-center deferforms-gap-1 deferforms-rounded-full deferforms-bg-amber-100 deferforms-px-2 deferforms-py-0.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-amber-700">
+					<Sparkles className="deferforms-h-3 deferforms-w-3" />
 					{ __( 'Pro', 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
 
-			<h3 className="df7-m-0 df7-text-base df7-font-semibold df7-text-ink">{ mod.name }</h3>
-			<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">{ mod.description }</p>
+			<h3 className="deferforms-m-0 deferforms-text-base deferforms-font-semibold deferforms-text-ink">{ mod.name }</h3>
+			<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">{ mod.description }</p>
 
-			<div className="df7-mt-4 df7-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-semibold df7-text-amber-600">
-				<Lock className="df7-h-3.5 df7-w-3.5" />
+			<div className="deferforms-mt-4 deferforms-flex deferforms-items-center deferforms-gap-1.5 deferforms-text-[14px] deferforms-font-semibold deferforms-text-amber-600">
+				<Lock className="deferforms-h-3.5 deferforms-w-3.5" />
 				{ __( 'Coming in Pro', 'defer-forms-for-contact-form-7' ) }
 			</div>
 		</div>
@@ -164,9 +164,9 @@ const ProCard = ( { mod } ) => {
  * on load instead of filling in.
  */
 const SectionHead = ( { title, note } ) => (
-	<div className="df7-mb-4 df7-flex df7-items-baseline df7-gap-2.5">
-		<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">{ title }</h2>
-		<span className="df7-text-sm df7-text-stone-400">{ note }</span>
+	<div className="deferforms-mb-4 deferforms-flex deferforms-items-baseline deferforms-gap-2.5">
+		<h2 className="deferforms-m-0 deferforms-text-xl deferforms-font-bold deferforms-text-ink">{ title }</h2>
+		<span className="deferforms-text-sm deferforms-text-stone-400">{ note }</span>
 	</div>
 );
 
@@ -175,7 +175,7 @@ const SectionHead = ( { title, note } ) => (
  * this. The catalogue is a fixed list in PHP and nothing about it depends on
  * the site, so the loading state can be the right size rather than a guess.
  */
-const HANDED_OVER = Array.isArray( window.df7Features?.items ) ? window.df7Features.items : null;
+const HANDED_OVER = Array.isArray( window.deferformsFeatures?.items ) ? window.deferformsFeatures.items : null;
 
 /**
  * The Pro section's header, which is a banner rather than a heading line.
@@ -185,12 +185,12 @@ const HANDED_OVER = Array.isArray( window.df7Features?.items ) ? window.df7Featu
  * something to reproduce by eye in two places.
  */
 const ProHead = () => (
-	<div className="df7-mb-4 df7-flex df7-flex-wrap df7-items-center df7-justify-between df7-gap-3 df7-rounded-2xl df7-border df7-border-amber-200 df7-bg-amber-50/60 df7-px-5 df7-py-4">
-		<div className="df7-flex df7-flex-col">
-			<h2 className="df7-m-0 df7-text-xl df7-font-bold df7-text-ink">
+	<div className="deferforms-mb-4 deferforms-flex deferforms-flex-wrap deferforms-items-center deferforms-justify-between deferforms-gap-3 deferforms-rounded-2xl deferforms-border deferforms-border-amber-200 deferforms-bg-amber-50/60 deferforms-px-5 deferforms-py-4">
+		<div className="deferforms-flex deferforms-flex-col">
+			<h2 className="deferforms-m-0 deferforms-text-xl deferforms-font-bold deferforms-text-ink">
 				{ __( 'In Pro', 'defer-forms-for-contact-form-7' ) }
 			</h2>
-			<p className="df7-mb-0 df7-mt-0.5 df7-text-[14px] df7-text-stone-500">
+			<p className="deferforms-mb-0 deferforms-mt-0.5 deferforms-text-[14px] deferforms-text-stone-500">
 				{ __( 'Everything above, plus these.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 		</div>
@@ -198,7 +198,7 @@ const ProHead = () => (
 );
 
 const SectionGrid = ( { children } ) => (
-	<div className="df7-grid df7-grid-cols-1 df7-gap-4 md:df7-grid-cols-2 xl:df7-grid-cols-3">{ children }</div>
+	<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 md:deferforms-grid-cols-2 xl:deferforms-grid-cols-3">{ children }</div>
 );
 
 /**
@@ -210,17 +210,17 @@ const SectionGrid = ( { children } ) => (
  * replaced, and six cards a row made the whole grid step down as it loaded.
  */
 const SkeletonCard = () => (
-	<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5">
-		<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-			<div className="df7-h-11 df7-w-11 df7-animate-pulse df7-rounded-xl df7-bg-stone-100" />
-			<div className="df7-h-6 df7-w-11 df7-animate-pulse df7-rounded-full df7-bg-stone-100" />
+	<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5">
+		<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+			<div className="deferforms-h-11 deferforms-w-11 deferforms-animate-pulse deferforms-rounded-xl deferforms-bg-stone-100" />
+			<div className="deferforms-h-6 deferforms-w-11 deferforms-animate-pulse deferforms-rounded-full deferforms-bg-stone-100" />
 		</div>
 
-		<Shimmer as="h3" w="df7-w-1/2" text="df7-text-base" />
+		<Shimmer as="h3" w="deferforms-w-1/2" text="deferforms-text-base" />
 
-		<p className="df7-mb-0 df7-mt-1.5 df7-text-[14px] df7-leading-relaxed">
-			<Shimmer w="df7-w-full" />
-			<Shimmer w="df7-w-3/4" />
+		<p className="deferforms-mb-0 deferforms-mt-1.5 deferforms-text-[14px] deferforms-leading-relaxed">
+			<Shimmer w="deferforms-w-full" />
+			<Shimmer w="deferforms-w-3/4" />
 		</p>
 	</div>
 );
@@ -240,7 +240,7 @@ const App = () => {
 		}
 
 		let live = true;
-		apiFetch( { path: 'df7/v1/modules' } )
+		apiFetch( { path: 'deferforms/v1/modules' } )
 			.then( ( res ) => live && setFeatures( res ) )
 			.catch( ( err ) => live && setError( err.message ) )
 			.finally( () => live && setLoading( false ) );
@@ -272,7 +272,7 @@ const App = () => {
 				<section>
 					<SectionHead
 						title={ __( 'What you have', 'defer-forms-for-contact-form-7' ) }
-						note={ <Shimmer w="df7-w-32" text="df7-text-sm" /> }
+						note={ <Shimmer w="deferforms-w-32" text="deferforms-text-sm" /> }
 					/>
 					<SectionGrid>
 						{ Array.from( { length: 6 } ).map( ( _, i ) => <SkeletonCard key={ i } /> ) }
@@ -283,14 +283,14 @@ const App = () => {
 
 		if ( 0 === lite.length && 0 === planned.length && 0 === pro.length ) {
 			return (
-				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-py-24 df7-text-center">
-					<div className="df7-mb-4 df7-flex df7-h-16 df7-w-16 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-stone-50 df7-text-stone-400">
-						<Boxes className="df7-h-8 df7-w-8" />
+				<div className="deferforms-flex deferforms-flex-col deferforms-items-center deferforms-justify-center deferforms-py-24 deferforms-text-center">
+					<div className="deferforms-mb-4 deferforms-flex deferforms-h-16 deferforms-w-16 deferforms-items-center deferforms-justify-center deferforms-rounded-2xl deferforms-bg-stone-50 deferforms-text-stone-400">
+						<Boxes className="deferforms-h-8 deferforms-w-8" />
 					</div>
-					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">
+					<h3 className="deferforms-m-0 deferforms-text-lg deferforms-font-bold deferforms-text-ink">
 						{ __( 'The feature list could not be loaded', 'defer-forms-for-contact-form-7' ) }
 					</h3>
-					<p className="df7-mt-1 df7-text-sm df7-text-stone-500">
+					<p className="deferforms-mt-1 deferforms-text-sm deferforms-text-stone-500">
 						{ __( 'Reload the page to try again.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 				</div>
@@ -300,7 +300,7 @@ const App = () => {
 		return (
 			<>
 				{ lite.length > 0 && (
-					<section className="df7-mb-10">
+					<section className="deferforms-mb-10">
 						<SectionHead
 							title={ __( 'What you have', 'defer-forms-for-contact-form-7' ) }
 							note={ sprintf(
@@ -316,7 +316,7 @@ const App = () => {
 				) }
 
 				{ planned.length > 0 && (
-					<section className="df7-mb-10">
+					<section className="deferforms-mb-10">
 						<SectionHead
 							title={ __( 'On the way', 'defer-forms-for-contact-form-7' ) }
 							note={ __( 'Planned for a future release.', 'defer-forms-for-contact-form-7' ) }
@@ -347,7 +347,7 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -357,7 +357,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-features-root' );
+const mount = document.getElementById( 'deferforms-features-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

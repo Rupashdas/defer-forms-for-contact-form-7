@@ -10,13 +10,13 @@
  *
  * `el()` was the other: three identical element helpers in three files.
  *
- * This is a dependency of every other df7 script, so it is on the page before
+ * This is a dependency of every other deferforms script, so it is on the page before
  * any of them run.
  */
 ( function () {
 	'use strict';
 
-	var df7 = window.df7 || ( window.df7 = {} );
+	var deferforms = window.deferforms || ( window.deferforms = {} );
 
 	/**
 	 * Run something once the document is usable, and again whenever Contact Form
@@ -26,7 +26,7 @@
 	 * DOMContentLoaded has already fired, and waiting for an event that is never
 	 * coming means the feature simply never starts.
 	 */
-	df7.ready = function ( fn ) {
+	deferforms.ready = function ( fn ) {
 		if ( 'loading' === document.readyState ) {
 			document.addEventListener( 'DOMContentLoaded', fn );
 		} else {
@@ -43,8 +43,8 @@
 	 * `dataset` flag — `wpcf7init` fires per form, so this deliberately re-scans
 	 * rather than trying to work out what is new.
 	 */
-	df7.forms = function ( fn ) {
-		df7.ready( function () {
+	deferforms.forms = function ( fn ) {
+		deferforms.ready( function () {
 			document.querySelectorAll( '.wpcf7-form' ).forEach( fn );
 		} );
 	};
@@ -63,7 +63,7 @@
 	 * are restored, so a callback running immediately would re-read the values
 	 * being discarded and conclude nothing had changed.
 	 */
-	df7.onReset = function ( form, fn ) {
+	deferforms.onReset = function ( form, fn ) {
 		form.addEventListener( 'reset', function () {
 			window.setTimeout( fn, 0 );
 		} );
@@ -74,7 +74,7 @@
 	 * the callers has markup to place, and one of them is handling a form's own
 	 * settings.
 	 */
-	df7.el = function ( tag, className, text ) {
+	deferforms.el = function ( tag, className, text ) {
 		var node = document.createElement( tag );
 
 		if ( className ) {

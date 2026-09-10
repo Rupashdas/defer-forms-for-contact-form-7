@@ -6,12 +6,12 @@
  * wrong place to keep it: three readers apply it and one of them — the GDPR
  * exporter — has no business reaching into an admin screen's class to ask.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,7 +22,7 @@ final class Entry_Fields {
 	 * plugin put in the form itself?
 	 *
 	 * Two prefixes are not answers. `_` covers Contact Form 7's own bookkeeping
-	 * and our `_df7_files`; `df7_` covers the honeypot and the time-trap's
+	 * and our `_deferforms_files`; `deferforms_` covers the honeypot and the time-trap's
 	 * signed token.
 	 *
 	 * Submission_Listener drops the second group before a row is written, so this
@@ -36,6 +36,6 @@ final class Entry_Fields {
 	 * less.
 	 */
 	public static function is_answer( string $key ): bool {
-		return 0 !== strpos( $key, '_' ) && 0 !== strpos( $key, 'df7_' );
+		return 0 !== strpos( $key, '_' ) && 0 !== strpos( $key, 'deferforms_' );
 	}
 }

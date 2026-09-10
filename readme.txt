@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.6.7
+Stable tag: 2.6.8
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,25 +67,25 @@ Contact Form 7's own hooks are untouched — `wpcf7_before_send_mail`, `wpcf7_ma
 
 A submission passes through the first four in this order: whether to store it, what to store, where to announce it, and what it became.
 
-`apply_filters( 'df7_store_submission', $store, $contact_form, $status )`
+`apply_filters( 'deferforms_store_submission', $store, $contact_form, $status )`
 Return false to keep an entry out of the table entirely. The mail is still sent; nothing is written. `$status` is either 'submitted' or 'spam'.
 
-`apply_filters( 'df7_submission_data', $data, $contact_form, $status )`
+`apply_filters( 'deferforms_submission_data', $data, $contact_form, $status )`
 The fields on their way into the table. Redact a value, drop a field, or add one of your own. Keys beginning with an underscore are the plugin's own bookkeeping and are never shown as answers.
 
-`do_action( 'df7_notify', $entry )`
+`do_action( 'deferforms_notify', $entry )`
 One submission, described once, for sending anywhere the Notifications screen does not already reach. `$entry` carries `entry_id`, `form_id`, `title`, `when`, `at` (ISO 8601), `fields` and `link`. Submitted entries only — spam never fires this.
 
-`do_action( 'df7_submission_stored', $id, $data, $contact_form, $status )`
+`do_action( 'deferforms_submission_stored', $id, $data, $contact_form, $status )`
 The entry exists and is complete: uploads are kept and `$id` can be linked to. Spam fires too, with `$status` saying so. This is where somebody else's code runs, so it is last.
 
-`apply_filters( 'df7_capability', 'manage_options' )`
+`apply_filters( 'deferforms_capability', 'manage_options' )`
 The capability the admin screens and the REST routes require.
 
-`apply_filters( 'df7_attachment_limit', $bytes )`
+`apply_filters( 'deferforms_attachment_limit', $bytes )`
 The ceiling on kept uploads across the site. Past it, submissions and their mail arrive as normal but files are no longer copied to the server.
 
-`do_action( 'df7_submissions_deleted', $rows )`
+`do_action( 'deferforms_submissions_deleted', $rows )`
 Entries that have just been removed, with their data, so anything mirroring them elsewhere can keep up.
 
 == External services ==
@@ -124,6 +124,11 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 
 == Changelog ==
 
+= 2.6.8 =
+* Fixed: on a site with WooCommerce active and debugging on, loading the dashboard could log a `_load_textdomain_just_in_time` notice. The daily cleanup event was being checked while plugins were still loading, which asked WordPress for the list of cron schedules before translations were ready. It is scheduled on `init` now.
+* Changed: every function, class, namespace, constant, option, hook and asset handle this plugin defines now carries the `deferforms` prefix. Prefixes shorter than that are too easy to collide with across the tens of thousands of plugins a site might have.
+* Changed: the bundled flatpickr library is registered under our own handle rather than a bare `flatpickr`, so a second plugin bundling the same library cannot decide which copy either of us gets.
+
 = 2.6.7 =
 * Removed the one-time migration that carried existing data across the 2.6.4 internal prefix rename. This plugin has never been distributed under the old `cf7e` prefix, so no install anyone downloads from here on could ever have data for it to find — it was dead code for every fresh install and always would be. Schema upgrades in general are untouched.
 
@@ -131,10 +136,10 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Housekeeping only — nothing about the plugin behaves differently. The last remaining internal test-code names and changelog wording from this plugin's two earlier names were cleared out. Nothing shipped was ever affected.
 
 = 2.6.5 =
-* Changed: the admin page addresses now carry the `df7-` prefix, matching the rest of the plugin. Update any bookmark to one of this plugin's admin screens.
+* Changed: the admin page addresses now carry the `deferforms-` prefix, matching the rest of the plugin. Update any bookmark to one of this plugin's admin screens.
 
 = 2.6.4 =
-* Changed: the plugin's internal prefix moved from `cf7e` to `df7`, to match the Defer Forms name — the database table, the developer hooks under "Hooks" below, post meta keys, the REST namespace, and script/style handles all carry the new prefix now.
+* Changed: the plugin's internal prefix moved from `cf7e` to `deferforms`, to match the Defer Forms name — the database table, the developer hooks under "Hooks" below, post meta keys, the REST namespace, and script/style handles all carry the new prefix now.
 * If you filter on any of the hooks listed under "Hooks" below by their old names, update to the current names in this release.
 
 = 2.6.3 =
@@ -161,7 +166,7 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 
 = 2.5.0 =
 * The plugin has been renamed. The old name said nothing about what the plugin does, and its folder name broke a wordpress.org naming rule.
-* New: attachments have a size ceiling — 1 GB by default. Past it, submissions and their mail arrive as normal but the files are no longer copied to the server, and the admin is told. A form that takes uploads is a public endpoint that writes to the disk, and nothing bounded how often it was used. Raise or remove the ceiling with the df7_attachment_limit filter.
+* New: attachments have a size ceiling — 1 GB by default. Past it, submissions and their mail arrive as normal but the files are no longer copied to the server, and the admin is told. A form that takes uploads is a public endpoint that writes to the disk, and nothing bounded how often it was used. Raise or remove the ceiling with the deferforms_attachment_limit filter.
 * New: blocked submissions no longer keep their file uploads. The entry is still stored and still lists what was sent, so a real enquiry caught by mistake can be found — but a caught bot now costs a few kilobytes instead of a megabyte. There is a switch under "Keep blocked submissions" for sites that want the files as well.
 * Changed: the Telegram bot token and the Slack and Discord webhook URLs are no longer sent to the browser in full. Every visit to the Notifications page used to carry them across the wire in plain text. They travel masked now; emptying the box removes the stored one, and leaving it alone keeps it.
 * Changed: a notification destination shows its settings only while it is switched on.
@@ -235,6 +240,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.6.8 =
+Fixes a debug notice on sites running WooCommerce, and lengthens the prefix on everything this plugin defines. If you hook into any filter or action by its old name, see "Hooks" for the current name.
 
 = 2.6.5 =
 Admin page addresses changed to a new prefix. Update any bookmark; nothing else changes.

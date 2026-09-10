@@ -12,14 +12,14 @@
  * comment as pending or not for everyone. On a site with two admins, one opening
  * an entry settles it for both.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Admin;
+namespace DEFERFORMS\Admin;
 
-use DF7\DB\Submissions_Repository;
+use DEFERFORMS\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 

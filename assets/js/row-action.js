@@ -10,7 +10,7 @@
 ( function () {
 	'use strict';
 
-	var data = window.df7RowAction || {};
+	var data = window.deferformsRowAction || {};
 
 	if ( ! data.base || ! data.label ) {
 		return;
@@ -34,7 +34,7 @@
 		a.textContent = data.label;
 
 		var span = document.createElement( 'span' );
-		span.className = 'df7-builder-link';
+		span.className = 'deferforms-builder-link';
 		span.appendChild( document.createTextNode( ' | ' ) );
 		span.appendChild( a );
 

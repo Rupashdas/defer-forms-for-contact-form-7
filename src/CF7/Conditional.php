@@ -1,16 +1,16 @@
 <?php
 /**
- * Conditional fields on the front-end. A `[df7_if action="…" groups="…"] …
- * [/df7_if]` marker (unregistered tag, so CF7 leaves it literal) wraps a field;
+ * Conditional fields on the front-end. A `[deferforms_if action="…" groups="…"] …
+ * [/deferforms_if]` marker (unregistered tag, so CF7 leaves it literal) wraps a field;
  * we turn it into a div the front-end script reads to show/hide the field as the
  * controlling fields change.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ final class Conditional {
 	}
 
 	/**
-	 * Names of the fields the current form wraps in a `[df7_if]` region.
+	 * Names of the fields the current form wraps in a `[deferforms_if]` region.
 	 *
 	 * This is the allow-list for skipping required checks: a field that is never
 	 * conditionally hidden has no business being skipped, whatever the browser
@@ -65,7 +65,7 @@ final class Conditional {
 	/**
 	 * The fields the browser says it currently has hidden.
 	 *
-	 * The browser is not trusted here. `_df7_hidden` is an ordinary POST
+	 * The browser is not trusted here. `_deferforms_hidden` is an ordinary POST
 	 * field, so anyone could list every required field in the form and have its
 	 * validation thrown away — or, since the acceptance side reads this too,
 	 * wave away the terms they are agreeing to. Only fields the form itself puts
@@ -74,14 +74,14 @@ final class Conditional {
 	 * @return array<int, string>
 	 */
 	private static function hidden_names(): array {
-		if ( empty( $_POST['_df7_hidden'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( empty( $_POST['_deferforms_hidden'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return array();
 		}
 
 		// The sanitisation is below, not skipped: every decoded name is stripped
 		// to [A-Za-z0-9_-] before it is used. Sanitising the JSON first would
 		// only mangle it. The nonce is CF7's, checked before these filters run.
-		$decoded = json_decode( wp_unslash( (string) $_POST['_df7_hidden'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$decoded = json_decode( wp_unslash( (string) $_POST['_deferforms_hidden'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( ! is_array( $decoded ) || empty( $decoded ) ) {
 			return array();
 		}
@@ -97,7 +97,7 @@ final class Conditional {
 	/**
 	 * Drop validation errors for fields the front-end currently has hidden, so a
 	 * hidden required field can't block submission. The browser posts the hidden
-	 * field names in `_df7_hidden`; we rebuild the validation result without
+	 * field names in `_deferforms_hidden`; we rebuild the validation result without
 	 * them (WPCF7_Validation has no public remove, but returning a fresh result
 	 * replaces it). CF7 has already run its own nonce/spam checks by this point.
 	 *
@@ -187,12 +187,12 @@ final class Conditional {
 	}
 
 	public function render( string $elements ): string {
-		if ( false === strpos( $elements, '[df7_if' ) ) {
+		if ( false === strpos( $elements, '[deferforms_if' ) ) {
 			return $elements;
 		}
 
 		$elements = (string) preg_replace_callback(
-			'/\[df7_if\s+([^\]]*)\]/',
+			'/\[deferforms_if\s+([^\]]*)\]/',
 			static function ( $match ) {
 				$attrs  = (string) $match[1];
 				$get    = static function ( string $key ) use ( $attrs ): string {
@@ -200,13 +200,13 @@ final class Conditional {
 				};
 				$action = 'hide' === $get( 'action' ) ? 'hide' : 'show';
 				$groups = $get( 'groups' );
-				return '<div class="df7-if" data-action="' . esc_attr( $action ) . '" data-groups="' . esc_attr( $groups ) . '">';
+				return '<div class="deferforms-if" data-action="' . esc_attr( $action ) . '" data-groups="' . esc_attr( $groups ) . '">';
 			},
 			$elements
 		);
 
-		wp_enqueue_script( 'df7-conditional', DF7_URL . 'assets/js/conditional.js', array( Validation::BASE ), df7_asset_ver( 'assets/js/conditional.js' ), true );
+		wp_enqueue_script( 'deferforms-conditional', DEFERFORMS_URL . 'assets/js/conditional.js', array( Validation::BASE ), deferforms_asset_ver( 'assets/js/conditional.js' ), true );
 
-		return str_replace( '[/df7_if]', '</div>', $elements );
+		return str_replace( '[/deferforms_if]', '</div>', $elements );
 	}
 }

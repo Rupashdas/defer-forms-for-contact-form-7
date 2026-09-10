@@ -2,20 +2,20 @@
 /**
  * Settings storage backed by a single WP option.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\DB;
+namespace DEFERFORMS\DB;
 
-use DF7\CF7\Design;
+use DEFERFORMS\CF7\Design;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Settings_Repository {
 
-	private const OPTION_KEY = 'df7_settings';
+	private const OPTION_KEY = 'deferforms_settings';
 
 	/**
 	 * @var array<string, array<string, mixed>>
@@ -68,7 +68,7 @@ final class Settings_Repository {
 			'enabled'     => false,
 			'webhook_url' => '',
 		),
-		// Mirrors the --df7-* contract in assets/css/controls.css. Defaults are
+		// Mirrors the --deferforms-* contract in assets/css/controls.css. Defaults are
 		// the same values that stylesheet declares, so an untouched install looks
 		// exactly as it does today.
 		'design'   => array(

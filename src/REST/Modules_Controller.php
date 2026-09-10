@@ -5,14 +5,14 @@
  * Read-only. There is nothing to write: every feature is on, and the list it
  * serves is a constant. See Modules\Registry for why the switches went.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\Modules\Registry;
+use DEFERFORMS\Modules\Registry;
 
 defined( 'ABSPATH' ) || exit;
 

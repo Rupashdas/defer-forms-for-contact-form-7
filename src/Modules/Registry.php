@@ -25,12 +25,12 @@
  * The Lite vs Pro split mirrors the original plugin inventory
  * (see cf7-companion-guide/01-audit-and-inventory.md, L1–L19 / P1–P15).
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Modules;
+namespace DEFERFORMS\Modules;
 
 defined( 'ABSPATH' ) || exit;
 

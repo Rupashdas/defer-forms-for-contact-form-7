@@ -25,10 +25,10 @@ const TABS = [
 // before the move — lands where it went, rather than on a General tab that says
 // nothing about why.
 const MOVED_TO = {
-	design:   'admin.php?page=df7-styling',
-	telegram: 'admin.php?page=df7-notifications#telegram',
-	slack:    'admin.php?page=df7-notifications#slack',
-	discord:  'admin.php?page=df7-notifications#discord',
+	design:   'admin.php?page=deferforms-styling',
+	telegram: 'admin.php?page=deferforms-notifications#telegram',
+	slack:    'admin.php?page=deferforms-notifications#slack',
+	discord:  'admin.php?page=deferforms-notifications#discord',
 };
 
 const getInitialTab = () => {
@@ -52,7 +52,7 @@ const GeneralTab = ( { values, onSave, loading = false } ) => {
 					type="number"
 					min="0"
 					max="3650"
-					width="df7-w-32"
+					width="deferforms-w-32"
 					value={ String( local.retention_days ) }
 					onChange={ ( value ) => setField( 'retention_days', parseInt( value, 10 ) || 0 ) }
 				/>
@@ -129,7 +129,7 @@ const SpamTab = ( { values, onSave, loading = false } ) => {
 					type="number"
 					min="0"
 					max="3650"
-					width="df7-w-32"
+					width="deferforms-w-32"
 					value={ String( local.spam_retention_days ) }
 					onChange={ ( value ) => setField( 'spam_retention_days', parseInt( value, 10 ) || 0 ) }
 				/>
@@ -156,7 +156,7 @@ const PrivacyTab = ( { values, onSave, loading = false } ) => {
 					checked={ !! local.ip_logging }
 					onChange={ ( value ) => setField( 'ip_logging', value ) }
 				/>
-				<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-p-4 df7-text-[15px] df7-leading-relaxed df7-text-stone-500">
+				<div className="deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-p-4 deferforms-text-[15px] deferforms-leading-relaxed deferforms-text-stone-500">
 					{ __( 'Stored submissions plug into WordPress’s built-in privacy tools. Under Tools → Export / Erase Personal Data, a request for a visitor’s email will include or remove their form submissions automatically.', 'defer-forms-for-contact-form-7' ) }
 				</div>
 			</SectionCard>
@@ -188,7 +188,7 @@ const App = () => {
 	}, [] );
 
 	useEffect( () => {
-		apiFetch( { path: 'df7/v1/settings' } )
+		apiFetch( { path: 'deferforms/v1/settings' } )
 			.then( ( res ) => {
 				setSettings( res );
 				setError( null );
@@ -203,7 +203,7 @@ const App = () => {
 
 	const saveSection = async ( section, values ) => {
 		const updated = await apiFetch( {
-			path:   `df7/v1/settings/${ section }`,
+			path:   `deferforms/v1/settings/${ section }`,
 			method: 'POST',
 			data:   values,
 		} );
@@ -245,7 +245,7 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
@@ -255,18 +255,18 @@ const App = () => {
 			     its own active state, which is the one place in the admin where
 			     switching tabs looked like a different product. */ }
 			<Tabs
-				className="df7-mb-6"
+				className="deferforms-mb-6"
 				active={ active }
 				onChange={ selectTab }
 				tabs={ TABS.map( ( tab ) => ( { id: tab.id, label: tab.label } ) ) }
 			/>
 
-			<div className="df7-min-w-0">{ renderTab() }</div>
+			<div className="deferforms-min-w-0">{ renderTab() }</div>
 		</Page>
 	);
 };
 
-const mount = document.getElementById( 'df7-settings-root' );
+const mount = document.getElementById( 'deferforms-settings-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

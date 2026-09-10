@@ -58,7 +58,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 	const sendTest = () => {
 		setTest( { state: 'sending' } );
 
-		apiFetch( { path: `df7/v1/settings/${ section }/test`, method: 'POST' } )
+		apiFetch( { path: `deferforms/v1/settings/${ section }/test`, method: 'POST' } )
 			.then( () => setTest( { state: 'sent' } ) )
 			.catch( ( err ) => setTest( { state: 'failed', message: err.message } ) );
 	};
@@ -119,7 +119,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 				{ /* Saved, not typed: the button asks the server, and the server
 				     reads what is stored. Testing what is on screen would pass on
 				     settings that were never kept. */ }
-				<div className="df7-flex df7-flex-wrap df7-items-center df7-gap-3">
+				<div className="deferforms-flex deferforms-flex-wrap deferforms-items-center deferforms-gap-3">
 					<Button
 						variant="ghost"
 						onClick={ sendTest }
@@ -131,13 +131,13 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 					</Button>
 
 					{ dirty && (
-						<span className="df7-text-sm df7-text-stone-500">
+						<span className="deferforms-text-sm deferforms-text-stone-500">
 							{ __( 'Save first — the test uses the saved settings.', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
 
 					{ 'sent' === test?.state && (
-						<span className="df7-text-sm df7-font-medium df7-text-emerald-700">
+						<span className="deferforms-text-sm deferforms-font-medium deferforms-text-emerald-700">
 							{ __( 'Sent. Go and look.', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
@@ -147,7 +147,7 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 				     "no_service" and "Unknown Webhook" each name which part is
 				     wrong, which is more than any message written here could. */ }
 				{ 'failed' === test?.state && (
-					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+					<div className="deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 						{ test.message }
 					</div>
 				) }
@@ -247,7 +247,7 @@ const App = () => {
 	// The whole settings object, because a section is not separately fetchable
 	// and four destinations are four sections of it.
 	useEffect( () => {
-		apiFetch( { path: 'df7/v1/settings' } )
+		apiFetch( { path: 'deferforms/v1/settings' } )
 			.then( ( res ) => {
 				setSettings( res );
 				setError( null );
@@ -262,7 +262,7 @@ const App = () => {
 
 	const saveSection = async ( section, values ) => {
 		const updated = await apiFetch( {
-			path:   `df7/v1/settings/${ section }`,
+			path:   `deferforms/v1/settings/${ section }`,
 			method: 'POST',
 			data:   values,
 		} );
@@ -278,19 +278,19 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
 
 			<Tabs
-				className="df7-mb-6"
+				className="deferforms-mb-6"
 				active={ active }
 				onChange={ selectTab }
 				tabs={ TABS.map( ( tab ) => ( { id: tab.id, label: tab.label } ) ) }
 			/>
 
-			<div className="df7-min-w-0">
+			<div className="deferforms-min-w-0">
 				{ /*
 				  * Keyed by section, and it has to be.
 				  *
@@ -315,7 +315,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-notifications-root' );
+const mount = document.getElementById( 'deferforms-notifications-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

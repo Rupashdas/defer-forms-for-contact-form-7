@@ -7,21 +7,21 @@
  * place the checks can live: the capability, a nonce, and a path that has to
  * resolve inside the attachments directory.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Admin;
+namespace DEFERFORMS\Admin;
 
-use DF7\CF7\Attachments;
-use DF7\Core\Capability;
+use DEFERFORMS\CF7\Attachments;
+use DEFERFORMS\Core\Capability;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Attachment_Download {
 
-	public const ACTION = 'df7_attachment';
+	public const ACTION = 'deferforms_attachment';
 
 	public function register_hooks(): void {
 		add_action( 'admin_post_' . self::ACTION, array( $this, 'serve' ) );

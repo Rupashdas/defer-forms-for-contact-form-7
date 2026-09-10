@@ -17,19 +17,19 @@
  * them, and storing them would make every row bigger while implying a
  * protection that is not being offered.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Revisions {
 
 	/** One meta row per revision, so pruning is a delete rather than a rewrite. */
-	private const META = '_df7_revision';
+	private const META = '_deferforms_revision';
 
 	/** How many states a form remembers. A decision, not a setting. */
 	private const KEEP = 10;

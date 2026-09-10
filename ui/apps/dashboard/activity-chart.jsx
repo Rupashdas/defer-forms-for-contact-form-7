@@ -42,16 +42,16 @@ export const ActivityChart = ( { days, loading = false } ) => {
 	// caption alone was thirty pixels the loading state did not reserve.
 	if ( loading ) {
 		return (
-			<figure className="df7-m-0">
-				<svg viewBox="0 0 300 100" preserveAspectRatio="none" className="df7-h-32 df7-w-full df7-animate-pulse" aria-hidden="true">
+			<figure className="deferforms-m-0">
+				<svg viewBox="0 0 300 100" preserveAspectRatio="none" className="deferforms-h-32 deferforms-w-full deferforms-animate-pulse" aria-hidden="true">
 					{ Array.from( { length: 30 } ).map( ( _, index ) => (
-						<rect key={ index } x={ index * 10 + 2 } y="98" width="6" height="2" rx="2" className="df7-fill-line" />
+						<rect key={ index } x={ index * 10 + 2 } y="98" width="6" height="2" rx="2" className="deferforms-fill-line" />
 					) ) }
 				</svg>
-				<figcaption className="df7-mt-2 df7-flex df7-items-baseline df7-justify-between df7-text-[14px] df7-text-stone-400">
-					<Shimmer w="df7-w-12" />
-					<Shimmer w="df7-w-28" />
-					<Shimmer w="df7-w-12" />
+				<figcaption className="deferforms-mt-2 deferforms-flex deferforms-items-baseline deferforms-justify-between deferforms-text-[14px] deferforms-text-stone-400">
+					<Shimmer w="deferforms-w-12" />
+					<Shimmer w="deferforms-w-28" />
+					<Shimmer w="deferforms-w-12" />
 				</figcaption>
 			</figure>
 		);
@@ -66,11 +66,11 @@ export const ActivityChart = ( { days, loading = false } ) => {
 	const total = days.reduce( ( sum, day ) => sum + day.count, 0 );
 
 	return (
-		<figure className="df7-m-0">
+		<figure className="deferforms-m-0">
 			<svg
 				viewBox={ `0 0 ${ days.length * 10 } 100` }
 				preserveAspectRatio="none"
-				className="df7-h-32 df7-w-full"
+				className="deferforms-h-32 deferforms-w-full"
 				role="img"
 				aria-label={ sprintf(
 					/* translators: 1: number of submissions, 2: number of days. */
@@ -96,7 +96,7 @@ export const ActivityChart = ( { days, loading = false } ) => {
 							width="6"
 							height={ height }
 							rx="2"
-							className={ day.count ? 'df7-fill-ink' : 'df7-fill-line' }
+							className={ day.count ? 'deferforms-fill-ink' : 'deferforms-fill-line' }
 						>
 							<title>{ label }</title>
 						</rect>
@@ -105,10 +105,10 @@ export const ActivityChart = ( { days, loading = false } ) => {
 			</svg>
 
 			{ /* Two dates, not thirty. The ends are what tell you the span. */ }
-			<figcaption className="df7-mt-2 df7-flex df7-items-baseline df7-justify-between df7-text-[14px] df7-text-stone-400">
+			<figcaption className="deferforms-mt-2 deferforms-flex deferforms-items-baseline deferforms-justify-between deferforms-text-[14px] deferforms-text-stone-400">
 				<span>{ readable( days[ 0 ].date ) }</span>
 				{ total > 0 && (
-					<span className="df7-font-medium df7-text-stone-500">
+					<span className="deferforms-font-medium deferforms-text-stone-500">
 						{ sprintf(
 							/* translators: 1: a date, 2: number of submissions on it. */
 							__( 'Busiest: %1$s, %2$s', 'defer-forms-for-contact-form-7' ),

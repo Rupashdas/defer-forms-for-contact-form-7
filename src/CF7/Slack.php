@@ -7,12 +7,12 @@
  * is no second field to get wrong — and no way to be told "chat not found"
  * because there is no chat to name.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

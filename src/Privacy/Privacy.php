@@ -5,15 +5,15 @@
  * whose stored values contain the requested email address count as that person's
  * data.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Privacy;
+namespace DEFERFORMS\Privacy;
 
-use DF7\CF7\Entry_Fields;
-use DF7\DB\Submissions_Repository;
+use DEFERFORMS\CF7\Entry_Fields;
+use DEFERFORMS\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -68,9 +68,9 @@ final class Privacy {
 
 		foreach ( $rows as $row ) {
 			$items[] = array(
-				'group_id'    => 'df7-submissions',
+				'group_id'    => 'deferforms-submissions',
 				'group_label' => __( 'Contact form submissions', 'defer-forms-for-contact-form-7' ),
-				'item_id'     => 'df7-submission-' . (int) $row['id'],
+				'item_id'     => 'deferforms-submission-' . (int) $row['id'],
 				'data'        => $this->row_fields( $row ),
 			);
 		}
@@ -182,7 +182,7 @@ final class Privacy {
 			foreach ( $data as $key => $value ) {
 				/*
 				 * The plugin's own keys are not this person's data, and two of
-				 * them must not travel at all: `_df7_files` names the folder
+				 * them must not travel at all: `_deferforms_files` names the folder
 				 * the attachments were put in — the unguessable name is what
 				 * guards them — and a row written by an older version can still
 				 * carry the time-trap's signed token. The CSV export has skipped

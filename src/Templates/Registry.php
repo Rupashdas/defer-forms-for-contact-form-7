@@ -6,14 +6,14 @@
  * drives both the React preview and the generated CF7 form markup, so there is
  * a single source of truth.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Templates;
+namespace DEFERFORMS\Templates;
 
-use DF7\CF7\Form_Serializer;
+use DEFERFORMS\CF7\Form_Serializer;
 
 defined( 'ABSPATH' ) || exit;
 

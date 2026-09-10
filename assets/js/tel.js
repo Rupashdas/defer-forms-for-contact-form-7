@@ -15,8 +15,8 @@
 ( function () {
 	'use strict';
 
-	var DIGITS = 'df7-tel';
-	var FORMAT = 'df7-telfmt-';
+	var DIGITS = 'deferforms-tel';
+	var FORMAT = 'deferforms-telfmt-';
 
 	function digitsOnly( value ) {
 		return String( value ).replace( /\D+/g, '' );
@@ -139,5 +139,5 @@
 
 	// ready(), not forms(): isOurs() already limits this to fields carrying our
 	// marker class, so the scan stays document-wide rather than per-form.
-	window.df7.ready( init );
+	window.deferforms.ready( init );
 } )();

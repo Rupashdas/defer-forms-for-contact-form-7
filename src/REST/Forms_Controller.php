@@ -2,19 +2,19 @@
 /**
  * REST: Listing CF7 forms and loading or saving one in the builder.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\CF7\Form_Class;
-use DF7\CF7\Form_Html;
-use DF7\CF7\Form_Tag_Parser;
-use DF7\CF7\Redirect;
-use DF7\CF7\Revisions;
-use DF7\CF7\Steps;
+use DEFERFORMS\CF7\Form_Class;
+use DEFERFORMS\CF7\Form_Html;
+use DEFERFORMS\CF7\Form_Tag_Parser;
+use DEFERFORMS\CF7\Redirect;
+use DEFERFORMS\CF7\Revisions;
+use DEFERFORMS\CF7\Steps;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -214,7 +214,7 @@ final class Forms_Controller extends Controller {
 			array(
 				'form_id'     => $id,
 				'title'       => $contact_form->title(),
-				'builder_url' => admin_url( 'admin.php?page=df7-builder&form=' . $id ),
+				'builder_url' => admin_url( 'admin.php?page=deferforms-builder&form=' . $id ),
 			),
 			201
 		);

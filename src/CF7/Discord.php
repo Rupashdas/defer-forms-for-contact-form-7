@@ -10,12 +10,12 @@
  * with a dozen fields reaches it — and it answers a successful post with 204
  * and an empty body rather than 200.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

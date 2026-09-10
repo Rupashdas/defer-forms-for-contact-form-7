@@ -7,12 +7,12 @@
  * one is empty" for itself. Five classes had written the same eight lines; this
  * is that code, once.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

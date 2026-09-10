@@ -6,14 +6,14 @@
  * menu to find this. Two entry points: a button on the single-form screen, and a
  * row action in the forms list.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Admin;
+namespace DEFERFORMS\Admin;
 
-use DF7\Core\Capability;
+use DEFERFORMS\Core\Capability;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,7 +26,7 @@ final class Cf7_Integration {
 
 	/** Everything up to the form id, which the two callers finish differently. */
 	private static function builder_url_base(): string {
-		return admin_url( 'admin.php?page=df7-builder&form=' );
+		return admin_url( 'admin.php?page=deferforms-builder&form=' );
 	}
 
 	private static function builder_url( int $form_id ): string {
@@ -62,16 +62,16 @@ final class Cf7_Integration {
 		}
 
 		wp_enqueue_script(
-			'df7-row-action',
-			DF7_URL . 'assets/js/row-action.js',
+			'deferforms-row-action',
+			DEFERFORMS_URL . 'assets/js/row-action.js',
 			array(),
-			df7_asset_ver( 'assets/js/row-action.js' ),
+			deferforms_asset_ver( 'assets/js/row-action.js' ),
 			true
 		);
 
 		wp_localize_script(
-			'df7-row-action',
-			'df7RowAction',
+			'deferforms-row-action',
+			'deferformsRowAction',
 			array(
 				'base'  => self::builder_url_base(),
 				'label' => __( 'Visual Builder', 'defer-forms-for-contact-form-7' ),

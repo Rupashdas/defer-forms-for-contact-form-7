@@ -2,18 +2,18 @@
 /**
  * Plugin deactivation handler.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Core;
+namespace DEFERFORMS\Core;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Deactivator {
 
 	public static function deactivate(): void {
-		wp_clear_scheduled_hook( 'df7_daily_cleanup' );
+		wp_clear_scheduled_hook( 'deferforms_daily_cleanup' );
 	}
 }

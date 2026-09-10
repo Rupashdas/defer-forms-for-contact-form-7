@@ -14,18 +14,18 @@
  *    MySQL's LAST_INSERT_ID(expr) trick increments and reports the new value in
  *    one statement, per connection, so each caller gets its own.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Submission_Id {
 
-	private const OPTION = 'df7_submission_seq';
+	private const OPTION = 'deferforms_submission_seq';
 
 	public function register_hooks(): void {
 		add_action( 'wpcf7_init', array( $this, 'add_form_tag' ) );
@@ -53,7 +53,7 @@ final class Submission_Id {
 		}
 
 		return sprintf(
-			'<input type="hidden" name="%s" value="" class="df7-submission-id" />',
+			'<input type="hidden" name="%s" value="" class="deferforms-submission-id" />',
 			esc_attr( $tag->name )
 		);
 	}

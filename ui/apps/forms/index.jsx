@@ -8,7 +8,7 @@ import { Modal, btnPrimary, btnGhost, btnDanger, control, focusRing, Shimmer } f
 import { ShortcodeBox } from '@shared/components/shortcode';
 import '@shared/styles/admin.css';
 
-const builderUrl = ( id ) => `admin.php?page=df7-builder&form=${ id }`;
+const builderUrl = ( id ) => `admin.php?page=deferforms-builder&form=${ id }`;
 const previewUrl = ( id ) => `${ builderUrl( id ) }&tab=preview`;
 const editUrl    = ( id ) => `admin.php?page=wpcf7&post=${ id }&action=edit`;
 
@@ -67,7 +67,7 @@ const NewFormDialog = ( { onClose } ) => {
 		setBusy( true );
 		setError( null );
 
-		apiFetch( { path: 'df7/v1/forms', method: 'POST', data: { title: trimmed } } )
+		apiFetch( { path: 'deferforms/v1/forms', method: 'POST', data: { title: trimmed } } )
 			.then( ( res ) => {
 				// A full reload, not a router push: the builder is its own admin
 				// page, and this is the same navigation the card's Builder link makes.
@@ -86,23 +86,23 @@ const NewFormDialog = ( { onClose } ) => {
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="df7-flex-1" />
+					<span className="deferforms-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
 						{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button type="button" className={ btnPrimary } onClick={ create } disabled={ busy || ! trimmed }>
-						{ busy && <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> }
+						{ busy && <Loader2 className="deferforms-h-4 deferforms-w-4 deferforms-animate-spin" /> }
 						{ busy ? __( 'Creating…', 'defer-forms-for-contact-form-7' ) : __( 'Create and open builder', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="df7-flex df7-flex-col df7-gap-1.5">
-				<label htmlFor="df7-new-form-name" className="df7-text-[14px] df7-font-semibold df7-text-ink">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-1.5">
+				<label htmlFor="deferforms-new-form-name" className="deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink">
 					{ __( 'Form name', 'defer-forms-for-contact-form-7' ) }
 				</label>
 				<input
-					id="df7-new-form-name"
+					id="deferforms-new-form-name"
 					type="text"
 					value={ name }
 					disabled={ busy }
@@ -110,14 +110,14 @@ const NewFormDialog = ( { onClose } ) => {
 					onChange={ ( event ) => setName( event.target.value ) }
 					onKeyDown={ ( event ) => 'Enter' === event.key && create() }
 					placeholder={ __( 'Contact us', 'defer-forms-for-contact-form-7' ) }
-					className={ `${ control } df7-w-full` }
+					className={ `${ control } deferforms-w-full` }
 				/>
-				<span className="df7-text-[14px] df7-text-stone-400">
+				<span className="deferforms-text-[14px] deferforms-text-stone-400">
 					{ __( 'You can rename it later. The form opens in the visual builder once created.', 'defer-forms-for-contact-form-7' ) }
 				</span>
 
 				{ error && (
-					<div className="df7-mt-2 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">
+					<div className="deferforms-mt-2 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-3.5 deferforms-py-2.5 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 						{ error }
 					</div>
 				) }
@@ -156,7 +156,7 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 		setError( null );
 		setReport( null );
 
-		apiFetch( { path: 'df7/v1/forms/export', method: 'POST', data: { ids: picked } } )
+		apiFetch( { path: 'deferforms/v1/forms/export', method: 'POST', data: { ids: picked } } )
 			.then( ( bundle ) => {
 				// The browser saves it; nothing is written on the server. An object
 				// URL rather than a data: one, because a bundle of twenty forms is
@@ -164,7 +164,7 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 				const url  = URL.createObjectURL( new Blob( [ JSON.stringify( bundle, null, '\t' ) ], { type: 'application/json' } ) );
 				const link = document.createElement( 'a' );
 				link.href     = url;
-				link.download = `df7-forms-${ new Date().toISOString().slice( 0, 10 ) }.json`;
+				link.download = `deferforms-forms-${ new Date().toISOString().slice( 0, 10 ) }.json`;
 				document.body.appendChild( link );
 				link.click();
 				link.remove();
@@ -193,7 +193,7 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 				} catch ( e ) {
 					throw new Error( __( 'That file is not JSON.', 'defer-forms-for-contact-form-7' ) );
 				}
-				return apiFetch( { path: 'df7/v1/forms/import', method: 'POST', data: { bundle } } );
+				return apiFetch( { path: 'deferforms/v1/forms/import', method: 'POST', data: { bundle } } );
 			} )
 			.then( ( res ) => {
 				setReport( res );
@@ -210,69 +210,69 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="df7-flex-1" />
+					<span className="deferforms-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
 						{ __( 'Close', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="df7-flex df7-flex-col df7-gap-6">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-6">
 				{ error && (
-					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+					<div className="deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 						{ error }
 					</div>
 				) }
 
-				<section className="df7-flex df7-flex-col df7-gap-3">
-					<h3 className="df7-m-0 df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Export', 'defer-forms-for-contact-form-7' ) }</h3>
-					<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">
+				<section className="deferforms-flex deferforms-flex-col deferforms-gap-3">
+					<h3 className="deferforms-m-0 deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Export', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="deferforms-m-0 deferforms-text-[14px] deferforms-text-stone-500">
 						{ __( 'Downloads the chosen forms as one JSON file — the template, the mail, the messages and the settings this plugin adds. Entries are not included.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 
 					{ forms.length ? (
-						<div className="df7-max-h-48 df7-overflow-y-auto df7-rounded-lg df7-border df7-border-line">
+						<div className="deferforms-max-h-48 deferforms-overflow-y-auto deferforms-rounded-lg deferforms-border deferforms-border-line">
 							{ forms.map( ( form ) => (
 								<label
 									key={ form.form_id }
-									className="df7-flex df7-cursor-pointer df7-items-center df7-gap-2.5 df7-border-b df7-border-line df7-px-3.5 df7-py-2 df7-text-sm df7-text-ink last:df7-border-b-0 hover:df7-bg-stone-50/60"
+									className="deferforms-flex deferforms-cursor-pointer deferforms-items-center deferforms-gap-2.5 deferforms-border-b deferforms-border-line deferforms-px-3.5 deferforms-py-2 deferforms-text-sm deferforms-text-ink last:deferforms-border-b-0 hover:deferforms-bg-stone-50/60"
 								>
 									<input
 										type="checkbox"
 										checked={ picked.includes( form.form_id ) }
 										onChange={ () => toggle( form.form_id ) }
 									/>
-									<span className="df7-truncate">
+									<span className="deferforms-truncate">
 										{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), form.form_id ) }
 									</span>
 								</label>
 							) ) }
 						</div>
 					) : (
-						<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">{ __( 'There is nothing to export yet.', 'defer-forms-for-contact-form-7' ) }</p>
+						<p className="deferforms-m-0 deferforms-text-[14px] deferforms-text-stone-500">{ __( 'There is nothing to export yet.', 'defer-forms-for-contact-form-7' ) }</p>
 					) }
 
 					<div>
 						<button type="button" className={ btnPrimary } onClick={ download } disabled={ busy || ! picked.length }>
-							{ busy ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : <Download className="df7-h-4 df7-w-4" /> }
+							{ busy ? <Loader2 className="deferforms-h-4 deferforms-w-4 deferforms-animate-spin" /> : <Download className="deferforms-h-4 deferforms-w-4" /> }
 							{ sprintf( /* translators: %d: number of forms. */ _n( 'Download %d form', 'Download %d forms', picked.length, 'defer-forms-for-contact-form-7' ), picked.length ) }
 						</button>
 					</div>
 				</section>
 
-				<section className="df7-flex df7-flex-col df7-gap-3 df7-border-t df7-border-line df7-pt-6">
-					<h3 className="df7-m-0 df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Import', 'defer-forms-for-contact-form-7' ) }</h3>
-					<p className="df7-m-0 df7-text-[14px] df7-text-stone-500">
+				<section className="deferforms-flex deferforms-flex-col deferforms-gap-3 deferforms-border-t deferforms-border-line deferforms-pt-6">
+					<h3 className="deferforms-m-0 deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Import', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="deferforms-m-0 deferforms-text-[14px] deferforms-text-stone-500">
 						{ __( 'Every form in the file is created as a new form. Nothing already here is overwritten, so importing the same file twice gives you two copies.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 
-					<label className={ `${ btnGhost } df7-w-fit` }>
-						<Upload className="df7-h-4 df7-w-4" />
+					<label className={ `${ btnGhost } deferforms-w-fit` }>
+						<Upload className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Choose a JSON file', 'defer-forms-for-contact-form-7' ) }
 						<input
 							type="file"
 							accept="application/json,.json"
-							className="df7-hidden"
+							className="deferforms-hidden"
 							disabled={ busy }
 							onChange={ ( event ) => {
 								upload( event.target.files?.[ 0 ] );
@@ -283,7 +283,7 @@ const TransferDialog = ( { forms, onClose, onImported } ) => {
 					</label>
 
 					{ report && (
-						<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5 df7-text-[14px] df7-text-stone-600">
+						<div className="deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5 deferforms-text-[14px] deferforms-text-stone-600">
 							{ sprintf(
 								/* translators: %d: number of forms created. */
 								_n( '%d form imported.', '%d forms imported.', report.created.length, 'defer-forms-for-contact-form-7' ),
@@ -313,7 +313,7 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 		setBusy( true );
 		setError( null );
 
-		apiFetch( { path: `df7/v1/forms/${ form.form_id }`, method: 'DELETE' } )
+		apiFetch( { path: `deferforms/v1/forms/${ form.form_id }`, method: 'DELETE' } )
 			.then( () => onDeleted( form.form_id ) )
 			.catch( ( err ) => {
 				setError( deleteError( err ) );
@@ -330,23 +330,23 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 			onClose={ onClose }
 			footer={
 				<>
-					<span className="df7-flex-1" />
+					<span className="deferforms-flex-1" />
 					<button type="button" className={ btnGhost } onClick={ onClose } disabled={ busy }>
 						{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button type="button" className={ btnDanger } onClick={ remove } disabled={ busy }>
-						{ busy ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : <Trash2 className="df7-h-4 df7-w-4" /> }
+						{ busy ? <Loader2 className="deferforms-h-4 deferforms-w-4 deferforms-animate-spin" /> : <Trash2 className="deferforms-h-4 deferforms-w-4" /> }
 						{ busy ? __( 'Deleting…', 'defer-forms-for-contact-form-7' ) : __( 'Delete form', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</>
 			}
 		>
-			<div className="df7-flex df7-flex-col df7-gap-3">
-				<p className="df7-m-0 df7-text-sm df7-text-ink">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-3">
+				<p className="deferforms-m-0 deferforms-text-sm deferforms-text-ink">
 					{ sprintf( /* translators: %s: form name. */ __( '“%s” will be deleted. Any page still using its shortcode will stop showing a form.', 'defer-forms-for-contact-form-7' ), name ) }
 				</p>
 
-				<p className="df7-m-0 df7-text-sm df7-text-stone-500">
+				<p className="deferforms-m-0 deferforms-text-sm deferforms-text-stone-500">
 					{ form.count > 0
 						? sprintf(
 							/* translators: %s: number of entries. */
@@ -361,12 +361,12 @@ const DeleteFormDialog = ( { form, onClose, onDeleted } ) => {
 						: __( 'It has no entries.', 'defer-forms-for-contact-form-7' ) }
 				</p>
 
-				<p className="df7-m-0 df7-text-sm df7-font-semibold df7-text-red-700">
+				<p className="deferforms-m-0 deferforms-text-sm deferforms-font-semibold deferforms-text-red-700">
 					{ __( 'This cannot be undone.', 'defer-forms-for-contact-form-7' ) }
 				</p>
 
 				{ error && (
-					<div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">
+					<div className="deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-3.5 deferforms-py-2.5 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 						{ error }
 					</div>
 				) }
@@ -434,12 +434,12 @@ const lastActivity = ( mysqlUtc ) => {
 // with nothing to breathe into. `min-w-0` + `truncate` keep a long label inside
 // its own button rather than spilling over the background.
 const actionBtn =
-	`df7-inline-flex df7-h-9 df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-truncate df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-text-[14px] df7-font-semibold df7-text-ink df7-no-underline df7-transition-colors hover:df7-bg-stone-50`;
+	`deferforms-inline-flex deferforms-h-9 deferforms-min-w-0 deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-1.5 deferforms-truncate deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-px-3 deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink deferforms-no-underline deferforms-transition-colors hover:deferforms-bg-stone-50`;
 
 // The card's primary action. Same box as `actionBtn` down to the padding, so
 // the two sit level when they share a row; only the fill differs.
 const primaryBtn =
-	`df7-inline-flex df7-h-9 df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1.5 df7-truncate df7-rounded-lg df7-border-0 df7-bg-ink df7-px-3 df7-text-[14px] df7-font-semibold df7-text-white df7-no-underline df7-transition hover:df7-opacity-90`;
+	`deferforms-inline-flex deferforms-h-9 deferforms-min-w-0 deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-1.5 deferforms-truncate deferforms-rounded-lg deferforms-border-0 deferforms-bg-ink deferforms-px-3 deferforms-text-[14px] deferforms-font-semibold deferforms-text-white deferforms-no-underline deferforms-transition hover:deferforms-opacity-90`;
 
 // One click copies the whole shortcode. The Clipboard API needs a secure
 // context, which a plain-http local site is not, so fall back to a scratch
@@ -456,45 +456,45 @@ const FormCard = ( { form, onDelete } ) => {
 	const fields = fieldSummary( form );
 
 	return (
-		<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5 df7-transition-colors hover:df7-border-stroke">
-			<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-				<div className="df7-flex df7-h-11 df7-w-11 df7-items-center df7-justify-center df7-rounded-xl df7-bg-accent-50 df7-text-accent">
-					<FileText className="df7-h-5 df7-w-5" />
+		<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5 deferforms-transition-colors hover:deferforms-border-stroke">
+			<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+				<div className="deferforms-flex deferforms-h-11 deferforms-w-11 deferforms-items-center deferforms-justify-center deferforms-rounded-xl deferforms-bg-accent-50 deferforms-text-accent">
+					<FileText className="deferforms-h-5 deferforms-w-5" />
 				</div>
 				{ /* Delete sits up here rather than in the action row below: that row
 				     is already two buttons and an icon inside a 240px card, and a
 				     fourth would squeeze "Entries" past its own text width. */ }
-				<div className="df7-flex df7-items-center df7-gap-1">
-					<span className="df7-text-[14px] df7-font-semibold df7-text-stone-400 df7-tnum">#{ form.form_id }</span>
+				<div className="deferforms-flex deferforms-items-center deferforms-gap-1">
+					<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-text-stone-400 deferforms-tnum">#{ form.form_id }</span>
 					<button
 						type="button"
 						onClick={ onDelete }
 						aria-label={ sprintf( /* translators: %s: form title. */ __( 'Delete %s', 'defer-forms-for-contact-form-7' ), form.title || `#${ form.form_id }` ) }
 						title={ __( 'Delete form', 'defer-forms-for-contact-form-7' ) }
-						className={ `df7-flex df7-h-7 df7-w-7 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-bg-red-50 hover:df7-text-red-600` }
+						className={ `deferforms-flex deferforms-h-7 deferforms-w-7 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-transition-colors hover:deferforms-bg-red-50 hover:deferforms-text-red-600` }
 					>
-						<Trash2 className="df7-h-3.5 df7-w-3.5" />
+						<Trash2 className="deferforms-h-3.5 deferforms-w-3.5" />
 					</button>
 				</div>
 			</div>
 
-			<h3 className="df7-m-0 df7-truncate df7-text-base df7-font-semibold df7-text-ink" title={ form.title }>
+			<h3 className="deferforms-m-0 deferforms-truncate deferforms-text-base deferforms-font-semibold deferforms-text-ink" title={ form.title }>
 				{ form.title || sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), form.form_id ) }
 			</h3>
 
 			{ fields && (
-				<p className="df7-mb-0 df7-mt-1 df7-truncate df7-text-[14px] df7-text-stone-400">{ fields }</p>
+				<p className="deferforms-mb-0 deferforms-mt-1 deferforms-truncate deferforms-text-[14px] deferforms-text-stone-400">{ fields }</p>
 			) }
 
-			<div className="df7-mt-2 df7-flex df7-items-baseline df7-gap-2">
-				<span className="df7-text-2xl df7-font-bold df7-text-ink df7-tnum">
+			<div className="deferforms-mt-2 deferforms-flex deferforms-items-baseline deferforms-gap-2">
+				<span className="deferforms-text-2xl deferforms-font-bold deferforms-text-ink deferforms-tnum">
 					{ form.count.toLocaleString() }
 				</span>
-				<span className="df7-text-sm df7-text-stone-500">
+				<span className="deferforms-text-sm deferforms-text-stone-500">
 					{ _n( 'entry', 'entries', form.count, 'defer-forms-for-contact-form-7' ) }
 				</span>
 			</div>
-			<p className="df7-mb-0 df7-mt-1 df7-text-[14px] df7-text-stone-400">
+			<p className="deferforms-mb-0 deferforms-mt-1 deferforms-text-[14px] deferforms-text-stone-400">
 				{ last
 					? sprintf( /* translators: %s: relative time. */ __( 'Last entry %s', 'defer-forms-for-contact-form-7' ), last )
 					: __( 'No entries yet', 'defer-forms-for-contact-form-7' ) }
@@ -507,38 +507,38 @@ const FormCard = ( { form, onDelete } ) => {
 			     padding. Measured at 240px: the primary action now has the line to
 			     itself, and Edit / Entries get 94px each against 67 and 84 of
 			     content. */ }
-			<div className="df7-mt-4 df7-flex df7-flex-col df7-gap-2 df7-border-t df7-border-line df7-pt-4">
+			<div className="deferforms-mt-4 deferforms-flex deferforms-flex-col deferforms-gap-2 deferforms-border-t deferforms-border-line deferforms-pt-4">
 				{ /* Builder gives up half its line to Preview rather than the row
 				     below taking a fourth button: at 240px that row is already
 				     "Edit", "Entries" and a 36px icon, and there is nothing left
 				     to give. Two words at ~96px each fit here with room over. */ }
-				<div className="df7-flex df7-gap-2">
+				<div className="deferforms-flex deferforms-gap-2">
 					<a href={ builderUrl( form.form_id ) } className={ primaryBtn }>
-						<PencilRuler className="df7-h-3.5 df7-w-3.5 df7-shrink-0" />
+						<PencilRuler className="deferforms-h-3.5 deferforms-w-3.5 deferforms-shrink-0" />
 						{ __( 'Builder', 'defer-forms-for-contact-form-7' ) }
 					</a>
 					<a href={ previewUrl( form.form_id ) } className={ actionBtn }>
-						<Eye className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+						<Eye className="deferforms-h-3.5 deferforms-w-3.5 deferforms-shrink-0 deferforms-text-stone-400" />
 						{ __( 'Preview', 'defer-forms-for-contact-form-7' ) }
 					</a>
 				</div>
 
-				<div className="df7-flex df7-gap-2">
+				<div className="deferforms-flex deferforms-gap-2">
 					<a href={ editUrl( form.form_id ) } className={ actionBtn }>
-						<Pencil className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+						<Pencil className="deferforms-h-3.5 deferforms-w-3.5 deferforms-shrink-0 deferforms-text-stone-400" />
 						{ __( 'Edit', 'defer-forms-for-contact-form-7' ) }
 					</a>
-					<a href={ `admin.php?page=df7-submissions&form=${ form.form_id }` } className={ actionBtn }>
-						<Inbox className="df7-h-3.5 df7-w-3.5 df7-shrink-0 df7-text-stone-400" />
+					<a href={ `admin.php?page=deferforms-submissions&form=${ form.form_id }` } className={ actionBtn }>
+						<Inbox className="deferforms-h-3.5 deferforms-w-3.5 deferforms-shrink-0 deferforms-text-stone-400" />
 						{ __( 'Entries', 'defer-forms-for-contact-form-7' ) }
 					</a>
 					<a
-						href={ `admin.php?page=df7-builder&form=${ form.form_id }&tab=settings` }
+						href={ `admin.php?page=deferforms-builder&form=${ form.form_id }&tab=settings` }
 						aria-label={ __( 'Form settings', 'defer-forms-for-contact-form-7' ) }
 						title={ __( 'Form settings', 'defer-forms-for-contact-form-7' ) }
-						className="df7-inline-flex df7-h-9 df7-w-9 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-400 df7-no-underline df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink"
+						className="deferforms-inline-flex deferforms-h-9 deferforms-w-9 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-text-stone-400 deferforms-no-underline deferforms-transition-colors hover:deferforms-bg-stone-50 hover:deferforms-text-ink"
 					>
-						<Settings className="df7-h-4 df7-w-4" />
+						<Settings className="deferforms-h-4 deferforms-w-4" />
 					</a>
 				</div>
 			</div>
@@ -558,36 +558,36 @@ const FormCard = ( { form, onDelete } ) => {
  * moment the fetch returned, and the whole grid below them moved with it.
  */
 const SkeletonCard = () => (
-	<div className="df7-flex df7-h-full df7-flex-col df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-5">
-		<div className="df7-mb-3 df7-flex df7-items-start df7-justify-between">
-			<div className="df7-h-11 df7-w-11 df7-animate-pulse df7-rounded-xl df7-bg-stone-100" />
+	<div className="deferforms-flex deferforms-h-full deferforms-flex-col deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-5">
+		<div className="deferforms-mb-3 deferforms-flex deferforms-items-start deferforms-justify-between">
+			<div className="deferforms-h-11 deferforms-w-11 deferforms-animate-pulse deferforms-rounded-xl deferforms-bg-stone-100" />
 			{ /* The id, beside a 28px delete button that sets this row's height. */ }
-			<div className="df7-flex df7-h-7 df7-items-center">
-				<Shimmer w="df7-w-8" text="df7-text-[14px]" />
+			<div className="deferforms-flex deferforms-h-7 deferforms-items-center">
+				<Shimmer w="deferforms-w-8" text="deferforms-text-[14px]" />
 			</div>
 		</div>
 
-		<Shimmer as="h3" w="df7-w-3/4" text="df7-text-base" />
-		<Shimmer as="p" w="df7-w-1/2" text="df7-text-[14px]" className="df7-mt-1" />
+		<Shimmer as="h3" w="deferforms-w-3/4" text="deferforms-text-base" />
+		<Shimmer as="p" w="deferforms-w-1/2" text="deferforms-text-[14px]" className="deferforms-mt-1" />
 
-		<div className="df7-mt-2 df7-flex df7-items-baseline df7-gap-2">
-			<Shimmer w="df7-w-16" text="df7-text-2xl" />
-			<Shimmer w="df7-w-12" text="df7-text-sm" />
+		<div className="deferforms-mt-2 deferforms-flex deferforms-items-baseline deferforms-gap-2">
+			<Shimmer w="deferforms-w-16" text="deferforms-text-2xl" />
+			<Shimmer w="deferforms-w-12" text="deferforms-text-sm" />
 		</div>
 
-		<Shimmer as="p" w="df7-w-1/2" text="df7-text-[14px]" className="df7-mt-1" />
+		<Shimmer as="p" w="deferforms-w-1/2" text="deferforms-text-[14px]" className="deferforms-mt-1" />
 
 		<ShortcodeBox code="" loading />
 
-		<div className="df7-mt-4 df7-flex df7-flex-col df7-gap-2 df7-border-t df7-border-line df7-pt-4">
-			<div className="df7-flex df7-gap-2">
-				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
-				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+		<div className="deferforms-mt-4 deferforms-flex deferforms-flex-col deferforms-gap-2 deferforms-border-t deferforms-border-line deferforms-pt-4">
+			<div className="deferforms-flex deferforms-gap-2">
+				<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
+				<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
 			</div>
-			<div className="df7-flex df7-gap-2">
-				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
-				<div className="df7-h-9 df7-flex-1 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
-				<div className="df7-h-9 df7-w-9 df7-shrink-0 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+			<div className="deferforms-flex deferforms-gap-2">
+				<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
+				<div className="deferforms-h-9 deferforms-flex-1 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
+				<div className="deferforms-h-9 deferforms-w-9 deferforms-shrink-0 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
 			</div>
 		</div>
 	</div>
@@ -605,7 +605,7 @@ const App = () => {
 	// Named, because an import adds forms this list has never seen and the only
 	// honest way to show them is to ask again.
 	const load = () =>
-		apiFetch( { path: 'df7/v1/forms/overview' } )
+		apiFetch( { path: 'deferforms/v1/forms/overview' } )
 			.then( ( res ) => {
 				setForms( res );
 				setError( null );
@@ -629,9 +629,9 @@ const App = () => {
 		<button
 			type="button"
 			onClick={ () => setCreating( true ) }
-			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border-0 df7-bg-ink df7-px-4 df7-text-sm df7-font-semibold df7-text-white df7-transition-opacity hover:df7-opacity-90"
+			className="deferforms-inline-flex deferforms-h-10 deferforms-cursor-pointer deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border-0 deferforms-bg-ink deferforms-px-4 deferforms-text-sm deferforms-font-semibold deferforms-text-white deferforms-transition-opacity hover:deferforms-opacity-90"
 		>
-			<Plus className="df7-h-4 df7-w-4" />
+			<Plus className="deferforms-h-4 deferforms-w-4" />
 			{ __( 'New form', 'defer-forms-for-contact-form-7' ) }
 		</button>
 	);
@@ -640,9 +640,9 @@ const App = () => {
 		<button
 			type="button"
 			onClick={ () => setTransfer( true ) }
-			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-transition-colors hover:df7-bg-stone-50"
+			className="deferforms-inline-flex deferforms-h-10 deferforms-cursor-pointer deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-px-4 deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-transition-colors hover:deferforms-bg-stone-50"
 		>
-			<ArrowDownUp className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			<ArrowDownUp className="deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 			{ __( 'Import / Export', 'defer-forms-for-contact-form-7' ) }
 		</button>
 	);
@@ -651,10 +651,10 @@ const App = () => {
 	// form, and a Styling button on each card would promise otherwise.
 	const stylingLink = (
 		<a
-			href="admin.php?page=df7-styling"
-			className="df7-inline-flex df7-h-10 df7-cursor-pointer df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-4 df7-text-sm df7-font-semibold df7-text-ink df7-no-underline df7-transition-colors hover:df7-bg-stone-50"
+			href="admin.php?page=deferforms-styling"
+			className="deferforms-inline-flex deferforms-h-10 deferforms-cursor-pointer deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-px-4 deferforms-text-sm deferforms-font-semibold deferforms-text-ink deferforms-no-underline deferforms-transition-colors hover:deferforms-bg-stone-50"
 		>
-			<Palette className="df7-h-4 df7-w-4 df7-text-stone-400" />
+			<Palette className="deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 			{ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
 		</a>
 	);
@@ -662,7 +662,7 @@ const App = () => {
 	const renderBody = () => {
 		if ( loading ) {
 			return (
-				<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
+				<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 sm:deferforms-grid-cols-2 lg:deferforms-grid-cols-3 xl:deferforms-grid-cols-4">
 					{ Array.from( { length: 8 } ).map( ( _, i ) => <SkeletonCard key={ i } /> ) }
 				</div>
 			);
@@ -670,14 +670,14 @@ const App = () => {
 
 		if ( 0 === forms.length ) {
 			return (
-				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-py-24 df7-text-center">
-					<div className="df7-mb-4 df7-flex df7-h-16 df7-w-16 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-stone-50 df7-text-stone-400">
-						<FileText className="df7-h-8 df7-w-8" />
+				<div className="deferforms-flex deferforms-flex-col deferforms-items-center deferforms-justify-center deferforms-py-24 deferforms-text-center">
+					<div className="deferforms-mb-4 deferforms-flex deferforms-h-16 deferforms-w-16 deferforms-items-center deferforms-justify-center deferforms-rounded-2xl deferforms-bg-stone-50 deferforms-text-stone-400">
+						<FileText className="deferforms-h-8 deferforms-w-8" />
 					</div>
-					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">
+					<h3 className="deferforms-m-0 deferforms-text-lg deferforms-font-bold deferforms-text-ink">
 						{ __( 'No forms yet', 'defer-forms-for-contact-form-7' ) }
 					</h3>
-					<p className="df7-mb-4 df7-mt-1 df7-text-sm df7-text-stone-500">
+					<p className="deferforms-mb-4 deferforms-mt-1 deferforms-text-sm deferforms-text-stone-500">
 						{ __( 'Create your first Contact Form 7 form to get started.', 'defer-forms-for-contact-form-7' ) }
 					</p>
 					{ newFormButton }
@@ -687,14 +687,14 @@ const App = () => {
 
 		if ( 0 === filtered.length ) {
 			return (
-				<div className="df7-py-20 df7-text-center df7-text-sm df7-text-stone-500">
+				<div className="deferforms-py-20 deferforms-text-center deferforms-text-sm deferforms-text-stone-500">
 					{ __( 'No forms match your search.', 'defer-forms-for-contact-form-7' ) }
 				</div>
 			);
 		}
 
 		return (
-			<div className="df7-grid df7-grid-cols-1 df7-gap-4 sm:df7-grid-cols-2 lg:df7-grid-cols-3 xl:df7-grid-cols-4">
+			<div className="deferforms-grid deferforms-grid-cols-1 deferforms-gap-4 sm:deferforms-grid-cols-2 lg:deferforms-grid-cols-3 xl:deferforms-grid-cols-4">
 				{ filtered.map( ( form ) => <FormCard key={ form.form_id } form={ form } onDelete={ () => setDeleting( form ) } /> ) }
 			</div>
 		);
@@ -709,19 +709,19 @@ const App = () => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">
 					{ error }
 				</div>
 			) }
 
-			<div className="df7-mb-6 df7-relative df7-w-full sm:df7-w-80">
-				<Search className="df7-pointer-events-none df7-absolute df7-left-3 df7-top-1/2 df7-h-4 df7-w-4 -df7-translate-y-1/2 df7-text-stone-400" />
+			<div className="deferforms-mb-6 deferforms-relative deferforms-w-full sm:deferforms-w-80">
+				<Search className="deferforms-pointer-events-none deferforms-absolute deferforms-left-3 deferforms-top-1/2 deferforms-h-4 deferforms-w-4 -deferforms-translate-y-1/2 deferforms-text-stone-400" />
 				<input
 					type="search"
 					value={ search }
 					onChange={ ( event ) => setSearch( event.target.value ) }
 					placeholder={ __( 'Search forms…', 'defer-forms-for-contact-form-7' ) }
-					className={ `df7-h-9 df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-pl-10 df7-pr-3 df7-text-sm df7-text-ink df7-transition-colors placeholder:df7-text-stone-400 ${ focusRing }` }
+					className={ `deferforms-h-9 deferforms-w-full deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-pl-10 deferforms-pr-3 deferforms-text-sm deferforms-text-ink deferforms-transition-colors placeholder:deferforms-text-stone-400 ${ focusRing }` }
 				/>
 			</div>
 
@@ -751,7 +751,7 @@ const App = () => {
 	);
 };
 
-const mount = document.getElementById( 'df7-forms-root' );
+const mount = document.getElementById( 'deferforms-forms-root' );
 if ( mount ) {
 	createRoot( mount ).render( <App /> );
 }

@@ -311,22 +311,22 @@ const CONDITION_OPS = [
 ];
 const VALUELESS_OPS = [ 'empty', 'notempty' ];
 
-const COLS    = 'df7-grid-cols-[20px_28px_minmax(0,1.4fr)_minmax(0,1fr)_120px_104px]';
-const inputCls  = `${ control } df7-w-full`;
+const COLS    = 'deferforms-grid-cols-[20px_28px_minmax(0,1.4fr)_minmax(0,1fr)_120px_104px]';
+const inputCls  = `${ control } deferforms-w-full`;
 // Same look as `control` but without its fixed height: every Tailwind utility
 // here is `!important`, so a height class would beat the inline height the
 // browser writes while you drag the resize grip — and the textarea would refuse
 // to resize. Initial size comes from the `rows` attribute instead.
-const textareaCls = `df7-w-full df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-px-3 df7-py-2 df7-text-sm df7-leading-relaxed df7-text-ink df7-transition-colors ${ focusRing }`;
+const textareaCls = `deferforms-w-full deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-px-3 deferforms-py-2 deferforms-text-sm deferforms-leading-relaxed deferforms-text-ink deferforms-transition-colors ${ focusRing }`;
 const ghostBtn  = btnGhost;
 const accentBtn = btnPrimary;
 
 /* ---------- Settings form ---------- */
 const LField = ( { label, hint, children } ) => (
-	<div className="df7-flex df7-flex-col df7-gap-1.5">
-		<span className="df7-text-[14px] df7-font-semibold df7-text-ink">{ label }</span>
+	<div className="deferforms-flex deferforms-flex-col deferforms-gap-1.5">
+		<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink">{ label }</span>
 		{ children }
-		{ hint && <span className="df7-text-[14px] df7-text-stone-400">{ hint }</span> }
+		{ hint && <span className="deferforms-text-[14px] deferforms-text-stone-400">{ hint }</span> }
 	</div>
 );
 
@@ -368,7 +368,7 @@ const SETTINGS_TABS = [
 	{ id: 'advanced',    label: () => __( 'Advanced', 'defer-forms-for-contact-form-7' ) },
 ];
 
-const TwoCol = ( { children } ) => <div className="df7-grid df7-grid-cols-2 df7-gap-3">{ children }</div>;
+const TwoCol = ( { children } ) => <div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-3">{ children }</div>;
 
 // Keyed by pattern so the two lists can be checked against each other; the
 // strings are literal so a translation scanner can pick them up.
@@ -447,7 +447,7 @@ const RedirectDestination = ( { redirect, items, onChange } ) => {
 					hint={ __( 'Stored by page, not by address — renaming the page keeps the redirect working.', 'defer-forms-for-contact-form-7' ) }
 				>
 					{ null === pages ? (
-						<div className="df7-h-9 df7-w-full df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+						<div className="deferforms-h-9 deferforms-w-full deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
 					) : (
 						// No "— Select a page —" entry: nothing chosen is a page id of
 						// 0, which matches no option, and the placeholder says so. An
@@ -504,11 +504,11 @@ const RedirectParams = ( { redirect, items, onChange } ) => {
 			label={ __( 'Extra query parameters', 'defer-forms-for-contact-form-7' ) }
 			hint={ __( 'Added to the address. A value in square brackets is filled in from the submission. These end up in the address bar and browser history, so leave personal details out of them.', 'defer-forms-for-contact-form-7' ) }
 		>
-			<div className="df7-flex df7-flex-col df7-gap-2">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-2">
 				{ rows.map( ( row, i ) => (
-					<div key={ i } className="df7-flex df7-items-center df7-gap-2">
+					<div key={ i } className="deferforms-flex deferforms-items-center deferforms-gap-2">
 						<input
-							className={ `${ inputCls } df7-w-40` }
+							className={ `${ inputCls } deferforms-w-40` }
 							placeholder={ __( 'name', 'defer-forms-for-contact-form-7' ) }
 							value={ row.key || '' }
 							onChange={ ( event ) => set( i, { key: event.target.value } ) }
@@ -525,22 +525,22 @@ const RedirectParams = ( { redirect, items, onChange } ) => {
 							aria-label={ __( 'Remove', 'defer-forms-for-contact-form-7' ) }
 							onClick={ () => onChange( { params: rows.filter( ( _, n ) => n !== i ) } ) }
 						>
-							<Trash2 className="df7-h-4 df7-w-4" />
+							<Trash2 className="deferforms-h-4 deferforms-w-4" />
 						</button>
 					</div>
 				) ) }
 
 				<button
 					type="button"
-					className={ `${ btnGhost } df7-self-start` }
+					className={ `${ btnGhost } deferforms-self-start` }
 					onClick={ () => onChange( { params: [ ...rows, { key: '', value: '' } ] } ) }
 				>
-					<Plus className="df7-h-4 df7-w-4" />
+					<Plus className="deferforms-h-4 deferforms-w-4" />
 					{ __( 'Add parameter', 'defer-forms-for-contact-form-7' ) }
 				</button>
 
 				{ !! names.length && (
-					<p className="df7-text-[14px] df7-text-stone-400">
+					<p className="deferforms-text-[14px] deferforms-text-stone-400">
 						{ __( 'Available fields:', 'defer-forms-for-contact-form-7' ) }{ ' ' }
 						<code>{ names.map( ( name ) => `[${ name }]` ).join( ' ' ) }</code>
 					</p>
@@ -600,11 +600,11 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'heading' === kind ) {
 		return (
-			<div className="df7-flex df7-flex-col df7-gap-5">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 				<LField label={ __( 'Text', 'defer-forms-for-contact-form-7' ) }>
 					<input className={ inputCls } value={ field.text || '' } onChange={ ( event ) => onChange( { text: event.target.value } ) } />
 				</LField>
-				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+				<div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-3">
 					<LField label={ __( 'Level', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
@@ -636,11 +636,11 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'paragraph' === kind ) {
 		return (
-			<div className="df7-flex df7-flex-col df7-gap-5">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 				<LField label={ __( 'Text', 'defer-forms-for-contact-form-7' ) }>
 					<textarea className={ textareaCls } rows={ 6 } value={ field.text || '' } onChange={ ( event ) => onChange( { text: event.target.value } ) } />
 				</LField>
-				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+				<div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-3">
 					<LField label={ __( 'Size', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
@@ -672,8 +672,8 @@ const ContentSettings = ( { field, onChange } ) => {
 
 	if ( 'divider' === kind ) {
 		return (
-			<div className="df7-flex df7-flex-col df7-gap-5">
-				<div className="df7-grid df7-grid-cols-2 df7-gap-3">
+			<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
+				<div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-3">
 					<LField label={ __( 'Style', 'defer-forms-for-contact-form-7' ) }>
 						<Select
 							inline
@@ -766,7 +766,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 	return (
 		<>
 			<Tabs
-				className="df7-mb-5"
+				className="deferforms-mb-5"
 				active={ tab }
 				onChange={ onTab }
 				tabs={ SETTINGS_TABS
@@ -777,7 +777,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			<div key={ tab }>
 
 			{ 'general' === tab && (
-				<div className="df7-flex df7-flex-col df7-gap-5">
+				<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 					{ /* A field that renders no caption of its own gets no label box. */ }
 					{ ! NO_CAPTION.includes( t ) && (
 						<LField
@@ -800,7 +800,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 									options={ countTargets.map( ( other ) => ( { value: other.name, label: other.label || other.name } ) ) }
 								/>
 							) : (
-								<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-p-3.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+								<div className="deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-p-3.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">
 									{ __( 'Add a text or textarea field first — a count needs something to count.', 'defer-forms-for-contact-form-7' ) }
 								</div>
 							) }
@@ -816,11 +816,11 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ showsRequired( t ) && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Required field', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Required field', 'defer-forms-for-contact-form-7' ) }</span>
 								{ requiredLocked( t ) && !! REQUIRED_LOCK_REASON[ t ] && (
-									<span className="df7-text-[14px] df7-text-stone-400">{ REQUIRED_LOCK_REASON[ t ]() }</span>
+									<span className="deferforms-text-[14px] deferforms-text-stone-400">{ REQUIRED_LOCK_REASON[ t ]() }</span>
 								) }
 							</div>
 							<Toggle
@@ -832,10 +832,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					) }
 					{ 'tel' === t && (
 						<>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<div className="df7-flex df7-flex-col">
-									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Numbers only', 'defer-forms-for-contact-form-7' ) }</span>
-									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Letters cannot be typed or pasted into the field.', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<div className="deferforms-flex deferforms-flex-col">
+									<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Numbers only', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Letters cannot be typed or pasted into the field.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle
 									checked={ !! field.digitsonly || !! field.telformat }
@@ -847,26 +847,26 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</>
 					) }
 					{ 'date' === t && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Styled date picker', 'defer-forms-for-contact-form-7' ) }</span>
-								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Off uses the browser native picker.', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Styled date picker', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Off uses the browser native picker.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ 'native' !== ( field.picker || 'styled' ) } onChange={ ( value ) => onChange( { picker: value ? 'styled' : 'native' } ) } />
 						</div>
 					) }
 					{ 'acceptance' === t && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Pre-checked', 'defer-forms-for-contact-form-7' ) }</span>
-								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Tick the box by default.', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Pre-checked', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Tick the box by default.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ 'on' === field.default } onChange={ ( value ) => onChange( { default: value ? 'on' : '' } ) } />
 						</div>
 					) }
 					{ 'submission_id' === t && (
 						<>
-							<div className="df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-p-3.5 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+							<div className="deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-p-3.5 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">
 								{ __( 'A sequential number, allocated when the form is sent. It is never shown on the page — printing it would tell visitors how many submissions you have had — so use it in the mail template as [your-field-name].', 'defer-forms-for-contact-form-7' ) }
 							</div>
 							<TwoCol>
@@ -889,12 +889,12 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 									<input type="number" min="1" max="200" className={ inputCls } value={ opt.limit || '' } placeholder="50" onChange={ ( event ) => setOption( 'limit', event.target.value ) } />
 								</LField>
 							</TwoCol>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Show the price', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Show the price', 'defer-forms-for-contact-form-7' ) }</span>
 								<Toggle checked={ !! opt.show_price } onChange={ ( value ) => setOption( 'show_price', value || undefined ) } />
 							</div>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'In-stock products only', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'In-stock products only', 'defer-forms-for-contact-form-7' ) }</span>
 								<Toggle checked={ !! opt.in_stock } onChange={ ( value ) => setOption( 'in_stock', value || undefined ) } />
 							</div>
 						</>
@@ -961,10 +961,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ 'count' === t && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Count down', 'defer-forms-for-contact-form-7' ) }</span>
-								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Characters left rather than characters typed. It needs a maximum length on the counted field to count down from.', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Count down', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Characters left rather than characters typed. It needs a maximum length on the counted field to count down from.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! opt.down } onChange={ ( value ) => setOption( 'down', value || undefined ) } />
 						</div>
@@ -979,27 +979,27 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ [ 'select', 'country' ].includes( t ) && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Searchable', 'defer-forms-for-contact-form-7' ) }</span>
-								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Adds a filter box inside the dropdown.', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Searchable', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Adds a filter box inside the dropdown.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! field.searchable } onChange={ ( value ) => onChange( { searchable: value } ) } />
 						</div>
 					) }
 					{ 'select' === t && (
 						<>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<div className="df7-flex df7-flex-col">
-									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Allow multiple selections', 'defer-forms-for-contact-form-7' ) }</span>
-									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Renders a multi-select list.', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<div className="deferforms-flex deferforms-flex-col">
+									<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Allow multiple selections', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Renders a multi-select list.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.multiple } onChange={ ( value ) => setOption( 'multiple', value || undefined ) } />
 							</div>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<div className="df7-flex df7-flex-col">
-									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Blank first option', 'defer-forms-for-contact-form-7' ) }</span>
-									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Starts empty so nothing is preselected.', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<div className="deferforms-flex deferforms-flex-col">
+									<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Blank first option', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Starts empty so nothing is preselected.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.include_blank } onChange={ ( value ) => setOption( 'include_blank', value || undefined ) } />
 							</div>
@@ -1020,10 +1020,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 						</LField>
 					) }
 					{ 'checkbox' === t && (
-						<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-							<div className="df7-flex df7-flex-col">
-								<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Exclusive', 'defer-forms-for-contact-form-7' ) }</span>
-								<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Only one box can be ticked at a time.', 'defer-forms-for-contact-form-7' ) }</span>
+						<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+							<div className="deferforms-flex deferforms-flex-col">
+								<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Exclusive', 'defer-forms-for-contact-form-7' ) }</span>
+								<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Only one box can be ticked at a time.', 'defer-forms-for-contact-form-7' ) }</span>
 							</div>
 							<Toggle checked={ !! opt.exclusive } onChange={ ( value ) => setOption( 'exclusive', value || undefined ) } />
 						</div>
@@ -1032,7 +1032,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			) }
 
 			{ 'validation' === tab && (
-				<div className="df7-flex df7-flex-col df7-gap-5">
+				<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 					{ [ 'text', 'email', 'tel', 'url', 'password', 'textarea' ].includes( t ) && (
 						<TwoCol>
 							<LField label={ __( 'Min length', 'defer-forms-for-contact-form-7' ) }>
@@ -1070,10 +1070,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 					) }
 					{ 'file' === t && (
 						<>
-							<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-								<div className="df7-flex df7-flex-col">
-									<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Allow multiple files', 'defer-forms-for-contact-form-7' ) }</span>
-									<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Visitors can attach more than one file.', 'defer-forms-for-contact-form-7' ) }</span>
+							<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+								<div className="deferforms-flex deferforms-flex-col">
+									<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Allow multiple files', 'defer-forms-for-contact-form-7' ) }</span>
+									<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Visitors can attach more than one file.', 'defer-forms-for-contact-form-7' ) }</span>
 								</div>
 								<Toggle checked={ !! opt.multiple } onChange={ ( value ) => setOption( 'multiple', value || undefined ) } />
 							</div>
@@ -1094,11 +1094,11 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 			) }
 
 			{ 'conditional' === tab && (
-				<div className="df7-flex df7-flex-col df7-gap-5">
-					<div className="df7-flex df7-items-center df7-justify-between df7-rounded-lg df7-border df7-border-line df7-bg-stone-50/60 df7-px-3.5 df7-py-2.5">
-						<div className="df7-flex df7-flex-col">
-							<span className="df7-text-sm df7-font-semibold df7-text-ink">{ __( 'Conditional display', 'defer-forms-for-contact-form-7' ) }</span>
-							<span className="df7-text-[14px] df7-text-stone-400">{ __( 'Show or hide this field based on another field.', 'defer-forms-for-contact-form-7' ) }</span>
+				<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
+					<div className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-3.5 deferforms-py-2.5">
+						<div className="deferforms-flex deferforms-flex-col">
+							<span className="deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ __( 'Conditional display', 'defer-forms-for-contact-form-7' ) }</span>
+							<span className="deferforms-text-[14px] deferforms-text-stone-400">{ __( 'Show or hide this field based on another field.', 'defer-forms-for-contact-form-7' ) }</span>
 						</div>
 						<Toggle
 							checked={ !! field.condition }
@@ -1112,10 +1112,10 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 								const groups   = field.condition.groups;
 								const setGroups = ( nextGroups ) => onChange( { condition: { ...field.condition, groups: nextGroups } } );
 								return (
-									<div className="df7-flex df7-flex-col df7-gap-2">
-										<div className="df7-flex df7-items-center df7-gap-2 df7-text-sm df7-text-stone-500">
+									<div className="deferforms-flex deferforms-flex-col deferforms-gap-2">
+										<div className="deferforms-flex deferforms-items-center deferforms-gap-2 deferforms-text-sm deferforms-text-stone-500">
 											<Select
-												className="df7-w-40"
+												className="deferforms-w-40"
 												value={ field.condition.action || 'show' }
 												onChange={ ( value ) => onChange( { condition: { ...field.condition, action: value } } ) }
 												options={ [
@@ -1128,13 +1128,13 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 										{ groups.map( ( group, gi ) => (
 											<Fragment key={ gi }>
 												{ gi > 0 && (
-													<div className="df7-flex df7-items-center df7-gap-2 df7-py-0.5">
-														<span className="df7-h-px df7-flex-1 df7-bg-line" />
-														<span className="df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-widest df7-text-stone-400">{ __( 'or', 'defer-forms-for-contact-form-7' ) }</span>
-														<span className="df7-h-px df7-flex-1 df7-bg-line" />
+													<div className="deferforms-flex deferforms-items-center deferforms-gap-2 deferforms-py-0.5">
+														<span className="deferforms-h-px deferforms-flex-1 deferforms-bg-line" />
+														<span className="deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-widest deferforms-text-stone-400">{ __( 'or', 'defer-forms-for-contact-form-7' ) }</span>
+														<span className="deferforms-h-px deferforms-flex-1 deferforms-bg-line" />
 													</div>
 												) }
-												<div className="df7-flex df7-flex-col df7-gap-1.5 df7-rounded-lg df7-border df7-border-line df7-p-2">
+												<div className="deferforms-flex deferforms-flex-col deferforms-gap-1.5 deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-p-2">
 													{ group.rules.map( ( rule, ri ) => {
 														const setRule = ( patch ) => setGroups( groups.map( ( each, eachIndex ) => ( eachIndex === gi ? { ...each, rules: each.rules.map( ( eachRule, eachRuleIndex ) => ( eachRuleIndex === ri ? { ...eachRule, ...patch } : eachRule ) ) } : each ) ) );
 														const dropRule = () => {
@@ -1145,12 +1145,12 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 															setGroups( next );
 														};
 														return (
-															<div key={ ri } className="df7-flex df7-flex-col df7-gap-1.5">
-																{ ri > 0 && <span className="df7-pl-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">{ __( 'and', 'defer-forms-for-contact-form-7' ) }</span> }
-																<div className="df7-flex df7-items-start df7-gap-1.5">
+															<div key={ ri } className="deferforms-flex deferforms-flex-col deferforms-gap-1.5">
+																{ ri > 0 && <span className="deferforms-pl-0.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">{ __( 'and', 'defer-forms-for-contact-form-7' ) }</span> }
+																<div className="deferforms-flex deferforms-items-start deferforms-gap-1.5">
 																	<Select
 																		inline
-																		className="df7-min-w-0 df7-basis-0 df7-flex-1"
+																		className="deferforms-min-w-0 deferforms-basis-0 deferforms-flex-1"
 																		placeholder={ __( 'Field…', 'defer-forms-for-contact-form-7' ) }
 																		value={ rule.field }
 																		onChange={ ( value ) => setRule( { field: value } ) }
@@ -1158,18 +1158,18 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 																	/>
 																	<Select
 																		inline
-																		className="df7-w-44 df7-shrink-0"
+																		className="deferforms-w-44 deferforms-shrink-0"
 																		value={ rule.operator }
 																		onChange={ ( value ) => setRule( { operator: value } ) }
 																		options={ CONDITION_OPS.map( ( op ) => ( { value: op.id, label: op.label() } ) ) }
 																	/>
 																	{ ! VALUELESS_OPS.includes( rule.operator ) && (
-																		<div className="df7-min-w-0 df7-basis-0 df7-flex-1">
+																		<div className="deferforms-min-w-0 deferforms-basis-0 deferforms-flex-1">
 																			<input className={ inputCls } value={ rule.value || '' } placeholder={ __( 'Value', 'defer-forms-for-contact-form-7' ) } onChange={ ( event ) => setRule( { value: event.target.value } ) } />
 																		</div>
 																	) }
-																	<button type="button" className="df7-flex df7-h-9 df7-shrink-0 df7-items-center df7-text-stone-400 hover:df7-text-red-500" onClick={ dropRule } aria-label={ __( 'Remove', 'defer-forms-for-contact-form-7' ) }>
-																		<X className="df7-h-4 df7-w-4" />
+																	<button type="button" className="deferforms-flex deferforms-h-9 deferforms-shrink-0 deferforms-items-center deferforms-text-stone-400 hover:deferforms-text-red-500" onClick={ dropRule } aria-label={ __( 'Remove', 'defer-forms-for-contact-form-7' ) }>
+																		<X className="deferforms-h-4 deferforms-w-4" />
 																	</button>
 																</div>
 															</div>
@@ -1177,33 +1177,33 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
 													} ) }
 													<button
 														type="button"
-														className="df7-flex df7-items-center df7-gap-1 df7-self-start df7-pl-0.5 df7-pt-0.5 df7-text-[14px] df7-font-semibold df7-text-ink/60 hover:df7-text-ink"
+														className="deferforms-flex deferforms-items-center deferforms-gap-1 deferforms-self-start deferforms-pl-0.5 deferforms-pt-0.5 deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink/60 hover:deferforms-text-ink"
 														onClick={ () => setGroups( groups.map( ( each, eachIndex ) => ( eachIndex === gi ? { ...each, rules: [ ...each.rules, { field: '', operator: 'eq', value: '' } ] } : each ) ) ) }
 													>
-														<Plus className="df7-h-3.5 df7-w-3.5" /> { __( 'AND', 'defer-forms-for-contact-form-7' ) }
+														<Plus className="deferforms-h-3.5 deferforms-w-3.5" /> { __( 'AND', 'defer-forms-for-contact-form-7' ) }
 													</button>
 												</div>
 											</Fragment>
 										) ) }
 										<button
 											type="button"
-											className={ `${ ghostBtn } df7-self-start` }
+											className={ `${ ghostBtn } deferforms-self-start` }
 											onClick={ () => setGroups( [ ...groups, { rules: [ { field: '', operator: 'eq', value: '' } ] } ] ) }
 										>
-											<Plus className="df7-h-4 df7-w-4" /> { __( 'OR group', 'defer-forms-for-contact-form-7' ) }
+											<Plus className="deferforms-h-4 deferforms-w-4" /> { __( 'OR group', 'defer-forms-for-contact-form-7' ) }
 										</button>
 									</div>
 								);
 							} )()
 						) : (
-							<p className="df7-text-sm df7-text-stone-400">{ __( 'Add another named field first to build a rule.', 'defer-forms-for-contact-form-7' ) }</p>
+							<p className="deferforms-text-sm deferforms-text-stone-400">{ __( 'Add another named field first to build a rule.', 'defer-forms-for-contact-form-7' ) }</p>
 						)
 					) }
 				</div>
 			) }
 
 			{ 'advanced' === tab && (
-				<div className="df7-flex df7-flex-col df7-gap-5">
+				<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 					{ ( TEXT_LIKE.includes( t ) || 'range' === t ) && (
 						<LField label={ __( 'Default value', 'defer-forms-for-contact-form-7' ) }>
 							<input className={ inputCls } value={ field.default || '' } onChange={ ( event ) => onChange( { default: event.target.value } ) } />
@@ -1247,7 +1247,7 @@ const FieldSettingsForm = ( { field, onChange, availableFields = [], tab = 'gene
  * out the wording for one it does not have.
  */
 const StepSettingsForm = ( { step, nav, onChange } ) => (
-	<div className="df7-flex df7-flex-col df7-gap-4">
+	<div className="deferforms-flex deferforms-flex-col deferforms-gap-4">
 		<LField label={ __( 'Step title', 'defer-forms-for-contact-form-7' ) } hint={ __( 'Shown above the fields on this step.', 'defer-forms-for-contact-form-7' ) }>
 			<input
 				className={ inputCls }
@@ -1305,14 +1305,14 @@ const REQUIREMENT = {
 const TypePicker = ( { onPick } ) => {
 	// Written by Menu::hand_over() on this screen. Missing while the bundle runs
 	// anywhere else, and an unmet requirement is the safe reading of that.
-	const capabilities = window.df7Builder || {};
+	const capabilities = window.deferformsBuilder || {};
 
 	return (
-		<div className="df7-flex df7-flex-col df7-gap-5">
+		<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 			{ FIELD_LIBRARY.map( ( group ) => (
 				<div key={ group.id }>
-					<div className="df7-mb-2 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">{ group.label }</div>
-					<div className="df7-grid df7-grid-cols-2 df7-gap-2 sm:df7-grid-cols-3">
+					<div className="deferforms-mb-2 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">{ group.label }</div>
+					<div className="deferforms-grid deferforms-grid-cols-2 deferforms-gap-2 sm:deferforms-grid-cols-3">
 						{ group.fields.map( ( entry ) => {
 							const missing = entry.requires && ! capabilities[ entry.requires ];
 							const reason  = missing ? REQUIREMENT[ entry.requires ]?.() : null;
@@ -1324,16 +1324,16 @@ const TypePicker = ( { onPick } ) => {
 									disabled={ !! missing }
 									title={ reason?.title }
 									onClick={ () => onPick( entry.type ) }
-									className={ `df7-flex df7-items-center df7-gap-2.5 df7-rounded-xl df7-border df7-border-stroke df7-px-3 df7-py-2.5 df7-text-left df7-transition-colors ${ missing ? 'df7-cursor-not-allowed df7-bg-stone-50' : 'df7-cursor-pointer df7-bg-white hover:df7-border-accent hover:df7-bg-accent-50' }` }
+									className={ `deferforms-flex deferforms-items-center deferforms-gap-2.5 deferforms-rounded-xl deferforms-border deferforms-border-stroke deferforms-px-3 deferforms-py-2.5 deferforms-text-left deferforms-transition-colors ${ missing ? 'deferforms-cursor-not-allowed deferforms-bg-stone-50' : 'deferforms-cursor-pointer deferforms-bg-white hover:deferforms-border-accent hover:deferforms-bg-accent-50' }` }
 								>
-									<span className={ `df7-flex df7-h-8 df7-w-8 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-lg df7-bg-stone-100 ${ missing ? 'df7-text-stone-400' : 'df7-text-stone-500' }` }>
-										<Ico className="df7-h-4 df7-w-4" />
+									<span className={ `deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-shrink-0 deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-bg-stone-100 ${ missing ? 'deferforms-text-stone-400' : 'deferforms-text-stone-500' }` }>
+										<Ico className="deferforms-h-4 deferforms-w-4" />
 									</span>
-									<span className="df7-flex df7-min-w-0 df7-flex-col">
-										<span className={ `df7-truncate df7-text-[14px] df7-font-semibold ${ missing ? 'df7-text-stone-400' : 'df7-text-ink' }` }>{ entry.label }</span>
+									<span className="deferforms-flex deferforms-min-w-0 deferforms-flex-col">
+										<span className={ `deferforms-truncate deferforms-text-[14px] deferforms-font-semibold ${ missing ? 'deferforms-text-stone-400' : 'deferforms-text-ink' }` }>{ entry.label }</span>
 										{ reason
-											? <span className="df7-truncate df7-text-[14px] df7-text-stone-400">{ reason.caption }</span>
-											: <span className="df7-text-[12px] df7-text-stone-400">{ entry.type }</span> }
+											? <span className="deferforms-truncate deferforms-text-[14px] deferforms-text-stone-400">{ reason.caption }</span>
+											: <span className="deferforms-text-[12px] deferforms-text-stone-400">{ entry.type }</span> }
 									</span>
 								</button>
 							);
@@ -1393,40 +1393,40 @@ const revisionWhen = ( unix ) => {
  */
 const RevisionList = ( { state, onPick } ) => {
 	if ( state.error ) {
-		return <div className="df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">{ state.error }</div>;
+		return <div className="deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-3.5 deferforms-py-2.5 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">{ state.error }</div>;
 	}
 
 	if ( state.loading && ! state.list.length ) {
-		return <p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">{ __( 'Loading…', 'defer-forms-for-contact-form-7' ) }</p>;
+		return <p className="deferforms-m-0 deferforms-text-center deferforms-text-sm deferforms-text-stone-400">{ __( 'Loading…', 'defer-forms-for-contact-form-7' ) }</p>;
 	}
 
 	if ( ! state.list.length ) {
 		return (
-			<p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">
+			<p className="deferforms-m-0 deferforms-text-center deferforms-text-sm deferforms-text-stone-400">
 				{ __( 'No earlier versions yet. One is kept each time you save.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 		);
 	}
 
 	return (
-		<div className="df7-flex df7-flex-col df7-gap-2">
-			<p className="df7-mb-2 df7-mt-0 df7-text-[14px] df7-leading-relaxed df7-text-stone-500">
+		<div className="deferforms-flex deferforms-flex-col deferforms-gap-2">
+			<p className="deferforms-mb-2 deferforms-mt-0 deferforms-text-[14px] deferforms-leading-relaxed deferforms-text-stone-500">
 				{ __( 'Opening a version loads it onto the canvas — nothing is saved until you press Save, and Ctrl+Z puts it back.', 'defer-forms-for-contact-form-7' ) }
 			</p>
 
 			{ state.list.map( ( entry, index ) => (
 				<div
 					key={ entry.rev }
-					className="df7-flex df7-items-center df7-gap-3 df7-rounded-xl df7-border df7-border-line df7-bg-white df7-px-4 df7-py-3"
+					className="deferforms-flex deferforms-items-center deferforms-gap-3 deferforms-rounded-xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-px-4 deferforms-py-3"
 				>
-					<span className="df7-flex-1 df7-text-sm df7-font-semibold df7-text-ink">{ revisionWhen( entry.time ) }</span>
+					<span className="deferforms-flex-1 deferforms-text-sm deferforms-font-semibold deferforms-text-ink">{ revisionWhen( entry.time ) }</span>
 
 					{ 0 === index && (
-						<span className="df7-text-[14px] df7-font-medium df7-text-stone-400">{ __( 'Latest save', 'defer-forms-for-contact-form-7' ) }</span>
+						<span className="deferforms-text-[14px] deferforms-font-medium deferforms-text-stone-400">{ __( 'Latest save', 'defer-forms-for-contact-form-7' ) }</span>
 					) }
 
 					<button type="button" disabled={ state.loading } onClick={ () => onPick( entry.rev ) } className={ btnGhost }>
-						<RotateCcw className="df7-h-4 df7-w-4" />
+						<RotateCcw className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Open', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</div>
@@ -1443,28 +1443,28 @@ const Modal = ( { title, badge, wide, onClose, footer, children } ) => {
 	}, [ onClose ] );
 
 	return (
-		<div className="df7-fixed df7-inset-0 df7-z-[100000] df7-flex df7-items-start df7-justify-center df7-px-4 df7-pb-4 df7-pt-[7vh]">
+		<div className="deferforms-fixed deferforms-inset-0 deferforms-z-[100000] deferforms-flex deferforms-items-start deferforms-justify-center deferforms-px-4 deferforms-pb-4 deferforms-pt-[7vh]">
 			<Backdrop
 				onClick={ onClose }
-				className="df7-absolute df7-inset-0 df7-bg-ink/40 df7-backdrop-blur-sm"
+				className="deferforms-absolute deferforms-inset-0 deferforms-bg-ink/40 deferforms-backdrop-blur-sm"
 			/>
 			<div
-				className={ `df7-relative df7-flex df7-max-h-[85vh] df7-w-full ${ wide ? 'df7-max-w-2xl' : 'df7-max-w-lg' } df7-flex-col df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-shadow-pop` }
+				className={ `deferforms-relative deferforms-flex deferforms-max-h-[85vh] deferforms-w-full ${ wide ? 'deferforms-max-w-2xl' : 'deferforms-max-w-lg' } deferforms-flex-col deferforms-overflow-hidden deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-shadow-pop` }
 			>
-				<header className="df7-flex df7-items-center df7-justify-between df7-gap-3 df7-border-b df7-border-line df7-px-6 df7-py-4">
-					<div className="df7-flex df7-min-w-0 df7-items-center df7-gap-2">
-						<span className="df7-truncate df7-text-lg df7-font-bold df7-text-ink">{ title }</span>
+				<header className="deferforms-flex deferforms-items-center deferforms-justify-between deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-px-6 deferforms-py-4">
+					<div className="deferforms-flex deferforms-min-w-0 deferforms-items-center deferforms-gap-2">
+						<span className="deferforms-truncate deferforms-text-lg deferforms-font-bold deferforms-text-ink">{ title }</span>
 						{ badge && (
-							<span className="df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-0.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">{ badge }</span>
+							<span className="deferforms-rounded-md deferforms-bg-stone-100 deferforms-px-2 deferforms-py-0.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-stone-500">{ badge }</span>
 						) }
 					</div>
 					<button
 						type="button"
 						onClick={ onClose }
 						aria-label={ __( 'Close', 'defer-forms-for-contact-form-7' ) }
-						className="df7-flex df7-h-9 df7-w-9 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-stone-50 df7-text-stone-500 hover:df7-bg-stone-100 hover:df7-text-ink"
+						className="deferforms-flex deferforms-h-9 deferforms-w-9 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-stone-50 deferforms-text-stone-500 hover:deferforms-bg-stone-100 hover:deferforms-text-ink"
 					>
-						<X className="df7-h-4 df7-w-4" />
+						<X className="deferforms-h-4 deferforms-w-4" />
 					</button>
 				</header>
 
@@ -1472,12 +1472,12 @@ const Modal = ( { title, badge, wide, onClose, footer, children } ) => {
 				     the right only and every field box stops short on that side. Padding
 				     is then 14px so padding + gutter lines the fields up with the 24px
 				     header and footer. */ }
-				<div className="df7-scroll df7-flex-1 df7-overflow-y-auto df7-px-3.5 df7-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
+				<div className="deferforms-scroll deferforms-flex-1 deferforms-overflow-y-auto deferforms-px-3.5 deferforms-py-5" style={ { scrollbarGutter: 'stable both-edges' } }>
 					{ children }
 				</div>
 
 				{ footer && (
-					<footer className="df7-flex df7-items-center df7-gap-2 df7-border-t df7-border-line df7-px-6 df7-py-4">{ footer }</footer>
+					<footer className="deferforms-flex deferforms-items-center deferforms-gap-2 deferforms-border-t deferforms-border-line deferforms-px-6 deferforms-py-4">{ footer }</footer>
 				) }
 			</div>
 		</div>
@@ -1506,8 +1506,8 @@ const FieldRow = ( { field, index, onEdit, onDelete, onDuplicate } ) => {
 
 	if ( isDragging ) {
 		return (
-			<div ref={ setNodeRef } style={ style } className="df7-border-b df7-border-line df7-px-4 df7-py-2 last:df7-border-b-0">
-				<div className="df7-h-9 df7-rounded-lg df7-border df7-border-dashed df7-border-accent-300 df7-bg-accent-50/60" />
+			<div ref={ setNodeRef } style={ style } className="deferforms-border-b deferforms-border-line deferforms-px-4 deferforms-py-2 last:deferforms-border-b-0">
+				<div className="deferforms-h-9 deferforms-rounded-lg deferforms-border deferforms-border-dashed deferforms-border-accent-300 deferforms-bg-accent-50/60" />
 			</div>
 		);
 	}
@@ -1518,34 +1518,34 @@ const FieldRow = ( { field, index, onEdit, onDelete, onDuplicate } ) => {
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-white df7-px-4 df7-py-3 df7-transition-colors last:df7-border-b-0 hover:df7-bg-stone-50/60` }
+			className={ `deferforms-grid ${ COLS } deferforms-items-center deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-bg-white deferforms-px-4 deferforms-py-3 deferforms-transition-colors last:deferforms-border-b-0 hover:deferforms-bg-stone-50/60` }
 		>
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
-				<GripVertical className="df7-h-4 df7-w-4" />
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-cursor-grab deferforms-items-center deferforms-justify-center deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-text-stone-500 active:deferforms-cursor-grabbing">
+				<GripVertical className="deferforms-h-4 deferforms-w-4" />
 			</button>
-			<span className="df7-text-[14px] df7-font-semibold df7-text-stone-400 df7-tnum">{ String( index + 1 ).padStart( 2, '0' ) }</span>
-			<button type="button" onClick={ onEdit } className="df7-flex df7-min-w-0 df7-cursor-pointer df7-items-center df7-gap-1 df7-border-0 df7-bg-transparent df7-text-left">
-				<span className="df7-truncate df7-text-sm df7-font-semibold df7-text-ink">
-					{ isContent ? contentLabel( field.type ) : ( field.label || <span className="df7-font-normal df7-text-stone-400">{ rowCaption( field ) }</span> ) }
+			<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-text-stone-400 deferforms-tnum">{ String( index + 1 ).padStart( 2, '0' ) }</span>
+			<button type="button" onClick={ onEdit } className="deferforms-flex deferforms-min-w-0 deferforms-cursor-pointer deferforms-items-center deferforms-gap-1 deferforms-border-0 deferforms-bg-transparent deferforms-text-left">
+				<span className="deferforms-truncate deferforms-text-sm deferforms-font-semibold deferforms-text-ink">
+					{ isContent ? contentLabel( field.type ) : ( field.label || <span className="deferforms-font-normal deferforms-text-stone-400">{ rowCaption( field ) }</span> ) }
 				</span>
-				{ ! isContent && field.required && <span className="df7-text-red-500">*</span> }
+				{ ! isContent && field.required && <span className="deferforms-text-red-500">*</span> }
 			</button>
-			<span className="df7-truncate df7-text-[14px] df7-text-stone-500">
+			<span className="deferforms-truncate deferforms-text-[14px] deferforms-text-stone-500">
 				{ isContent ? ( field.text ? String( field.text ).slice( 0, 60 ) : '—' ) : ( field.name || '—' ) }
 			</span>
-			<span className="df7-inline-flex df7-w-fit df7-items-center df7-gap-1.5 df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
-				<Ico className="df7-h-3 df7-w-3" />
+			<span className="deferforms-inline-flex deferforms-w-fit deferforms-items-center deferforms-gap-1.5 deferforms-rounded-md deferforms-bg-stone-100 deferforms-px-2 deferforms-py-1 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-stone-500">
+				<Ico className="deferforms-h-3 deferforms-w-3" />
 				{ field.type }
 			</span>
-			<div className="df7-flex df7-items-center df7-justify-end df7-gap-0.5">
-				<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
-					<Pencil className="df7-h-3.5 df7-w-3.5" />
+			<div className="deferforms-flex deferforms-items-center deferforms-justify-end deferforms-gap-0.5">
+				<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-stone-100 hover:deferforms-text-ink">
+					<Pencil className="deferforms-h-3.5 deferforms-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
-					<Copy className="df7-h-3.5 df7-w-3.5" />
+				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-stone-100 hover:deferforms-text-ink">
+					<Copy className="deferforms-h-3.5 deferforms-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
-					<Trash2 className="df7-h-3.5 df7-w-3.5" />
+				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-red-50 hover:deferforms-text-red-600">
+					<Trash2 className="deferforms-h-3.5 deferforms-w-3.5" />
 				</button>
 			</div>
 		</div>
@@ -1572,26 +1572,26 @@ const RowChip = ( { child, onEdit, onDuplicate, onDelete } ) => {
 	const style = { transform: CSS.Transform.toString( transform ), transition };
 
 	if ( isDragging ) {
-		return <div ref={ setNodeRef } style={ style } className="df7-h-[2.375rem] df7-rounded-lg df7-border df7-border-dashed df7-border-accent-300 df7-bg-accent-50/60" />;
+		return <div ref={ setNodeRef } style={ style } className="deferforms-h-[2.375rem] deferforms-rounded-lg deferforms-border deferforms-border-dashed deferforms-border-accent-300 deferforms-bg-accent-50/60" />;
 	}
 
 	return (
-		<div ref={ setNodeRef } style={ style } className="df7-group df7-flex df7-min-w-0 df7-items-center df7-gap-1.5 df7-rounded-lg df7-border df7-border-line df7-bg-white df7-py-1.5 df7-pl-1 df7-pr-2">
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag to reorder', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-4 df7-shrink-0 df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 df7-transition-colors hover:df7-text-stone-500 active:df7-cursor-grabbing">
-				<GripVertical className="df7-h-4 df7-w-4" />
+		<div ref={ setNodeRef } style={ style } className="deferforms-group deferforms-flex deferforms-min-w-0 deferforms-items-center deferforms-gap-1.5 deferforms-rounded-lg deferforms-border deferforms-border-line deferforms-bg-white deferforms-py-1.5 deferforms-pl-1 deferforms-pr-2">
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag to reorder', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-6 deferforms-w-4 deferforms-shrink-0 deferforms-cursor-grab deferforms-items-center deferforms-justify-center deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-transition-colors hover:deferforms-text-stone-500 active:deferforms-cursor-grabbing">
+				<GripVertical className="deferforms-h-4 deferforms-w-4" />
 			</button>
-			<span className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-items-center df7-justify-center df7-rounded-md df7-bg-stone-100 df7-text-stone-500">
-				<Ico className="df7-h-3 df7-w-3" />
+			<span className="deferforms-flex deferforms-h-6 deferforms-w-6 deferforms-shrink-0 deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-bg-stone-100 deferforms-text-stone-500">
+				<Ico className="deferforms-h-3 deferforms-w-3" />
 			</span>
-			<button type="button" onClick={ onEdit } className="df7-min-w-0 df7-flex-1 df7-cursor-pointer df7-truncate df7-border-0 df7-bg-transparent df7-text-left df7-text-[14px] df7-font-medium df7-text-ink">{ label }</button>
-			<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-stone-100 hover:df7-text-ink group-hover:df7-opacity-100">
-				<Pencil className="df7-h-3 df7-w-3" />
+			<button type="button" onClick={ onEdit } className="deferforms-min-w-0 deferforms-flex-1 deferforms-cursor-pointer deferforms-truncate deferforms-border-0 deferforms-bg-transparent deferforms-text-left deferforms-text-[14px] deferforms-font-medium deferforms-text-ink">{ label }</button>
+			<button type="button" onClick={ onEdit } aria-label={ __( 'Edit', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-6 deferforms-w-6 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-opacity-0 deferforms-transition-opacity hover:deferforms-bg-stone-100 hover:deferforms-text-ink group-hover:deferforms-opacity-100">
+				<Pencil className="deferforms-h-3 deferforms-w-3" />
 			</button>
-			<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-stone-100 hover:df7-text-ink group-hover:df7-opacity-100">
-				<Copy className="df7-h-3 df7-w-3" />
+			<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-6 deferforms-w-6 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-opacity-0 deferforms-transition-opacity hover:deferforms-bg-stone-100 hover:deferforms-text-ink group-hover:deferforms-opacity-100">
+				<Copy className="deferforms-h-3 deferforms-w-3" />
 			</button>
-			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-6 df7-w-6 df7-shrink-0 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-md df7-border-0 df7-bg-transparent df7-text-stone-400 df7-opacity-0 df7-transition-opacity hover:df7-bg-red-50 hover:df7-text-red-600 group-hover:df7-opacity-100">
-				<Trash2 className="df7-h-3 df7-w-3" />
+			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-6 deferforms-w-6 deferforms-shrink-0 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 deferforms-opacity-0 deferforms-transition-opacity hover:deferforms-bg-red-50 hover:deferforms-text-red-600 group-hover:deferforms-opacity-100">
+				<Trash2 className="deferforms-h-3 deferforms-w-3" />
 			</button>
 		</div>
 	);
@@ -1603,9 +1603,9 @@ const Column = ( { rowId, ci, items, total, onAddField, onEditChild, onDuplicate
 	return (
 		<div
 			ref={ setNodeRef }
-			className={ `df7-flex df7-min-h-[5.5rem] df7-flex-col df7-gap-2 df7-rounded-lg df7-border df7-border-dashed df7-p-2 df7-transition-all ${ isOver ? 'df7-border-accent df7-bg-accent-50 df7-ring-2 df7-ring-accent-200' : 'df7-border-stroke df7-bg-white' }` }
+			className={ `deferforms-flex deferforms-min-h-[5.5rem] deferforms-flex-col deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-dashed deferforms-p-2 deferforms-transition-all ${ isOver ? 'deferforms-border-accent deferforms-bg-accent-50 deferforms-ring-2 deferforms-ring-accent-200' : 'deferforms-border-stroke deferforms-bg-white' }` }
 		>
-			<span className="df7-px-1 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400">
+			<span className="deferforms-px-1 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400">
 				{ sprintf( /* translators: 1: column number, 2: total columns. */ __( 'Column %1$d / %2$d', 'defer-forms-for-contact-form-7' ), ci + 1, total ) }
 			</span>
 			<SortableContext items={ items.map( ( item ) => item._id ) } strategy={ verticalListSortingStrategy }>
@@ -1620,13 +1620,13 @@ const Column = ( { rowId, ci, items, total, onAddField, onEditChild, onDuplicate
 						/>
 					) )
 					: (
-						<span className={ `df7-flex df7-flex-1 df7-items-center df7-justify-center df7-rounded-md df7-border df7-border-dashed df7-py-3 df7-text-center df7-text-[14px] df7-transition-colors ${ isOver ? 'df7-border-accent df7-text-accent' : 'df7-border-transparent df7-text-stone-400' }` }>
+						<span className={ `deferforms-flex deferforms-flex-1 deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-border deferforms-border-dashed deferforms-py-3 deferforms-text-center deferforms-text-[14px] deferforms-transition-colors ${ isOver ? 'deferforms-border-accent deferforms-text-accent' : 'deferforms-border-transparent deferforms-text-stone-400' }` }>
 							{ __( 'Drop a field here', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					) }
 			</SortableContext>
-			<button type="button" onClick={ onAddField } className="df7-flex df7-w-full df7-cursor-pointer df7-items-center df7-justify-center df7-gap-1 df7-rounded-md df7-border df7-border-dashed df7-border-stroke df7-bg-stone-50/60 df7-py-1.5 df7-text-[14px] df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent">
-				<Plus className="df7-h-3 df7-w-3" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
+			<button type="button" onClick={ onAddField } className="deferforms-flex deferforms-w-full deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-1 deferforms-rounded-md deferforms-border deferforms-border-dashed deferforms-border-stroke deferforms-bg-stone-50/60 deferforms-py-1.5 deferforms-text-[14px] deferforms-font-semibold deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-border-accent hover:deferforms-text-accent">
+				<Plus className="deferforms-h-3 deferforms-w-3" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 			</button>
 		</div>
 	);
@@ -1642,18 +1642,18 @@ const RowBlock = ( { row, onCols, onDuplicate, onDelete, onAddField, onEditChild
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `df7-border-b df7-border-line df7-bg-stone-50/40 last:df7-border-b-0 ${ isDragging ? 'df7-relative df7-z-10 df7-shadow-card' : '' }` }
+			className={ `deferforms-border-b deferforms-border-line deferforms-bg-stone-50/40 last:deferforms-border-b-0 ${ isDragging ? 'deferforms-relative deferforms-z-10 deferforms-shadow-card' : '' }` }
 		>
-			<div className="df7-flex df7-items-center df7-gap-3 df7-px-4 df7-py-2.5">
-				<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
-					<GripVertical className="df7-h-4 df7-w-4" />
+			<div className="deferforms-flex deferforms-items-center deferforms-gap-3 deferforms-px-4 deferforms-py-2.5">
+				<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-cursor-grab deferforms-items-center deferforms-justify-center deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-text-stone-500 active:deferforms-cursor-grabbing">
+					<GripVertical className="deferforms-h-4 deferforms-w-4" />
 				</button>
-				<span className="df7-inline-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
-					<LayoutGrid className="df7-h-3.5 df7-w-3.5" />
+				<span className="deferforms-inline-flex deferforms-items-center deferforms-gap-1.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-stone-500">
+					<LayoutGrid className="deferforms-h-3.5 deferforms-w-3.5" />
 					{ __( 'Grid row', 'defer-forms-for-contact-form-7' ) }
 				</span>
 				<Select
-					className="df7-w-32"
+					className="deferforms-w-32"
 					value={ cols }
 					onChange={ ( value ) => onCols( Number( value ) ) }
 					options={ [ 1, 2, 3, 4 ].map( ( count ) => ( {
@@ -1661,15 +1661,15 @@ const RowBlock = ( { row, onCols, onDuplicate, onDelete, onAddField, onEditChild
 						label: sprintf( /* translators: %d: number of columns. */ __( '%d columns', 'defer-forms-for-contact-form-7' ), count ),
 					} ) ) }
 				/>
-				<span className="df7-flex-1" />
-				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate row', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
-					<Copy className="df7-h-3.5 df7-w-3.5" />
+				<span className="deferforms-flex-1" />
+				<button type="button" onClick={ onDuplicate } aria-label={ __( 'Duplicate row', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-stone-100 hover:deferforms-text-ink">
+					<Copy className="deferforms-h-3.5 deferforms-w-3.5" />
 				</button>
-				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
-					<Trash2 className="df7-h-3.5 df7-w-3.5" />
+				<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-red-50 hover:deferforms-text-red-600">
+					<Trash2 className="deferforms-h-3.5 deferforms-w-3.5" />
 				</button>
 			</div>
-			<div className="df7-px-4 df7-pb-3" style={ { display: 'grid', gridTemplateColumns: `repeat(${ cols }, minmax(0, 1fr))`, gap: '0.5rem' } }>
+			<div className="deferforms-px-4 deferforms-pb-3" style={ { display: 'grid', gridTemplateColumns: `repeat(${ cols }, minmax(0, 1fr))`, gap: '0.5rem' } }>
 				{ columns.map( ( col, ci ) => (
 					<Column
 						key={ ci }
@@ -1696,24 +1696,24 @@ const PageBreakBar = ( { item, step, onEdit, onDelete } ) => {
 		<div
 			ref={ setNodeRef }
 			style={ style }
-			className={ `df7-flex df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-100/70 df7-px-4 df7-py-2.5 last:df7-border-b-0 ${ isDragging ? 'df7-relative df7-z-10 df7-shadow-card' : '' }` }
+			className={ `deferforms-flex deferforms-items-center deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-bg-stone-100/70 deferforms-px-4 deferforms-py-2.5 last:deferforms-border-b-0 ${ isDragging ? 'deferforms-relative deferforms-z-10 deferforms-shadow-card' : '' }` }
 		>
-			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-cursor-grab df7-items-center df7-justify-center df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-text-stone-500 active:df7-cursor-grabbing">
-				<GripVertical className="df7-h-4 df7-w-4" />
+			<button type="button" { ...attributes } { ...listeners } aria-label={ __( 'Drag', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-cursor-grab deferforms-items-center deferforms-justify-center deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-text-stone-500 active:deferforms-cursor-grabbing">
+				<GripVertical className="deferforms-h-4 deferforms-w-4" />
 			</button>
-			<span className="df7-inline-flex df7-items-center df7-gap-1.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wide df7-text-stone-500">
-				<Scissors className="df7-h-3.5 df7-w-3.5" />
+			<span className="deferforms-inline-flex deferforms-items-center deferforms-gap-1.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wide deferforms-text-stone-500">
+				<Scissors className="deferforms-h-3.5 deferforms-w-3.5" />
 				{ sprintf( /* translators: %d: step number. */ __( 'Step %d', 'defer-forms-for-contact-form-7' ), step ) }
 			</span>
 			{ item.title && (
-				<span className="df7-truncate df7-text-[14px] df7-font-semibold df7-text-ink">{ item.title }</span>
+				<span className="deferforms-truncate deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink">{ item.title }</span>
 			) }
-			<span className="df7-h-px df7-flex-1 df7-bg-stroke" />
-			<button type="button" onClick={ onEdit } aria-label={ __( 'Step settings', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-stone-100 hover:df7-text-ink">
-				<Pencil className="df7-h-3.5 df7-w-3.5" />
+			<span className="deferforms-h-px deferforms-flex-1 deferforms-bg-stroke" />
+			<button type="button" onClick={ onEdit } aria-label={ __( 'Step settings', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-stone-100 hover:deferforms-text-ink">
+				<Pencil className="deferforms-h-3.5 deferforms-w-3.5" />
 			</button>
-			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-8 df7-w-8 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border-0 df7-bg-transparent df7-text-stone-400 hover:df7-bg-red-50 hover:df7-text-red-600">
-				<Trash2 className="df7-h-3.5 df7-w-3.5" />
+			<button type="button" onClick={ onDelete } aria-label={ __( 'Delete', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-8 deferforms-w-8 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border-0 deferforms-bg-transparent deferforms-text-stone-400 hover:deferforms-bg-red-50 hover:deferforms-text-red-600">
+				<Trash2 className="deferforms-h-3.5 deferforms-w-3.5" />
 			</button>
 		</div>
 	);
@@ -1725,18 +1725,18 @@ const DragPreview = ( { item } ) => {
 	}
 	if ( 'row' === item.kind ) {
 		return (
-			<div className="df7-flex df7-rotate-2 df7-cursor-grabbing df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-accent-200 df7-bg-white df7-px-3 df7-py-2 df7-shadow-2xl df7-ring-2 df7-ring-accent-100">
-				<LayoutGrid className="df7-h-4 df7-w-4 df7-text-accent" />
-				<span className="df7-text-[14px] df7-font-semibold df7-text-ink">{ __( 'Grid row', 'defer-forms-for-contact-form-7' ) }</span>
+			<div className="deferforms-flex deferforms-rotate-2 deferforms-cursor-grabbing deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-accent-200 deferforms-bg-white deferforms-px-3 deferforms-py-2 deferforms-shadow-2xl deferforms-ring-2 deferforms-ring-accent-100">
+				<LayoutGrid className="deferforms-h-4 deferforms-w-4 deferforms-text-accent" />
+				<span className="deferforms-text-[14px] deferforms-font-semibold deferforms-text-ink">{ __( 'Grid row', 'defer-forms-for-contact-form-7' ) }</span>
 			</div>
 		);
 	}
 	const Ico   = iconFor( item.type );
 	const label = 'content' === item.kind ? contentLabel( item.type ) : ( item.label || item.name || item.type );
 	return (
-		<div className="df7-flex df7-rotate-2 df7-cursor-grabbing df7-items-center df7-gap-2 df7-rounded-lg df7-border df7-border-accent-200 df7-bg-white df7-px-2.5 df7-py-1.5 df7-shadow-2xl df7-ring-2 df7-ring-accent-100">
-			<span className="df7-flex df7-h-6 df7-w-6 df7-items-center df7-justify-center df7-rounded-md df7-bg-accent-50 df7-text-accent"><Ico className="df7-h-3 df7-w-3" /></span>
-			<span className="df7-text-[14px] df7-font-medium df7-text-ink">{ label }</span>
+		<div className="deferforms-flex deferforms-rotate-2 deferforms-cursor-grabbing deferforms-items-center deferforms-gap-2 deferforms-rounded-lg deferforms-border deferforms-border-accent-200 deferforms-bg-white deferforms-px-2.5 deferforms-py-1.5 deferforms-shadow-2xl deferforms-ring-2 deferforms-ring-accent-100">
+			<span className="deferforms-flex deferforms-h-6 deferforms-w-6 deferforms-items-center deferforms-justify-center deferforms-rounded-md deferforms-bg-accent-50 deferforms-text-accent"><Ico className="deferforms-h-3 deferforms-w-3" /></span>
+			<span className="deferforms-text-[14px] deferforms-font-medium deferforms-text-ink">{ label }</span>
 		</div>
 	);
 };
@@ -1745,10 +1745,10 @@ const DragPreview = ( { item } ) => {
  *
  * The preview renders what the front end renders: the same wrappers, the same
  * class names. assets/css/{controls,form,steps,range,rating}.css are imported
- * into the admin bundle and scoped to `:is( .wpcf7-form, .df7-preview )`, so
+ * into the admin bundle and scoped to `:is( .wpcf7-form, .deferforms-preview )`, so
  * they skin this the way they skin the real form rather than us imitating them.
  *
- * Nothing below carries an df7- Tailwind utility. Utilities are `!important` in
+ * Nothing below carries an deferforms- Tailwind utility. Utilities are `!important` in
  * this bundle, so one would beat the shared rule and put the preview back out
  * of step — which is how it drifted the first time. Anything still drawn by
  * hand here is a place the two can drift again.
@@ -1766,7 +1766,7 @@ const isInvisible = ( field ) =>
 	'submission_id' === field.type ||
 	( 'dynamictext' === field.type && field.options?.hidden );
 
-const RequiredStar = () => <span className="df7-required" aria-hidden="true">*</span>;
+const RequiredStar = () => <span className="deferforms-required" aria-hidden="true">*</span>;
 
 const clamp = ( value, min, max, fallback ) => {
 	const number = parseInt( value, 10 );
@@ -1774,29 +1774,29 @@ const clamp = ( value, min, max, fallback ) => {
 };
 
 const PreviewContent = ( { item } ) => {
-	const align = `df7-align-${ [ 'left', 'center', 'right' ].includes( item.align ) ? item.align : 'left' }`;
+	const align = `deferforms-align-${ [ 'left', 'center', 'right' ].includes( item.align ) ? item.align : 'left' }`;
 
 	if ( 'heading' === item.type ) {
 		const level   = [ 'h2', 'h3', 'h4' ].includes( item.level ) ? item.level : 'h2';
 		const Heading = level;
-		return <Heading className={ `df7-h df7-h-${ level } ${ align }` }>{ item.text }</Heading>;
+		return <Heading className={ `deferforms-h deferforms-h-${ level } ${ align }` }>{ item.text }</Heading>;
 	}
 	if ( 'paragraph' === item.type ) {
 		const size = [ 'sm', 'md', 'lg' ].includes( item.size ) ? item.size : 'md';
-		return <p className={ `df7-p df7-p-${ size } ${ align }` }>{ item.text }</p>;
+		return <p className={ `deferforms-p deferforms-p-${ size } ${ align }` }>{ item.text }</p>;
 	}
 	if ( 'divider' === item.type ) {
 		const style = [ 'solid', 'dashed', 'dotted' ].includes( item.style ) ? item.style : 'solid';
 		const tier  = [ 'subtle', 'normal', 'strong' ].includes( item.tier ) ? item.tier : 'subtle';
 		return (
 			<hr
-				className={ `df7-hr df7-hr-${ style } df7-hr-${ tier }` }
+				className={ `deferforms-hr deferforms-hr-${ style } deferforms-hr-${ tier }` }
 				style={ { borderTopWidth: `${ clamp( item.thickness, 1, 6, 1 ) }px` } }
 			/>
 		);
 	}
 	if ( 'spacer' === item.type ) {
-		return <div className="df7-spacer" aria-hidden="true" style={ { height: `${ clamp( item.height, 0, 200, 16 ) }px` } } />;
+		return <div className="deferforms-spacer" aria-hidden="true" style={ { height: `${ clamp( item.height, 0, 200, 16 ) }px` } } />;
 	}
 	return null;
 };
@@ -1849,19 +1849,19 @@ const PreviewField = ( { field } ) => {
 		const multi  = !! field.options?.multiple;
 		const chosen = ( field.choices || [] ).slice( 0, multi ? 2 : 1 );
 		widget = (
-			<div className={ `df7-select${ multi ? ' df7-select--multiple' : '' }` }>
-				<span className="df7-select-trigger">
-					<span className="df7-select-value">
+			<div className={ `deferforms-select${ multi ? ' deferforms-select--multiple' : '' }` }>
+				<span className="deferforms-select-trigger">
+					<span className="deferforms-select-value">
 						{ multi
-							? chosen.map( ( choice, index ) => <span key={ index } className="df7-select-chip">{ choice }<span className="df7-select-chip-remove">×</span></span> )
-							: ( chosen[ 0 ] || <span className="df7-select-placeholder">{ __( 'Select…', 'defer-forms-for-contact-form-7' ) }</span> ) }
+							? chosen.map( ( choice, index ) => <span key={ index } className="deferforms-select-chip">{ choice }<span className="deferforms-select-chip-remove">×</span></span> )
+							: ( chosen[ 0 ] || <span className="deferforms-select-placeholder">{ __( 'Select…', 'defer-forms-for-contact-form-7' ) }</span> ) }
 					</span>
-					<span className="df7-select-arrow" />
+					<span className="deferforms-select-arrow" />
 				</span>
 			</div>
 		);
 	} else if ( 'checkbox' === kind || 'radio' === kind ) {
-		const layout = [ 'inline', 'cards' ].includes( field.layout ) ? ` df7-${ field.layout }` : '';
+		const layout = [ 'inline', 'cards' ].includes( field.layout ) ? ` deferforms-${ field.layout }` : '';
 		widget = (
 			<span className={ `wpcf7-form-control wpcf7-${ kind }${ layout }` }>
 				{ ( field.choices || [] ).map( ( choice, index ) => (
@@ -1880,15 +1880,15 @@ const PreviewField = ( { field } ) => {
 			field.options?.limit,
 		].filter( Boolean );
 		widget = (
-			<div className="df7-file">
-				<div className="df7-file-zone">
-					<span className="df7-file-icon" />
-					<span className="df7-file-text">
+			<div className="deferforms-file">
+				<div className="deferforms-file-zone">
+					<span className="deferforms-file-icon" />
+					<span className="deferforms-file-text">
 						{ field.options?.multiple
 							? __( 'Drag files here or click to browse', 'defer-forms-for-contact-form-7' )
 							: __( 'Drag a file here or click to browse', 'defer-forms-for-contact-form-7' ) }
 					</span>
-					{ !! hints.length && <span className="df7-file-hint">{ hints.join( ' · ' ) }</span> }
+					{ !! hints.length && <span className="deferforms-file-hint">{ hints.join( ' · ' ) }</span> }
 				</div>
 			</div>
 		);
@@ -1899,18 +1899,18 @@ const PreviewField = ( { field } ) => {
 		const pct  = rMax > rMin ? ( ( rVal - rMin ) / ( rMax - rMin ) ) * 100 : 0;
 		// The wrapper and badge range.js builds around the native control.
 		widget = (
-			<div className="df7-range">
+			<div className="deferforms-range">
 				<input
 					type="range"
 					className="wpcf7-range"
-					style={ { '--df7-range-p': `${ pct }%` } }
+					style={ { '--deferforms-range-p': `${ pct }%` } }
 					min={ rMin }
 					max={ rMax }
 					step={ field.options?.step ?? 1 }
 					value={ rVal }
 					readOnly
 				/>
-				<span className="df7-range-value">{ rVal }</span>
+				<span className="deferforms-range-value">{ rVal }</span>
 			</div>
 		);
 	} else if ( 'rating' === kind ) {
@@ -1918,7 +1918,7 @@ const PreviewField = ( { field } ) => {
 		// Counted down like Rating.php, because rating.css reverses the row — the
 		// order in the markup is what makes the CSS-only fill work.
 		widget = (
-			<span className="df7-rating">
+			<span className="deferforms-rating">
 				{ Array.from( { length: max } ).flatMap( ( _, i ) => {
 					const score = max - i;
 					// `for`/`id` the same way Rating.php pairs them: the star is the
@@ -1933,16 +1933,16 @@ const PreviewField = ( { field } ) => {
 		);
 	} else if ( 'country' === kind || 'product' === kind ) {
 		widget = (
-			<div className="df7-select">
-				<span className="df7-select-trigger">
-					<span className="df7-select-value">
-						<span className="df7-select-placeholder">
+			<div className="deferforms-select">
+				<span className="deferforms-select-trigger">
+					<span className="deferforms-select-value">
+						<span className="deferforms-select-placeholder">
 							{ 'product' === kind
 								? __( 'Select a product…', 'defer-forms-for-contact-form-7' )
 								: __( 'Select a country…', 'defer-forms-for-contact-form-7' ) }
 						</span>
 					</span>
-					<span className="df7-select-arrow" />
+					<span className="deferforms-select-arrow" />
 				</span>
 			</div>
 		);
@@ -1976,7 +1976,7 @@ const PreviewField = ( { field } ) => {
 
 	if ( GROUP_CAPTION.includes( kind ) ) {
 		return (
-			<fieldset className="df7-fieldset">
+			<fieldset className="deferforms-fieldset">
 				<legend>{ caption }</legend>
 				{ wrapped }
 			</fieldset>
@@ -2012,9 +2012,9 @@ const previewItems = ( list ) => list.map( ( item ) => {
 const PreviewRow = ( { row } ) => {
 	const columns = row.columns || [];
 	return (
-		<div className={ `df7-row df7-cols-${ columns.length || 1 }` }>
+		<div className={ `deferforms-row deferforms-cols-${ columns.length || 1 }` }>
 			{ columns.map( ( col, ci ) => (
-				<div key={ ci } className="df7-col">{ previewItems( col ) }</div>
+				<div key={ ci } className="deferforms-col">{ previewItems( col ) }</div>
 			) ) }
 		</div>
 	);
@@ -2024,23 +2024,23 @@ const PreviewRow = ( { row } ) => {
  * The indicator, built exactly as steps.js builds it.
  *
  * Both the bar and the marker row are always rendered; steps.css decides which
- * one is shown from the `df7-steps-*` class on the wrapper, and hides the
+ * one is shown from the `deferforms-steps-*` class on the wrapper, and hides the
  * whole block for "none". That is how it works on the real form, so the
  * variants cannot disagree here.
  */
 const PreviewIndicator = ( { pages, current } ) => (
-	<div className="df7-steps-indicator">
-		<div className="df7-steps-progress">
-			<div className="df7-steps-progress-fill" style={ { width: `${ ( ( current + 1 ) / pages.length ) * 100 }%` } } />
+	<div className="deferforms-steps-indicator">
+		<div className="deferforms-steps-progress">
+			<div className="deferforms-steps-progress-fill" style={ { width: `${ ( ( current + 1 ) / pages.length ) * 100 }%` } } />
 		</div>
-		<ol className="df7-steps-marks">
+		<ol className="deferforms-steps-marks">
 			{ pages.map( ( page, i ) => (
 				<li
 					key={ i }
-					className={ `df7-steps-mark${ i < current ? ' df7-steps-mark-done' : '' }${ i === current ? ' df7-steps-mark-current' : '' }` }
+					className={ `deferforms-steps-mark${ i < current ? ' deferforms-steps-mark-done' : '' }${ i === current ? ' deferforms-steps-mark-current' : '' }` }
 				>
-					<span className="df7-steps-mark-num">{ i + 1 }</span>
-					<span className="df7-steps-mark-label">
+					<span className="deferforms-steps-mark-num">{ i + 1 }</span>
+					<span className="deferforms-steps-mark-label">
 						{ page.settings.title || sprintf( /* translators: %d: step number. */ __( 'Step %d', 'defer-forms-for-contact-form-7' ), i + 1 ) }
 					</span>
 				</li>
@@ -2070,21 +2070,21 @@ const Preview = ( { items, title, indicator } ) => {
 	// The variant class belongs on the host element, as it does on the <form>:
 	// steps.css keys every variant rule off it. Left off entirely when there is
 	// no choice yet, so the "not one of the others" fallback shows the bar.
-	const variant = multi && indicator ? ` df7-steps-${ indicator }` : '';
+	const variant = multi && indicator ? ` deferforms-steps-${ indicator }` : '';
 
 	return (
-		<div className={ `df7-preview${ variant } df7-mx-auto df7-max-w-2xl df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-8 df7-shadow-card` }>
-			{ title && <h2 className="df7-mb-6 df7-mt-0 df7-text-2xl df7-font-bold df7-text-ink">{ title }</h2> }
+		<div className={ `deferforms-preview${ variant } deferforms-mx-auto deferforms-max-w-2xl deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-8 deferforms-shadow-card` }>
+			{ title && <h2 className="deferforms-mb-6 deferforms-mt-0 deferforms-text-2xl deferforms-font-bold deferforms-text-ink">{ title }</h2> }
 			{ 0 === items.length ? (
-				<p className="df7-m-0 df7-text-center df7-text-sm df7-text-stone-400">{ __( 'Nothing to preview yet.', 'defer-forms-for-contact-form-7' ) }</p>
+				<p className="deferforms-m-0 deferforms-text-center deferforms-text-sm deferforms-text-stone-400">{ __( 'Nothing to preview yet.', 'defer-forms-for-contact-form-7' ) }</p>
 			) : multi ? (
 				<>
 					<PreviewIndicator pages={ pages } current={ current } />
-					<div className="df7-step df7-step-active">
+					<div className="deferforms-step deferforms-step-active">
 						{ ( now.settings.title || now.settings.desc ) && (
-							<div className="df7-step-heading">
-								{ now.settings.title && <h3 className="df7-step-title">{ now.settings.title }</h3> }
-								{ now.settings.desc && <p className="df7-step-desc">{ now.settings.desc }</p> }
+							<div className="deferforms-step-heading">
+								{ now.settings.title && <h3 className="deferforms-step-title">{ now.settings.title }</h3> }
+								{ now.settings.desc && <p className="deferforms-step-desc">{ now.settings.desc }</p> }
 							</div>
 						) }
 						{ previewItems( now.fields ) }
@@ -2092,21 +2092,21 @@ const Preview = ( { items, title, indicator } ) => {
 					{ /* steps.js takes the buttons out of flow rather than hiding
 					     them in place, which is what lets the status line slide
 					     across on the first and last step. */ }
-					<div className="df7-steps-nav">
+					<div className="deferforms-steps-nav">
 						<button
 							type="button"
-							className="df7-step-btn df7-step-prev"
+							className="deferforms-step-btn deferforms-step-prev"
 							style={ 0 === current ? { display: 'none' } : undefined }
 							onClick={ () => setStep( current - 1 ) }
 						>
 							{ now.settings.prev || __( 'Back', 'defer-forms-for-contact-form-7' ) }
 						</button>
-						<span className="df7-step-status">
+						<span className="deferforms-step-status">
 							{ sprintf( /* translators: 1: current step, 2: total steps. */ __( 'Step %1$d of %2$d', 'defer-forms-for-contact-form-7' ), current + 1, pages.length ) }
 						</span>
 						<button
 							type="button"
-							className="df7-step-btn df7-step-next"
+							className="deferforms-step-btn deferforms-step-next"
 							style={ current === pages.length - 1 ? { display: 'none' } : undefined }
 							onClick={ () => setStep( current + 1 ) }
 						>
@@ -2155,7 +2155,7 @@ const App = ( { formId } ) => {
 			setLoading( false );
 			return;
 		}
-		apiFetch( { path: `df7/v1/forms/${ formId }/builder` } )
+		apiFetch( { path: `deferforms/v1/forms/${ formId }/builder` } )
 			.then( ( res ) => {
 				setItems( ensureIds( res.fields || [] ) );
 				setTitle( res.title || '' );
@@ -2208,7 +2208,7 @@ const App = ( { formId } ) => {
 		setSaving( 'saving' );
 		try {
 			const res = await apiFetch( {
-				path:   `df7/v1/forms/${ formId }/builder`,
+				path:   `deferforms/v1/forms/${ formId }/builder`,
 				method: 'PUT',
 				data:   { fields: stripIds( items ), redirect, steps, css_class: cssClass },
 			} );
@@ -2242,7 +2242,7 @@ const App = ( { formId } ) => {
 	const openHistory = () => {
 		setHistory( { loading: true, list: [], error: null } );
 
-		apiFetch( { path: `df7/v1/forms/${ formId }/revisions` } )
+		apiFetch( { path: `deferforms/v1/forms/${ formId }/revisions` } )
 			.then( ( list ) => setHistory( { loading: false, list, error: null } ) )
 			.catch( ( err ) => setHistory( { loading: false, list: [], error: err.message } ) );
 	};
@@ -2255,7 +2255,7 @@ const App = ( { formId } ) => {
 	const loadRevision = ( rev ) => {
 		setHistory( ( state ) => ( { ...state, loading: true } ) );
 
-		apiFetch( { path: `df7/v1/forms/${ formId }/revisions/${ rev }` } )
+		apiFetch( { path: `deferforms/v1/forms/${ formId }/revisions/${ rev }` } )
 			.then( ( res ) => {
 				beginChange();
 				setItems( ensureIds( res.fields || [] ) );
@@ -2500,7 +2500,7 @@ const App = ( { formId } ) => {
 				title={ __( 'Form Builder', 'defer-forms-for-contact-form-7' ) }
 				subtitle={ title || ( formId ? sprintf( /* translators: %d: form ID. */ __( 'Form #%d', 'defer-forms-for-contact-form-7' ), formId ) : __( 'No form selected.', 'defer-forms-for-contact-form-7' ) ) }
 				actions={
-					<div className="df7-flex df7-items-center df7-gap-2">
+					<div className="deferforms-flex deferforms-items-center deferforms-gap-2">
 						{ /* Beside the tools rather than above the tabs.
 						     
 						     It is a thing you reach for while working, like undo
@@ -2508,38 +2508,38 @@ const App = ( { formId } ) => {
 						     stands at button height and cannot push the row wide:
 						     a shortcode is long and this one truncates. */ }
 						{ !! formId && <ShortcodeBox code={ shortcode } loading={ loading } compact /> }
-						<div className="df7-flex df7-items-center df7-gap-1">
-							<button type="button" onClick={ undo } disabled={ ! past.length } aria-label={ __( 'Undo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Undo (Ctrl+Z)', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
-								<Undo2 className="df7-h-4 df7-w-4" />
+						<div className="deferforms-flex deferforms-items-center deferforms-gap-1">
+							<button type="button" onClick={ undo } disabled={ ! past.length } aria-label={ __( 'Undo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Undo (Ctrl+Z)', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-9 deferforms-w-9 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-bg-stone-50 hover:deferforms-text-ink disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-40">
+								<Undo2 className="deferforms-h-4 deferforms-w-4" />
 							</button>
-							<button type="button" onClick={ redo } disabled={ ! future.length } aria-label={ __( 'Redo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Redo (Ctrl+Shift+Z)', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
-								<Redo2 className="df7-h-4 df7-w-4" />
+							<button type="button" onClick={ redo } disabled={ ! future.length } aria-label={ __( 'Redo', 'defer-forms-for-contact-form-7' ) } title={ __( 'Redo (Ctrl+Shift+Z)', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-9 deferforms-w-9 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-bg-stone-50 hover:deferforms-text-ink disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-40">
+								<Redo2 className="deferforms-h-4 deferforms-w-4" />
 							</button>
 							{ /* Beside undo/redo because it is the same idea at a
 							     longer timescale — this sitting, and the ten saves
 							     before it. */ }
-							<button type="button" onClick={ openHistory } disabled={ ! formId || loading } aria-label={ __( 'History', 'defer-forms-for-contact-form-7' ) } title={ __( 'Earlier saved versions of this form', 'defer-forms-for-contact-form-7' ) } className="df7-flex df7-h-9 df7-w-9 df7-cursor-pointer df7-items-center df7-justify-center df7-rounded-lg df7-border df7-border-stroke df7-bg-white df7-text-stone-500 df7-transition-colors hover:df7-bg-stone-50 hover:df7-text-ink disabled:df7-cursor-not-allowed disabled:df7-opacity-40">
-								<History className="df7-h-4 df7-w-4" />
+							<button type="button" onClick={ openHistory } disabled={ ! formId || loading } aria-label={ __( 'History', 'defer-forms-for-contact-form-7' ) } title={ __( 'Earlier saved versions of this form', 'defer-forms-for-contact-form-7' ) } className="deferforms-flex deferforms-h-9 deferforms-w-9 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-rounded-lg deferforms-border deferforms-border-stroke deferforms-bg-white deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-bg-stone-50 hover:deferforms-text-ink disabled:deferforms-cursor-not-allowed disabled:deferforms-opacity-40">
+								<History className="deferforms-h-4 deferforms-w-4" />
 							</button>
 						</div>
 						{ /* Styling is global, not this form's — but this is where
 						     someone stands when they decide the form looks wrong,
 						     and a link they can find beats a setting they cannot. */ }
 						<a
-							href="admin.php?page=df7-styling"
+							href="admin.php?page=deferforms-styling"
 							className={ btnGhost }
 							title={ __( 'Colours, shape and spacing for every form', 'defer-forms-for-contact-form-7' ) }
 						>
-							<Palette className="df7-h-4 df7-w-4 df7-text-stone-400" />
+							<Palette className="deferforms-h-4 deferforms-w-4 deferforms-text-stone-400" />
 							{ __( 'Styling', 'defer-forms-for-contact-form-7' ) }
 						</a>
 						<button
 							type="button"
 							disabled={ loading || 'saving' === saving }
 							onClick={ save }
-							className={ `${ btnPrimary } df7-px-5` }
+							className={ `${ btnPrimary } deferforms-px-5` }
 						>
-							{ 'saving' === saving ? <Loader2 className="df7-h-4 df7-w-4 df7-animate-spin" /> : 'saved' === saving ? <Check className="df7-h-4 df7-w-4" /> : <Save className="df7-h-4 df7-w-4" /> }
+							{ 'saving' === saving ? <Loader2 className="deferforms-h-4 deferforms-w-4 deferforms-animate-spin" /> : 'saved' === saving ? <Check className="deferforms-h-4 deferforms-w-4" /> : <Save className="deferforms-h-4 deferforms-w-4" /> }
 							{ 'saved' === saving ? __( 'Saved', 'defer-forms-for-contact-form-7' ) : __( 'Save', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</div>
@@ -2547,12 +2547,12 @@ const App = ( { formId } ) => {
 			/>
 
 			{ error && (
-				<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-4 df7-py-3 df7-text-sm df7-font-medium df7-text-red-700">{ error }</div>
+				<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">{ error }</div>
 			) }
 
 			{ null !== loaded && (
-				<div className="df7-mb-4 df7-flex df7-flex-wrap df7-items-center df7-gap-x-2 df7-gap-y-1 df7-rounded-lg df7-border df7-border-amber-200 df7-bg-amber-50 df7-px-4 df7-py-3 df7-text-sm df7-text-amber-800">
-					<strong className="df7-font-semibold">
+				<div className="deferforms-mb-4 deferforms-flex deferforms-flex-wrap deferforms-items-center deferforms-gap-x-2 deferforms-gap-y-1 deferforms-rounded-lg deferforms-border deferforms-border-amber-200 deferforms-bg-amber-50 deferforms-px-4 deferforms-py-3 deferforms-text-sm deferforms-text-amber-800">
+					<strong className="deferforms-font-semibold">
 						{ sprintf(
 							/* translators: %s: when the version was saved, e.g. "Today at 1:49:07 PM". */
 							__( 'Showing the version from %s.', 'defer-forms-for-contact-form-7' ),
@@ -2564,7 +2564,7 @@ const App = ( { formId } ) => {
 			) }
 
 			<Tabs
-				className="df7-mb-4"
+				className="deferforms-mb-4"
 				active={ mode }
 				onChange={ setMode }
 				tabs={ [
@@ -2575,33 +2575,33 @@ const App = ( { formId } ) => {
 			/>
 
 			{ loading ? (
-				<div className="df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white">
-					<div className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-50/60 df7-px-4 df7-py-2.5` }>
+				<div className="deferforms-overflow-hidden deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white">
+					<div className={ `deferforms-grid ${ COLS } deferforms-items-center deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-4 deferforms-py-2.5` }>
 						<span /><span /><span /><span /><span /><span />
 					</div>
 					{ /* py-3 and a 32px action button, both taken from FieldRow above:
 					     the padding was py-3.5 here and the last cell a 16px bar,
 					     which is a row 8px shorter than the one replacing it. */ }
 					{ Array.from( { length: 4 } ).map( ( _, i ) => (
-						<div key={ i } className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-px-4 df7-py-3 last:df7-border-0` }>
-							<div className="df7-h-4 df7-w-4 df7-animate-pulse df7-rounded df7-bg-stone-100" />
-							<Shimmer w="df7-w-5" text="df7-text-[14px]" />
-							<Shimmer w="df7-w-32" text="df7-text-sm" />
-							<Shimmer w="df7-w-24" text="df7-text-[14px]" />
-							<span className="df7-inline-block df7-w-fit df7-animate-pulse df7-rounded-md df7-bg-stone-100 df7-px-2 df7-py-1 df7-text-[14px] df7-text-transparent">
+						<div key={ i } className={ `deferforms-grid ${ COLS } deferforms-items-center deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-px-4 deferforms-py-3 last:deferforms-border-0` }>
+							<div className="deferforms-h-4 deferforms-w-4 deferforms-animate-pulse deferforms-rounded deferforms-bg-stone-100" />
+							<Shimmer w="deferforms-w-5" text="deferforms-text-[14px]" />
+							<Shimmer w="deferforms-w-32" text="deferforms-text-sm" />
+							<Shimmer w="deferforms-w-24" text="deferforms-text-[14px]" />
+							<span className="deferforms-inline-block deferforms-w-fit deferforms-animate-pulse deferforms-rounded-md deferforms-bg-stone-100 deferforms-px-2 deferforms-py-1 deferforms-text-[14px] deferforms-text-transparent">
 								{ '\u00a0\u00a0\u00a0\u00a0\u00a0' }
 							</span>
-							<div className="df7-h-8 df7-w-8 df7-animate-pulse df7-rounded-lg df7-bg-stone-100" />
+							<div className="deferforms-h-8 deferforms-w-8 deferforms-animate-pulse deferforms-rounded-lg deferforms-bg-stone-100" />
 						</div>
 					) ) }
 				</div>
 			) : 'settings' === mode ? (
-				<div className="df7-rounded-2xl df7-border df7-border-line df7-bg-white df7-p-6">
+				<div className="deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white deferforms-p-6">
 					{ /* Full width. A max-width here left every field hugging the
 					     left edge of a card that ran the width of the screen,
 					     which reads as a layout that has gone wrong rather than
 					     as a measured column. */ }
-					<div className="df7-flex df7-flex-col df7-gap-5">
+					<div className="deferforms-flex deferforms-flex-col deferforms-gap-5">
 						{ /*
 						  * A hook for the one form that has to look different.
 						  *
@@ -2623,7 +2623,7 @@ const App = ( { formId } ) => {
 								onChange={ ( event ) => setCssClass( event.target.value ) }
 							/>
 						</LField>
-						<hr className="df7-m-0 df7-border-0 df7-border-t df7-border-line" />
+						<hr className="deferforms-m-0 deferforms-border-0 deferforms-border-t deferforms-border-line" />
 
 						{ items.some( ( it ) => 'pagebreak' === it.kind ) && (
 							<>
@@ -2643,7 +2643,7 @@ const App = ( { formId } ) => {
 										] }
 									/>
 								</LField>
-								<hr className="df7-m-0 df7-border-0 df7-border-t df7-border-line" />
+								<hr className="deferforms-m-0 deferforms-border-0 deferforms-border-t deferforms-border-line" />
 							</>
 						) }
 
@@ -2660,7 +2660,7 @@ const App = ( { formId } ) => {
 									hint={ __( 'Seconds to leave the success message on screen. 0 redirects straight away.', 'defer-forms-for-contact-form-7' ) }
 								>
 									<input
-										className={ `${ inputCls } df7-w-28` }
+										className={ `${ inputCls } deferforms-w-28` }
 										type="number"
 										min="0"
 										max="60"
@@ -2720,24 +2720,24 @@ const App = ( { formId } ) => {
 			) : 'preview' === mode ? (
 				<Preview items={ items } title={ title } indicator={ steps.indicator } />
 			) : 0 === items.length ? (
-				<div className="df7-flex df7-flex-col df7-items-center df7-justify-center df7-rounded-2xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-16 df7-text-center">
-					<div className="df7-mb-4 df7-flex df7-h-14 df7-w-14 df7-items-center df7-justify-center df7-rounded-2xl df7-bg-accent-50 df7-text-accent">
-						<Wand2 className="df7-h-7 df7-w-7" />
+				<div className="deferforms-flex deferforms-flex-col deferforms-items-center deferforms-justify-center deferforms-rounded-2xl deferforms-border deferforms-border-dashed deferforms-border-stroke deferforms-bg-white deferforms-py-16 deferforms-text-center">
+					<div className="deferforms-mb-4 deferforms-flex deferforms-h-14 deferforms-w-14 deferforms-items-center deferforms-justify-center deferforms-rounded-2xl deferforms-bg-accent-50 deferforms-text-accent">
+						<Wand2 className="deferforms-h-7 deferforms-w-7" />
 					</div>
-					<h3 className="df7-m-0 df7-text-lg df7-font-bold df7-text-ink">{ __( 'Build your form', 'defer-forms-for-contact-form-7' ) }</h3>
-					<p className="df7-mb-5 df7-mt-1 df7-text-sm df7-text-stone-500">{ __( 'Add your first field to get started.', 'defer-forms-for-contact-form-7' ) }</p>
-					<div className="df7-flex df7-items-center df7-gap-2">
-						<button type="button" onClick={ openAdd } className={ accentBtn + ' df7-h-10 df7-px-5 df7-text-sm' }>
-							<Plus className="df7-h-4 df7-w-4" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
+					<h3 className="deferforms-m-0 deferforms-text-lg deferforms-font-bold deferforms-text-ink">{ __( 'Build your form', 'defer-forms-for-contact-form-7' ) }</h3>
+					<p className="deferforms-mb-5 deferforms-mt-1 deferforms-text-sm deferforms-text-stone-500">{ __( 'Add your first field to get started.', 'defer-forms-for-contact-form-7' ) }</p>
+					<div className="deferforms-flex deferforms-items-center deferforms-gap-2">
+						<button type="button" onClick={ openAdd } className={ accentBtn + ' deferforms-h-10 deferforms-px-5 deferforms-text-sm' }>
+							<Plus className="deferforms-h-4 deferforms-w-4" /> { __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 						</button>
-						<button type="button" onClick={ addRow } className={ ghostBtn + ' df7-h-10 df7-px-5 df7-text-sm' }>
-							<LayoutGrid className="df7-h-4 df7-w-4" /> { __( 'Add row', 'defer-forms-for-contact-form-7' ) }
+						<button type="button" onClick={ addRow } className={ ghostBtn + ' deferforms-h-10 deferforms-px-5 deferforms-text-sm' }>
+							<LayoutGrid className="deferforms-h-4 deferforms-w-4" /> { __( 'Add row', 'defer-forms-for-contact-form-7' ) }
 						</button>
 					</div>
 				</div>
 			) : (
-				<div className="df7-overflow-hidden df7-rounded-2xl df7-border df7-border-line df7-bg-white">
-					<div className={ `df7-grid ${ COLS } df7-items-center df7-gap-3 df7-border-b df7-border-line df7-bg-stone-50/60 df7-px-4 df7-py-2.5 df7-text-[14px] df7-font-bold df7-uppercase df7-tracking-wider df7-text-stone-400` }>
+				<div className="deferforms-overflow-hidden deferforms-rounded-2xl deferforms-border deferforms-border-line deferforms-bg-white">
+					<div className={ `deferforms-grid ${ COLS } deferforms-items-center deferforms-gap-3 deferforms-border-b deferforms-border-line deferforms-bg-stone-50/60 deferforms-px-4 deferforms-py-2.5 deferforms-text-[14px] deferforms-font-bold deferforms-uppercase deferforms-tracking-wider deferforms-text-stone-400` }>
 						<span />
 						<span>#</span>
 						<span>{ __( 'Label', 'defer-forms-for-contact-form-7' ) }</span>
@@ -2788,29 +2788,29 @@ const App = ( { formId } ) => {
 			) }
 
 			{ ! loading && 'build' === mode && items.length > 0 && (
-				<div className="df7-mt-3 df7-flex df7-gap-2">
+				<div className="deferforms-mt-3 deferforms-flex deferforms-gap-2">
 					<button
 						type="button"
 						onClick={ openAdd }
-						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
+						className="deferforms-flex deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-2 deferforms-rounded-xl deferforms-border deferforms-border-dashed deferforms-border-stroke deferforms-bg-white deferforms-py-3 deferforms-text-sm deferforms-font-semibold deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-border-accent hover:deferforms-text-accent"
 					>
-						<Plus className="df7-h-4 df7-w-4" />
+						<Plus className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Add field', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button
 						type="button"
 						onClick={ addRow }
-						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
+						className="deferforms-flex deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-2 deferforms-rounded-xl deferforms-border deferforms-border-dashed deferforms-border-stroke deferforms-bg-white deferforms-py-3 deferforms-text-sm deferforms-font-semibold deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-border-accent hover:deferforms-text-accent"
 					>
-						<LayoutGrid className="df7-h-4 df7-w-4" />
+						<LayoutGrid className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Add row', 'defer-forms-for-contact-form-7' ) }
 					</button>
 					<button
 						type="button"
 						onClick={ addPageBreak }
-						className="df7-flex df7-flex-1 df7-cursor-pointer df7-items-center df7-justify-center df7-gap-2 df7-rounded-xl df7-border df7-border-dashed df7-border-stroke df7-bg-white df7-py-3 df7-text-sm df7-font-semibold df7-text-stone-500 df7-transition-colors hover:df7-border-accent hover:df7-text-accent"
+						className="deferforms-flex deferforms-flex-1 deferforms-cursor-pointer deferforms-items-center deferforms-justify-center deferforms-gap-2 deferforms-rounded-xl deferforms-border deferforms-border-dashed deferforms-border-stroke deferforms-bg-white deferforms-py-3 deferforms-text-sm deferforms-font-semibold deferforms-text-stone-500 deferforms-transition-colors hover:deferforms-border-accent hover:deferforms-text-accent"
 					>
-						<Scissors className="df7-h-4 df7-w-4" />
+						<Scissors className="deferforms-h-4 deferforms-w-4" />
 						{ __( 'Add page break', 'defer-forms-for-contact-form-7' ) }
 					</button>
 				</div>
@@ -2825,7 +2825,7 @@ const App = ( { formId } ) => {
 					footer={
 						showPicker ? (
 							<>
-								<span className="df7-flex-1" />
+								<span className="deferforms-flex-1" />
 								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }</button>
 							</>
 						) : (
@@ -2833,7 +2833,7 @@ const App = ( { formId } ) => {
 								{ 'add' === modal.mode && (
 									<button type="button" className={ ghostBtn } onClick={ () => setDraft( null ) }>{ __( '← Back', 'defer-forms-for-contact-form-7' ) }</button>
 								) }
-								<span className="df7-flex-1" />
+								<span className="deferforms-flex-1" />
 								<button type="button" className={ ghostBtn } onClick={ closeModal }>{ __( 'Cancel', 'defer-forms-for-contact-form-7' ) }</button>
 								<button type="button" className={ accentBtn } onClick={ commitDraft }>{ __( 'Done', 'defer-forms-for-contact-form-7' ) }</button>
 							</>
@@ -2845,7 +2845,7 @@ const App = ( { formId } ) => {
 					) : (
 						<>
 							{ draftError && (
-								<div className="df7-mb-4 df7-rounded-lg df7-border df7-border-red-200 df7-bg-red-50 df7-px-3.5 df7-py-2.5 df7-text-sm df7-font-medium df7-text-red-700">{ draftError }</div>
+								<div className="deferforms-mb-4 deferforms-rounded-lg deferforms-border deferforms-border-red-200 deferforms-bg-red-50 deferforms-px-3.5 deferforms-py-2.5 deferforms-text-sm deferforms-font-medium deferforms-text-red-700">{ draftError }</div>
 							) }
 							<FieldSettingsForm field={ draft } onChange={ patchDraft } availableFields={ collectFields( items ).filter( ( other ) => other._id !== draft?._id ) } tab={ fieldTab } onTab={ setFieldTab } />
 						</>
@@ -2859,7 +2859,7 @@ const App = ( { formId } ) => {
 					onClose={ () => setHistory( null ) }
 					footer={
 						<>
-							<span className="df7-flex-1" />
+							<span className="deferforms-flex-1" />
 							<button type="button" onClick={ () => setHistory( null ) } className={ btnGhost }>
 								{ __( 'Close', 'defer-forms-for-contact-form-7' ) }
 							</button>
@@ -2873,7 +2873,7 @@ const App = ( { formId } ) => {
 	);
 };
 
-const mount = document.getElementById( 'df7-builder-root' );
+const mount = document.getElementById( 'deferforms-builder-root' );
 if ( mount ) {
 	const formId = parseInt( mount.dataset.formId || '0', 10 );
 	createRoot( mount ).render( <App formId={ formId } /> );

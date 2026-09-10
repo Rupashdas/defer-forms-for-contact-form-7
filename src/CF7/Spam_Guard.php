@@ -6,20 +6,20 @@
  *  - Dedup: an identical submission repeated within a short window is a flood /
  *    double-post, tracked with a short-lived transient (no DB schema needed).
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
-use DF7\DB\Settings_Repository;
+use DEFERFORMS\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Spam_Guard {
 
-	private const TS_FIELD    = 'df7_ts';
+	private const TS_FIELD    = 'deferforms_ts';
 	private const MIN_SECONDS = 3;
 	private const DUP_WINDOW  = 60;
 
@@ -139,7 +139,7 @@ final class Spam_Guard {
 	private function dup_key( $submission ): string {
 		$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
 		foreach ( array_keys( $data ) as $key ) {
-			if ( 0 === strpos( $key, '_' ) || 0 === strpos( $key, 'df7_' ) ) {
+			if ( 0 === strpos( $key, '_' ) || 0 === strpos( $key, 'deferforms_' ) ) {
 				unset( $data[ $key ] );
 			}
 		}
@@ -151,7 +151,7 @@ final class Spam_Guard {
 		// with nothing to tell them why.
 		$who = (string) ( $submission && method_exists( $submission, 'get_meta' ) ? $submission->get_meta( 'remote_ip' ) : '' );
 
-		return 'df7_dup_' . md5( self::form_id_of( $submission ) . '|' . $who . '|' . wp_json_encode( $data ) );
+		return 'deferforms_dup_' . md5( self::form_id_of( $submission ) . '|' . $who . '|' . wp_json_encode( $data ) );
 	}
 
 	/**

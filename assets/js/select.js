@@ -7,12 +7,12 @@
  * reading the same source of truth. If this script fails to load, the visitor
  * simply gets the native control.
  *
- * A `df7-search` marker class on the select turns on the filter box.
+ * A `deferforms-search` marker class on the select turns on the filter box.
  */
 ( function () {
 	'use strict';
 
-	var l10n = window.df7SelectL10n || {};
+	var l10n = window.deferformsSelectL10n || {};
 	var TEXT = {
 		one:    l10n.placeholder      || 'Select…',
 		many:   l10n.placeholderMulti || 'Select options…',
@@ -41,28 +41,28 @@
 		} );
 	} );
 
-	var el = window.df7.el;
+	var el = window.deferforms.el;
 
 	function enhance( select ) {
-		if ( select.dataset.df7Select || select.disabled ) {
+		if ( select.dataset.deferformsSelect || select.disabled ) {
 			return;
 		}
-		select.dataset.df7Select = '1';
+		select.dataset.deferformsSelect = '1';
 
 		var multiple   = select.multiple;
-		var searchable = select.classList.contains( 'df7-search' );
+		var searchable = select.classList.contains( 'deferforms-search' );
 		var options    = Array.prototype.slice.call( select.options );
 
 		// The blank option doubles as the placeholder label when it has text.
 		var blank = options.filter( function ( option ) { return '' === option.value; } )[ 0 ];
 		var placeholder = ( blank && blank.textContent.trim() ) || ( multiple ? TEXT.many : TEXT.one );
 
-		var wrap = el( 'div', 'df7-select' + ( multiple ? ' df7-select--multiple' : '' ) );
+		var wrap = el( 'div', 'deferforms-select' + ( multiple ? ' deferforms-select--multiple' : '' ) );
 		select.parentNode.insertBefore( wrap, select );
 		wrap.appendChild( select );
-		select.classList.add( 'df7-select-native' );
+		select.classList.add( 'deferforms-select-native' );
 
-		var trigger = el( 'button', 'df7-select-trigger' );
+		var trigger = el( 'button', 'deferforms-select-trigger' );
 		trigger.type = 'button';
 		trigger.setAttribute( 'aria-haspopup', 'listbox' );
 		trigger.setAttribute( 'aria-expanded', 'false' );
@@ -79,38 +79,38 @@
 			trigger.setAttribute( 'aria-label', ( caption.textContent || '' ).trim() );
 		}
 
-		var value = el( 'span', 'df7-select-value' );
+		var value = el( 'span', 'deferforms-select-value' );
 		trigger.appendChild( value );
-		trigger.appendChild( el( 'span', 'df7-select-arrow' ) );
+		trigger.appendChild( el( 'span', 'deferforms-select-arrow' ) );
 		wrap.appendChild( trigger );
 
-		var panel = el( 'div', 'df7-select-panel' );
+		var panel = el( 'div', 'deferforms-select-panel' );
 		panel.hidden = true;
 		wrap.appendChild( panel );
 
 		var search = null;
 		if ( searchable ) {
-			search = el( 'input', 'df7-select-search' );
+			search = el( 'input', 'deferforms-select-search' );
 			search.type = 'text';
 			search.placeholder = TEXT.search;
 			search.setAttribute( 'aria-label', TEXT.search );
 			panel.appendChild( search );
 		}
 
-		var list = el( 'div', 'df7-select-list' );
+		var list = el( 'div', 'deferforms-select-list' );
 		list.setAttribute( 'role', 'listbox' );
 		if ( multiple ) {
 			list.setAttribute( 'aria-multiselectable', 'true' );
 		}
 		panel.appendChild( list );
 
-		var empty = el( 'div', 'df7-select-empty', TEXT.empty );
+		var empty = el( 'div', 'deferforms-select-empty', TEXT.empty );
 		empty.hidden = true;
 		panel.appendChild( empty );
 
 		// One row per real <option>, kept in the same order.
 		var rows = options.map( function ( option ) {
-			var row = el( 'div', 'df7-select-option', option.textContent );
+			var row = el( 'div', 'deferforms-select-option', option.textContent );
 			row.setAttribute( 'role', 'option' );
 			row.dataset.value = option.value;
 			if ( option.disabled ) {
@@ -155,13 +155,13 @@
 
 			value.innerHTML = '';
 			if ( ! chosen.length ) {
-				value.appendChild( el( 'span', 'df7-select-placeholder', placeholder ) );
+				value.appendChild( el( 'span', 'deferforms-select-placeholder', placeholder ) );
 			} else if ( ! multiple ) {
 				value.appendChild( document.createTextNode( chosen[ 0 ].textContent ) );
 			} else {
 				chosen.forEach( function ( option ) {
-					var chip = el( 'span', 'df7-select-chip', option.textContent );
-					var remove = el( 'button', 'df7-select-chip-remove', '×' );
+					var chip = el( 'span', 'deferforms-select-chip', option.textContent );
+					var remove = el( 'button', 'deferforms-select-chip-remove', '×' );
 					remove.type = 'button';
 					remove.setAttribute( 'aria-label', TEXT.remove + ': ' + option.textContent );
 					remove.addEventListener( 'click', function ( e ) {
@@ -314,13 +314,13 @@
 		// A reset does not come through above: it dispatches no event of any
 		// kind, so the widget went on naming a country the select no longer held.
 		if ( select.form ) {
-			window.df7.onReset( select.form, render );
+			window.deferforms.onReset( select.form, render );
 		}
 
 		render();
 	}
 
-	window.df7.forms( function ( form ) {
+	window.deferforms.forms( function ( form ) {
 		form.querySelectorAll( 'select' ).forEach( enhance );
 	} );
 } )();

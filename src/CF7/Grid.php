@@ -1,16 +1,16 @@
 <?php
 /**
- * Renders Defer Forms grid rows on the front-end. `[df7_row cols="N"][df7_col] …
- * [/df7_col] … [/df7_row]` markers survive CF7's form-tag pass (the tags are
+ * Renders Defer Forms grid rows on the front-end. `[deferforms_row cols="N"][deferforms_col] …
+ * [/deferforms_col] … [/deferforms_row]` markers survive CF7's form-tag pass (the tags are
  * unregistered, so CF7 leaves them literal); we convert them to grid/column divs
  * after the real form-tags render.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,22 +22,22 @@ final class Grid {
 	}
 
 	public function render_rows( string $elements ): string {
-		if ( false === strpos( $elements, '[df7_row' ) ) {
+		if ( false === strpos( $elements, '[deferforms_row' ) ) {
 			return $elements;
 		}
 
 		$elements = (string) preg_replace_callback(
-			'/\[df7_row(?:\s+cols="(\d+)")?\]/',
+			'/\[deferforms_row(?:\s+cols="(\d+)")?\]/',
 			static function ( $match ) {
 				$cols = isset( $match[1] ) ? max( 1, min( 4, (int) $match[1] ) ) : 2;
-				return '<div class="df7-row df7-cols-' . $cols . '">';
+				return '<div class="deferforms-row deferforms-cols-' . $cols . '">';
 			},
 			$elements
 		);
 
 		return str_replace(
-			array( '[df7_col]', '[/df7_col]', '[/df7_row]' ),
-			array( '<div class="df7-col">', '</div>', '</div>' ),
+			array( '[deferforms_col]', '[/deferforms_col]', '[/deferforms_row]' ),
+			array( '<div class="deferforms-col">', '</div>', '</div>' ),
 			$elements
 		);
 	}

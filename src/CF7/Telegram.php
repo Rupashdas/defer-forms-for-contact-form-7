@@ -11,12 +11,12 @@
  * so a background job would add a moving part for no gain — and a failure would
  * have nowhere to be seen.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 

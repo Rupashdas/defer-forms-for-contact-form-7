@@ -2,18 +2,18 @@
 /**
  * REST: Reading and writing the plugin settings sections.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\CF7\Discord;
-use DF7\CF7\Slack;
-use DF7\CF7\Telegram;
-use DF7\CF7\Webhook;
-use DF7\DB\Settings_Repository;
+use DEFERFORMS\CF7\Discord;
+use DEFERFORMS\CF7\Slack;
+use DEFERFORMS\CF7\Telegram;
+use DEFERFORMS\CF7\Webhook;
+use DEFERFORMS\DB\Settings_Repository;
 
 defined( 'ABSPATH' ) || exit;
 

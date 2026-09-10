@@ -5,12 +5,12 @@
  * through our callback, collects its posted value, and includes it in mail. The
  * widget is a reversed radio group styled into stars by rating.css (CSS-only).
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,7 +44,7 @@ final class Rating {
 			return '';
 		}
 
-		wp_enqueue_style( 'df7-rating', DF7_URL . 'assets/css/rating.css', array(), df7_asset_ver( 'assets/css/rating.css' ) );
+		wp_enqueue_style( 'deferforms-rating', DEFERFORMS_URL . 'assets/css/rating.css', array(), deferforms_asset_ver( 'assets/css/rating.css' ) );
 
 		$max = (int) $tag->get_option( 'max', 'int', true );
 		$max = ( $max < 1 ) ? 5 : min( 10, $max );
@@ -68,7 +68,7 @@ final class Rating {
 		}
 
 		return sprintf(
-			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><span class="df7-rating %2$s">%3$s</span>%4$s</span>',
+			'<span class="wpcf7-form-control-wrap" data-name="%1$s"><span class="deferforms-rating %2$s">%3$s</span>%4$s</span>',
 			esc_attr( $tag->name ),
 			esc_attr( wpcf7_form_controls_class( $tag->type ) ),
 			$stars,

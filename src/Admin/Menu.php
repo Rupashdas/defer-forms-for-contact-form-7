@@ -6,25 +6,25 @@
  * let React take over. So there is one render method and a table of screens,
  * rather than seven functions that each said it again.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Admin;
+namespace DEFERFORMS\Admin;
 
-use DF7\CF7\Attachments;
-use DF7\CF7\Design;
-use DF7\CF7\Product_Field;
-use DF7\Core\Capability;
-use DF7\DB\Submissions_Repository;
-use DF7\Modules\Registry;
+use DEFERFORMS\CF7\Attachments;
+use DEFERFORMS\CF7\Design;
+use DEFERFORMS\CF7\Product_Field;
+use DEFERFORMS\Core\Capability;
+use DEFERFORMS\DB\Submissions_Repository;
+use DEFERFORMS\Modules\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Menu {
 
-	private const SLUG = 'df7';
+	private const SLUG = 'deferforms';
 
 	private Design $design;
 
@@ -39,19 +39,19 @@ final class Menu {
 	 * The submenu, in order: page slug => [ entry name, label ].
 	 *
 	 * The entry name is both the Vite entry under ui/apps/ and half the id React
-	 * mounts on (`df7-<entry>-root`), which is why neither has to be repeated.
+	 * mounts on (`deferforms-<entry>-root`), which is why neither has to be repeated.
 	 *
 	 * @return array<string, array{0: string, 1: string}>
 	 */
 	private static function pages(): array {
 		return array(
 			self::SLUG                     => array( 'dashboard', __( 'Dashboard', 'defer-forms-for-contact-form-7' ) ),
-			'df7-forms'         => array( 'forms', __( 'Forms', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-forms'         => array( 'forms', __( 'Forms', 'defer-forms-for-contact-form-7' ) ),
 			// Straight after Forms, not buried in Settings: this is the look of
 			// every form on the site, and it is the first thing anyone goes
 			// looking for after making one.
-			'df7-styling'       => array( 'styling', __( 'Styling', 'defer-forms-for-contact-form-7' ) ),
-			'df7-submissions'   => array( 'submissions', __( 'Submissions', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-styling'       => array( 'styling', __( 'Styling', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-submissions'   => array( 'submissions', __( 'Submissions', 'defer-forms-for-contact-form-7' ) ),
 			// Under Submissions, because that is the order of the work: entries
 			// arrive, then somebody is told about them.
 			//
@@ -60,10 +60,10 @@ final class Menu {
 			// button that goes and tries them, which is a job rather than a
 			// preference — and the routing rules to come need somewhere to live
 			// that is not a seventh tab.
-			'df7-notifications' => array( 'notifications', __( 'Notifications', 'defer-forms-for-contact-form-7' ) ),
-			'df7-templates'     => array( 'templates', __( 'Templates', 'defer-forms-for-contact-form-7' ) ),
-			'df7-settings'      => array( 'settings', __( 'Settings', 'defer-forms-for-contact-form-7' ) ),
-			'df7-features'      => array( 'features', __( 'Features', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-notifications' => array( 'notifications', __( 'Notifications', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-templates'     => array( 'templates', __( 'Templates', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-settings'      => array( 'settings', __( 'Settings', 'defer-forms-for-contact-form-7' ) ),
+			'deferforms-features'      => array( 'features', __( 'Features', 'defer-forms-for-contact-form-7' ) ),
 		);
 	}
 
@@ -90,7 +90,7 @@ final class Menu {
 			esc_html(
 				sprintf(
 					/* translators: 1: bytes in use, 2: the limit. */
-					__( 'Stored attachments have reached %1$s of the %2$s limit. Submissions and their mail are unaffected — only the copies are being refused. Delete old entries, set a retention period, or raise the limit with the df7_attachment_limit filter.', 'defer-forms-for-contact-form-7' ),
+					__( 'Stored attachments have reached %1$s of the %2$s limit. Submissions and their mail are unaffected — only the copies are being refused. Delete old entries, set a retention period, or raise the limit with the deferforms_attachment_limit filter.', 'defer-forms-for-contact-form-7' ),
 					size_format( Attachments::used() ),
 					size_format( Attachments::limit() )
 				)
@@ -119,7 +119,7 @@ final class Menu {
 			add_submenu_page(
 				self::SLUG,
 				$label,
-				'df7-submissions' === $slug ? $label . $unread : $label,
+				'deferforms-submissions' === $slug ? $label . $unread : $label,
 				$capability,
 				$slug,
 				fn() => $this->render( $entry )
@@ -135,7 +135,7 @@ final class Menu {
 			__( 'Form Builder', 'defer-forms-for-contact-form-7' ),
 			__( 'Form Builder', 'defer-forms-for-contact-form-7' ),
 			$capability,
-			'df7-builder',
+			'deferforms-builder',
 			fn() => $this->render( 'builder' )
 		);
 
@@ -171,7 +171,7 @@ final class Menu {
 		$this->skin_preview();
 
 		printf(
-			'<div class="wrap"><div id="df7-%1$s-root"%2$s></div></div>',
+			'<div class="wrap"><div id="deferforms-%1$s-root"%2$s></div></div>',
 			esc_attr( $entry ),
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- `%d` over an absint(); the attribute cannot carry anything but digits.
 			'builder' === $entry ? sprintf( ' data-form-id="%d"', self::requested_form_id() ) : ''
@@ -179,7 +179,7 @@ final class Menu {
 	}
 
 	/**
-	 * The saved design tokens, so a `.df7-preview` looks like the real form.
+	 * The saved design tokens, so a `.deferforms-preview` looks like the real form.
 	 *
 	 * Here rather than on a hook of Design's own, because here is the one moment
 	 * the handle exists: `wp_add_inline_style()` will not attach to a stylesheet
@@ -188,7 +188,7 @@ final class Menu {
 	 * bundle was registered, and therefore before the rules it needed to outrank.
 	 *
 	 * Every screen gets it, not just the two that draw a preview. The tokens are
-	 * scoped to `.df7-preview`, so on a screen without one they match nothing,
+	 * scoped to `.deferforms-preview`, so on a screen without one they match nothing,
 	 * and picking the screens by hand is a list to keep in step with the markup.
 	 */
 	private function skin_preview(): void {
@@ -216,7 +216,7 @@ final class Menu {
 			// capability read as "" or "1" is a trap for the next one added.
 			wp_add_inline_script(
 				$handle,
-				'window.df7Builder = ' . wp_json_encode( array( 'woocommerce' => Product_Field::is_available() ) ) . ';',
+				'window.deferformsBuilder = ' . wp_json_encode( array( 'woocommerce' => Product_Field::is_available() ) ) . ';',
 				'before'
 			);
 
@@ -235,7 +235,7 @@ final class Menu {
 			 */
 			wp_add_inline_script(
 				$handle,
-				'window.df7Dashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
+				'window.deferformsDashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
 				'before'
 			);
 
@@ -258,7 +258,7 @@ final class Menu {
 			 */
 			wp_add_inline_script(
 				$handle,
-				'window.df7Features = ' . wp_json_encode( array( 'items' => Registry::definitions() ) ) . ';',
+				'window.deferformsFeatures = ' . wp_json_encode( array( 'items' => Registry::definitions() ) ) . ';',
 				'before'
 			);
 
@@ -271,10 +271,10 @@ final class Menu {
 
 		wp_localize_script(
 			$handle,
-			'df7Submissions',
+			'deferformsSubmissions',
 			array(
 				'exportUrl'       => admin_url( 'admin-post.php' ),
-				'exportNonce'     => wp_create_nonce( 'df7_export_csv' ),
+				'exportNonce'     => wp_create_nonce( 'deferforms_export_csv' ),
 				// Attachments go through admin-post.php too, under their own nonce.
 				'attachmentNonce' => wp_create_nonce( Attachment_Download::ACTION ),
 			)

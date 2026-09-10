@@ -6,7 +6,7 @@
  * it — so nobody fills a long form only to be sent back to the top.
  *
  * It is also the single owner of "is this field valid": steps.js calls into
- * `window.df7Validate` for its per-step gate, so both use identical rules.
+ * `window.deferformsValidate` for its per-step gate, so both use identical rules.
  *
  * Nothing here blocks submission — CF7's own server-side validation remains the
  * authority. This is only a faster, kinder message.
@@ -14,7 +14,7 @@
 ( function () {
 	'use strict';
 
-	var l10n = window.df7ValidateL10n || {};
+	var l10n = window.deferformsValidateL10n || {};
 	var TEXT = {
 		required: l10n.required || 'Please complete this field.',
 		invalid:  l10n.invalid  || 'Please check this entry.'
@@ -54,7 +54,7 @@
 	 * required", read rather than guessed.
 	 */
 	function isRequired( control ) {
-		if ( 'radio' === control.type && ! control.closest( '.df7-rating' ) ) {
+		if ( 'radio' === control.type && ! control.closest( '.deferforms-rating' ) ) {
 			return true;
 		}
 
@@ -70,7 +70,7 @@
 		return control.closest( '.wpcf7-form-control-wrap' ) || control.parentNode;
 	}
 
-	/** CF7 marks its own findings with this; ours are `.df7-field-error`. */
+	/** CF7 marks its own findings with this; ours are `.deferforms-field-error`. */
 	function cf7Complaint( wrap ) {
 		return wrap ? wrap.querySelector( '.wpcf7-not-valid-tip' ) : null;
 	}
@@ -84,16 +84,16 @@
 			// Undo only what we put there. CF7's own validator sets the same
 			// class, and stripping that left its message on screen with the
 			// styling gone — a red-flagged field that no longer looks flagged.
-			if ( ! one.hasAttribute( 'data-df7-invalid' ) ) {
+			if ( ! one.hasAttribute( 'data-deferforms-invalid' ) ) {
 				return;
 			}
-			one.removeAttribute( 'data-df7-invalid' );
+			one.removeAttribute( 'data-deferforms-invalid' );
 			one.classList.remove( 'wpcf7-not-valid' );
 			one.removeAttribute( 'aria-invalid' );
 		} );
 
 		if ( wrap ) {
-			var tip = wrap.querySelector( '.df7-field-error' );
+			var tip = wrap.querySelector( '.deferforms-field-error' );
 			if ( tip ) {
 				tip.parentNode.removeChild( tip );
 			}
@@ -110,7 +110,7 @@
 			return;
 		}
 
-		control.setAttribute( 'data-df7-invalid', '1' );
+		control.setAttribute( 'data-deferforms-invalid', '1' );
 		control.classList.add( 'wpcf7-not-valid' );
 		control.setAttribute( 'aria-invalid', 'true' );
 
@@ -120,7 +120,7 @@
 			return;
 		}
 		var tip = document.createElement( 'span' );
-		tip.className = 'df7-field-error';
+		tip.className = 'deferforms-field-error';
 		tip.setAttribute( 'role', 'alert' );
 		tip.textContent = message;
 		wrap.appendChild( tip );
@@ -226,7 +226,7 @@
 			}
 
 			var caption = captionFor( control );
-			if ( ! caption || caption.querySelector( '.df7-required' ) ) {
+			if ( ! caption || caption.querySelector( '.deferforms-required' ) ) {
 				return;
 			}
 
@@ -237,7 +237,7 @@
 			}
 
 			var star = document.createElement( 'span' );
-			star.className = 'df7-required';
+			star.className = 'deferforms-required';
 			// aria-required already tells a screen reader; this is for eyes only.
 			star.setAttribute( 'aria-hidden', 'true' );
 			star.textContent = '*';
@@ -271,7 +271,7 @@
 	function dropOursWhereCf7Spoke( form ) {
 		Array.prototype.forEach.call( form.querySelectorAll( '.wpcf7-not-valid-tip' ), function ( theirs ) {
 			var wrap = theirs.closest( '.wpcf7-form-control-wrap' ) || theirs.parentNode;
-			var ours = wrap ? wrap.querySelector( '.df7-field-error' ) : null;
+			var ours = wrap ? wrap.querySelector( '.deferforms-field-error' ) : null;
 			if ( ours ) {
 				ours.parentNode.removeChild( ours );
 			}
@@ -310,10 +310,10 @@
 	}
 
 	function watch( form ) {
-		if ( form.dataset.df7Validate ) {
+		if ( form.dataset.deferformsValidate ) {
 			return;
 		}
-		form.dataset.df7Validate = '1';
+		form.dataset.deferformsValidate = '1';
 
 		markRequired( form );
 		releaseSubmit( form );
@@ -357,13 +357,13 @@
 
 		// CF7 re-renders its own messages after a submit; ours would be stale.
 		form.addEventListener( 'wpcf7submit', function () {
-			Array.prototype.forEach.call( form.querySelectorAll( '.df7-field-error' ), function ( tip ) {
+			Array.prototype.forEach.call( form.querySelectorAll( '.deferforms-field-error' ), function ( tip ) {
 				tip.parentNode.removeChild( tip );
 			} );
 		} );
 	}
 
-	window.df7Validate = { field: field, container: container, clear: clear, isEmpty: isEmpty, isRequired: isRequired };
+	window.deferformsValidate = { field: field, container: container, clear: clear, isEmpty: isEmpty, isRequired: isRequired };
 
-	window.df7.forms( watch );
+	window.deferforms.forms( watch );
 } )();

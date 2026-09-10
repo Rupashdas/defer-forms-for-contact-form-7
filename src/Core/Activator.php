@@ -2,14 +2,14 @@
 /**
  * Plugin activation handler.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Core;
+namespace DEFERFORMS\Core;
 
-use DF7\DB\Schema;
+use DEFERFORMS\DB\Schema;
 
 defined( 'ABSPATH' ) || exit;
 

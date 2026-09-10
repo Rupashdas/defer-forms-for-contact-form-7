@@ -2,12 +2,12 @@
 /**
  * REST: The starter-template library and creating a form from one.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -91,7 +91,7 @@ final class Templates_Controller extends Controller {
 		return new \WP_REST_Response(
 			array(
 				'form_id'     => (int) $id,
-				'builder_url' => admin_url( 'admin.php?page=df7-builder&form=' . (int) $id ),
+				'builder_url' => admin_url( 'admin.php?page=deferforms-builder&form=' . (int) $id ),
 			),
 			201
 		);

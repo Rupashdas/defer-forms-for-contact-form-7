@@ -2,7 +2,7 @@
  * Defer Forms — front-end date picker (flatpickr) for CF7 date fields.
  *
  * Single dates only. There was a range mode here for a date-range field that was
- * never built: nothing emits `df7-daterange`, and if anything had, flatpickr
+ * never built: nothing emits `deferforms-daterange`, and if anything had, flatpickr
  * would have written `2024-01-01 to 2024-01-05` into a field Contact Form 7
  * validates as a date — so every submission would have been rejected. It comes
  * back with the field, and with a validator that understands it.
@@ -11,7 +11,7 @@
 	'use strict';
 
 	function init( input ) {
-		if ( input._df7Fp || ! window.flatpickr ) {
+		if ( input._deferformsFp || ! window.flatpickr ) {
 			return;
 		}
 
@@ -32,10 +32,10 @@
 			input.type = 'text';
 		}
 
-		input._df7Fp = window.flatpickr( input, opts );
+		input._deferformsFp = window.flatpickr( input, opts );
 	}
 
-	window.df7.forms( function ( form ) {
-		form.querySelectorAll( 'input.df7-fp' ).forEach( init );
+	window.deferforms.forms( function ( form ) {
+		form.querySelectorAll( 'input.deferforms-fp' ).forEach( init );
 	} );
 } )();

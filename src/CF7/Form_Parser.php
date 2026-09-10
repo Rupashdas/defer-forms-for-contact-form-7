@@ -10,15 +10,15 @@
  *   - 'field':     a CF7 form-tag (text, email, select, …)
  *   - 'content':   a layout block (heading/paragraph/divider/spacer)
  *   - 'row':       a grid row wrapping child items in columns
- *   - 'pagebreak': a multi-step page break ([df7_pagebreak])
+ *   - 'pagebreak': a multi-step page break ([deferforms_pagebreak])
  *   - 'html':      free-form markup between tags (preserved verbatim)
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -74,7 +74,7 @@ final class Form_Parser {
 
 	/**
 	 * Split markup into ordered segments, peeling out conditional regions
-	 * (`[df7_if field="…" op="…" value="…"] … [/df7_if]`). A plain segment
+	 * (`[deferforms_if field="…" op="…" value="…"] … [/deferforms_if]`). A plain segment
 	 * carries only `text`; a conditional segment also carries `cond`.
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -83,7 +83,7 @@ final class Form_Parser {
 		$out = array();
 		$pos = 0;
 
-		if ( preg_match_all( '/\[df7_if\s+([^\]]*)\](.*?)\[\/df7_if\]/s', $markup, $matches, PREG_OFFSET_CAPTURE ) ) {
+		if ( preg_match_all( '/\[deferforms_if\s+([^\]]*)\](.*?)\[\/deferforms_if\]/s', $markup, $matches, PREG_OFFSET_CAPTURE ) ) {
 			foreach ( $matches[0] as $i => $whole ) {
 				$start = (int) $whole[1];
 				if ( $start > $pos ) {
@@ -123,7 +123,7 @@ final class Form_Parser {
 	}
 
 	/**
-	 * Read the `field`/`op`/`value` attributes off a `[df7_if …]` opening tag.
+	 * Read the `field`/`op`/`value` attributes off a `[deferforms_if …]` opening tag.
 	 *
 	 * @return array<string, string>
 	 */
@@ -167,7 +167,7 @@ final class Form_Parser {
 
 	/**
 	 * Split markup into ordered segments — plain markup and grid-row regions
-	 * (`[df7_row cols="N"] … [/df7_row]`). Rows don't nest.
+	 * (`[deferforms_row cols="N"] … [/deferforms_row]`). Rows don't nest.
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -175,7 +175,7 @@ final class Form_Parser {
 		$out = array();
 		$pos = 0;
 
-		if ( preg_match_all( '/\[df7_row(?:\s+cols="(\d+)")?\](.*?)\[\/df7_row\]/s', $markup, $matches, PREG_OFFSET_CAPTURE ) ) {
+		if ( preg_match_all( '/\[deferforms_row(?:\s+cols="(\d+)")?\](.*?)\[\/deferforms_row\]/s', $markup, $matches, PREG_OFFSET_CAPTURE ) ) {
 			foreach ( $matches[0] as $i => $whole ) {
 				$start = (int) $whole[1];
 				if ( $start > $pos ) {
@@ -206,7 +206,7 @@ final class Form_Parser {
 
 	/**
 	 * Split a row's inner markup into per-column item lists by reading
-	 * `[df7_col] … [/df7_col]` segments. A legacy row with no column markers
+	 * `[deferforms_col] … [/deferforms_col]` segments. A legacy row with no column markers
 	 * collapses into a single column.
 	 *
 	 * @return array<int, array<int, array<string, mixed>>>
@@ -214,7 +214,7 @@ final class Form_Parser {
 	private static function split_columns( string $inner ): array {
 		$columns = array();
 
-		if ( preg_match_all( '/\[df7_col\](.*?)\[\/df7_col\]/s', $inner, $matches ) ) {
+		if ( preg_match_all( '/\[deferforms_col\](.*?)\[\/deferforms_col\]/s', $inner, $matches ) ) {
 			foreach ( $matches[1] as $cell ) {
 				$columns[] = self::parse_items( $cell );
 			}
@@ -286,7 +286,7 @@ final class Form_Parser {
 
 			// Multi-step page break is its own item, not a field. Its settings
 			// ride as quoted attributes, the same way a conditional group's do.
-			if ( 'df7_pagebreak' === $tag ) {
+			if ( 'deferforms_pagebreak' === $tag ) {
 				$out[] = array_merge( array( 'kind' => 'pagebreak' ), self::parse_step_attrs( $args ) );
 				continue;
 			}
@@ -430,17 +430,17 @@ final class Form_Parser {
 		// Settings we smuggle through CF7 as marker classes come back out here,
 		// so the user's own CSS-class field never shows them.
 		if ( 'date' === $tag ) {
-			$found         = self::extract_markers( $out, array( 'df7-fp' ) );
+			$found         = self::extract_markers( $out, array( 'deferforms-fp' ) );
 			$out['picker'] = $found ? 'styled' : 'native';
 		}
 
 		if ( in_array( $tag, array( 'checkbox', 'radio' ), true ) ) {
-			$found         = self::extract_markers( $out, array( 'df7-inline', 'df7-cards' ) );
-			$out['layout'] = $found ? substr( (string) $found[0], strlen( 'df7-' ) ) : 'list';
+			$found         = self::extract_markers( $out, array( 'deferforms-inline', 'deferforms-cards' ) );
+			$out['layout'] = $found ? substr( (string) $found[0], strlen( 'deferforms-' ) ) : 'list';
 		}
 
 		if ( in_array( $tag, array( 'select', 'country' ), true ) ) {
-			$out['searchable'] = (bool) self::extract_markers( $out, array( 'df7-search' ) );
+			$out['searchable'] = (bool) self::extract_markers( $out, array( 'deferforms-search' ) );
 		}
 
 		if ( 'tel' === $tag ) {
@@ -674,10 +674,10 @@ final class Form_Parser {
 	 * @return array<int, array<string, mixed>>
 	 */
 	private static function split_content( string $html ): array {
-		$re = '#(?P<h><(?P<hlvl>h[234])\s+class="(?P<hcls>[^"]*df7-h[^"]*)"\s*>(?P<htxt>.*?)</\2>)'
-			. '|(?P<p><p\s+class="(?P<pcls>[^"]*df7-p[^"]*)"\s*>(?P<ptxt>.*?)</p>)'
-			. '|(?P<hr><hr\s+class="(?P<hrcls>[^"]*df7-hr[^"]*)"(?:\s+style="border-top-width:(?P<hrth>\d+)px")?\s*/?\s*>)'
-			. '|(?P<sp><div\s+class="df7-spacer"\s+style="height:(?P<sph>\d+)px"[^>]*>\s*</div>)#is';
+		$re = '#(?P<h><(?P<hlvl>h[234])\s+class="(?P<hcls>[^"]*deferforms-h[^"]*)"\s*>(?P<htxt>.*?)</\2>)'
+			. '|(?P<p><p\s+class="(?P<pcls>[^"]*deferforms-p[^"]*)"\s*>(?P<ptxt>.*?)</p>)'
+			. '|(?P<hr><hr\s+class="(?P<hrcls>[^"]*deferforms-hr[^"]*)"(?:\s+style="border-top-width:(?P<hrth>\d+)px")?\s*/?\s*>)'
+			. '|(?P<sp><div\s+class="deferforms-spacer"\s+style="height:(?P<sph>\d+)px"[^>]*>\s*</div>)#is';
 
 		if ( false === preg_match_all( $re, $html, $matches, PREG_OFFSET_CAPTURE ) || empty( $matches[0] ) ) {
 			return '' === trim( $html ) ? array() : array(
@@ -708,23 +708,23 @@ final class Form_Parser {
 					'kind'  => 'content',
 					'type'  => 'heading',
 					'level' => $matches['hlvl'][ $i ][0],
-					'align' => self::class_token( $matches['hcls'][ $i ][0], 'df7-align-', array( 'left', 'center', 'right' ), 'left' ),
+					'align' => self::class_token( $matches['hcls'][ $i ][0], 'deferforms-align-', array( 'left', 'center', 'right' ), 'left' ),
 					'text'  => html_entity_decode( wp_strip_all_tags( (string) $matches['htxt'][ $i ][0] ), ENT_QUOTES, 'UTF-8' ),
 				);
 			} elseif ( '' !== ( $matches['p'][ $i ][0] ?? '' ) ) {
 				$out[] = array(
 					'kind'  => 'content',
 					'type'  => 'paragraph',
-					'size'  => self::class_token( $matches['pcls'][ $i ][0], 'df7-p-', array( 'sm', 'md', 'lg' ), 'md' ),
-					'align' => self::class_token( $matches['pcls'][ $i ][0], 'df7-align-', array( 'left', 'center', 'right' ), 'left' ),
+					'size'  => self::class_token( $matches['pcls'][ $i ][0], 'deferforms-p-', array( 'sm', 'md', 'lg' ), 'md' ),
+					'align' => self::class_token( $matches['pcls'][ $i ][0], 'deferforms-align-', array( 'left', 'center', 'right' ), 'left' ),
 					'text'  => html_entity_decode( wp_strip_all_tags( (string) $matches['ptxt'][ $i ][0] ), ENT_QUOTES, 'UTF-8' ),
 				);
 			} elseif ( '' !== ( $matches['hr'][ $i ][0] ?? '' ) ) {
 				$out[] = array(
 					'kind'      => 'content',
 					'type'      => 'divider',
-					'style'     => self::class_token( $matches['hrcls'][ $i ][0], 'df7-hr-', array( 'solid', 'dashed', 'dotted' ), 'solid' ),
-					'tier'      => self::class_token( $matches['hrcls'][ $i ][0], 'df7-hr-', array( 'subtle', 'normal', 'strong' ), 'subtle' ),
+					'style'     => self::class_token( $matches['hrcls'][ $i ][0], 'deferforms-hr-', array( 'solid', 'dashed', 'dotted' ), 'solid' ),
+					'tier'      => self::class_token( $matches['hrcls'][ $i ][0], 'deferforms-hr-', array( 'subtle', 'normal', 'strong' ), 'subtle' ),
 					'thickness' => isset( $matches['hrth'][ $i ][0] ) && '' !== $matches['hrth'][ $i ][0] ? (int) $matches['hrth'][ $i ][0] : 1,
 				);
 			} elseif ( '' !== ( $matches['sp'][ $i ][0] ?? '' ) ) {
@@ -750,7 +750,7 @@ final class Form_Parser {
 	}
 
 	/**
-	 * Pull a known token (e.g. `center` from `df7-align-center`) out of a class
+	 * Pull a known token (e.g. `center` from `deferforms-align-center`) out of a class
 	 * string, falling back to a default.
 	 *
 	 * @param array<int, string> $allowed
@@ -758,7 +758,7 @@ final class Form_Parser {
 	private static function class_token( string $classes, string $prefix, array $allowed, string $default ): string {
 		/*
 		 * Every token off the prefix, not the first one. A divider writes two
-		 * of them — `df7-hr-dashed df7-hr-normal`, the line style and the
+		 * of them — `deferforms-hr-dashed deferforms-hr-normal`, the line style and the
 		 * weight — and reading only the first meant asking for the weight got
 		 * `dashed`, which is not a weight, so it fell to the default. Every
 		 * divider that was not subtle became subtle the moment somebody opened

@@ -13,7 +13,7 @@
 ( function () {
 	'use strict';
 
-	var l10n = window.df7FileL10n || {};
+	var l10n = window.deferformsFileL10n || {};
 	var TEXT = {
 		drop:     l10n.drop     || 'Drag files here or click to browse',
 		dropOne:  l10n.dropOne  || 'Drag a file here or click to browse',
@@ -60,7 +60,7 @@
 		} );
 	} );
 
-	var el = window.df7.el;
+	var el = window.deferforms.el;
 
 	/** Does the file satisfy the input's `accept` list? */
 	function accepted( file, accept ) {
@@ -86,26 +86,26 @@
 	}
 
 	function setup( input ) {
-		if ( input.dataset.df7File ) {
+		if ( input.dataset.deferformsFile ) {
 			return;
 		}
-		input.dataset.df7File = '1';
+		input.dataset.deferformsFile = '1';
 
 		var multiple = input.multiple;
 		var accept   = input.getAttribute( 'accept' ) || '';
 		var limit    = parseInt( input.dataset.limit || '0', 10 );
 		var maxFiles = parseInt( input.dataset.maxfiles || '0', 10 );
 
-		var wrap = el( 'div', 'df7-file' );
+		var wrap = el( 'div', 'deferforms-file' );
 		input.parentNode.insertBefore( wrap, input );
 		wrap.appendChild( input );
-		input.classList.add( 'df7-file-native' );
+		input.classList.add( 'deferforms-file-native' );
 
-		var zone = el( 'div', 'df7-file-zone' );
+		var zone = el( 'div', 'deferforms-file-zone' );
 		zone.setAttribute( 'role', 'button' );
 		zone.setAttribute( 'tabindex', '0' );
-		zone.appendChild( el( 'span', 'df7-file-icon' ) );
-		zone.appendChild( el( 'span', 'df7-file-text', multiple ? TEXT.drop : TEXT.dropOne ) );
+		zone.appendChild( el( 'span', 'deferforms-file-icon' ) );
+		zone.appendChild( el( 'span', 'deferforms-file-text', multiple ? TEXT.drop : TEXT.dropOne ) );
 
 		var hint = [];
 		if ( accept ) {
@@ -118,12 +118,12 @@
 			hint.push( sprintf( TEXT.tooMany, maxFiles ) );
 		}
 		if ( hint.length ) {
-			zone.appendChild( el( 'span', 'df7-file-hint', hint.join( ' · ' ) ) );
+			zone.appendChild( el( 'span', 'deferforms-file-hint', hint.join( ' · ' ) ) );
 		}
 		wrap.appendChild( zone );
 
-		var list   = el( 'ul', 'df7-file-list' );
-		var errors = el( 'div', 'df7-file-errors' );
+		var list   = el( 'ul', 'deferforms-file-list' );
+		var errors = el( 'div', 'deferforms-file-errors' );
 		wrap.appendChild( list );
 		wrap.appendChild( errors );
 
@@ -140,7 +140,7 @@
 		function showErrors( messages ) {
 			errors.innerHTML = '';
 			messages.forEach( function ( message ) {
-				errors.appendChild( el( 'p', 'df7-file-error', message ) );
+				errors.appendChild( el( 'p', 'deferforms-file-error', message ) );
 			} );
 		}
 
@@ -148,24 +148,24 @@
 			list.innerHTML = '';
 
 			chosen.forEach( function ( file, index ) {
-				var item = el( 'li', 'df7-file-item' );
+				var item = el( 'li', 'deferforms-file-item' );
 
 				if ( file.type.indexOf( 'image/' ) === 0 ) {
-					var thumb = el( 'img', 'df7-file-thumb' );
+					var thumb = el( 'img', 'deferforms-file-thumb' );
 					thumb.alt = '';
 					thumb.src = URL.createObjectURL( file );
 					thumb.addEventListener( 'load', function () { URL.revokeObjectURL( thumb.src ); } );
 					item.appendChild( thumb );
 				} else {
-					item.appendChild( el( 'span', 'df7-file-thumb df7-file-thumb--doc' ) );
+					item.appendChild( el( 'span', 'deferforms-file-thumb deferforms-file-thumb--doc' ) );
 				}
 
-				var meta = el( 'span', 'df7-file-meta' );
-				meta.appendChild( el( 'span', 'df7-file-name', file.name ) );
-				meta.appendChild( el( 'span', 'df7-file-size', formatSize( file.size ) ) );
+				var meta = el( 'span', 'deferforms-file-meta' );
+				meta.appendChild( el( 'span', 'deferforms-file-name', file.name ) );
+				meta.appendChild( el( 'span', 'deferforms-file-size', formatSize( file.size ) ) );
 				item.appendChild( meta );
 
-				var remove = el( 'button', 'df7-file-remove', '×' );
+				var remove = el( 'button', 'deferforms-file-remove', '×' );
 				remove.type = 'button';
 				remove.setAttribute( 'aria-label', TEXT.remove + ': ' + file.name );
 				remove.addEventListener( 'click', function () {
@@ -265,7 +265,7 @@
 		// form left every thumbnail on screen over an input holding nothing —
 		// files the visitor could see attached and that would never be sent.
 		if ( input.form ) {
-			window.df7.onReset( input.form, function () {
+			window.deferforms.onReset( input.form, function () {
 				chosen = [];
 				showErrors( [] );
 				renderList();
@@ -275,7 +275,7 @@
 		renderList();
 	}
 
-	window.df7.forms( function ( form ) {
+	window.deferforms.forms( function ( form ) {
 		form.querySelectorAll( 'input[type="file"]' ).forEach( setup );
 	} );
 } )();

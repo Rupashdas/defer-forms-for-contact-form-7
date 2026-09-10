@@ -8,21 +8,21 @@
  *
  * Every route is admin-only; `can_manage()` is the single place that says so.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\Core\Capability;
-use DF7\Core\Container;
+use DEFERFORMS\Core\Capability;
+use DEFERFORMS\Core\Container;
 
 defined( 'ABSPATH' ) || exit;
 
 abstract class Controller {
 
-	protected const NAMESPACE = 'df7/v1';
+	protected const NAMESPACE = 'deferforms/v1';
 
 	protected Container $container;
 

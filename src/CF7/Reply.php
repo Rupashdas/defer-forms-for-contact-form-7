@@ -5,12 +5,12 @@
  * The plugin stored the message and the address and then sent you to an email
  * client to copy them out. This closes that.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class Reply {
 	 * the order the fields were filled in.
 	 *
 	 * Underscored keys are skipped: they are the plugin's own bookkeeping, and
-	 * _df7_files holds filenames rather than answers.
+	 * _deferforms_files holds filenames rather than answers.
 	 *
 	 * @param array<string, mixed> $data The submitted fields.
 	 */

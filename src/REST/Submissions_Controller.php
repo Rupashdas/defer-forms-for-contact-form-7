@@ -2,15 +2,15 @@
 /**
  * REST: Reading, deleting and counting stored submissions.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\REST;
+namespace DEFERFORMS\REST;
 
-use DF7\CF7\Reply;
-use DF7\DB\Submissions_Repository;
+use DEFERFORMS\CF7\Reply;
+use DEFERFORMS\DB\Submissions_Repository;
 
 defined( 'ABSPATH' ) || exit;
 

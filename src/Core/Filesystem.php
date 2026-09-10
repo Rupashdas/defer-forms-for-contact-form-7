@@ -19,12 +19,12 @@
  * storing an attachment at all, so anything that can hold the file can be
  * written to directly.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\Core;
+namespace DEFERFORMS\Core;
 
 defined( 'ABSPATH' ) || exit;
 

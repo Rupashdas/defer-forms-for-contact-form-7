@@ -2,12 +2,12 @@
 /**
  * Plugin orchestrator.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare(strict_types=1);
 
-namespace DF7\Core;
+namespace DEFERFORMS\Core;
 
 /*
  * Above the imports rather than below them.
@@ -23,45 +23,45 @@ namespace DF7\Core;
  */
 defined( 'ABSPATH' ) || exit;
 
-use DF7\Admin\Assets;
-use DF7\Admin\Attachment_Download;
-use DF7\Admin\Cf7_Integration;
-use DF7\Admin\Csv_Export;
-use DF7\Admin\Menu;
-use DF7\CF7\Attachments;
-use DF7\CF7\Conditional;
-use DF7\CF7\Country;
-use DF7\CF7\Date_Picker;
-use DF7\CF7\Design;
-use DF7\CF7\Dynamic_Text;
-use DF7\CF7\File_Field;
-use DF7\CF7\Form_Class;
-use DF7\CF7\Form_Styles;
-use DF7\CF7\Grid;
-use DF7\CF7\Honeypot;
-use DF7\CF7\Marker_Cleanup;
-use DF7\CF7\Password;
-use DF7\CF7\Prefill;
-use DF7\CF7\Product_Field;
-use DF7\CF7\Rating;
-use DF7\CF7\Spam_Guard;
-use DF7\CF7\Redirect;
-use DF7\CF7\Revisions;
-use DF7\CF7\Steps;
-use DF7\CF7\Submission_Id;
-use DF7\CF7\Submission_Listener;
-use DF7\CF7\Validation;
-use DF7\DB\Settings_Repository;
-use DF7\DB\Submissions_Repository;
-use DF7\Privacy\Privacy;
-use DF7\Modules\Registry;
-use DF7\REST\Forms_Controller;
-use DF7\REST\Modules_Controller;
-use DF7\REST\Settings_Controller;
-use DF7\REST\Submissions_Controller;
-use DF7\REST\Templates_Controller;
-use DF7\REST\Transfer_Controller;
-use DF7\Templates\Registry as Template_Registry;
+use DEFERFORMS\Admin\Assets;
+use DEFERFORMS\Admin\Attachment_Download;
+use DEFERFORMS\Admin\Cf7_Integration;
+use DEFERFORMS\Admin\Csv_Export;
+use DEFERFORMS\Admin\Menu;
+use DEFERFORMS\CF7\Attachments;
+use DEFERFORMS\CF7\Conditional;
+use DEFERFORMS\CF7\Country;
+use DEFERFORMS\CF7\Date_Picker;
+use DEFERFORMS\CF7\Design;
+use DEFERFORMS\CF7\Dynamic_Text;
+use DEFERFORMS\CF7\File_Field;
+use DEFERFORMS\CF7\Form_Class;
+use DEFERFORMS\CF7\Form_Styles;
+use DEFERFORMS\CF7\Grid;
+use DEFERFORMS\CF7\Honeypot;
+use DEFERFORMS\CF7\Marker_Cleanup;
+use DEFERFORMS\CF7\Password;
+use DEFERFORMS\CF7\Prefill;
+use DEFERFORMS\CF7\Product_Field;
+use DEFERFORMS\CF7\Rating;
+use DEFERFORMS\CF7\Spam_Guard;
+use DEFERFORMS\CF7\Redirect;
+use DEFERFORMS\CF7\Revisions;
+use DEFERFORMS\CF7\Steps;
+use DEFERFORMS\CF7\Submission_Id;
+use DEFERFORMS\CF7\Submission_Listener;
+use DEFERFORMS\CF7\Validation;
+use DEFERFORMS\DB\Settings_Repository;
+use DEFERFORMS\DB\Submissions_Repository;
+use DEFERFORMS\Privacy\Privacy;
+use DEFERFORMS\Modules\Registry;
+use DEFERFORMS\REST\Forms_Controller;
+use DEFERFORMS\REST\Modules_Controller;
+use DEFERFORMS\REST\Settings_Controller;
+use DEFERFORMS\REST\Submissions_Controller;
+use DEFERFORMS\REST\Templates_Controller;
+use DEFERFORMS\REST\Transfer_Controller;
+use DEFERFORMS\Templates\Registry as Template_Registry;
 
 final class Plugin {
 
@@ -135,10 +135,13 @@ final class Plugin {
 		}
 
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
-		add_action( 'df7_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
+		add_action( 'deferforms_daily_cleanup', array( $this, 'run_retention_cleanup' ) );
+		add_action( 'init', array( $this, 'schedule_cleanup' ), 20 );
+	}
 
-		if ( ! wp_next_scheduled( 'df7_daily_cleanup' ) ) {
-			wp_schedule_event( time(), 'daily', 'df7_daily_cleanup' );
+	public function schedule_cleanup(): void {
+		if ( ! wp_next_scheduled( 'deferforms_daily_cleanup' ) ) {
+			wp_schedule_event( time(), 'daily', 'deferforms_daily_cleanup' );
 		}
 	}
 

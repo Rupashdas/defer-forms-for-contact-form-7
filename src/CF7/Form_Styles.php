@@ -9,12 +9,12 @@
  *  - controls.css is the control skin, and also carries the validation message,
  *    so it loads on every form.
  *
- * @package DF7
+ * @package DEFERFORMS
  */
 
 declare( strict_types=1 );
 
-namespace DF7\CF7;
+namespace DEFERFORMS\CF7;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,30 +31,30 @@ final class Form_Styles {
 	}
 
 	public function maybe_enqueue( string $elements ): string {
-		if ( false !== strpos( $elements, 'class="df7-' ) || false !== strpos( $elements, 'class="df7-row' ) ) {
-			wp_enqueue_style( 'df7-form', DF7_URL . 'assets/css/form.css', array(), df7_asset_ver( 'assets/css/form.css' ) );
+		if ( false !== strpos( $elements, 'class="deferforms-' ) || false !== strpos( $elements, 'class="deferforms-row' ) ) {
+			wp_enqueue_style( 'deferforms-form', DEFERFORMS_URL . 'assets/css/form.css', array(), deferforms_asset_ver( 'assets/css/form.css' ) );
 		}
 
 		// Range is a native CF7 tag, so there's no render callback of ours to
 		// hook — spot the control in the output instead.
 		if ( false !== strpos( $elements, 'wpcf7-range' ) ) {
-			wp_enqueue_style( 'df7-range', DF7_URL . 'assets/css/range.css', array(), df7_asset_ver( 'assets/css/range.css' ) );
-			wp_enqueue_script( 'df7-range', DF7_URL . 'assets/js/range.js', array( Validation::BASE ), df7_asset_ver( 'assets/js/range.js' ), true );
+			wp_enqueue_style( 'deferforms-range', DEFERFORMS_URL . 'assets/css/range.css', array(), deferforms_asset_ver( 'assets/css/range.css' ) );
+			wp_enqueue_script( 'deferforms-range', DEFERFORMS_URL . 'assets/js/range.js', array( Validation::BASE ), deferforms_asset_ver( 'assets/js/range.js' ), true );
 		}
 
-		wp_enqueue_style( 'df7-controls', DF7_URL . 'assets/css/controls.css', array(), df7_asset_ver( 'assets/css/controls.css' ) );
+		wp_enqueue_style( 'deferforms-controls', DEFERFORMS_URL . 'assets/css/controls.css', array(), deferforms_asset_ver( 'assets/css/controls.css' ) );
 
 		// Added after the stylesheet, so the same-specificity token block wins.
 		$tokens = $this->design->inline_css();
 		if ( '' !== $tokens ) {
-			wp_add_inline_style( 'df7-controls', $tokens );
+			wp_add_inline_style( 'deferforms-controls', $tokens );
 		}
 
 		if ( false !== strpos( $elements, 'type="file"' ) ) {
-			wp_enqueue_script( 'df7-file', DF7_URL . 'assets/js/file.js', array( Validation::BASE ), df7_asset_ver( 'assets/js/file.js' ), true );
+			wp_enqueue_script( 'deferforms-file', DEFERFORMS_URL . 'assets/js/file.js', array( Validation::BASE ), deferforms_asset_ver( 'assets/js/file.js' ), true );
 			wp_localize_script(
-				'df7-file',
-				'df7FileL10n',
+				'deferforms-file',
+				'deferformsFileL10n',
 				array(
 					'drop'      => __( 'Drag files here or click to browse', 'defer-forms-for-contact-form-7' ),
 					'dropOne'   => __( 'Drag a file here or click to browse', 'defer-forms-for-contact-form-7' ),
@@ -72,10 +72,10 @@ final class Form_Styles {
 		}
 
 		if ( false !== strpos( $elements, '<select' ) ) {
-			wp_enqueue_script( 'df7-select', DF7_URL . 'assets/js/select.js', array( Validation::BASE ), df7_asset_ver( 'assets/js/select.js' ), true );
+			wp_enqueue_script( 'deferforms-select', DEFERFORMS_URL . 'assets/js/select.js', array( Validation::BASE ), deferforms_asset_ver( 'assets/js/select.js' ), true );
 			wp_localize_script(
-				'df7-select',
-				'df7SelectL10n',
+				'deferforms-select',
+				'deferformsSelectL10n',
 				array(
 					'placeholder'      => __( 'Select…', 'defer-forms-for-contact-form-7' ),
 					'placeholderMulti' => __( 'Select options…', 'defer-forms-for-contact-form-7' ),
@@ -87,8 +87,8 @@ final class Form_Styles {
 		}
 
 		// Both markers are opt-in, so an untouched CF7 form loads nothing.
-		if ( false !== strpos( $elements, 'df7-tel' ) ) {
-			wp_enqueue_script( 'df7-tel', DF7_URL . 'assets/js/tel.js', array( Validation::BASE ), df7_asset_ver( 'assets/js/tel.js' ), true );
+		if ( false !== strpos( $elements, 'deferforms-tel' ) ) {
+			wp_enqueue_script( 'deferforms-tel', DEFERFORMS_URL . 'assets/js/tel.js', array( Validation::BASE ), deferforms_asset_ver( 'assets/js/tel.js' ), true );
 		}
 
 		return $elements;

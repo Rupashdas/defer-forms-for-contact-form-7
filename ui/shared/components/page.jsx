@@ -4,19 +4,19 @@
  */
 
 export const Page = ( { children } ) => (
-	<div className="df7-mt-4 df7-w-full df7-pb-14 df7-pr-5">{ children }</div>
+	<div className="deferforms-mt-4 deferforms-w-full deferforms-pb-14 deferforms-pr-5">{ children }</div>
 );
 
 export const PageHeader = ( { title, subtitle, actions } ) => (
-	<div className="df7-mb-6 df7-flex df7-flex-wrap df7-items-end df7-justify-between df7-gap-4 df7-border-b df7-border-line df7-pb-5">
-		<div className="df7-min-w-0">
-			<h1 className="df7-m-0 df7-p-0 df7-text-[30px] df7-font-extrabold df7-leading-tight df7-tracking-tight df7-text-ink">
+	<div className="deferforms-mb-6 deferforms-flex deferforms-flex-wrap deferforms-items-end deferforms-justify-between deferforms-gap-4 deferforms-border-b deferforms-border-line deferforms-pb-5">
+		<div className="deferforms-min-w-0">
+			<h1 className="deferforms-m-0 deferforms-p-0 deferforms-text-[30px] deferforms-font-extrabold deferforms-leading-tight deferforms-tracking-tight deferforms-text-ink">
 				{ title }
 			</h1>
 			{ subtitle && (
-				<p className="df7-mb-0 df7-mt-2 df7-text-[15px] df7-text-stone-500">{ subtitle }</p>
+				<p className="deferforms-mb-0 deferforms-mt-2 deferforms-text-[15px] deferforms-text-stone-500">{ subtitle }</p>
 			) }
 		</div>
-		{ actions ? <div className="df7-flex df7-shrink-0 df7-items-center df7-gap-2">{ actions }</div> : null }
+		{ actions ? <div className="deferforms-flex deferforms-shrink-0 deferforms-items-center deferforms-gap-2">{ actions }</div> : null }
 	</div>
 );
