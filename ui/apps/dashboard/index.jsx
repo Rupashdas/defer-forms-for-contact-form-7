@@ -15,6 +15,7 @@ import {
 	FilePlus2,
 	LifeBuoy,
 	Lightbulb,
+	BookOpen,
 	ExternalLink,
 	Pencil,
 	Plus,
@@ -485,6 +486,13 @@ const QuickActions = () => (
 				icon={ SettingsIcon }
 				title={ __( 'Settings', 'defer-forms-for-contact-form-7' ) }
 				desc={ __( 'Spam, privacy and retention.', 'defer-forms-for-contact-form-7' ) }
+			/>
+			<ActionRow
+				href="https://rupashdas.github.io/defer-forms-for-contact-form-7/"
+				external
+				icon={ BookOpen }
+				title={ __( 'Documentation', 'defer-forms-for-contact-form-7' ) }
+				desc={ __( 'How every feature works, in one page.', 'defer-forms-for-contact-form-7' ) }
 			/>
 			<ActionRow
 				href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/"

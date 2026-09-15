@@ -26,6 +26,11 @@ final class Menu {
 
 	private const SLUG = 'deferforms';
 
+	/** Where the documentation lives, for the two places that offer it. */
+	private const DOCS = 'https://rupashdas.github.io/defer-forms-for-contact-form-7/';
+
+	private const SUPPORT = 'https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/';
+
 	private Design $design;
 
 	private Submissions_Repository $submissions;
@@ -70,6 +75,38 @@ final class Menu {
 	public function register_hooks(): void {
 		add_action( 'admin_menu', array( $this, 'register' ) );
 		add_action( 'admin_notices', array( $this, 'storage_notice' ) );
+
+		// Beside Deactivate on the Plugins screen: the one place somebody looks
+		// for a plugin they have not opened yet.
+		add_filter( 'plugin_action_links_' . DEFERFORMS_BASENAME, array( $this, 'action_links' ) );
+	}
+
+	/**
+	 * Documentation and Settings, in front of WordPress's own row actions.
+	 *
+	 * @param array<int, string> $links
+	 * @return array<int, string>
+	 */
+	public function action_links( array $links ): array {
+		if ( ! Capability::granted() ) {
+			return $links;
+		}
+
+		return array_merge(
+			array(
+				sprintf(
+					'<a href="%s">%s</a>',
+					esc_url( admin_url( 'admin.php?page=' . self::SLUG . '-settings' ) ),
+					esc_html__( 'Settings', 'defer-forms-for-contact-form-7' )
+				),
+				sprintf(
+					'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+					esc_url( self::DOCS ),
+					esc_html__( 'Documentation', 'defer-forms-for-contact-form-7' )
+				),
+			),
+			$links
+		);
 	}
 
 	/**
@@ -233,9 +270,14 @@ final class Menu {
 
 				$screen->set_help_sidebar(
 					'<p>' . sprintf(
+						/* translators: %s: a link to the documentation site. */
+						__( 'Longer answers: %s', 'defer-forms-for-contact-form-7' ),
+						'<a href="' . esc_url( self::DOCS ) . '" target="_blank" rel="noopener noreferrer">' .
+							__( 'read the documentation', 'defer-forms-for-contact-form-7' ) . '</a>'
+					) . '</p><p>' . sprintf(
 						/* translators: %s: a link to the wordpress.org support forum. */
 						__( 'Still stuck? %s', 'defer-forms-for-contact-form-7' ),
-						'<a href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/" target="_blank" rel="noopener noreferrer">' .
+						'<a href="' . esc_url( self::SUPPORT ) . '" target="_blank" rel="noopener noreferrer">' .
 							__( 'Ask on the support forum', 'defer-forms-for-contact-form-7' ) . '</a>'
 					) . '</p>'
 				);

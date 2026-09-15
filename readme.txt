@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,10 @@ Defer Forms for Contact Form 7 turns Contact Form 7 into a modern visual form bu
 * A webhook: every submission posted as JSON to an address of your own, which is how Zapier, Make and n8n reach the rest of what you use
 
 The Features screen lists everything this plugin does, and nothing it does not.
+
+**Documentation**
+
+Full documentation — every feature, how each one works, and the developer hooks — is at https://rupashdas.github.io/defer-forms-for-contact-form-7/ and is linked from every screen's Help tab.
 
 **For developers**
 
@@ -156,6 +160,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 8. Notifications — Telegram, Slack, Discord and a webhook.
 
 == Changelog ==
+
+= 2.7.1 =
+* New: the documentation is reachable from inside the plugin. Every screen's Help tab links to it, the Dashboard lists it under Quick actions, and there is a Documentation link beside Settings on the Plugins screen.
 
 = 2.7.0 =
 * The Dashboard is a different screen. It was three figures that repeated each other on any site younger than a week, a chart, and a breakdown that left out every form nobody had used yet. It now opens with four figures that each carry a comparison — how many forms you have and how many are new, the last thirty days against the thirty before them, how many entries are unread, and how many nobody has answered — over two columns: the activity chart beside the latest entries, then every form you have beside the things you are most likely to go and do next.
@@ -282,6 +289,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.7.1 =
+Links the new documentation site from the Help tab, the Dashboard and the Plugins screen. Nothing else changes.
 
 = 2.7.0 =
 A rebuilt Dashboard, a Help tab on every screen, and three fixes for fields that flickered while a screen was still loading. Your forms, entries and settings are untouched.
