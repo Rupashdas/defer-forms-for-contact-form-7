@@ -469,8 +469,10 @@ final class Submissions_Repository {
 		// so a bare UTC_DATE() put the boundary in the wrong place: on a UTC+6
 		// site every entry from the first six hours of the morning showed today's
 		// date in the table and was missing from the count above it.
-		$today = self::local_day_start();
-		$week  = self::local_day_start( 7 );
+		$today    = self::local_day_start();
+		$week     = self::local_day_start( 7 );
+		$period   = self::local_day_start( 30 );
+		$previous = self::local_day_start( 60 );
 
 		/*
 		 * One pass with conditional counts.
@@ -494,21 +496,30 @@ final class Submissions_Repository {
 					SUM( status = 'spam' ) AS spam,
 					SUM( created_at >= %s ) AS today,
 					SUM( created_at >= %s ) AS week,
-					SUM( read_at IS NULL AND status = 'submitted' ) AS unread
+					SUM( read_at IS NULL AND status = 'submitted' ) AS unread,
+					SUM( created_at >= %s ) AS period,
+					SUM( created_at >= %s AND created_at < %s ) AS previous_period,
+					SUM( stage = '' AND status = 'submitted' ) AS needs_reply
 				FROM {$this->table}", // phpcs:ignore WordPress.DB.PreparedSQL, PluginCheck.Security.DirectDB.UnescapedDBParameter -- see the class docblock.
 				$today,
-				$week
+				$week,
+				$period,
+				$previous,
+				$period
 			),
 			ARRAY_A
 		);
 
 		return array(
-			'total'     => (int) ( $row['total'] ?? 0 ),
-			'submitted' => (int) ( $row['submitted'] ?? 0 ),
-			'today'     => (int) ( $row['today'] ?? 0 ),
-			'week'      => (int) ( $row['week'] ?? 0 ),
-			'spam'      => (int) ( $row['spam'] ?? 0 ),
-			'unread'    => (int) ( $row['unread'] ?? 0 ),
+			'total'           => (int) ( $row['total'] ?? 0 ),
+			'submitted'       => (int) ( $row['submitted'] ?? 0 ),
+			'today'           => (int) ( $row['today'] ?? 0 ),
+			'week'            => (int) ( $row['week'] ?? 0 ),
+			'spam'            => (int) ( $row['spam'] ?? 0 ),
+			'unread'          => (int) ( $row['unread'] ?? 0 ),
+			'period'          => (int) ( $row['period'] ?? 0 ),
+			'previous_period' => (int) ( $row['previous_period'] ?? 0 ),
+			'needs_reply'     => (int) ( $row['needs_reply'] ?? 0 ),
 		);
 	}
 
@@ -530,7 +541,7 @@ final class Submissions_Repository {
 	 * Every published CF7 form, with submission count and last submission date.
 	 * Unlike forms_with_counts(), this includes forms with zero submissions.
 	 *
-	 * @return array<int, array{form_id: int, title: string, count: int, last_at: ?string}>
+	 * @return array<int, array{form_id: int, title: string, count: int, last_at: ?string, created_at: string}>
 	 */
 	public function all_forms(): array {
 		global $wpdb;
@@ -548,7 +559,7 @@ final class Submissions_Repository {
 		 * leads and the counts are filled in against it.
 		 */
 		$forms = $wpdb->get_results(
-			"SELECT ID, post_title FROM {$wpdb->posts}
+			"SELECT ID, post_title, post_date_gmt FROM {$wpdb->posts}
 			WHERE post_type = 'wpcf7_contact_form' AND post_status = 'publish'",
 			ARRAY_A
 		); // phpcs:ignore WordPress.DB.PreparedSQL, WordPress.DB.DirectDatabaseQuery -- see the class docblock.
@@ -574,10 +585,11 @@ final class Submissions_Repository {
 				$has = $totals[ $id ] ?? array();
 
 				return array(
-					'form_id' => $id,
-					'title'   => (string) ( $form['post_title'] ?? '' ),
-					'count'   => (int) ( $has['submission_count'] ?? 0 ),
-					'last_at' => $has['last_at'] ?? null,
+					'form_id'    => $id,
+					'title'      => (string) ( $form['post_title'] ?? '' ),
+					'count'      => (int) ( $has['submission_count'] ?? 0 ),
+					'last_at'    => $has['last_at'] ?? null,
+					'created_at' => (string) ( $form['post_date_gmt'] ?? '' ),
 				);
 			},
 			$forms

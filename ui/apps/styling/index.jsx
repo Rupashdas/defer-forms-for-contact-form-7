@@ -203,7 +203,7 @@ const DesignPreview = ( { values } ) => {
  * the shape it always has.
  */
 const StylingPanel = ( { values, onSave, loading = false } ) => {
-	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave );
+	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave, loading );
 
 	const apply = ( next ) => Object.entries( next ).forEach( ( [ key, value ] ) => setField( key, value ) );
 	const stock = Object.entries( DEFAULTS ).every( ( [ key, value ] ) => local[ key ] === value );

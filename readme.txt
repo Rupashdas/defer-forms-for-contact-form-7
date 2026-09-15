@@ -5,7 +5,7 @@ Requires at least: 6.5
 Requires Plugins: contact-form-7
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.6.8
+Stable tag: 2.7.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,39 @@ No. Existing CF7 shortcodes keep rendering exactly as before. Defer Forms featur
 
 = Does the plugin send my data anywhere? =
 Only if you switch on a notification destination and give it a token or a URL of your own. Nothing leaves your site otherwise — there is no telemetry, no licence check and no remote asset. See "External services" below.
+
+= How do I build a form with the visual builder? =
+Go to **Defer Forms → Forms** and either open an existing CF7 form or start a new one — either way you land in the drag-and-drop builder. Add fields from the panel on the left, drag them into the order you want, and Save. The result is still a normal Contact Form 7 form; its shortcode works anywhere CF7's own does.
+
+= How do I split a form into steps? =
+Add a Page Break field wherever a new step should start. Each step can have its own title, description and CSS class — open the settings on the page break to set them. A step indicator above the form shows visitors their progress automatically.
+
+= How do I show or hide a field based on another answer? =
+Open the field's settings in the builder and add a condition under **Conditional Logic** — for example, show a field only when a checkbox is ticked or a dropdown has a specific value. Conditions can be combined with AND/OR, and the front end applies them live as the visitor fills the form in.
+
+= How do I arrange fields side by side? =
+Drag fields into a Grid row in the builder and choose 1 to 4 columns. The layout is responsive, so it collapses to a single column on a narrow screen without any extra setup.
+
+= Where do submitted entries go, and can I export them? =
+Every submission is stored under **Defer Forms → Submissions**, with search, filters and a CSV export button. Opening an entry lets you reply to it directly, and mark it Replied or Done so the list works like an inbox rather than a growing log.
+
+= What happens to file uploads? =
+Contact Form 7 does not keep uploaded files on its own — Defer Forms does. A file attached to a submission is stored with that entry and can be downloaded from it, until the entry is deleted or the retention period under Settings removes it.
+
+= How do I get notified when a form is submitted? =
+Under **Defer Forms → Notifications**, turn on Telegram, Slack, Discord or a webhook of your own and fill in its details. Each one is off until you switch it on, and there is a "Send a test message" button to check your credentials before relying on it. Spam is never sent to any destination.
+
+= How does spam protection work, and do I need to configure anything? =
+Honeypot, time-trap and duplicate-submission checks are on by default under **Defer Forms → Settings → Spam** — nothing to add to the form itself. A submission the filters catch is stored on its own Spam tab rather than deleted outright, in case a real enquiry is ever caught by mistake.
+
+= Can I redirect visitors to another page after they submit? =
+Yes — set a redirect destination in the form's own settings in the builder, to a page on your site or an external URL. Leaving it on "Nowhere — stay on the page" keeps Contact Form 7's normal on-page success message.
+
+= How do I move a form to another site? =
+Use **Defer Forms → Forms**, select a form and export it — it downloads as a single JSON file. Importing that file on another site's Forms page recreates the form there, fields, styling and settings included.
+
+= Can I change how forms look without writing CSS? =
+Yes, under **Defer Forms → Styling** — colours, typography and spacing apply to every form the plugin styles across the site, and the preview matches the front end. For one form that needs to look different from the rest, give it a CSS class of its own under that form's Settings tab and target that class from your theme.
 
 == Hooks ==
 
@@ -123,6 +156,15 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 8. Notifications — Telegram, Slack, Discord and a webhook.
 
 == Changelog ==
+
+= 2.7.0 =
+* The Dashboard is a different screen. It was three figures that repeated each other on any site younger than a week, a chart, and a breakdown that left out every form nobody had used yet. It now opens with four figures that each carry a comparison — how many forms you have and how many are new, the last thirty days against the thirty before them, how many entries are unread, and how many nobody has answered — over two columns: the activity chart beside the latest entries, then every form you have beside the things you are most likely to go and do next.
+* New: a Help tab on every screen. WordPress's own Help button, top right, now explains what the screen you are on does, and the one or two things about it that are not obvious from looking.
+* Fixed: on the Notifications screen, the fields belonging to a destination appeared for a moment on every load — whatever that destination's switch was actually set to — and then disappeared. They were drawn during loading deliberately, to avoid the opposite flash for anyone whose destination was on; but destinations are off until you turn one on, so nearly everybody was paying for that guess.
+* Fixed: a group of fields revealed by a switch could flicker as its screen finished loading. Keeping blocked submissions, and giving the submit button its own colours, were both affected. The local copy of a setting caught up with the saved one a frame after the screen stopped saying it was loading.
+* Fixed: a site that had never received an entry drew the whole stats-and-chart skeleton and then replaced it with the empty state. The page already knew it was empty before it asked.
+* The Features screen no longer lists White Label, A/B Testing or Email Workflows, and Draft Autosave has folded into Save & Continue. Sequences of trigger, condition and action are what the CRM integrations beside them already do better, and autosaving a draft and resuming it from a link were two cards for one problem.
+* The plugin page answers eleven more questions about how each feature actually works, from building a form to moving one between sites.
 
 = 2.6.8 =
 * Fixed: on a site with WooCommerce active and debugging on, loading the dashboard could log a `_load_textdomain_just_in_time` notice. The daily cleanup event was being checked while plugins were still loading, which asked WordPress for the list of cron schedules before translations were ready. It is scheduled on `init` now.
@@ -240,6 +282,9 @@ The third-party library bundled under `assets/vendor/flatpickr/` is [flatpickr](
 * Privacy: submissions answer WordPress's own export and erase requests.
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+A rebuilt Dashboard, a Help tab on every screen, and three fixes for fields that flickered while a screen was still loading. Your forms, entries and settings are untouched.
 
 = 2.6.8 =
 Fixes a debug notice on sites running WooCommerce, and lengthens the prefix on everything this plugin defines. If you hook into any filter or action by its old name, see "Hooks" for the current name.

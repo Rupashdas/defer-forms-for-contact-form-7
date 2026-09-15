@@ -81,7 +81,6 @@ final class Registry {
 
 		$pro = array(
 			array( 'analytics', __( 'Analytics', 'defer-forms-for-contact-form-7' ), __( 'Track views, conversion, abandonment and field drop-off.', 'defer-forms-for-contact-form-7' ), __( 'Insights', 'defer-forms-for-contact-form-7' ), 'bar-chart' ),
-			array( 'ab_testing', __( 'A/B Testing', 'defer-forms-for-contact-form-7' ), __( 'Test form variants and pick the winner.', 'defer-forms-for-contact-form-7' ), __( 'Insights', 'defer-forms-for-contact-form-7' ), 'split' ),
 			array( 'payments', __( 'Payments', 'defer-forms-for-contact-form-7' ), __( 'Collect Stripe and PayPal payments from forms.', 'defer-forms-for-contact-form-7' ), __( 'Integrations', 'defer-forms-for-contact-form-7' ), 'credit-card' ),
 			array( 'crm', __( 'CRM Integrations', 'defer-forms-for-contact-form-7' ), __( 'Sync entries to Mailchimp, HubSpot, ActiveCampaign, ConvertKit.', 'defer-forms-for-contact-form-7' ), __( 'Integrations', 'defer-forms-for-contact-form-7' ), 'users' ),
 			// Sending to one endpoint is free and on the Notifications screen.
@@ -90,12 +89,12 @@ final class Registry {
 			array( 'webhook', __( 'Webhook Builder', 'defer-forms-for-contact-form-7' ), __( 'Several endpoints, a different one per form, a payload shaped the way the far end wants it, and a log of what was delivered.', 'defer-forms-for-contact-form-7' ), __( 'Integrations', 'defer-forms-for-contact-form-7' ), 'webhook' ),
 			array( 'pro_fields', __( 'Advanced Fields', 'defer-forms-for-contact-form-7' ), __( 'Signature, repeater, calculation, range, image-choice and more.', 'defer-forms-for-contact-form-7' ), __( 'Fields', 'defer-forms-for-contact-form-7' ), 'pen-tool' ),
 			array( 'pdf', __( 'PDF Export', 'defer-forms-for-contact-form-7' ), __( 'Generate a PDF of each submission with Dompdf.', 'defer-forms-for-contact-form-7' ), __( 'Tools', 'defer-forms-for-contact-form-7' ), 'file-text' ),
-			array( 'save_continue', __( 'Save & Continue', 'defer-forms-for-contact-form-7' ), __( 'Let users save progress and resume from a link.', 'defer-forms-for-contact-form-7' ), __( 'Forms', 'defer-forms-for-contact-form-7' ), 'save' ),
-			array( 'autosave', __( 'Draft Autosave', 'defer-forms-for-contact-form-7' ), __( 'Auto-save drafts to the database and localStorage.', 'defer-forms-for-contact-form-7' ), __( 'Forms', 'defer-forms-for-contact-form-7' ), 'refresh-cw' ),
+			// One feature, not two: autosaving a draft and resuming it from a
+			// link are the same "do not lose this" problem, and used to be sold
+			// as separate cards for it.
+			array( 'save_continue', __( 'Save & Continue', 'defer-forms-for-contact-form-7' ), __( 'Auto-save progress as they type, and let them resume from a link later.', 'defer-forms-for-contact-form-7' ), __( 'Forms', 'defer-forms-for-contact-form-7' ), 'save' ),
 			array( 'step_branching', __( 'Step Branching', 'defer-forms-for-contact-form-7' ), __( 'Jump to different steps based on field values.', 'defer-forms-for-contact-form-7' ), __( 'Forms', 'defer-forms-for-contact-form-7' ), 'git-fork' ),
-			array( 'workflows', __( 'Email Workflows', 'defer-forms-for-contact-form-7' ), __( 'Build trigger → condition → action email sequences.', 'defer-forms-for-contact-form-7' ), __( 'Notifications', 'defer-forms-for-contact-form-7' ), 'workflow' ),
 			array( 'team', __( 'Team Collaboration', 'defer-forms-for-contact-form-7' ), __( 'Notes, activity log and mentions on submissions.', 'defer-forms-for-contact-form-7' ), __( 'Tools', 'defer-forms-for-contact-form-7' ), 'message-square' ),
-			array( 'white_label', __( 'White Label', 'defer-forms-for-contact-form-7' ), __( 'Replace the plugin name, logo and hide Pro CTAs.', 'defer-forms-for-contact-form-7' ), __( 'Tools', 'defer-forms-for-contact-form-7' ), 'tag' ),
 		);
 
 		$out = array();

@@ -37,7 +37,7 @@ const getInitialTab = () => {
 };
 
 const GeneralTab = ( { values, onSave, loading = false } ) => {
-	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave );
+	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave, loading );
 
 	return (
 		<SectionStack>
@@ -70,7 +70,7 @@ const GeneralTab = ( { values, onSave, loading = false } ) => {
 };
 
 const SpamTab = ( { values, onSave, loading = false } ) => {
-	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave );
+	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave, loading );
 
 	return (
 		<SectionStack>
@@ -141,7 +141,7 @@ const SpamTab = ( { values, onSave, loading = false } ) => {
 };
 
 const PrivacyTab = ( { values, onSave, loading = false } ) => {
-	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave );
+	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave, loading );
 
 	return (
 		<SectionStack>

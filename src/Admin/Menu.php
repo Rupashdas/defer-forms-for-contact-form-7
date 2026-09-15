@@ -105,7 +105,7 @@ final class Menu {
 		// heading, and neither wants a count in it.
 		$unread = Unread::bubble();
 
-		add_menu_page(
+		$hook = add_menu_page(
 			__( 'Defer Forms', 'defer-forms-for-contact-form-7' ),
 			__( 'Defer Forms', 'defer-forms-for-contact-form-7' ) . $unread,
 			$capability,
@@ -115,8 +115,10 @@ final class Menu {
 			58
 		);
 
+		$this->add_help( $hook, 'dashboard' );
+
 		foreach ( self::pages() as $slug => [ $entry, $label ] ) {
-			add_submenu_page(
+			$hook = add_submenu_page(
 				self::SLUG,
 				$label,
 				'deferforms-submissions' === $slug ? $label . $unread : $label,
@@ -124,6 +126,14 @@ final class Menu {
 				$slug,
 				fn() => $this->render( $entry )
 			);
+
+			// The Dashboard entry reuses the top-level page's own slug — that is
+			// what turns its submenu label into "Dashboard" instead of repeating
+			// "Defer Forms" — so it is also the same hook, already given its help
+			// tab above. Registering it a second time would just overwrite itself.
+			if ( self::SLUG !== $slug ) {
+				$this->add_help( $hook, $entry );
+			}
 		}
 
 		// Hidden page (no menu item) — opened per-form from the Forms list.
@@ -159,6 +169,78 @@ final class Menu {
 				}
 			);
 		}
+	}
+
+	/**
+	 * What each screen's Help tab says, keyed the same way pages() keys its entries.
+	 *
+	 * One tab, not several — a screen small enough to draw in an admin page does
+	 * not need sub-tabs to explain it. Builder has none: it is dense enough that a
+	 * paragraph above it would say less than the screen already shows, field by
+	 * field.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function help(): array {
+		return array(
+			'dashboard'     => '<p>' . __( "This is where your forms' activity lives: how many entries came in, whether any are unread or still waiting on a reply, and which forms are getting used.", 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( 'The Needs a reply tile counts submitted entries nobody has answered yet — open one and mark it Replied to clear it. Submissions compares the last 30 days against the 30 before, so a change shows against something rather than nothing.', 'defer-forms-for-contact-form-7' ) . '</p>',
+			'forms'         => '<p>' . __( 'Every Contact Form 7 form on this site, whether or not it was built here. Open Edit to work on one in the visual builder, or start a new one and you will be asked for a name and taken straight in.', 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( 'A form can also be duplicated, renamed or deleted from its row — deleting a form does not delete the entries it already collected.', 'defer-forms-for-contact-form-7' ) . '</p>',
+			'styling'       => '<p>' . __( 'Colours, spacing and typography here apply to every form this plugin styles across the whole site, and the preview matches the front end.', 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( "To make one form look different from the rest, give it a CSS class of its own under that form's Settings tab in the builder, and target that class from your theme.", 'defer-forms-for-contact-form-7' ) . '</p>',
+			'submissions'   => '<p>' . __( 'Every entry your forms have received, with search, filters and CSV export.', 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( 'Mark an entry Replied or Done to keep this list working like an inbox rather than a log — press the same button again to undo it. Spam is kept on its own tab rather than deleted outright, in case the filter ever catches a real one by mistake.', 'defer-forms-for-contact-form-7' ) . '</p>',
+			'notifications' => '<p>' . __( 'Send every submission somewhere the moment it arrives — Telegram, Slack, Discord, or a webhook of your own.', 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( 'Each destination stays off until you fill in its details and switch it on, and none of them ever receive an entry caught as spam. Use Send a test message after saving, before relying on it.', 'defer-forms-for-contact-form-7' ) . '</p>',
+			'templates'     => '<p>' . __( 'Start a new form from one of these instead of building one field at a time. Choosing a template opens it, already filled in, straight in the builder — nothing is created on this site until you save it.', 'defer-forms-for-contact-form-7' ) . '</p>',
+			'settings'      => '<p>' . __( 'Behaviour that is not specific to any one form: how long submissions are kept, the spam checks applied to every form, and privacy.', 'defer-forms-for-contact-form-7' ) . '</p><p>' .
+				__( "Submissions already answer WordPress's own Export/Erase Personal Data tools under Tools, with nothing extra to set up here.", 'defer-forms-for-contact-form-7' ) . '</p>',
+			'features'      => '<p>' . __( 'Everything this plugin does today, and what is planned for a future release. Nothing on this screen is switched off — there is nothing here to enable.', 'defer-forms-for-contact-form-7' ) . '</p>',
+		);
+	}
+
+	/**
+	 * One Help tab, added once the screen for `$hook` is known to exist.
+	 *
+	 * On `load-`, for the reason given on the builder's title fix above: by the
+	 * time the page callback runs, admin-header.php has already printed the Help
+	 * dropdown for the request.
+	 */
+	private function add_help( string|false $hook, string $entry ): void {
+		$help = self::help();
+
+		if ( ! $hook || ! isset( $help[ $entry ] ) ) {
+			return;
+		}
+
+		add_action(
+			'load-' . $hook,
+			static function () use ( $entry, $help ): void {
+				$screen = get_current_screen();
+
+				if ( ! $screen ) {
+					return;
+				}
+
+				$screen->add_help_tab(
+					array(
+						'id'      => 'deferforms-help-' . $entry,
+						'title'   => __( 'Defer Forms', 'defer-forms-for-contact-form-7' ),
+						'content' => $help[ $entry ],
+					)
+				);
+
+				$screen->set_help_sidebar(
+					'<p>' . sprintf(
+						/* translators: %s: a link to the wordpress.org support forum. */
+						__( 'Still stuck? %s', 'defer-forms-for-contact-form-7' ),
+						'<a href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/" target="_blank" rel="noopener noreferrer">' .
+							__( 'Ask on the support forum', 'defer-forms-for-contact-form-7' ) . '</a>'
+					) . '</p>'
+				);
+			}
+		);
 	}
 
 	/**
@@ -225,17 +307,26 @@ final class Menu {
 
 		if ( 'dashboard' === $entry ) {
 			/*
-			 * How many forms have entries, so the loading state can draw the
-			 * right number of rows in the breakdown rather than guessing two.
+			 * Two counts, for two different reasons neither markup can answer.
 			 *
-			 * Everything else on that screen can reserve its own height from
-			 * markup alone; this one section is as tall as the site has forms,
-			 * which is the one thing the browser cannot know before the fetch
-			 * comes back. The server already does.
+			 * `forms` is how many forms have at least one entry — zero of those
+			 * proves the fetch will come back with no submissions at all, which
+			 * is what tells the loading state to show the empty state right
+			 * away rather than a skeleton for a screen that never arrives.
+			 *
+			 * `totalForms` is every published form, entries or not — the "Your
+			 * forms" list draws one row per form regardless of whether it has
+			 * been used yet, so its loading state needs the real row count
+			 * rather than guessing three.
 			 */
 			wp_add_inline_script(
 				$handle,
-				'window.deferformsDashboard = ' . wp_json_encode( array( 'forms' => count( $this->submissions->forms_with_counts() ) ) ) . ';',
+				'window.deferformsDashboard = ' . wp_json_encode(
+					array(
+						'forms'      => count( $this->submissions->forms_with_counts() ),
+						'totalForms' => count( $this->submissions->all_forms() ),
+					)
+				) . ';',
 				'before'
 			);
 

@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Defer Forms for Contact Form 7</title>
+<meta name="description" content="A visual builder, a submissions database, multi-step forms and conditional logic for Contact Form 7 — without changing the forms you already have.">
+<meta name="color-scheme" content="light">
+<style>
+
+/* ---------------------------------------------------------------
+   Typefaces, served from this repository. Nothing is fetched from
+   anywhere else on this page — the plugin makes the same promise.
+   All three are SIL Open Font License 1.1.
+   --------------------------------------------------------------- */
+
+@font-face {
+	font-family: 'Bricolage Grotesque';
+	src: url('fonts/bricolage-grotesque.woff2') format('woff2-variations');
+	font-weight: 400 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Hanken Grotesk';
+	src: url('fonts/hanken-grotesk.woff2') format('woff2-variations');
+	font-weight: 300 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	src: url('fonts/jetbrains-mono.woff2') format('woff2-variations');
+	font-weight: 400 600;
+	font-display: swap;
+}
+
+:root {
+	--ink: #1b1b22;
+	--ink-deep: #131318;
+	--ink-soft: #2a2a33;
+	--paper: #faf9f7;
+	--white: #ffffff;
+	--line: #ebe7e1;
+	--stroke: #d9d3c9;
+	--stone-400: #6f665d;
+	--stone-500: #544c45;
+	--stone-600: #3d3831;
+	--required: #cf3f35;
+
+	--on-ink: #f4f2ef;
+	--on-ink-dim: #9d9a96;
+	--rule-ink: rgba(255, 255, 255, 0.11);
+
+	--display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+	--text: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+
+	--shell: 1180px;
+	--measure: 68ch;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--text);
+	font-size: 17px;
+	line-height: 1.65;
+	font-weight: 400;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+	font-family: var(--display);
+	font-weight: 700;
+	line-height: 1.05;
+	letter-spacing: -0.022em;
+	margin: 0;
+	font-variation-settings: 'opsz' 40;
+}
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: inherit; }
+
+code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
+
+:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+.shell {
+	width: 100%;
+	max-width: var(--shell);
+	margin: 0 auto;
+	padding: 0 28px;
+}
+
+.measure { max-width: var(--measure); }
+
+/* ---------------------------------------------------------------
+   Masthead
+   --------------------------------------------------------------- */
+
+.masthead {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	background: rgba(250, 249, 247, 0.86);
+	backdrop-filter: saturate(150%) blur(10px);
+	border-bottom: 1px solid var(--line);
+}
+
+.masthead-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 28px;
+	height: 62px;
+}
+
+.wordmark {
+	font-family: var(--display);
+	font-weight: 800;
+	font-size: 19px;
+	letter-spacing: -0.03em;
+	text-decoration: none;
+	white-space: nowrap;
+	font-variation-settings: 'opsz' 20;
+}
+
+.masthead nav {
+	display: flex;
+	align-items: center;
+	gap: 26px;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.masthead nav a {
+	text-decoration: none;
+	color: var(--stone-500);
+}
+
+.masthead nav a:hover { color: var(--ink); }
+
+.masthead nav a.get {
+	color: var(--ink);
+	font-weight: 600;
+	border-bottom: 2px solid var(--ink);
+	padding-bottom: 1px;
+}
+
+/* ---------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------- */
+
+.hero {
+	background: var(--ink-deep);
+	color: var(--on-ink);
+	padding: clamp(56px, 8vw, 104px) 0 clamp(56px, 8vw, 96px);
+	overflow: hidden;
+}
+
+.hero-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+	gap: clamp(36px, 5vw, 76px);
+	align-items: center;
+}
+
+.hero h1 {
+	font-size: clamp(2.7rem, 6.2vw, 4.6rem);
+	font-weight: 800;
+	line-height: 0.96;
+	letter-spacing: -0.035em;
+	font-variation-settings: 'opsz' 96;
+	margin-bottom: 26px;
+	text-wrap: balance;
+}
+
+.hero-lede {
+	font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+	color: var(--on-ink-dim);
+	max-width: 46ch;
+	margin-bottom: 34px;
+	line-height: 1.6;
+}
+
+.hero-lede code {
+	color: var(--on-ink);
+	background: rgba(255, 255, 255, 0.07);
+	padding: 0.12em 0.4em;
+	border-radius: 4px;
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.action {
+	display: inline-flex;
+	align-items: center;
+	height: 46px;
+	padding: 0 22px;
+	border-radius: 7px;
+	font-weight: 600;
+	font-size: 15.5px;
+	text-decoration: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.action-solid { background: var(--on-ink); color: var(--ink); }
+.action-solid:hover { background: var(--white); }
+
+.action-line {
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	color: var(--on-ink);
+}
+
+.action-line:hover { border-color: rgba(255, 255, 255, 0.55); }
+
+.hero-foot {
+	margin-top: 26px;
+	font-size: 14.5px;
+	color: #85817c;
+}
+
+/* ---- the Rosetta panel: tags on the left, fields on the right --- */
+
+/* Lifted off the hero rather than sitting in it: a step lighter than the
+   background, a rim of light along the top edge, and a wide soft halo so
+   the panel reads as the thing on this screen worth looking at. */
+.rosetta {
+	background: linear-gradient(180deg, #2b2a34 0%, #211f28 55%, #1c1b23 100%);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.07),
+		0 0 0 1px rgba(0, 0, 0, 0.35),
+		0 34px 70px -24px rgba(0, 0, 0, 0.8),
+		0 0 130px -30px rgba(255, 246, 232, 0.14);
+}
+
+.rosetta-head {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	background: rgba(255, 255, 255, 0.055);
+	border-bottom: 1px solid var(--rule-ink);
+	font-size: 12.5px;
+	color: #a49d94;
+	font-weight: 500;
+}
+
+.rosetta-head span { padding: 11px 18px; }
+.rosetta-head span + span { border-left: 1px solid var(--rule-ink); }
+
+.tagrow {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	border-bottom: 1px solid var(--rule-ink);
+}
+
+.tagrow:last-child { border-bottom: 0; }
+
+.tagrow .src {
+	padding: 16px 18px;
+	font-family: var(--mono);
+	font-size: 13px;
+	line-height: 1.55;
+	color: #b3ada6;
+	display: flex;
+	align-items: center;
+}
+
+/* One flex item, not several: a flex container drops the whitespace
+   between inline children, and these tags are mostly whitespace. */
+.tagrow .src > span.tag { display: block; word-break: break-word; }
+
+.tagrow .out {
+	padding: 14px 18px;
+	border-left: 1px solid var(--rule-ink);
+	background: rgba(255, 255, 255, 0.022);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 6px;
+}
+
+.req { color: var(--required); }
+.tok-name { color: #ece7e0; }
+.tok-str { color: #a6b596; }
+
+.f-label {
+	font-size: 12.5px;
+	color: #8a857e;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.f-input {
+	height: 34px;
+	border-radius: 6px;
+	background: rgba(255, 255, 255, 0.055);
+	border: 1px solid rgba(255, 255, 255, 0.13);
+	display: flex;
+	align-items: center;
+	padding: 0 11px;
+	font-size: 13.5px;
+	color: #e3dfd9;
+}
+
+.f-input.placeholder { color: #746f69; }
+
+.f-input.select { justify-content: space-between; }
+.f-input.select::after {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-right: 1.6px solid #8f8a83;
+	border-bottom: 1.6px solid #8f8a83;
+	transform: translateY(-2px) rotate(45deg);
+}
+
+.f-stars { display: flex; gap: 5px; }
+
+.f-stars svg { width: 19px; height: 19px; display: block; }
+
+.f-button {
+	align-self: flex-start;
+	height: 34px;
+	padding: 0 18px;
+	border-radius: 6px;
+	background: var(--on-ink);
+	color: var(--ink);
+	font-size: 13.5px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+}
+
+/* One orchestrated moment: the built side arrives after the source. */
+@media (prefers-reduced-motion: no-preference) {
+	.rosetta .out > * {
+		animation: settle 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+	.tagrow:nth-child(2) .out > * { animation-delay: 0.30s; }
+	.tagrow:nth-child(3) .out > * { animation-delay: 0.40s; }
+	.tagrow:nth-child(4) .out > * { animation-delay: 0.50s; }
+	.tagrow:nth-child(5) .out > * { animation-delay: 0.60s; }
+	.tagrow:nth-child(6) .out > * { animation-delay: 0.70s; }
+
+	@keyframes settle {
+		from { opacity: 0; transform: translateY(7px); }
+		to   { opacity: 1; transform: none; }
+	}
+}
+
+/* ---------------------------------------------------------------
+   Bands
+   --------------------------------------------------------------- */
+
+.band { padding: clamp(60px, 8vw, 104px) 0; }
+.band-line { border-top: 1px solid var(--line); }
+
+.band-title {
+	font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+	margin-bottom: 14px;
+	text-wrap: balance;
+}
+
+.band-lede {
+	color: var(--stone-500);
+	max-width: 56ch;
+	font-size: 1.0625rem;
+	margin-bottom: 44px;
+}
+
+/* ---- what CF7 does and does not do ---- */
+
+.split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: clamp(32px, 5vw, 72px);
+}
+
+.split h3 {
+	font-family: var(--text);
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	margin-bottom: 18px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid var(--stroke);
+}
+
+.plainlist { list-style: none; margin: 0; padding: 0; }
+
+.plainlist li {
+	padding: 11px 0;
+	border-bottom: 1px solid var(--line);
+	color: var(--stone-500);
+	font-size: 1rem;
+}
+
+.plainlist li:last-child { border-bottom: 0; }
+
+.split .adds li { color: var(--ink); font-weight: 500; }
+
+/* ---- the feature index ---- */
+
+.index-group {
+	display: grid;
+	grid-template-columns: 190px minmax(0, 1fr);
+	gap: 0 40px;
+	border-top: 1px solid var(--stroke);
+	padding-top: 22px;
+	margin-bottom: 30px;
+}
+
+.index-group > h3 {
+	font-family: var(--text);
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	color: var(--ink);
+	position: sticky;
+	top: 88px;
+	align-self: start;
+}
+
+.index-items { display: grid; gap: 0; }
+
+.index-item {
+	display: grid;
+	grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
+	gap: 8px 32px;
+	padding: 16px 0;
+	border-bottom: 1px solid var(--line);
+	align-items: baseline;
+}
+
+.index-items .index-item:last-child { border-bottom: 0; }
+
+.index-item dt {
+	font-weight: 600;
+	font-size: 1.0625rem;
+	letter-spacing: -0.01em;
+}
+
+.index-item dd {
+	margin: 0;
+	color: var(--stone-500);
+	font-size: 0.9875rem;
+}
+
+/* ---- install ---- */
+
+.install {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 28px;
+	counter-reset: s;
+}
+
+.install li {
+	list-style: none;
+	counter-increment: s;
+	padding-top: 16px;
+	border-top: 2px solid var(--ink);
+	font-size: 0.9875rem;
+	color: var(--stone-500);
+}
+
+.install li::before {
+	content: counter(s);
+	display: block;
+	font-family: var(--display);
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--ink);
+	margin-bottom: 7px;
+}
+
+.install strong { color: var(--ink); font-weight: 600; }
+
+.requires {
+	margin-top: 44px;
+	padding-top: 22px;
+	border-top: 1px solid var(--line);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 40px;
+	font-size: 0.9375rem;
+	color: var(--stone-400);
+}
+
+.requires b { color: var(--ink); font-weight: 600; }
+
+/* ---------------------------------------------------------------
+   Documentation: sticky index + long-form column
+   --------------------------------------------------------------- */
+
+.docs {
+	display: grid;
+	grid-template-columns: 208px minmax(0, 1fr);
+	gap: 0 64px;
+	align-items: start;
+}
+
+.docs-nav {
+	position: sticky;
+	top: 88px;
+	font-size: 0.9375rem;
+}
+
+.docs-nav p {
+	font-weight: 600;
+	margin-bottom: 12px;
+	font-size: 0.9375rem;
+}
+
+.docs-nav a {
+	display: block;
+	padding: 5px 0 5px 14px;
+	border-left: 2px solid var(--line);
+	color: var(--stone-400);
+	text-decoration: none;
+}
+
+.docs-nav a:hover { color: var(--ink); border-left-color: var(--stroke); }
+
+.doc-section { scroll-margin-top: 92px; }
+.doc-section + .doc-section { margin-top: 64px; }
+
+.doc-section > h3 {
+	font-size: 1.5rem;
+	margin-bottom: 8px;
+}
+
+.doc-section > .doc-intro {
+	color: var(--stone-500);
+	max-width: var(--measure);
+	margin-bottom: 30px;
+}
+
+.entry {
+	padding: 22px 0;
+	border-top: 1px solid var(--line);
+	max-width: var(--measure);
+}
+
+.entry h4 {
+	font-family: var(--text);
+	font-size: 1.0625rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	margin-bottom: 7px;
+	line-height: 1.4;
+}
+
+.entry p { color: var(--stone-500); font-size: 1rem; }
+
+.entry strong { color: var(--ink); font-weight: 600; }
+
+/* ---- hooks ---- */
+
+.hook { padding: 20px 0; border-top: 1px solid var(--line); }
+
+.hook pre {
+	margin: 0 0 10px;
+	padding: 13px 15px;
+	background: var(--ink);
+	color: #cfcbd8;
+	border-radius: 8px;
+	overflow-x: auto;
+	font-size: 12.75px;
+	line-height: 1.5;
+}
+
+.hook pre .fn { color: #8fa8b8; }
+.hook pre .hk { color: #f0edf6; font-weight: 600; }
+.hook pre .arg { color: #a79fb5; }
+
+.hook p { color: var(--stone-500); font-size: 0.9875rem; max-width: var(--measure); }
+
+/* ---- services ---- */
+
+.service {
+	padding: 18px 0;
+	border-top: 1px solid var(--line);
+	display: grid;
+	grid-template-columns: 150px minmax(0, 1fr);
+	gap: 6px 32px;
+	max-width: var(--measure);
+}
+
+.service dt { font-weight: 600; }
+.service dd { margin: 0; color: var(--stone-500); font-size: 0.9875rem; }
+.service dd a { color: var(--stone-500); }
+
+/* ---------------------------------------------------------------
+   Closing + footer
+   --------------------------------------------------------------- */
+
+.closing {
+	background: var(--ink-deep);
+	color: var(--on-ink);
+	padding: clamp(64px, 9vw, 108px) 0;
+}
+
+.closing h2 {
+	font-size: clamp(2.1rem, 5vw, 3.6rem);
+	font-weight: 800;
+	letter-spacing: -0.032em;
+	line-height: 1;
+	font-variation-settings: 'opsz' 88;
+	margin-bottom: 20px;
+	max-width: 24ch;
+	text-wrap: balance;
+}
+
+.closing p {
+	color: var(--on-ink-dim);
+	max-width: 52ch;
+	font-size: 1.0625rem;
+	margin-bottom: 34px;
+}
+
+footer {
+	background: var(--ink-deep);
+	color: #928d86;
+	border-top: 1px solid var(--rule-ink);
+	padding: 30px 0 44px;
+	font-size: 14px;
+}
+
+.foot-inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 14px 40px;
+}
+
+.foot-links { display: flex; flex-wrap: wrap; gap: 24px; }
+footer a { color: var(--on-ink-dim); text-decoration: none; }
+footer a:hover { color: var(--on-ink); text-decoration: underline; }
+
+/* ---------------------------------------------------------------
+   Narrower screens
+   --------------------------------------------------------------- */
+
+@media (max-width: 980px) {
+	.hero-grid { grid-template-columns: minmax(0, 1fr); gap: 46px; }
+	.docs { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+	.docs-nav { position: static; display: none; }
+	.index-group { grid-template-columns: minmax(0, 1fr); gap: 0; }
+	.index-group > h3 { position: static; margin-bottom: 4px; }
+	.install { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+}
+
+@media (max-width: 720px) {
+	body { font-size: 16.5px; }
+	.shell { padding: 0 20px; }
+	.masthead nav a:not(.get) { display: none; }
+	.actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+	.action { justify-content: center; }
+	.split { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+	.index-item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+	.install { grid-template-columns: minmax(0, 1fr); }
+	.service { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+	.rosetta-head, .tagrow { grid-template-columns: minmax(0, 1fr); }
+	.tagrow .out { border-left: 0; border-top: 1px solid var(--rule-ink); }
+	.rosetta-head span + span { border-left: 0; }
+	.rosetta-head { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+	<div class="shell masthead-inner">
+		<a class="wordmark" href="#top">Defer Forms</a>
+		<nav>
+			<a href="#leaves-out">Why</a>
+			<a href="#features">Features</a>
+			<a href="#install">Install</a>
+			<a href="#guides">Docs</a>
+			<a href="#hooks">Hooks</a>
+			<a class="get" href="https://wordpress.org/plugins/defer-forms-for-contact-form-7/">Install it</a>
+		</nav>
+	</div>
+</header>
+
+<main id="top">
+
+	<section class="hero">
+		<div class="shell hero-grid">
+			<div>
+				<h1>Stop writing your forms as text.</h1>
+				<p class="hero-lede">Contact Form 7 asks you to type <code>[text* your-name]</code> into a box. Defer Forms gives it a visual builder, a submissions database and everything CF7 leaves out — without changing a single form you already have.</p>
+				<div class="actions">
+					<a class="action action-solid" href="https://wordpress.org/plugins/defer-forms-for-contact-form-7/">Install from WordPress.org</a>
+					<a class="action action-line" href="#features">See what's included</a>
+				</div>
+				<p class="hero-foot">Free and GPL. No account, no licence key, no data leaves your site.</p>
+			</div>
+
+			<div class="rosetta" role="img" aria-label="Five Contact Form 7 form tags shown beside the form fields Defer Forms builds and renders from them: a required name field, a required email field, a plan chooser, a five-star rating, and a send button.">
+				<div class="rosetta-head" aria-hidden="true">
+					<span>Stored as</span>
+					<span>Built and rendered as</span>
+				</div>
+
+				<div class="tagrow" aria-hidden="true">
+					<div class="src"><span class="tag">[text<span class="req">*</span> <span class="tok-name">your-name</span>]</span></div>
+					<div class="out">
+						<span class="f-label">Your name</span>
+						<span class="f-input">Ada Lovelace</span>
+					</div>
+				</div>
+
+				<div class="tagrow" aria-hidden="true">
+					<div class="src"><span class="tag">[email<span class="req">*</span> <span class="tok-name">your-email</span>]</span></div>
+					<div class="out">
+						<span class="f-label">Email address</span>
+						<span class="f-input">ada@analytical.engine</span>
+					</div>
+				</div>
+
+				<div class="tagrow" aria-hidden="true">
+					<div class="src"><span class="tag">[select <span class="tok-name">plan</span> <span class="tok-str">"Starter"</span> <span class="tok-str">"Business"</span>]</span></div>
+					<div class="out">
+						<span class="f-label">Which plan?</span>
+						<span class="f-input select">Business</span>
+					</div>
+				</div>
+
+				<div class="tagrow" aria-hidden="true">
+					<div class="src"><span class="tag">[rating <span class="tok-name">score</span> <span class="tok-str">"5"</span>]</span></div>
+					<div class="out">
+						<span class="f-label">How did we do?</span>
+						<span class="f-stars">
+							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24" fill="none" stroke="#524e49" stroke-width="1.7"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.5l6.1-.7z"/></svg>
+						</span>
+					</div>
+				</div>
+
+				<div class="tagrow" aria-hidden="true">
+					<div class="src"><span class="tag">[submit <span class="tok-str">"Send enquiry"</span>]</span></div>
+					<div class="out">
+						<span class="f-button">Send enquiry</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="band" id="leaves-out">
+		<div class="shell">
+			<h2 class="band-title">Contact Form 7 is where your forms live. It was never where they were built.</h2>
+			<p class="band-lede">CF7 renders forms and sends mail, reliably, on millions of sites. Everything past that point it leaves to you. Defer Forms fills in the rest and touches none of it.</p>
+
+			<div class="split">
+				<div>
+					<h3>What Contact Form 7 already does</h3>
+					<ul class="plainlist">
+						<li>Renders a form from form tags you write by hand</li>
+						<li>Validates what a visitor typed</li>
+						<li>Sends the mail, and only the mail</li>
+						<li>Discards uploaded files once sent</li>
+						<li>Keeps no record of who wrote in</li>
+						<li>Offers hooks, if you write PHP</li>
+					</ul>
+				</div>
+				<div class="adds">
+					<h3>What Defer Forms adds on top</h3>
+					<ul class="plainlist">
+						<li>A drag-and-drop builder that writes the tags for you</li>
+						<li>Every submission stored, searchable and exportable</li>
+						<li>Uploads kept with the entry and downloadable</li>
+						<li>Steps, columns and conditional fields</li>
+						<li>An inbox: read, reply, mark replied or done</li>
+						<li>Colours and spacing without writing CSS</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="band band-line" id="features">
+		<div class="shell">
+			<h2 class="band-title">Sixteen features, all of them free</h2>
+			<p class="band-lede">Nothing here is held back behind a tier, and nothing needs switching on. This is the whole plugin.</p>
+
+			<div class="index-group">
+				<h3>Submissions</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Submissions database</dt>
+						<dd>Every entry stored with search, filtering and CSV export.</dd>
+					</div>
+					<div class="index-item">
+						<dt>File uploads kept</dt>
+						<dd>Uploaded files are stored with the entry and downloadable from it, which CF7 alone never does.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Entry workflow</dt>
+						<dd>Mark an entry replied or done, and answer it from the entry itself.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="index-group">
+				<h3>Building forms</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Visual builder</dt>
+						<dd>Drag and drop every Contact Form 7 field, with live preview and undo.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Grid layout</dt>
+						<dd>Arrange fields in one to four columns, collapsing on small screens.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Multi-step forms</dt>
+						<dd>Split a long form into steps, each with its own title and progress indicator.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Conditional logic</dt>
+						<dd>Show or hide any field from the answers above it, combined with AND or OR.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Redirect after submit</dt>
+						<dd>Send visitors to a thank-you page or any URL, or leave them where they are.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Template library</dt>
+						<dd>Twenty-plus ready-made forms that open straight in the builder.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="index-group">
+				<h3>Design and fields</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Styling controls</dt>
+						<dd>Colours, typography and spacing for every form on the site, plus a CSS class for the one that differs.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Extra field types</dt>
+						<dd>Star rating, country, password, dynamic text, product, quiz and character count.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="index-group">
+				<h3>Protection</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Spam protection</dt>
+						<dd>A honeypot, a time-trap and a duplicate check, on by default, with no captcha for visitors to solve.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Privacy and GDPR</dt>
+						<dd>Submissions answer WordPress's own export and erase requests.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="index-group">
+				<h3>Tools</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Import and export</dt>
+						<dd>Move a form between sites as a single JSON file.</dd>
+					</div>
+					<div class="index-item">
+						<dt>Revisions</dt>
+						<dd>The last ten versions of a form, each one restorable.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="index-group">
+				<h3>Notifications</h3>
+				<dl class="index-items">
+					<div class="index-item">
+						<dt>Instant notifications</dt>
+						<dd>Every submission posted to Telegram, Slack, Discord or a webhook of your own as it arrives.</dd>
+					</div>
+				</dl>
+			</div>
+		</div>
+	</section>
+
+	<section class="band band-line" id="install">
+		<div class="shell">
+			<h2 class="band-title">Installing it takes about a minute</h2>
+			<p class="band-lede">Defer Forms sits on top of Contact Form 7 and needs it active. Existing forms keep working exactly as they are.</p>
+
+			<ol class="install">
+				<li><strong>Install Contact Form 7</strong> and activate it, if it is not already running.</li>
+				<li><strong>Add Defer Forms</strong> from Plugins, Add New, or upload the folder to <code>/wp-content/plugins/</code>.</li>
+				<li><strong>Activate it</strong> from the Plugins screen.</li>
+				<li><strong>Open Defer Forms</strong> in the sidebar. Your existing forms are already listed.</li>
+			</ol>
+
+			<div class="requires">
+				<span><b>WordPress</b> 6.5 or newer</span>
+				<span><b>PHP</b> 8.0 or newer</span>
+				<span><b>Contact Form 7</b> required</span>
+				<span><b>Licence</b> GPL-2.0-or-later</span>
+			</div>
+		</div>
+	</section>
+
+	<section class="band band-line">
+		<div class="shell docs">
+			<aside class="docs-nav">
+				<p>On this page</p>
+				<a href="#guides">Guides</a>
+				<a href="#questions">Common questions</a>
+				<a href="#hooks">Hooks for developers</a>
+				<a href="#services">What leaves your site</a>
+				<a href="#source">Source code</a>
+			</aside>
+
+			<div>
+				<section class="doc-section" id="guides">
+					<h3>Guides</h3>
+					<p class="doc-intro">How each part works, roughly in the order you will meet it.</p>
+
+					<div class="entry">
+						<h4>Building a form</h4>
+						<p>Open <strong>Defer Forms, Forms</strong> and either edit an existing CF7 form or start a new one — both land you in the builder. Drag fields in from the left, reorder them, set each one's label, placeholder and validation in the panel beside it, then save. What comes out is an ordinary Contact Form 7 form: the same shortcode works everywhere it did before, and CF7 still sends the mail.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Splitting a form into steps</h4>
+						<p>Add a <strong>page break</strong> wherever a new step should begin. Each step carries its own title, description and CSS class, set on the page break itself, and a progress indicator appears above the form automatically. A page break carries the settings of the step that follows it, so the first one belongs at the very top.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Showing a field only when it is relevant</h4>
+						<p>Every field has a <strong>conditional logic</strong> panel. Add one or more rules — equals, is not, is empty, contains — against any field above it, and combine them with AND or OR. The rules run in the browser as the visitor types, so a field appears the moment its condition is met, and a hidden field is never required.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Putting fields side by side</h4>
+						<p>Drop fields into a <strong>grid row</strong> and choose one to four columns. Rows collapse to a single column on narrow screens on their own, so a two-column name and email pair still works on a phone.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Reading and answering entries</h4>
+						<p>Everything arrives under <strong>Submissions</strong>, with search, per-form filters and CSV export. Open an entry to read every answer, download whatever was attached, and reply without copying the address into a mail client. Mark it <strong>replied</strong> or <strong>done</strong> and the list stops being a log and starts being an inbox — the same buttons take it back off again.</p>
+					</div>
+
+					<div class="entry">
+						<h4>What happens to uploaded files</h4>
+						<p>Contact Form 7 attaches a file to the mail and then deletes it. Defer Forms keeps a copy with the entry, downloadable from it, until the entry is deleted or your retention period removes it. There is a storage ceiling — one gigabyte by default — and once it is reached the plugin says so on screen: submissions and mail keep arriving, only the copies stop.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Getting told the moment something arrives</h4>
+						<p>Under <strong>Notifications</strong>, switch on Telegram, Slack, Discord or a webhook of your own and paste in the token or URL it needs. Each destination stays off until you turn it on, and each has a <strong>send a test message</strong> button that uses the saved settings, so you can prove a token works before a real enquiry depends on it. Spam is never forwarded.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Keeping bots out</h4>
+						<p>Three checks run on every form with nothing to add to it: a honeypot field real visitors never see, a time-trap that rejects submissions sent faster than a human could type, and a duplicate check for the same answers repeated within a minute. Anything caught is kept on its own <strong>spam</strong> tab rather than destroyed, because filters occasionally catch a real person.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Sending visitors somewhere after they submit</h4>
+						<p>Each form's settings hold a <strong>redirect</strong>: a page on this site, any URL, or nowhere at all, which keeps CF7's ordinary on-page message. A redirect can wait a couple of seconds so the success message is readable first, and can open in a new tab.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Moving a form to another site</h4>
+						<p><strong>Export</strong> a form from the Forms screen and it downloads as one JSON file — fields, steps, conditions, styling and settings together. Import that file on another site and the form is rebuilt there. It is also the simplest backup of a form you spent an afternoon on.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Changing how forms look</h4>
+						<p><strong>Styling</strong> sets colours, typography, spacing and button shape for every form the plugin renders, with a preview that matches the front end exactly. For the one form that has to look different, give it a CSS class of its own in that form's settings and target the class from your theme.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Going back to an earlier version</h4>
+						<p>Every save keeps the previous version, up to ten. Open <strong>revisions</strong> in the builder toolbar to see when each was written and restore any of them. Useful the first time a save turns out to have removed a field you meant to keep.</p>
+					</div>
+				</section>
+
+				<section class="doc-section" id="questions">
+					<h3>Common questions</h3>
+
+					<div class="entry">
+						<h4>Does this replace Contact Form 7?</h4>
+						<p>No. Defer Forms extends CF7 and needs it installed and active. CF7 still renders the form and still sends the mail; this plugin adds the layer around that.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Will it change my existing forms?</h4>
+						<p>No. Existing shortcodes render exactly as before, and every feature here is opt-in per form. A form you never open in the builder is left byte for byte as it was.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Does any of my data leave the site?</h4>
+						<p>Only if you switch on a notification destination and give it your own token or URL. There is no telemetry, no licence check and no remote asset anywhere in the plugin — and, for the same reason, this page loads nothing from anywhere else either.</p>
+					</div>
+
+					<div class="entry">
+						<h4>What happens to my entries if I delete the plugin?</h4>
+						<p>Nothing, unless you ask. Deleting the plugin leaves the submissions table alone by default; a setting under <strong>Settings, General</strong> turns on full removal for anyone who wants a clean uninstall.</p>
+					</div>
+
+					<div class="entry">
+						<h4>Is there a paid version?</h4>
+						<p>Not today, and everything listed on this page is free. If a paid tier is ever built it will add new things beside these — nothing described here moves behind a paywall.</p>
+					</div>
+				</section>
+
+				<section class="doc-section" id="hooks">
+					<h3>Hooks for developers</h3>
+					<p class="doc-intro">Contact Form 7's own hooks are untouched. These are the ones Defer Forms adds. A submission passes through the first four in order: whether to store it, what to store, where to announce it, and what it became.</p>
+
+					<div class="hook">
+						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_store_submission</span>', <span class="arg">$store, $contact_form, $status</span> )</pre>
+						<p>Return false to keep an entry out of the table entirely. The mail is still sent and nothing is written. <code>$status</code> is either <code>submitted</code> or <code>spam</code>.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_submission_data</span>', <span class="arg">$data, $contact_form, $status</span> )</pre>
+						<p>The fields on their way into the table. Redact a value, drop a field, or add one of your own. Keys beginning with an underscore are the plugin's own bookkeeping and are never shown as answers.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_notify</span>', <span class="arg">$entry</span> )</pre>
+						<p>One submission, described once, for sending anywhere the Notifications screen does not reach. <code>$entry</code> carries <code>entry_id</code>, <code>form_id</code>, <code>title</code>, <code>when</code>, <code>at</code>, <code>fields</code> and <code>link</code>. Submitted entries only — spam never fires it.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submission_stored</span>', <span class="arg">$id, $data, $contact_form, $status</span> )</pre>
+						<p>The entry exists and is complete: uploads are kept and <code>$id</code> can be linked to. Spam fires this too, with <code>$status</code> saying so. It runs last, because this is where somebody else's code runs.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_capability</span>', <span class="arg">'manage_options'</span> )</pre>
+						<p>The capability the admin screens and every REST route require.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_attachment_limit</span>', <span class="arg">$bytes</span> )</pre>
+						<p>The ceiling on kept uploads across the site. Past it, submissions and their mail arrive as normal but files are no longer copied to the server.</p>
+					</div>
+
+					<div class="hook">
+						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submissions_deleted</span>', <span class="arg">$rows</span> )</pre>
+						<p>Entries that have just been removed, with their data, so anything mirroring them elsewhere can keep up.</p>
+					</div>
+				</section>
+
+				<section class="doc-section" id="services">
+					<h3>What leaves your site</h3>
+					<p class="doc-intro">All four destinations are off until you enter your own credentials and switch one on. When one is on, each submission is posted to it as it arrives, carrying the form's title, the time, every field and answer, and a link back to the entry in your admin. Spam is never sent. The test button posts a message containing no visitor data.</p>
+
+					<dl class="service">
+						<dt>Telegram</dt>
+						<dd>Sent to the Telegram Bot API at api.telegram.org, using the bot token and chat ID you supply.</dd>
+					</dl>
+					<dl class="service">
+						<dt>Slack</dt>
+						<dd>Sent to the incoming webhook URL you supply, at hooks.slack.com.</dd>
+					</dl>
+					<dl class="service">
+						<dt>Discord</dt>
+						<dd>Sent to the webhook URL you supply, at discord.com.</dd>
+					</dl>
+					<dl class="service">
+						<dt>Your own webhook</dt>
+						<dd>No fixed service behind it: the submission is posted as JSON to whatever address you enter and to no other. Commonly an automation service such as Zapier, Make or n8n, or a server of your own — whose terms are yours to read before you paste the URL in.</dd>
+					</dl>
+				</section>
+
+				<section class="doc-section" id="source">
+					<h3>Source code</h3>
+					<p class="doc-intro">The admin screens are React, compiled with Vite. The unminified source of every one of those files ships inside the plugin, in <code>ui/</code>, alongside the build configuration — run <code>npm install &amp;&amp; npm run build</code> in the plugin folder to rebuild it. The one bundled third-party library is <a href="https://github.com/flatpickr/flatpickr">flatpickr</a>, MIT licensed.</p>
+				</section>
+			</div>
+		</div>
+	</section>
+
+	<section class="closing">
+		<div class="shell">
+			<h2>Your forms are already here. Give them somewhere to land.</h2>
+			<p>Install it beside Contact Form 7 and open the Forms screen. Every form you have is listed, and nothing about them changes until you decide it should.</p>
+			<div class="actions">
+				<a class="action action-solid" href="https://wordpress.org/plugins/defer-forms-for-contact-form-7/">Install from WordPress.org</a>
+				<a class="action action-line" href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/">Ask a question</a>
+			</div>
+		</div>
+	</section>
+
+</main>
+
+<footer>
+	<div class="shell foot-inner">
+		<span>Defer Forms for Contact Form 7 — GPL-2.0-or-later.</span>
+		<div class="foot-links">
+			<a href="https://wordpress.org/plugins/defer-forms-for-contact-form-7/">WordPress.org</a>
+			<a href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/">Support forum</a>
+			<a href="https://github.com/Rupashdas/defer-forms-for-contact-form-7">GitHub</a>
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>

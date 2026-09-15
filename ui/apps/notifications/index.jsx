@@ -52,7 +52,7 @@ const getInitialTab = () => {
  * hours later, with nothing to say which half was wrong.
  */
 const NotifierTab = ( { section, title, description, toggleLabel, fields, values, onSave, loading = false } ) => {
-	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave );
+	const { local, setField, dirty, status, problem, save } = useSectionForm( values, onSave, loading );
 	const [ test, setTest ] = useState( null );
 
 	const sendTest = () => {
@@ -68,12 +68,15 @@ const NotifierTab = ( { section, title, description, toggleLabel, fields, values
 	 * destination is — and none of it is worth reading while the destination is
 	 * switched off. A tab that is not in use is the toggle and nothing else.
 	 *
-	 * Shown while loading, though. The answer has not arrived yet, and the
-	 * loading state exists to hold the shape of what is coming rather than to
-	 * guess at it: hiding on `false` before `false` is known would flash an
-	 * empty tab at everyone whose destination is on.
+	 * Hidden while loading too, on purpose: `local.enabled` reads false until
+	 * the real answer arrives, which is also every destination's default. A
+	 * site with nothing configured — most of them — would otherwise flash
+	 * every field on open only to hide them all a moment later. The cost is
+	 * the opposite case: a destination that is already on has its fields
+	 * appear a beat after the toggle does, rather than from the first paint.
+	 * Content arriving reads better than content being taken away.
 	 */
-	const configuring = loading || !! local.enabled;
+	const configuring = !! local.enabled;
 
 	return (
 		<SectionStack>

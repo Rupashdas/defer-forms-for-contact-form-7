@@ -3,7 +3,7 @@
  * Plugin Name:       Defer Forms for Contact Form 7
  * Plugin URI:        https://github.com/Rupashdas/defer-forms-for-contact-form-7
  * Description:       The missing modern layer for Contact Form 7 — visual builder, multi-step, submissions DB, conditional logic, and more. Free.
- * Version:           2.6.8
+ * Version:           2.7.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Requires Plugins:  contact-form-7
@@ -37,7 +37,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DEFERFORMS_VERSION', '2.6.8' );
+define( 'DEFERFORMS_VERSION', '2.7.0' );
 define( 'DEFERFORMS_DB_VERSION', '6' );
 define( 'DEFERFORMS_FILE', __FILE__ );
 define( 'DEFERFORMS_PATH', plugin_dir_path( __FILE__ ) );

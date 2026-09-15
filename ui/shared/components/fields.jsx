@@ -247,10 +247,23 @@ export const SectionCard = ( { title, description, children } ) => (
  * One section's editing state: a local copy, whether it differs from what the
  * server last returned, and a save that reports back through `status`.
  */
-export const useSectionForm = ( values, onSave ) => {
+export const useSectionForm = ( values, onSave, loading = false ) => {
 	const [ local, setLocal ]     = useState( values );
 	const [ status, setStatus ]   = useState( 'idle' );
 	const [ problem, setProblem ] = useState( '' );
+
+	/*
+	 * Caught up in the same render as loading turning false, not in an
+	 * effect afterward. An effect fires a paint late, and in that one frame
+	 * `local` is still its stale initial value — long enough for a field
+	 * shown or hidden by `local.x` alone (nothing here checks `loading` too)
+	 * to flash the wrong way before correcting.
+	 */
+	const [ wasLoading, setWasLoading ] = useState( loading );
+	if ( wasLoading && ! loading ) {
+		setWasLoading( false );
+		setLocal( values );
+	}
 
 	useEffect( () => {
 		setLocal( values );
