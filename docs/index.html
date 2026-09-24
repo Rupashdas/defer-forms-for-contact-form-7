@@ -57,6 +57,7 @@
 	--mono: 'JetBrains Mono', Consolas, Monaco, monospace;
 
 	--shell: 1180px;
+	--shell-docs: 1360px;
 	--measure: 68ch;
 }
 
@@ -506,15 +507,176 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .requires b { color: var(--ink); font-weight: 600; }
 
 /* ---------------------------------------------------------------
-   Documentation: sticky index + long-form column
+   Documentation
    --------------------------------------------------------------- */
 
+/* The docs open in a different key from the marketing bands above,
+   so that arriving here reads as arriving somewhere rather than as
+   scrolling past a fourth section that looks like the other three. */
+.docs-head {
+	background: var(--ink-deep);
+	color: var(--on-ink);
+	padding: clamp(48px, 6vw, 76px) 0 clamp(42px, 5vw, 62px);
+}
+
+/* Docs run wider than the marketing bands, so that the third column
+   is paid for out of margin rather than out of the prose. The head
+   matches, or its first letter would not sit above the nav below it. */
+.docs-head > .shell, .docs { max-width: var(--shell-docs); }
+
+.docs-eyebrow {
+	font-size: 12.5px;
+	font-weight: 600;
+	letter-spacing: 0.11em;
+	text-transform: uppercase;
+	color: var(--on-ink-dim);
+	margin-bottom: 15px;
+}
+
+.docs-head h2 {
+	font-size: clamp(1.9rem, 4vw, 2.9rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variation-settings: 'opsz' 72;
+	margin-bottom: 16px;
+	max-width: 22ch;
+	text-wrap: balance;
+}
+
+.docs-head .docs-lede {
+	color: var(--on-ink-dim);
+	max-width: 60ch;
+	font-size: 1.0625rem;
+	margin-bottom: 0;
+}
+
+/* ---- search ---- */
+
+.docs-search {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	max-width: 430px;
+	margin-top: 32px;
+	height: 46px;
+	padding: 0 14px;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.055);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.docs-search:focus-within {
+	background: rgba(255, 255, 255, 0.09);
+	border-color: rgba(255, 255, 255, 0.42);
+}
+
+.docs-search svg {
+	width: 17px;
+	height: 17px;
+	flex: none;
+	color: var(--on-ink-dim);
+}
+
+.docs-search input {
+	flex: 1 1 auto;
+	min-width: 0;
+	height: 100%;
+	border: 0;
+	background: none;
+	color: var(--on-ink);
+	font: inherit;
+	font-size: 15.5px;
+}
+
+/* The wrapper lights up instead: the global ink ring is invisible here. */
+.docs-search input:focus { outline: none; }
+.docs-search input::placeholder { color: #7d7872; }
+.docs-search input::-webkit-search-cancel-button { display: none; }
+
+.docs-search kbd {
+	flex: none;
+	font-family: var(--text);
+	font-size: 11.5px;
+	font-weight: 600;
+	line-height: 1.5;
+	color: var(--on-ink-dim);
+	background: rgba(255, 255, 255, 0.09);
+	border: 1px solid rgba(255, 255, 255, 0.13);
+	border-radius: 4px;
+	padding: 1px 7px;
+}
+
+.docs-search:focus-within kbd { visibility: hidden; }
+
+/* ---- what a search leaves behind ---- */
+
+.docs-status {
+	font-size: 0.9375rem;
+	color: var(--stone-400);
+	padding-bottom: 22px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid var(--line);
+}
+
+.docs-empty { max-width: var(--measure); }
+
+.docs-empty h3 {
+	font-size: 1.3rem;
+	margin-bottom: 9px;
+}
+
+.docs-empty p { color: var(--stone-500); margin-bottom: 0; }
+.docs-empty b { color: var(--ink); font-weight: 600; }
+
+/* ---- the three-column frame ---- */
+
+/* The prose keeps its measure. The width a wide screen frees up goes
+   to a rail of facts that were otherwise buried, not to longer lines. */
 .docs {
 	display: grid;
-	grid-template-columns: 208px minmax(0, 1fr);
-	gap: 0 64px;
+	grid-template-columns: 200px minmax(0, 1fr) 224px;
+	gap: 0 clamp(36px, 3.6vw, 60px);
 	align-items: start;
+	padding: clamp(50px, 6vw, 78px) 0 clamp(66px, 8vw, 104px);
 }
+
+.docs-rail {
+	position: sticky;
+	top: 88px;
+	display: grid;
+	gap: 26px;
+	font-size: 0.9375rem;
+}
+
+.rail-group > h4 {
+	font-family: var(--text);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--stone-400);
+	padding-bottom: 9px;
+	margin-bottom: 4px;
+	border-bottom: 1px solid var(--stroke);
+}
+
+.rail-group ul { list-style: none; margin: 0; padding: 0; }
+
+.rail-group li {
+	padding: 7px 0;
+	border-bottom: 1px solid var(--line);
+	color: var(--stone-500);
+	font-size: 0.875rem;
+	line-height: 1.45;
+}
+
+.rail-group li:last-child { border-bottom: 0; }
+
+.rail-group b { color: var(--ink); font-weight: 600; }
+
+.rail-group a { color: var(--stone-500); text-decoration: none; }
+.rail-group a:hover { color: var(--ink); text-decoration: underline; }
 
 .docs-nav {
 	position: sticky;
@@ -537,6 +699,34 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 }
 
 .docs-nav a:hover { color: var(--ink); border-left-color: var(--stroke); }
+
+.docs-nav a.is-here {
+	color: var(--ink);
+	font-weight: 600;
+	border-left-color: var(--ink);
+}
+
+/* ---- deep links ---- */
+
+/* Added by script, so it is quiet until a pointer is near it and its
+   absence costs a reader who has no JavaScript nothing they can see. */
+.deep {
+	margin-left: 9px;
+	color: var(--stone-400);
+	font-weight: 500;
+	text-decoration: none;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+}
+
+.entry:hover .deep,
+.hook:hover .deep,
+.deep:focus-visible { opacity: 1; }
+
+.deep:hover { color: var(--ink); }
+
+.hook-head .deep { margin-left: 0; color: #a79fb5; }
+.hook-head .deep:hover { color: var(--white); }
 
 .doc-section { scroll-margin-top: 92px; }
 .doc-section + .doc-section { margin-top: 64px; }
@@ -571,16 +761,232 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 .entry strong { color: var(--ink); font-weight: 600; }
 
+/* ---- guides ---- */
+
+/* Twelve entries in one column is a list nobody finishes. Three named
+   runs of four or five, two abreast, is something you can stand back
+   from and see the shape of. */
+.guide-group + .guide-group { margin-top: 46px; }
+
+.guide-group > h4 {
+	font-family: var(--text);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--stone-400);
+	padding-bottom: 12px;
+	margin-bottom: 18px;
+	border-bottom: 1px solid var(--stroke);
+}
+
+.guide-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.entry.guide {
+	max-width: none;
+	padding: 20px 21px 22px;
+	border: 1px solid var(--line);
+	border-radius: 11px;
+	background: var(--white);
+	transition: border-color 0.15s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.entry.guide:hover {
+	border-color: var(--stroke);
+	box-shadow: 0 12px 26px -16px rgba(27, 27, 34, 0.34);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.entry.guide:hover { transform: translateY(-2px); }
+}
+
+.guide-glyph {
+	width: 34px;
+	height: 34px;
+	margin-bottom: 15px;
+	border: 1px solid var(--stroke);
+	border-radius: 9px;
+	background: var(--paper);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.guide-glyph svg {
+	display: block;
+	width: 18px;
+	height: 18px;
+	color: var(--ink);
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.6;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.entry.guide p { font-size: 0.9875rem; }
+
+/* ---- common questions ---- */
+
+/* <details> rather than a script: the browser already knows how to do
+   this, including from the keyboard and with a screen reader. */
+.entry.faq {
+	padding: 0;
+	max-width: var(--measure);
+}
+
+.entry.faq > summary {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 22px;
+	padding: 17px 0;
+	cursor: pointer;
+	list-style: none;
+	font-size: 1.0625rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.entry.faq > summary::-webkit-details-marker { display: none; }
+
+.entry.faq > summary:hover { color: var(--stone-600); }
+
+.entry.faq > summary::after {
+	content: '';
+	flex: none;
+	width: 8px;
+	height: 8px;
+	margin-top: 6px;
+	border-right: 1.7px solid var(--stone-400);
+	border-bottom: 1.7px solid var(--stone-400);
+	transform: rotate(45deg);
+}
+
+.entry.faq[open] > summary::after { transform: rotate(-135deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+	.entry.faq > summary::after { transition: transform 0.2s ease; }
+}
+
+.entry.faq > p { padding-bottom: 20px; }
+
 /* ---- hooks ---- */
+
+/* The four hooks a submission passes through, as the order it passes
+   through them: the intro says "in order" and this is that order. */
+.hook-flow {
+	list-style: none;
+	counter-reset: hf;
+	max-width: var(--measure);
+	margin: 0 0 36px;
+	padding: 2px 0 2px 0;
+	border-left: 1px solid var(--stroke);
+}
+
+.hook-flow li {
+	counter-increment: hf;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 3px 12px;
+	padding: 0 0 17px 26px;
+}
+
+.hook-flow li:last-child { padding-bottom: 0; }
+
+.hook-flow li::before {
+	content: counter(hf);
+	position: absolute;
+	left: -11px;
+	top: -1px;
+	width: 21px;
+	height: 21px;
+	border-radius: 50%;
+	background: var(--ink);
+	color: var(--on-ink);
+	font-family: var(--display);
+	font-size: 11px;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hook-flow code { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.hook-flow span { font-size: 0.9375rem; color: var(--stone-500); }
 
 .hook { padding: 20px 0; border-top: 1px solid var(--line); }
 
-.hook pre {
-	margin: 0 0 10px;
-	padding: 13px 15px;
+.hook-code {
 	background: var(--ink);
+	border-radius: 9px;
+	overflow: hidden;
+	margin-bottom: 11px;
+}
+
+.hook-head {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	padding: 7px 8px 7px 14px;
+	background: rgba(255, 255, 255, 0.035);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hook-kind {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	color: #a79fb5;
+}
+
+.hook-copy {
+	display: inline-flex;
+	align-items: center;
+	margin-left: auto;
+	gap: 6px;
+	height: 27px;
+	padding: 0 10px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 6px;
+	background: none;
 	color: #cfcbd8;
-	border-radius: 8px;
+	font-family: var(--text);
+	font-size: 12.5px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.hook-copy:hover {
+	background: rgba(255, 255, 255, 0.09);
+	border-color: rgba(255, 255, 255, 0.32);
+	color: var(--white);
+}
+
+.hook-copy svg {
+	width: 13px;
+	height: 13px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.hook-copy.is-done { color: #a6c48f; border-color: rgba(166, 196, 143, 0.45); }
+
+.hook pre {
+	margin: 0;
+	padding: 13px 15px;
+	color: #cfcbd8;
 	overflow-x: auto;
 	font-size: 12.75px;
 	line-height: 1.5;
@@ -658,10 +1064,62 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
    Narrower screens
    --------------------------------------------------------------- */
 
+/* The rail is the first thing to go: it is reference, not reading. It
+   drops under the prose and lies down flat rather than disappearing. */
+@media (max-width: 1180px) {
+	.docs { grid-template-columns: 200px minmax(0, 1fr); }
+
+	.docs-rail {
+		position: static;
+		grid-column: 2;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 44px;
+		margin-top: 56px;
+		padding-top: 30px;
+		border-top: 1px solid var(--stroke);
+	}
+}
+
 @media (max-width: 980px) {
 	.hero-grid { grid-template-columns: minmax(0, 1fr); gap: 46px; }
 	.docs { grid-template-columns: minmax(0, 1fr); gap: 34px; }
-	.docs-nav { position: static; display: none; }
+	.docs-rail { grid-column: 1; }
+
+	/* A column of links has nowhere to stand here, so it lies down and
+	   rides along under the masthead instead of leaving the longest
+	   section on the page with no way to get around it. */
+	.docs-nav {
+		position: sticky;
+		top: 61px;
+		z-index: 20;
+		display: flex;
+		gap: 8px;
+		overflow-x: auto;
+		scrollbar-width: none;
+		margin: 0 -20px;
+		padding: 11px 20px 12px;
+		background: rgba(250, 249, 247, 0.92);
+		backdrop-filter: saturate(150%) blur(10px);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.docs-nav::-webkit-scrollbar { display: none; }
+	.docs-nav p { display: none; }
+
+	.docs-nav a {
+		flex: none;
+		padding: 6px 14px;
+		border: 1px solid var(--stroke);
+		border-radius: 999px;
+		white-space: nowrap;
+		font-size: 0.875rem;
+	}
+
+	.docs-nav a.is-here {
+		background: var(--ink);
+		border-color: var(--ink);
+		color: var(--on-ink);
+	}
 	.index-group { grid-template-columns: minmax(0, 1fr); gap: 0; }
 	.index-group > h3 { position: static; margin-bottom: 4px; }
 	.install { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -677,6 +1135,8 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 	.index-item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 	.install { grid-template-columns: minmax(0, 1fr); }
 	.service { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+	.guide-grid { grid-template-columns: minmax(0, 1fr); }
+	.docs-rail { grid-template-columns: minmax(0, 1fr); gap: 26px; }
 	.rosetta-head, .tagrow { grid-template-columns: minmax(0, 1fr); }
 	.tagrow .out { border-left: 0; border-top: 1px solid var(--rule-ink); }
 	.rosetta-head span + span { border-left: 0; }
@@ -686,6 +1146,25 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 </style>
 </head>
 <body>
+
+<!-- Glyphs for the guide cards. Drawn here once and referenced by
+     <use>; stroke and colour are inherited from the CSS. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+	<symbol id="g-build" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9.5h10M7 14h6"/></symbol>
+	<symbol id="g-steps" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 12h3"/></symbol>
+	<symbol id="g-branch" viewBox="0 0 24 24"><path d="M3 12h4"/><path d="M7 12c4.5 0 4-7 9-7h5"/><path d="M7 12c4.5 0 4 7 9 7h5"/></symbol>
+	<symbol id="g-cols" viewBox="0 0 24 24"><rect x="3" y="5" width="7.5" height="14" rx="1.8"/><rect x="13.5" y="5" width="7.5" height="14" rx="1.8"/></symbol>
+	<symbol id="g-redirect" viewBox="0 0 24 24"><path d="M13.5 3.5h7v7M20.5 3.5l-8.5 8.5"/><path d="M18 13.5v5a2 2 0 0 1-2 2H5.5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></symbol>
+	<symbol id="g-inbox" viewBox="0 0 24 24"><path d="M3 13.5h5l2 3h4l2-3h5"/><path d="M5.6 4.5h12.8L21 13.5v4a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-4z"/></symbol>
+	<symbol id="g-clip" viewBox="0 0 24 24"><path d="M20 11.4l-7.9 7.9a5 5 0 0 1-7.1-7.1l8.1-8.1a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/></symbol>
+	<symbol id="g-bell" viewBox="0 0 24 24"><path d="M18 9.5a6 6 0 1 0-12 0c0 5.5-2.2 7-2.2 7h16.4S18 15 18 9.5"/><path d="M13.8 19.5a2.1 2.1 0 0 1-3.6 0"/></symbol>
+	<symbol id="g-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v6c0 4.6-3.1 8-7.5 9.5C7.6 20 4.5 16.6 4.5 12V6z"/><path d="M9.2 12.2l2 2 3.6-3.9"/></symbol>
+	<symbol id="g-brush" viewBox="0 0 24 24"><path d="M4.2 15.4L15.4 4.2a2.4 2.4 0 0 1 3.4 3.4L7.6 18.8"/><path d="M7.6 18.8l-4.4 1.4 1.4-4.4"/></symbol>
+	<symbol id="g-move" viewBox="0 0 24 24"><path d="M12 3v9.5M8.5 9l3.5 3.5L15.5 9"/><path d="M4 15v3.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V15"/></symbol>
+	<symbol id="g-history" viewBox="0 0 24 24"><path d="M3.6 12a8.4 8.4 0 1 0 2.6-6.1"/><path d="M3.4 4.6v4.3h4.3"/><path d="M12 7.9V12l3 1.8"/></symbol>
+	<symbol id="g-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.2"/><path d="M5.5 15h-1A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5v1"/></symbol>
+	<symbol id="g-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+</svg>
 
 <header class="masthead">
 	<div class="shell masthead-inner">
@@ -929,7 +1408,24 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		</div>
 	</section>
 
-	<section class="band band-line">
+	<section class="docs-band" id="docs">
+		<div class="docs-head">
+			<div class="shell">
+				<p class="docs-eyebrow">Documentation</p>
+				<h2>Everything it does, written down.</h2>
+				<p class="docs-lede">Twelve guides in roughly the order you will meet them, the questions people ask first, and every hook the plugin adds for anyone extending it.</p>
+
+				<form class="docs-search" role="search">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+						<circle cx="11" cy="11" r="7"></circle>
+						<path d="M20 20l-3.6-3.6"></path>
+					</svg>
+					<input type="search" id="docs-q" autocomplete="off" spellcheck="false" placeholder="Search the documentation" aria-label="Search the documentation">
+					<kbd>/</kbd>
+				</form>
+			</div>
+		</div>
+
 		<div class="shell docs">
 			<aside class="docs-nav">
 				<p>On this page</p>
@@ -940,137 +1436,226 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 				<a href="#source">Source code</a>
 			</aside>
 
-			<div>
+			<div class="docs-main">
+				<p class="docs-status" role="status" hidden></p>
+
+				<div class="docs-empty" hidden>
+					<h3>Nothing here matches <b></b>.</h3>
+					<p>Try a shorter word, or a term from the plugin's own screens — <em>page break</em>, <em>conditional</em>, <em>webhook</em>, <em>retention</em>. If it is something the documentation ought to cover and does not, the support forum is the place to say so.</p>
+				</div>
+
 				<section class="doc-section" id="guides">
 					<h3>Guides</h3>
-					<p class="doc-intro">How each part works, roughly in the order you will meet it.</p>
+					<p class="doc-intro">How each part works, grouped by roughly when you will meet it.</p>
 
-					<div class="entry">
-						<h4>Building a form</h4>
-						<p>Open <strong>Defer Forms, Forms</strong> and either edit an existing CF7 form or start a new one — both land you in the builder. Drag fields in from the left, reorder them, set each one's label, placeholder and validation in the panel beside it, then save. What comes out is an ordinary Contact Form 7 form: the same shortcode works everywhere it did before, and CF7 still sends the mail.</p>
+					<div class="guide-group">
+						<h4>In the builder</h4>
+						<div class="guide-grid">
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-build"></use></svg></span>
+								<h4>Building a form</h4>
+								<p>Open <strong>Defer Forms, Forms</strong> and either edit an existing CF7 form or start a new one — both land you in the builder. Drag fields in from the left, reorder them, set each one's label, placeholder and validation in the panel beside it, then save. What comes out is an ordinary Contact Form 7 form: the same shortcode works everywhere it did before, and CF7 still sends the mail.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-steps"></use></svg></span>
+								<h4>Splitting a form into steps</h4>
+								<p>Add a <strong>page break</strong> wherever a new step should begin. Each step carries its own title, description and CSS class, set on the page break itself, and a progress indicator appears above the form automatically. A page break carries the settings of the step that follows it, so the first one belongs at the very top.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-branch"></use></svg></span>
+								<h4>Showing a field only when it is relevant</h4>
+								<p>Every field has a <strong>conditional logic</strong> panel. Add one or more rules — equals, is not, is empty, contains — against any field above it, and combine them with AND or OR. The rules run in the browser as the visitor types, so a field appears the moment its condition is met, and a hidden field is never required.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-cols"></use></svg></span>
+								<h4>Putting fields side by side</h4>
+								<p>Drop fields into a <strong>grid row</strong> and choose one to four columns. Rows collapse to a single column on narrow screens on their own, so a two-column name and email pair still works on a phone.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-redirect"></use></svg></span>
+								<h4>Sending visitors somewhere after they submit</h4>
+								<p>Each form's settings hold a <strong>redirect</strong>: a page on this site, any URL, or nowhere at all, which keeps CF7's ordinary on-page message. A redirect can wait a couple of seconds so the success message is readable first, and can open in a new tab.</p>
+							</div>
+
+						</div>
 					</div>
 
-					<div class="entry">
-						<h4>Splitting a form into steps</h4>
-						<p>Add a <strong>page break</strong> wherever a new step should begin. Each step carries its own title, description and CSS class, set on the page break itself, and a progress indicator appears above the form automatically. A page break carries the settings of the step that follows it, so the first one belongs at the very top.</p>
+					<div class="guide-group">
+						<h4>Receiving answers</h4>
+						<div class="guide-grid">
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-inbox"></use></svg></span>
+								<h4>Reading and answering entries</h4>
+								<p>Everything arrives under <strong>Submissions</strong>, with search, per-form filters and CSV export. Open an entry to read every answer, download whatever was attached, and reply without copying the address into a mail client. Mark it <strong>replied</strong> or <strong>done</strong> and the list stops being a log and starts being an inbox — the same buttons take it back off again.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-clip"></use></svg></span>
+								<h4>What happens to uploaded files</h4>
+								<p>Contact Form 7 attaches a file to the mail and then deletes it. Defer Forms keeps a copy with the entry, downloadable from it, until the entry is deleted or your retention period removes it. There is a storage ceiling — one gigabyte by default — and once it is reached the plugin says so on screen: submissions and mail keep arriving, only the copies stop.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-bell"></use></svg></span>
+								<h4>Getting told the moment something arrives</h4>
+								<p>Under <strong>Notifications</strong>, switch on Telegram, Slack, Discord or a webhook of your own and paste in the token or URL it needs. Each destination stays off until you turn it on, and each has a <strong>send a test message</strong> button that uses the saved settings, so you can prove a token works before a real enquiry depends on it. Spam is never forwarded.</p>
+							</div>
+
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-shield"></use></svg></span>
+								<h4>Keeping bots out</h4>
+								<p>Three checks run on every form with nothing to add to it: a honeypot field real visitors never see, a time-trap that rejects submissions sent faster than a human could type, and a duplicate check for the same answers repeated within a minute. Anything caught is kept on its own <strong>spam</strong> tab rather than destroyed, because filters occasionally catch a real person.</p>
+							</div>
+
+						</div>
 					</div>
 
-					<div class="entry">
-						<h4>Showing a field only when it is relevant</h4>
-						<p>Every field has a <strong>conditional logic</strong> panel. Add one or more rules — equals, is not, is empty, contains — against any field above it, and combine them with AND or OR. The rules run in the browser as the visitor types, so a field appears the moment its condition is met, and a hidden field is never required.</p>
-					</div>
+					<div class="guide-group">
+						<h4>Design and upkeep</h4>
+						<div class="guide-grid">
 
-					<div class="entry">
-						<h4>Putting fields side by side</h4>
-						<p>Drop fields into a <strong>grid row</strong> and choose one to four columns. Rows collapse to a single column on narrow screens on their own, so a two-column name and email pair still works on a phone.</p>
-					</div>
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-brush"></use></svg></span>
+								<h4>Changing how forms look</h4>
+								<p><strong>Styling</strong> sets colours, typography, spacing and button shape for every form the plugin renders, with a preview that matches the front end exactly. For the one form that has to look different, give it a CSS class of its own in that form's settings and target the class from your theme.</p>
+							</div>
 
-					<div class="entry">
-						<h4>Reading and answering entries</h4>
-						<p>Everything arrives under <strong>Submissions</strong>, with search, per-form filters and CSV export. Open an entry to read every answer, download whatever was attached, and reply without copying the address into a mail client. Mark it <strong>replied</strong> or <strong>done</strong> and the list stops being a log and starts being an inbox — the same buttons take it back off again.</p>
-					</div>
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-move"></use></svg></span>
+								<h4>Moving a form to another site</h4>
+								<p><strong>Export</strong> a form from the Forms screen and it downloads as one JSON file — fields, steps, conditions, styling and settings together. Import that file on another site and the form is rebuilt there. It is also the simplest backup of a form you spent an afternoon on.</p>
+							</div>
 
-					<div class="entry">
-						<h4>What happens to uploaded files</h4>
-						<p>Contact Form 7 attaches a file to the mail and then deletes it. Defer Forms keeps a copy with the entry, downloadable from it, until the entry is deleted or your retention period removes it. There is a storage ceiling — one gigabyte by default — and once it is reached the plugin says so on screen: submissions and mail keep arriving, only the copies stop.</p>
-					</div>
+							<div class="entry guide">
+								<span class="guide-glyph"><svg><use href="#g-history"></use></svg></span>
+								<h4>Going back to an earlier version</h4>
+								<p>Every save keeps the previous version, up to ten. Open <strong>revisions</strong> in the builder toolbar to see when each was written and restore any of them. Useful the first time a save turns out to have removed a field you meant to keep.</p>
+							</div>
 
-					<div class="entry">
-						<h4>Getting told the moment something arrives</h4>
-						<p>Under <strong>Notifications</strong>, switch on Telegram, Slack, Discord or a webhook of your own and paste in the token or URL it needs. Each destination stays off until you turn it on, and each has a <strong>send a test message</strong> button that uses the saved settings, so you can prove a token works before a real enquiry depends on it. Spam is never forwarded.</p>
-					</div>
-
-					<div class="entry">
-						<h4>Keeping bots out</h4>
-						<p>Three checks run on every form with nothing to add to it: a honeypot field real visitors never see, a time-trap that rejects submissions sent faster than a human could type, and a duplicate check for the same answers repeated within a minute. Anything caught is kept on its own <strong>spam</strong> tab rather than destroyed, because filters occasionally catch a real person.</p>
-					</div>
-
-					<div class="entry">
-						<h4>Sending visitors somewhere after they submit</h4>
-						<p>Each form's settings hold a <strong>redirect</strong>: a page on this site, any URL, or nowhere at all, which keeps CF7's ordinary on-page message. A redirect can wait a couple of seconds so the success message is readable first, and can open in a new tab.</p>
-					</div>
-
-					<div class="entry">
-						<h4>Moving a form to another site</h4>
-						<p><strong>Export</strong> a form from the Forms screen and it downloads as one JSON file — fields, steps, conditions, styling and settings together. Import that file on another site and the form is rebuilt there. It is also the simplest backup of a form you spent an afternoon on.</p>
-					</div>
-
-					<div class="entry">
-						<h4>Changing how forms look</h4>
-						<p><strong>Styling</strong> sets colours, typography, spacing and button shape for every form the plugin renders, with a preview that matches the front end exactly. For the one form that has to look different, give it a CSS class of its own in that form's settings and target the class from your theme.</p>
-					</div>
-
-					<div class="entry">
-						<h4>Going back to an earlier version</h4>
-						<p>Every save keeps the previous version, up to ten. Open <strong>revisions</strong> in the builder toolbar to see when each was written and restore any of them. Useful the first time a save turns out to have removed a field you meant to keep.</p>
+						</div>
 					</div>
 				</section>
 
 				<section class="doc-section" id="questions">
 					<h3>Common questions</h3>
 
-					<div class="entry">
-						<h4>Does this replace Contact Form 7?</h4>
+					<details class="entry faq" open>
+						<summary>Does this replace Contact Form 7?</summary>
 						<p>No. Defer Forms extends CF7 and needs it installed and active. CF7 still renders the form and still sends the mail; this plugin adds the layer around that.</p>
-					</div>
+					</details>
 
-					<div class="entry">
-						<h4>Will it change my existing forms?</h4>
+					<details class="entry faq">
+						<summary>Will it change my existing forms?</summary>
 						<p>No. Existing shortcodes render exactly as before, and every feature here is opt-in per form. A form you never open in the builder is left byte for byte as it was.</p>
-					</div>
+					</details>
 
-					<div class="entry">
-						<h4>Does any of my data leave the site?</h4>
+					<details class="entry faq">
+						<summary>Does any of my data leave the site?</summary>
 						<p>Only if you switch on a notification destination and give it your own token or URL. There is no telemetry, no licence check and no remote asset anywhere in the plugin — and, for the same reason, this page loads nothing from anywhere else either.</p>
-					</div>
+					</details>
 
-					<div class="entry">
-						<h4>What happens to my entries if I delete the plugin?</h4>
+					<details class="entry faq">
+						<summary>What happens to my entries if I delete the plugin?</summary>
 						<p>Nothing, unless you ask. Deleting the plugin leaves the submissions table alone by default; a setting under <strong>Settings, General</strong> turns on full removal for anyone who wants a clean uninstall.</p>
-					</div>
+					</details>
 
-					<div class="entry">
-						<h4>Is there a paid version?</h4>
+					<details class="entry faq">
+						<summary>Is there a paid version?</summary>
 						<p>Not today, and everything listed on this page is free. If a paid tier is ever built it will add new things beside these — nothing described here moves behind a paywall.</p>
-					</div>
+					</details>
 				</section>
 
 				<section class="doc-section" id="hooks">
 					<h3>Hooks for developers</h3>
-					<p class="doc-intro">Contact Form 7's own hooks are untouched. These are the ones Defer Forms adds. A submission passes through the first four in order: whether to store it, what to store, where to announce it, and what it became.</p>
+					<p class="doc-intro">Contact Form 7's own hooks are untouched. These are the ones Defer Forms adds. A submission passes through the first four in order:</p>
+
+					<ol class="hook-flow">
+						<li><code>deferforms_store_submission</code> <span>Whether to store it</span></li>
+						<li><code>deferforms_submission_data</code> <span>What to store</span></li>
+						<li><code>deferforms_notify</code> <span>Where to announce it</span></li>
+						<li><code>deferforms_submission_stored</code> <span>What it became</span></li>
+					</ol>
 
 					<div class="hook">
-						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_store_submission</span>', <span class="arg">$store, $contact_form, $status</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Filter</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_store_submission"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_store_submission</span>', <span class="arg">$store, $contact_form, $status</span> )</pre>
+						</div>
 						<p>Return false to keep an entry out of the table entirely. The mail is still sent and nothing is written. <code>$status</code> is either <code>submitted</code> or <code>spam</code>.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_submission_data</span>', <span class="arg">$data, $contact_form, $status</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Filter</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_submission_data"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_submission_data</span>', <span class="arg">$data, $contact_form, $status</span> )</pre>
+						</div>
 						<p>The fields on their way into the table. Redact a value, drop a field, or add one of your own. Keys beginning with an underscore are the plugin's own bookkeeping and are never shown as answers.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_notify</span>', <span class="arg">$entry</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Action</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_notify"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_notify</span>', <span class="arg">$entry</span> )</pre>
+						</div>
 						<p>One submission, described once, for sending anywhere the Notifications screen does not reach. <code>$entry</code> carries <code>entry_id</code>, <code>form_id</code>, <code>title</code>, <code>when</code>, <code>at</code>, <code>fields</code> and <code>link</code>. Submitted entries only — spam never fires it.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submission_stored</span>', <span class="arg">$id, $data, $contact_form, $status</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Action</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_submission_stored"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submission_stored</span>', <span class="arg">$id, $data, $contact_form, $status</span> )</pre>
+						</div>
 						<p>The entry exists and is complete: uploads are kept and <code>$id</code> can be linked to. Spam fires this too, with <code>$status</code> saying so. It runs last, because this is where somebody else's code runs.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_capability</span>', <span class="arg">'manage_options'</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Filter</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_capability"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_capability</span>', <span class="arg">'manage_options'</span> )</pre>
+						</div>
 						<p>The capability the admin screens and every REST route require.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_attachment_limit</span>', <span class="arg">$bytes</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Filter</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_attachment_limit"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">apply_filters</span>( '<span class="hk">deferforms_attachment_limit</span>', <span class="arg">$bytes</span> )</pre>
+						</div>
 						<p>The ceiling on kept uploads across the site. Past it, submissions and their mail arrive as normal but files are no longer copied to the server.</p>
 					</div>
 
 					<div class="hook">
-						<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submissions_deleted</span>', <span class="arg">$rows</span> )</pre>
+						<div class="hook-code">
+							<div class="hook-head">
+								<span class="hook-kind">Action</span>
+								<button type="button" class="hook-copy" data-copy="deferforms_submissions_deleted"><svg><use href="#g-copy"></use></svg><span>Copy name</span></button>
+							</div>
+							<pre><span class="fn">do_action</span>( '<span class="hk">deferforms_submissions_deleted</span>', <span class="arg">$rows</span> )</pre>
+						</div>
 						<p>Entries that have just been removed, with their data, so anything mirroring them elsewhere can keep up.</p>
 					</div>
 				</section>
@@ -1102,6 +1687,28 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 					<p class="doc-intro">The admin screens are React, compiled with Vite. The unminified source of every one of those files ships inside the plugin, in <code>ui/</code>, alongside the build configuration — run <code>npm install &amp;&amp; npm run build</code> in the plugin folder to rebuild it. The one bundled third-party library is <a href="https://github.com/flatpickr/flatpickr">flatpickr</a>, MIT licensed.</p>
 				</section>
 			</div>
+
+			<aside class="docs-rail">
+				<div class="rail-group">
+					<h4>At a glance</h4>
+					<ul>
+						<li><b>Version</b> 2.7.1</li>
+						<li><b>WordPress</b> 6.5 or newer</li>
+						<li><b>PHP</b> 8.0 or newer</li>
+						<li><b>Contact Form 7</b> installed and active</li>
+						<li><b>Licence</b> GPL-2.0-or-later</li>
+					</ul>
+				</div>
+
+				<div class="rail-group">
+					<h4>Elsewhere</h4>
+					<ul>
+						<li><a href="https://wordpress.org/plugins/defer-forms-for-contact-form-7/">Plugin on WordPress.org</a></li>
+						<li><a href="https://wordpress.org/support/plugin/defer-forms-for-contact-form-7/">Support forum</a></li>
+						<li><a href="https://github.com/Rupashdas/defer-forms-for-contact-form-7">Source on GitHub</a></li>
+					</ul>
+				</div>
+			</aside>
 		</div>
 	</section>
 
@@ -1128,6 +1735,312 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		</div>
 	</div>
 </footer>
+
+<script>
+/* Filtering the documentation in place. Two dozen nodes and no index:
+   the whole corpus fits in memory several times over, so the simplest
+   thing that works is also the fastest thing available. */
+( function () {
+
+	var ITEM    = '.entry, .hook, .service';
+	var VISIBLE = '.entry:not([hidden]), .hook:not([hidden]), .service:not([hidden])';
+
+	var input = document.getElementById( 'docs-q' );
+	var main  = document.querySelector( '.docs-main' );
+
+	if ( ! input || ! main ) {
+		return;
+	}
+
+	var items    = Array.prototype.slice.call( main.querySelectorAll( ITEM ) );
+	var sections = Array.prototype.slice.call( main.querySelectorAll( '.doc-section, .guide-group' ) );
+	var status   = main.querySelector( '.docs-status' );
+	var empty    = main.querySelector( '.docs-empty' );
+	var echo     = main.querySelector( '.docs-empty b' );
+
+	/* Read once. None of it changes, and lowercasing two dozen blocks of
+	   prose on every keystroke is the only thing here that could be slow. */
+	var text = new Map();
+
+	items.concat( sections ).forEach( function ( el ) {
+		text.set( el, el.textContent.toLowerCase() );
+	} );
+
+	/* A question whose answer is the match has to be showing the answer,
+	   and has to go back to how it was found when the search is dropped. */
+	var shut = new Map();
+
+	items.forEach( function ( el ) {
+		if ( 'DETAILS' === el.tagName ) {
+			shut.set( el, el.open );
+		}
+	} );
+
+	function run() {
+		var raw  = input.value.trim();
+		var q    = raw.toLowerCase();
+		var hits = 0;
+
+		items.forEach( function ( el ) {
+			var show = ! q || text.get( el ).indexOf( q ) !== -1;
+			el.hidden = ! show;
+
+			if ( show ) {
+				hits++;
+			}
+
+			if ( shut.has( el ) ) {
+				el.open = q ? show : shut.get( el );
+			}
+		} );
+
+		sections.forEach( function ( el ) {
+			if ( ! q ) {
+				el.hidden = false;
+				return;
+			}
+
+			/* A section of pure prose has nothing to filter, so it answers
+			   for itself rather than for entries it does not have. */
+			if ( el.querySelector( ITEM ) ) {
+				el.hidden = ! el.querySelector( VISIBLE );
+			} else {
+				el.hidden = text.get( el ).indexOf( q ) === -1;
+
+				if ( ! el.hidden ) {
+					hits++;
+				}
+			}
+		} );
+
+		if ( status ) {
+			status.hidden = ! q;
+			status.textContent = hits + ( 1 === hits ? ' result for ' : ' results for ' ) + '“' + raw + '”';
+		}
+
+		if ( empty ) {
+			empty.hidden = ! ( q && 0 === hits );
+		}
+
+		if ( echo ) {
+			echo.textContent = '“' + raw + '”';
+		}
+	}
+
+	input.addEventListener( 'input', run );
+
+	input.form.addEventListener( 'submit', function ( e ) {
+		e.preventDefault();
+	} );
+
+	document.addEventListener( 'keydown', function ( e ) {
+		var on = document.activeElement;
+		var typing = on && ( /^(INPUT|TEXTAREA|SELECT)$/.test( on.tagName ) || on.isContentEditable );
+
+		if ( '/' === e.key && ! typing ) {
+			e.preventDefault();
+			input.focus();
+		} else if ( 'Escape' === e.key && on === input ) {
+			input.value = '';
+			run();
+			input.blur();
+		}
+	} );
+
+	/* A reload can arrive with the field already filled. */
+	if ( input.value ) {
+		run();
+	}
+
+}() );
+
+/* Copying a hook name. The clipboard API wants a secure context, which
+   a site served over plain http has not got, so the old selection
+   trick stays behind it rather than the button simply doing nothing. */
+( function () {
+
+	var main = document.querySelector( '.docs-main' );
+
+	if ( ! main ) {
+		return;
+	}
+
+	var undo  = null;
+	var timer = 0;
+
+	function put( value ) {
+		if ( navigator.clipboard && window.isSecureContext ) {
+			return navigator.clipboard.writeText( value );
+		}
+
+		return new Promise( function ( resolve, reject ) {
+			var pad = document.createElement( 'textarea' );
+
+			pad.value = value;
+			pad.setAttribute( 'readonly', '' );
+			pad.style.cssText = 'position:fixed;top:0;left:-9999px';
+			document.body.appendChild( pad );
+			pad.select();
+
+			var done = document.execCommand( 'copy' );
+
+			document.body.removeChild( pad );
+
+			return done ? resolve() : reject();
+		} );
+	}
+
+	function restore() {
+		clearTimeout( timer );
+
+		if ( undo ) {
+			undo();
+			undo = null;
+		}
+	}
+
+	main.addEventListener( 'click', function ( e ) {
+		var btn = e.target.closest( '.hook-copy' );
+
+		if ( ! btn ) {
+			return;
+		}
+
+		var label = btn.querySelector( 'span' );
+		var icon  = btn.querySelector( 'use' );
+
+		restore();
+
+		undo = function () {
+			btn.classList.remove( 'is-done' );
+			label.textContent = 'Copy name';
+			icon.setAttribute( 'href', '#g-copy' );
+		};
+
+		put( btn.dataset.copy ).then( function () {
+			btn.classList.add( 'is-done' );
+			label.textContent = 'Copied';
+			icon.setAttribute( 'href', '#g-check' );
+		}, function () {
+			label.textContent = 'Press Ctrl-C';
+		} ).then( function () {
+			timer = setTimeout( restore, 1500 );
+		} );
+	} );
+
+}() );
+
+/* Saying where you are in the index, and giving every guide and hook an
+   address of its own so one can be pointed at rather than described. */
+( function () {
+
+	var nav = document.querySelector( '.docs-nav' );
+	var main = document.querySelector( '.docs-main' );
+
+	if ( ! nav || ! main ) {
+		return;
+	}
+
+	/* ---- an address per entry ---- */
+
+	var taken = {};
+
+	function slug( s ) {
+		return s.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^-|-$/g, '' ).slice( 0, 60 );
+	}
+
+	main.querySelectorAll( '.entry.guide, .hook' ).forEach( function ( el ) {
+		var hook  = el.classList.contains( 'hook' );
+		var label = el.querySelector( hook ? '.hk' : 'h4' );
+		var host  = hook ? el.querySelector( '.hook-head' ) : label;
+
+		if ( ! label || ! host ) {
+			return;
+		}
+
+		var id = slug( label.textContent );
+
+		if ( ! id ) {
+			return;
+		}
+
+		taken[ id ] = ( taken[ id ] || 0 ) + 1;
+
+		if ( taken[ id ] > 1 ) {
+			id += '-' + taken[ id ];
+		}
+
+		el.id = id;
+
+		var a = document.createElement( 'a' );
+
+		a.className = 'deep';
+		a.href = '#' + id;
+		a.textContent = '#';
+		a.setAttribute( 'aria-label', 'Link to ' + label.textContent.trim() );
+		host.appendChild( a );
+	} );
+
+	/* The browser went looking for the hash before any of that existed. */
+	if ( location.hash ) {
+		var landing = document.getElementById( location.hash.slice( 1 ) );
+
+		if ( landing ) {
+			landing.scrollIntoView();
+		}
+	}
+
+	/* ---- where you are ---- */
+
+	var links = {};
+	var order = [];
+
+	nav.querySelectorAll( 'a' ).forEach( function ( a ) {
+		var id = a.getAttribute( 'href' ).slice( 1 );
+		var section = document.getElementById( id );
+
+		if ( section ) {
+			links[ id ] = a;
+			order.push( id );
+		}
+	} );
+
+	if ( ! order.length ) {
+		return;
+	}
+
+	function mark( id ) {
+		order.forEach( function ( other ) {
+			links[ other ].classList.toggle( 'is-here', other === id );
+		} );
+	}
+
+	/* The last heading to have crossed a line under the masthead is the
+	   one being read. Scroll events already arrive at most once a frame,
+	   and five rectangles is not enough work to be worth deferring. */
+	function spy() {
+		var pick = order[ 0 ];
+
+		order.forEach( function ( id ) {
+			if ( document.getElementById( id ).getBoundingClientRect().top <= 110 ) {
+				pick = id;
+			}
+		} );
+
+		/* The last section can be too short ever to reach that line. */
+		if ( window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2 ) {
+			pick = order[ order.length - 1 ];
+		}
+
+		mark( pick );
+	}
+
+	window.addEventListener( 'scroll', spy, { passive: true } );
+	window.addEventListener( 'resize', spy );
+	spy();
+
+}() );
+</script>
 
 </body>
 </html>
