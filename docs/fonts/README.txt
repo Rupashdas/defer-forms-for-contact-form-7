@@ -1,14 +1,10 @@
-The three typefaces this documentation page uses, served from here rather than
+The two typefaces this documentation page uses, served from here rather than
 from a font CDN so the page makes no external request of any kind — the same
 promise the plugin itself makes.
 
 Each is the latin subset of the variable font, taken from Google Fonts, and each
 is licensed under the SIL Open Font License, Version 1.1. The full licence text
-is in OFL.txt beside this file, and applies to all three.
-
-  bricolage-grotesque.woff2
-  Copyright 2022 The Bricolage Grotesque Project Authors
-  https://github.com/ateliertriay/bricolage
+is in OFL.txt beside this file, and applies to both.
 
   hanken-grotesk.woff2
   Copyright 2021 The Hanken Grotesk Project Authors

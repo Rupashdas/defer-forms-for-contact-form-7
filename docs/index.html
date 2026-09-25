@@ -11,15 +11,8 @@
 /* ---------------------------------------------------------------
    Typefaces, served from this repository. Nothing is fetched from
    anywhere else on this page — the plugin makes the same promise.
-   All three are SIL Open Font License 1.1.
+   Both are SIL Open Font License 1.1.
    --------------------------------------------------------------- */
-
-@font-face {
-	font-family: 'Bricolage Grotesque';
-	src: url('fonts/bricolage-grotesque.woff2') format('woff2-variations');
-	font-weight: 400 800;
-	font-display: swap;
-}
 
 @font-face {
 	font-family: 'Hanken Grotesk';
@@ -36,28 +29,46 @@
 }
 
 :root {
-	--ink: #1b1b22;
-	--ink-deep: #131318;
-	--ink-soft: #2a2a33;
-	--paper: #faf9f7;
+	/* Ink. Cool greys rather than the warm ones this page began with. */
+	--ink: #1e293b;
+	--ink-deep: #0f172a;
+	--ink-soft: #334155;
+	--stone-400: #94a3b8;
+	--stone-500: #64748b;
+	--stone-600: #475569;
+
+	/* Surfaces. Three of them: the page, a card, and a band that wants
+	   to sit a step apart from the page without becoming a card. */
+	--paper: #eef1f6;
 	--white: #ffffff;
-	--line: #ebe7e1;
-	--stroke: #d9d3c9;
-	--stone-400: #6f665d;
-	--stone-500: #544c45;
-	--stone-600: #3d3831;
-	--required: #cf3f35;
+	--surface-2: #f8fafc;
+	--line: #e2e8f0;
+	--stroke: #cbd5e1;
 
-	--on-ink: #f4f2ef;
-	--on-ink-dim: #9d9a96;
-	--rule-ink: rgba(255, 255, 255, 0.11);
+	/* One accent, and the two tints it is allowed to appear as. */
+	--primary: #6366f1;
+	--primary-hover: #4f46e5;
+	--primary-light: #eef2ff;
+	--primary-soft: rgba(99, 102, 241, 0.12);
+	--required: #ef4444;
 
-	--display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+	--on-ink: #f8fafc;
+	--on-ink-dim: #94a3b8;
+	--rule-ink: rgba(255, 255, 255, 0.12);
+
+	--radius: 12px;
+	--radius-sm: 8px;
+	--shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 16px rgba(15, 23, 42, 0.04);
+	--shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.12);
+
+	/* One grotesque doing both jobs, weight alone telling them apart. */
+	--display: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--text: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--mono: 'JetBrains Mono', Consolas, Monaco, monospace;
 
 	--shell: 1180px;
 	--shell-docs: 1360px;
+	--gutter: 28px;
 	--measure: 68ch;
 }
 
@@ -83,7 +94,6 @@ h1, h2, h3, h4 {
 	line-height: 1.05;
 	letter-spacing: -0.022em;
 	margin: 0;
-	font-variation-settings: 'opsz' 40;
 }
 
 p { margin: 0 0 1.1em; }
@@ -94,7 +104,7 @@ a { color: inherit; }
 code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 :focus-visible {
-	outline: 2px solid var(--ink);
+	outline: 2px solid var(--primary);
 	outline-offset: 3px;
 	border-radius: 2px;
 }
@@ -103,7 +113,7 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	width: 100%;
 	max-width: var(--shell);
 	margin: 0 auto;
-	padding: 0 28px;
+	padding: 0 var(--gutter);
 }
 
 .measure { max-width: var(--measure); }
@@ -116,7 +126,7 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	position: sticky;
 	top: 0;
 	z-index: 50;
-	background: rgba(250, 249, 247, 0.86);
+	background: rgba(255, 255, 255, 0.82);
 	backdrop-filter: saturate(150%) blur(10px);
 	border-bottom: 1px solid var(--line);
 }
@@ -136,7 +146,6 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	letter-spacing: -0.03em;
 	text-decoration: none;
 	white-space: nowrap;
-	font-variation-settings: 'opsz' 20;
 }
 
 .masthead nav {
@@ -155,22 +164,44 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .masthead nav a:hover { color: var(--ink); }
 
 .masthead nav a.get {
-	color: var(--ink);
+	display: inline-flex;
+	align-items: center;
+	height: 36px;
+	padding: 0 16px;
+	border-radius: var(--radius-sm);
+	background: var(--primary);
+	color: var(--white);
 	font-weight: 600;
-	border-bottom: 2px solid var(--ink);
-	padding-bottom: 1px;
+	transition: background-color 0.15s ease;
 }
+
+.masthead nav a.get:hover { background: var(--primary-hover); color: var(--white); }
 
 /* ---------------------------------------------------------------
    Hero
    --------------------------------------------------------------- */
 
+/* A light hero, lit from behind the panel rather than filled in. The
+   glow is the only place this page uses the accent at any size. */
 .hero {
-	background: var(--ink-deep);
-	color: var(--on-ink);
-	padding: clamp(56px, 8vw, 104px) 0 clamp(56px, 8vw, 96px);
+	position: relative;
+	color: var(--ink);
+	padding: clamp(72px, 9vw, 132px) 0 clamp(64px, 8vw, 108px);
 	overflow: hidden;
 }
+
+.hero::before {
+	content: '';
+	position: absolute;
+	top: -18%;
+	right: -6%;
+	width: 62%;
+	aspect-ratio: 1;
+	background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(99, 102, 241, 0) 70%);
+	pointer-events: none;
+}
+
+.hero > .shell { position: relative; }
 
 .hero-grid {
 	display: grid;
@@ -184,22 +215,21 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	font-weight: 800;
 	line-height: 0.96;
 	letter-spacing: -0.035em;
-	font-variation-settings: 'opsz' 96;
 	margin-bottom: 26px;
 	text-wrap: balance;
 }
 
 .hero-lede {
 	font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
-	color: var(--on-ink-dim);
+	color: var(--stone-500);
 	max-width: 46ch;
 	margin-bottom: 34px;
 	line-height: 1.6;
 }
 
 .hero-lede code {
-	color: var(--on-ink);
-	background: rgba(255, 255, 255, 0.07);
+	color: var(--primary-hover);
+	background: var(--primary-light);
 	padding: 0.12em 0.4em;
 	border-radius: 4px;
 }
@@ -209,29 +239,35 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .action {
 	display: inline-flex;
 	align-items: center;
-	height: 46px;
-	padding: 0 22px;
-	border-radius: 7px;
+	height: 48px;
+	padding: 0 24px;
+	border-radius: var(--radius-sm);
 	font-weight: 600;
 	font-size: 15.5px;
 	text-decoration: none;
-	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.2s ease;
 }
 
-.action-solid { background: var(--on-ink); color: var(--ink); }
-.action-solid:hover { background: var(--white); }
+.action-solid {
+	background: var(--primary);
+	color: var(--white);
+	box-shadow: 0 6px 16px -6px rgba(99, 102, 241, 0.7);
+}
+
+.action-solid:hover { background: var(--primary-hover); }
 
 .action-line {
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	color: var(--on-ink);
+	background: var(--white);
+	border: 1px solid var(--stroke);
+	color: var(--ink);
 }
 
-.action-line:hover { border-color: rgba(255, 255, 255, 0.55); }
+.action-line:hover { border-color: var(--primary); color: var(--primary-hover); }
 
 .hero-foot {
 	margin-top: 26px;
 	font-size: 14.5px;
-	color: #85817c;
+	color: var(--stone-400);
 }
 
 /* ---- the Rosetta panel: tags on the left, fields on the right --- */
@@ -239,35 +275,33 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 /* Lifted off the hero rather than sitting in it: a step lighter than the
    background, a rim of light along the top edge, and a wide soft halo so
    the panel reads as the thing on this screen worth looking at. */
+/* The panel is the thing on this screen worth looking at, so it is
+   lifted off the page by a shadow rather than by a change of colour. */
 .rosetta {
-	background: linear-gradient(180deg, #2b2a34 0%, #211f28 55%, #1c1b23 100%);
-	border: 1px solid rgba(255, 255, 255, 0.15);
-	border-radius: 14px;
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
 	overflow: hidden;
-	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.07),
-		0 0 0 1px rgba(0, 0, 0, 0.35),
-		0 34px 70px -24px rgba(0, 0, 0, 0.8),
-		0 0 130px -30px rgba(255, 246, 232, 0.14);
+	box-shadow: var(--shadow-lg);
 }
 
 .rosetta-head {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-	background: rgba(255, 255, 255, 0.055);
-	border-bottom: 1px solid var(--rule-ink);
+	background: var(--surface-2);
+	border-bottom: 1px solid var(--line);
 	font-size: 12.5px;
-	color: #a49d94;
-	font-weight: 500;
+	color: var(--stone-500);
+	font-weight: 600;
 }
 
 .rosetta-head span { padding: 11px 18px; }
-.rosetta-head span + span { border-left: 1px solid var(--rule-ink); }
+.rosetta-head span + span { border-left: 1px solid var(--line); }
 
 .tagrow {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-	border-bottom: 1px solid var(--rule-ink);
+	border-bottom: 1px solid var(--line);
 }
 
 .tagrow:last-child { border-bottom: 0; }
@@ -277,7 +311,7 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	font-family: var(--mono);
 	font-size: 13px;
 	line-height: 1.55;
-	color: #b3ada6;
+	color: var(--stone-500);
 	display: flex;
 	align-items: center;
 }
@@ -288,8 +322,8 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 .tagrow .out {
 	padding: 14px 18px;
-	border-left: 1px solid var(--rule-ink);
-	background: rgba(255, 255, 255, 0.022);
+	border-left: 1px solid var(--line);
+	background: var(--surface-2);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -297,51 +331,52 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 }
 
 .req { color: var(--required); }
-.tok-name { color: #ece7e0; }
-.tok-str { color: #a6b596; }
+.tok-name { color: var(--ink); }
+.tok-str { color: #0f766e; }
 
 .f-label {
 	font-size: 12.5px;
-	color: #8a857e;
+	color: var(--stone-500);
 	font-weight: 500;
 	line-height: 1.2;
 }
 
 .f-input {
 	height: 34px;
-	border-radius: 6px;
-	background: rgba(255, 255, 255, 0.055);
-	border: 1px solid rgba(255, 255, 255, 0.13);
+	border-radius: var(--radius-sm);
+	background: var(--white);
+	border: 1px solid var(--stroke);
 	display: flex;
 	align-items: center;
 	padding: 0 11px;
 	font-size: 13.5px;
-	color: #e3dfd9;
+	color: var(--ink);
 }
 
-.f-input.placeholder { color: #746f69; }
+.f-input.placeholder { color: var(--stone-400); }
 
 .f-input.select { justify-content: space-between; }
 .f-input.select::after {
 	content: '';
 	width: 7px;
 	height: 7px;
-	border-right: 1.6px solid #8f8a83;
-	border-bottom: 1.6px solid #8f8a83;
+	border-right: 1.6px solid var(--stone-400);
+	border-bottom: 1.6px solid var(--stone-400);
 	transform: translateY(-2px) rotate(45deg);
 }
 
 .f-stars { display: flex; gap: 5px; }
 
-.f-stars svg { width: 19px; height: 19px; display: block; }
+/* Amber, because a rating is the one thing here that is not the accent. */
+.f-stars svg { width: 19px; height: 19px; display: block; fill: #f59e0b; }
 
 .f-button {
 	align-self: flex-start;
 	height: 34px;
 	padding: 0 18px;
-	border-radius: 6px;
-	background: var(--on-ink);
-	color: var(--ink);
+	border-radius: var(--radius-sm);
+	background: var(--primary);
+	color: var(--white);
 	font-size: 13.5px;
 	font-weight: 600;
 	display: flex;
@@ -369,20 +404,26 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
    Bands
    --------------------------------------------------------------- */
 
-.band { padding: clamp(60px, 8vw, 104px) 0; }
+/* Bands alternate against the page rather than being ruled off it,
+   and each one gets roughly half as much again of the air it had. */
+.band { padding: clamp(72px, 9vw, 110px) 0; }
+.band-alt { background: var(--surface-2); }
 .band-line { border-top: 1px solid var(--line); }
 
 .band-title {
-	font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-	margin-bottom: 14px;
+	font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+	letter-spacing: -0.03em;
+	margin: 0 auto 16px;
+	text-align: center;
 	text-wrap: balance;
 }
 
 .band-lede {
 	color: var(--stone-500);
-	max-width: 56ch;
+	max-width: 58ch;
 	font-size: 1.0625rem;
-	margin-bottom: 44px;
+	text-align: center;
+	margin: 0 auto 56px;
 }
 
 /* ---- what CF7 does and does not do ---- */
@@ -390,8 +431,19 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .split {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-	gap: clamp(32px, 5vw, 72px);
+	gap: 20px;
 }
+
+/* Two claims side by side, each one a card, so the comparison reads as
+   two things rather than as one long column that happens to fork. */
+.split > div {
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	padding: 32px;
+}
+
+.split .adds { border-color: var(--primary-soft); }
 
 .split h3 {
 	font-family: var(--text);
@@ -422,20 +474,25 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	display: grid;
 	grid-template-columns: 190px minmax(0, 1fr);
 	gap: 0 40px;
-	border-top: 1px solid var(--stroke);
-	padding-top: 22px;
-	margin-bottom: 30px;
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	padding: 26px 32px;
+	margin-bottom: 16px;
 }
 
+.index-group:last-child { margin-bottom: 0; }
+
+/* Static, not stuck: inside a card of its own there is nothing left
+   for the label to scroll against. */
 .index-group > h3 {
 	font-family: var(--text);
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: 700;
 	letter-spacing: 0;
 	color: var(--ink);
-	position: sticky;
-	top: 88px;
 	align-self: start;
+	padding-top: 16px;
 }
 
 .index-items { display: grid; gap: 0; }
@@ -465,40 +522,50 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 /* ---- install ---- */
 
+/* Four steps when there is room for four, fewer when there is not:
+   a card this padded stops being readable long before 980px. */
 .install {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 28px;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	gap: 20px;
 	counter-reset: s;
+	padding: 0;
 }
 
 .install li {
 	list-style: none;
 	counter-increment: s;
-	padding-top: 16px;
-	border-top: 2px solid var(--ink);
+	padding: 28px;
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
 	font-size: 0.9875rem;
 	color: var(--stone-500);
 }
 
 .install li::before {
 	content: counter(s);
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: var(--primary-light);
+	color: var(--primary);
 	font-family: var(--display);
 	font-weight: 700;
-	font-size: 15px;
-	color: var(--ink);
-	margin-bottom: 7px;
+	font-size: 14px;
+	margin-bottom: 15px;
 }
 
 .install strong { color: var(--ink); font-weight: 600; }
 
 .requires {
-	margin-top: 44px;
-	padding-top: 22px;
-	border-top: 1px solid var(--line);
+	margin-top: 40px;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 	gap: 10px 40px;
 	font-size: 0.9375rem;
 	color: var(--stone-400);
@@ -513,10 +580,11 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 /* The docs open in a different key from the marketing bands above,
    so that arriving here reads as arriving somewhere rather than as
    scrolling past a fourth section that looks like the other three. */
+/* The docs read as one continuous zone on the page ground, marked off
+   from the band above by that band's colour rather than by its own. */
 .docs-head {
-	background: var(--ink-deep);
-	color: var(--on-ink);
-	padding: clamp(48px, 6vw, 76px) 0 clamp(42px, 5vw, 62px);
+	color: var(--ink);
+	padding: clamp(66px, 8vw, 104px) 0 clamp(20px, 2.5vw, 34px);
 }
 
 /* Docs run wider than the marketing bands, so that the third column
@@ -526,25 +594,24 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 .docs-eyebrow {
 	font-size: 12.5px;
-	font-weight: 600;
+	font-weight: 700;
 	letter-spacing: 0.11em;
 	text-transform: uppercase;
-	color: var(--on-ink-dim);
+	color: var(--primary);
 	margin-bottom: 15px;
 }
 
 .docs-head h2 {
 	font-size: clamp(1.9rem, 4vw, 2.9rem);
 	font-weight: 800;
-	letter-spacing: -0.03em;
-	font-variation-settings: 'opsz' 72;
+	letter-spacing: -0.032em;
 	margin-bottom: 16px;
 	max-width: 22ch;
 	text-wrap: balance;
 }
 
 .docs-head .docs-lede {
-	color: var(--on-ink-dim);
+	color: var(--stone-500);
 	max-width: 60ch;
 	font-size: 1.0625rem;
 	margin-bottom: 0;
@@ -556,27 +623,30 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	display: flex;
 	align-items: center;
 	gap: 11px;
-	max-width: 430px;
-	margin-top: 32px;
-	height: 46px;
-	padding: 0 14px;
-	border-radius: 8px;
-	background: rgba(255, 255, 255, 0.055);
-	border: 1px solid rgba(255, 255, 255, 0.15);
-	transition: background-color 0.15s ease, border-color 0.15s ease;
+	max-width: 440px;
+	margin-top: 34px;
+	height: 48px;
+	padding: 0 15px;
+	border-radius: var(--radius-sm);
+	background: var(--white);
+	border: 1px solid var(--stroke);
+	box-shadow: var(--shadow);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .docs-search:focus-within {
-	background: rgba(255, 255, 255, 0.09);
-	border-color: rgba(255, 255, 255, 0.42);
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
 .docs-search svg {
 	width: 17px;
 	height: 17px;
 	flex: none;
-	color: var(--on-ink-dim);
+	color: var(--stone-400);
 }
+
+.docs-search:focus-within svg { color: var(--primary); }
 
 .docs-search input {
 	flex: 1 1 auto;
@@ -584,14 +654,14 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	height: 100%;
 	border: 0;
 	background: none;
-	color: var(--on-ink);
+	color: var(--ink);
 	font: inherit;
 	font-size: 15.5px;
 }
 
-/* The wrapper lights up instead: the global ink ring is invisible here. */
+/* The wrapper lights up instead: the global ink ring doubles up here. */
 .docs-search input:focus { outline: none; }
-.docs-search input::placeholder { color: #7d7872; }
+.docs-search input::placeholder { color: var(--stone-400); }
 .docs-search input::-webkit-search-cancel-button { display: none; }
 
 .docs-search kbd {
@@ -600,9 +670,9 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	font-size: 11.5px;
 	font-weight: 600;
 	line-height: 1.5;
-	color: var(--on-ink-dim);
-	background: rgba(255, 255, 255, 0.09);
-	border: 1px solid rgba(255, 255, 255, 0.13);
+	color: var(--stone-400);
+	background: var(--surface-2);
+	border: 1px solid var(--line);
 	border-radius: 4px;
 	padding: 1px 7px;
 }
@@ -638,7 +708,8 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	grid-template-columns: 200px minmax(0, 1fr) 224px;
 	gap: 0 clamp(36px, 3.6vw, 60px);
 	align-items: start;
-	padding: clamp(50px, 6vw, 78px) 0 clamp(66px, 8vw, 104px);
+	padding-top: clamp(50px, 6vw, 78px);
+	padding-bottom: clamp(66px, 8vw, 104px);
 }
 
 .docs-rail {
@@ -701,9 +772,9 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .docs-nav a:hover { color: var(--ink); border-left-color: var(--stroke); }
 
 .docs-nav a.is-here {
-	color: var(--ink);
+	color: var(--primary-hover);
 	font-weight: 600;
-	border-left-color: var(--ink);
+	border-left-color: var(--primary);
 }
 
 /* ---- deep links ---- */
@@ -723,23 +794,24 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .hook:hover .deep,
 .deep:focus-visible { opacity: 1; }
 
-.deep:hover { color: var(--ink); }
+.deep:hover { color: var(--primary); }
 
-.hook-head .deep { margin-left: 0; color: #a79fb5; }
+.hook-head .deep { margin-left: 0; color: var(--stone-400); }
 .hook-head .deep:hover { color: var(--white); }
 
 .doc-section { scroll-margin-top: 92px; }
-.doc-section + .doc-section { margin-top: 64px; }
+.doc-section + .doc-section { margin-top: 80px; }
 
 .doc-section > h3 {
-	font-size: 1.5rem;
-	margin-bottom: 8px;
+	font-size: 1.75rem;
+	letter-spacing: -0.025em;
+	margin-bottom: 10px;
 }
 
 .doc-section > .doc-intro {
 	color: var(--stone-500);
 	max-width: var(--measure);
-	margin-bottom: 30px;
+	margin-bottom: 34px;
 }
 
 .entry {
@@ -766,51 +838,50 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 /* Twelve entries in one column is a list nobody finishes. Three named
    runs of four or five, two abreast, is something you can stand back
    from and see the shape of. */
-.guide-group + .guide-group { margin-top: 46px; }
+.guide-group + .guide-group { margin-top: 56px; }
 
 .guide-group > h4 {
 	font-family: var(--text);
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 700;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
 	color: var(--stone-400);
-	padding-bottom: 12px;
-	margin-bottom: 18px;
-	border-bottom: 1px solid var(--stroke);
+	padding-bottom: 13px;
+	margin-bottom: 22px;
+	border-bottom: 1px solid var(--line);
 }
 
 .guide-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 14px;
+	gap: 20px;
 }
 
 .entry.guide {
 	max-width: none;
-	padding: 20px 21px 22px;
+	padding: 32px;
 	border: 1px solid var(--line);
-	border-radius: 11px;
+	border-radius: var(--radius);
 	background: var(--white);
 	transition: border-color 0.15s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .entry.guide:hover {
-	border-color: var(--stroke);
-	box-shadow: 0 12px 26px -16px rgba(27, 27, 34, 0.34);
+	border-color: var(--primary);
+	box-shadow: var(--shadow-lg);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-	.entry.guide:hover { transform: translateY(-2px); }
+	.entry.guide:hover { transform: translateY(-3px); }
 }
 
 .guide-glyph {
-	width: 34px;
-	height: 34px;
-	margin-bottom: 15px;
-	border: 1px solid var(--stroke);
-	border-radius: 9px;
-	background: var(--paper);
+	width: 44px;
+	height: 44px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	background: var(--primary-light);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -818,16 +889,17 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
 .guide-glyph svg {
 	display: block;
-	width: 18px;
-	height: 18px;
-	color: var(--ink);
+	width: 21px;
+	height: 21px;
+	color: var(--primary);
 	fill: none;
 	stroke: currentColor;
-	stroke-width: 1.6;
+	stroke-width: 1.7;
 	stroke-linecap: round;
 	stroke-linejoin: round;
 }
 
+.entry.guide h4 { font-size: 1.125rem; margin-bottom: 9px; }
 .entry.guide p { font-size: 0.9875rem; }
 
 /* ---- common questions ---- */
@@ -908,8 +980,8 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	width: 21px;
 	height: 21px;
 	border-radius: 50%;
-	background: var(--ink);
-	color: var(--on-ink);
+	background: var(--primary);
+	color: var(--white);
 	font-family: var(--display);
 	font-size: 11px;
 	font-weight: 700;
@@ -924,27 +996,30 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 .hook { padding: 20px 0; border-top: 1px solid var(--line); }
 
 .hook-code {
-	background: var(--ink);
-	border-radius: 9px;
+	background: var(--ink-deep);
+	border-radius: var(--radius);
 	overflow: hidden;
-	margin-bottom: 11px;
+	margin-bottom: 13px;
 }
 
 .hook-head {
 	display: flex;
 	align-items: center;
 	gap: 11px;
-	padding: 7px 8px 7px 14px;
-	background: rgba(255, 255, 255, 0.035);
+	padding: 9px 9px 9px 14px;
+	background: rgba(255, 255, 255, 0.04);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .hook-kind {
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 0.09em;
+	padding: 3px 9px;
+	border-radius: 999px;
+	background: rgba(129, 140, 248, 0.16);
+	font-size: 10.5px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: #a79fb5;
+	color: #a5b4fc;
 }
 
 .hook-copy {
@@ -957,7 +1032,7 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	border-radius: 6px;
 	background: none;
-	color: #cfcbd8;
+	color: #cbd5e1;
 	font-family: var(--text);
 	font-size: 12.5px;
 	font-weight: 500;
@@ -981,35 +1056,40 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 	stroke-linejoin: round;
 }
 
-.hook-copy.is-done { color: #a6c48f; border-color: rgba(166, 196, 143, 0.45); }
+.hook-copy.is-done { color: #6ee7b7; border-color: rgba(110, 231, 183, 0.45); }
 
 .hook pre {
 	margin: 0;
 	padding: 13px 15px;
-	color: #cfcbd8;
+	color: #cbd5e1;
 	overflow-x: auto;
 	font-size: 12.75px;
 	line-height: 1.5;
 }
 
-.hook pre .fn { color: #8fa8b8; }
-.hook pre .hk { color: #f0edf6; font-weight: 600; }
-.hook pre .arg { color: #a79fb5; }
+.hook pre .fn { color: #7dd3fc; }
+.hook pre .hk { color: #f1f5f9; font-weight: 600; }
+.hook pre .arg { color: #94a3b8; }
 
 .hook p { color: var(--stone-500); font-size: 0.9875rem; max-width: var(--measure); }
 
 /* ---- services ---- */
 
 .service {
-	padding: 18px 0;
-	border-top: 1px solid var(--line);
+	padding: 20px 24px;
+	margin-bottom: 12px;
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
 	display: grid;
 	grid-template-columns: 150px minmax(0, 1fr);
 	gap: 6px 32px;
 	max-width: var(--measure);
 }
 
-.service dt { font-weight: 600; }
+.service:last-child { margin-bottom: 0; }
+
+.service dt { font-weight: 700; }
 .service dd { margin: 0; color: var(--stone-500); font-size: 0.9875rem; }
 .service dd a { color: var(--stone-500); }
 
@@ -1018,34 +1098,36 @@ code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
    --------------------------------------------------------------- */
 
 .closing {
-	background: var(--ink-deep);
-	color: var(--on-ink);
-	padding: clamp(64px, 9vw, 108px) 0;
+	background: var(--surface-2);
+	border-top: 1px solid var(--line);
+	color: var(--ink);
+	padding: clamp(76px, 9vw, 116px) 0;
+	text-align: center;
 }
 
 .closing h2 {
-	font-size: clamp(2.1rem, 5vw, 3.6rem);
+	font-size: clamp(2rem, 4.4vw, 3.1rem);
 	font-weight: 800;
 	letter-spacing: -0.032em;
-	line-height: 1;
-	font-variation-settings: 'opsz' 88;
-	margin-bottom: 20px;
+	line-height: 1.06;
+	margin: 0 auto 20px;
 	max-width: 24ch;
 	text-wrap: balance;
 }
 
 .closing p {
-	color: var(--on-ink-dim);
-	max-width: 52ch;
+	color: var(--stone-500);
+	max-width: 54ch;
 	font-size: 1.0625rem;
-	margin-bottom: 34px;
+	margin: 0 auto 36px;
 }
 
+.closing .actions { justify-content: center; }
+
 footer {
-	background: var(--ink-deep);
-	color: #928d86;
-	border-top: 1px solid var(--rule-ink);
-	padding: 30px 0 44px;
+	background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #2563eb 100%);
+	color: rgba(255, 255, 255, 0.78);
+	padding: 34px 0 46px;
 	font-size: 14px;
 }
 
@@ -1057,8 +1139,8 @@ footer {
 }
 
 .foot-links { display: flex; flex-wrap: wrap; gap: 24px; }
-footer a { color: var(--on-ink-dim); text-decoration: none; }
-footer a:hover { color: var(--on-ink); text-decoration: underline; }
+footer a { color: rgba(255, 255, 255, 0.82); text-decoration: none; }
+footer a:hover { color: var(--white); text-decoration: underline; }
 
 /* ---------------------------------------------------------------
    Narrower screens
@@ -1096,8 +1178,8 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		gap: 8px;
 		overflow-x: auto;
 		scrollbar-width: none;
-		margin: 0 -20px;
-		padding: 11px 20px 12px;
+		margin: 0 calc(var(--gutter) * -1);
+		padding: 11px var(--gutter) 12px;
 		background: rgba(250, 249, 247, 0.92);
 		backdrop-filter: saturate(150%) blur(10px);
 		border-bottom: 1px solid var(--line);
@@ -1121,22 +1203,24 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		color: var(--on-ink);
 	}
 	.index-group { grid-template-columns: minmax(0, 1fr); gap: 0; }
-	.index-group > h3 { position: static; margin-bottom: 4px; }
-	.install { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+	.index-group > h3 { padding-top: 0; margin-bottom: 8px; }
 }
 
 @media (max-width: 720px) {
 	body { font-size: 16.5px; }
-	.shell { padding: 0 20px; }
+	:root { --gutter: 20px; }
 	.masthead nav a:not(.get) { display: none; }
 	.actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 	.action { justify-content: center; }
 	.split { grid-template-columns: minmax(0, 1fr); gap: 34px; }
 	.index-item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-	.install { grid-template-columns: minmax(0, 1fr); }
 	.service { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 	.guide-grid { grid-template-columns: minmax(0, 1fr); }
 	.docs-rail { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+
+	/* A card that keeps 32px on each side has little middle left here. */
+	.entry.guide, .split > div, .index-group { padding: 24px; }
+	.install li { padding: 24px; }
 	.rosetta-head, .tagrow { grid-template-columns: minmax(0, 1fr); }
 	.tagrow .out { border-left: 0; border-top: 1px solid var(--rule-ink); }
 	.rosetta-head span + span { border-left: 0; }
@@ -1229,10 +1313,10 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 					<div class="out">
 						<span class="f-label">How did we do?</span>
 						<span class="f-stars">
-							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-							<svg viewBox="0 0 24 24" fill="#f4f2ef"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+							<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
 							<svg viewBox="0 0 24 24" fill="none" stroke="#524e49" stroke-width="1.7"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.5l6.1-.7z"/></svg>
 						</span>
 					</div>
@@ -1248,7 +1332,7 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		</div>
 	</section>
 
-	<section class="band" id="leaves-out">
+	<section class="band band-alt" id="leaves-out">
 		<div class="shell">
 			<h2 class="band-title">Contact Form 7 is where your forms live. It was never where they were built.</h2>
 			<p class="band-lede">CF7 renders forms and sends mail, reliably, on millions of sites. Everything past that point it leaves to you. Defer Forms fills in the rest and touches none of it.</p>
@@ -1280,7 +1364,7 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		</div>
 	</section>
 
-	<section class="band band-line" id="features">
+	<section class="band" id="features">
 		<div class="shell">
 			<h2 class="band-title">Sixteen features, all of them free</h2>
 			<p class="band-lede">Nothing here is held back behind a tier, and nothing needs switching on. This is the whole plugin.</p>
@@ -1387,7 +1471,7 @@ footer a:hover { color: var(--on-ink); text-decoration: underline; }
 		</div>
 	</section>
 
-	<section class="band band-line" id="install">
+	<section class="band band-alt" id="install">
 		<div class="shell">
 			<h2 class="band-title">Installing it takes about a minute</h2>
 			<p class="band-lede">Defer Forms sits on top of Contact Form 7 and needs it active. Existing forms keep working exactly as they are.</p>
